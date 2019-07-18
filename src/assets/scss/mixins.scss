@@ -1,0 +1,28 @@
+// see vue.config.js
+@mixin begin-page {
+  min-height: calc(100vh - #{$header_height});
+  margin: 0;
+  padding: 10px 0;
+  overflow-y: auto;
+  // flex-wrap: wrap;
+  font-size: 1.1rem;
+}
+
+@mixin begin-form {
+  background-color: white;
+  border: 1px solid $color_grey;
+  border-radius: 30px;
+  padding: 1rem 1.5rem 1.5rem;
+
+  .form-title {
+    display: flex;
+    align-items: center;
+    // font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+
+    .title {
+      flex-grow: 1;
+    }
+  }
+}
