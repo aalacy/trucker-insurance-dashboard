@@ -1,5 +1,6 @@
 <template>
   <div class="eld-provider-form container-fluid mob-2">
+    
     <form id="eldProviderForm" @submit.prevent="updateCompany">
       <div class="card">
         <div class="card-body">
@@ -14,7 +15,7 @@
                   placeholder="Other Provider"
                   required
                   class="lt-input"
-                />
+                >
               </div>
 
               <div class="px-2">
@@ -22,15 +23,13 @@
                   form="addProviderForm"
                   type="submit"
                   class="px-3 lt-button lt-button-main get-data"
-                >
-                  ADD
-                </button>
+                >ADD</button>
               </div>
             </div>
           </form>
 
           <div class="container">
-            <div class="row cargo-group-page ">
+            <div class="row cargo-group-page">
               <div
                 v-for="(item, index) in allProviders"
                 :key="index"
@@ -38,12 +37,7 @@
                 @click="selectProvider(item.value)"
               >
                 <div class="p-1 provider-img-wrapper">
-                  <img
-                    v-if="item.image"
-                    :src="item.image"
-                    alt=""
-                    class="provider-img  rounded"
-                  />
+                  <img v-if="item.image" :src="item.image" alt class="provider-img rounded">
                   <!-- <div v-else class="p-1 provider-img-wrapper">
                   <img
                     src="../assets/images/bigroad.jpeg"
@@ -52,25 +46,19 @@
                   />
                   
                   
-                </div> -->
+                  </div>-->
                 </div>
                 <div
                   class="font-weight-bold name"
                   :class="{ selected: eldProviderMap[item.value] }"
-                >
-                  {{ item.value }}
-                </div>
+                >{{ item.value }}</div>
               </div>
             </div>
           </div>
 
-          <div v-if="formErrors.eldProvider" class="text-danger">
-            {{ formErrors.eldProvider }}
-          </div>
+          <div v-if="formErrors.eldProvider" class="text-danger">{{ formErrors.eldProvider }}</div>
 
-          <div v-if="error" class="alert alert-danger" role="alert">
-            {{ error }}
-          </div>
+          <div v-if="error" class="alert alert-danger" role="alert">{{ error }}</div>
         </div>
 
         <div class="card-footer">
@@ -83,9 +71,7 @@
                 @click="goPrevForm"
               >
                 Prev
-                <div class="next-title text-center d-inline pl-3 mob-2">
-                  Vehicles & Trailers
-                </div>
+                <div class="next-title text-center d-inline pl-3 mob-2">Vehicles & Trailers</div>
               </button>
             </div>
 
@@ -97,34 +83,36 @@
                 class="lt-button lt-button-main px-4 btn-block btn-border-radius-rb mob-2"
               >
                 {{ loading ? 'Loading...' : 'Next' }}
-                <div class="next-title text-center d-inline pl-3 text-white mob-2">
-                  Drivers
-                </div>
+                <div class="next-title text-center d-inline pl-3 text-white mob-2">Drivers</div>
               </button>
             </div>
           </div>
         </div>
       </div>
-        <div class="d-flex justify-content-center m-4" @click="show" v-if="save">
-            <span class="save-hover">Save & Continue </span>
-            </div>
-            <div v-if="showmodel">
-              <modelLogin/>
-            </div>
-
+      <div class="d-flex justify-content-center m-4" @click="show" v-if="save">
+        <span class="save-hover">Save & Continue</span>
+      </div>
+      <div class="d-flex justify-content-center m-4" @click="newQuoteReq" v-else>
+        <span class="save-hover">Save Changes</span>
+      </div>
+      <div v-if="showmodel">
+        <modelLogin/>
+      </div>
     </form>
   </div>
 </template>
 
 <script>
-import { mapState } from 'vuex';
-import { validateField, validateForm, minLength } from '../validators.js';
-import { API } from '../api.js';
-import ModalLogin from "./ModalLogin.vue"
-
+import { mapState } from "vuex";
+import { validateField, validateForm, minLength } from "../validators.js";
+import { API } from "../api.js";
+import ModalLogin from "./ModalLogin.vue";
+import axios from "axios";
+import headerAssistant from "./header.vue";
+import { setTimeout } from 'timers';
 
 export default {
-  name: 'AccountInfoEldProvider',
+  name: "AccountInfoEldProvider",
   props: {
     prevForm: {
       type: String,
@@ -141,24 +129,27 @@ export default {
   },
   data() {
     return {
-       showmodel:false,
+      final_uuid:"",
+      uuid:"",
+      showmodel: false,
+      userData:"",
       formData: {
         eldProvider: []
       },
       rules: {
-        eldProvider: [val => minLength(val, 1, 'Please select ELD Provider')]
+        eldProvider: [val => minLength(val, 1, "Please select ELD Provider")]
       },
       formErrors: {},
       hints: {},
       userProviders: [],
-      userProviderName: '',
+      userProviderName: "",
       loading: false,
       error: null,
-      save:true
+      save: true
     };
   },
   computed: {
-    ...mapState('eld', ['eldProviders']),
+    ...mapState("eld", ["eldProviders"]),
     allProviders() {
       return this.eldProviders.concat(this.userProviders);
     },
@@ -167,71 +158,151 @@ export default {
       this.formData.eldProvider.forEach(val => (map[val] = true));
       return map;
     },
-      ...mapState([
-    'data'
-  ])
+    ...mapState(["data"])
   },
   created() {
-    this.$emit('update-progress', this.progress);
+    this.$emit("update-progress", this.progress);
     this.loadCompany();
-  }, components:{
-    "modelLogin":ModalLogin
   },
- mounted(){
-    if(localStorage.getItem("token")){
-      this.$store.dispatch('loadData',localStorage.getItem("uuid"))
-     let a = this.$store.state.getData.data[6]
-     let b = JSON.parse(a.val).eldProvider
-     console.log(b)
-    let c = [];
-    for(var i=0;i<b.length;i++){
-        c.push(b[i])
-     }
-     let filteredKeywords = c.filter((word)=> b.includes(word));
-    console.log("filteredKeywords",filteredKeywords);
-    for(var i=0;i<filteredKeywords.length;i++){
-     this.selectProvider(filteredKeywords[i]);
-    }
-     this.save = false
-   }else{
-     this.save = true
-   }
- },
-updated(){
-if(localStorage.getItem("showModal") == "true")
-     {
-       this.showmodel = true;
-     }
-     else{
-       this.showmodel = false;
-     }
- },
-  methods: {
+  components: {
+    modelLogin: ModalLogin,
+     headerAssistant:headerAssistant
 
+  },
+  mounted() {
+    if (localStorage.getItem("token")) {
+      
+     this.save = false;
+       axios
+      .get(
+        "http://3.13.68.92/luckytrucker_admin/api/CompanyController/getuuidbyuserid?user_id=" +
+          localStorage.getItem("userId")
+      )
+      .then(coins => {
+        this.userData = coins.data.uuid;
+      });
+      setTimeout(()=>{
+  this.$store
+        .dispatch("loadData", this.userData)
+        .then(() => {
+          let len = this.$store.state.getData.data;
+          for(let j=0;j<len.length;j++){
+            if(this.$store.state.getData.data[j].key == "eldProvider")
+            {
+          let a = this.$store.state.getData.data[j];
+          let b = JSON.parse(a.val).eldProvider;
+          console.log(b);
+          let c = [];
+          for (var i = 0; i < b.length; i++) {
+            c.push(b[i]);
+          }
+          let filteredKeywords = c.filter(word => b.includes(word));
+          console.log("filteredKeywords", filteredKeywords);
+          for (var i = 0; i < filteredKeywords.length; i++) {
+            this.selectProvider(filteredKeywords[i]);
+          }
+            }
+         
+           
+          }
+          
+     });
+      },1000)
+      
+    } else {
+      this.save = true;
+         setTimeout(()=>{
+  this.$store
+        .dispatch("loadData", this.uuid)
+        .then(() => {
+          let len = this.$store.state.getData.data;
+          for(let j=0;j<len.length;j++){
+            if(this.$store.state.getData.data[j].key == "eldProvider")
+            {
+          let a = this.$store.state.getData.data[j];
+          let b = JSON.parse(a.val).eldProvider;
+          console.log(b);
+          let c = [];
+          for (var i = 0; i < b.length; i++) {
+            c.push(b[i]);
+          }
+          let filteredKeywords = c.filter(word => b.includes(word));
+          console.log("filteredKeywords", filteredKeywords);
+          for (var i = 0; i < filteredKeywords.length; i++) {
+            this.selectProvider(filteredKeywords[i]);
+          }
+            }
+         
+           
+          }
+          
+     });
+      },1000)
+    }
+    
+  },
+  updated() {
+    if (localStorage.getItem("showModal") == "true") {
+      this.showmodel = true;
+    } else {
+      this.showmodel = false;
+    }
+  },
+  methods: {
+    newQuoteReq() {
+      swal({
+        title: "Are you sure?",
+        text: "Do you want to continue editing?",
+        icon: "warning",
+        buttons: ["No", "Yes"]
+      }).then(willDelete => {
+        this.show();
+        console.log("willbe", willDelete);
+        if (willDelete) {
+          this.$router.push({ name: "AccountInfoEldProvider" });
+        } else {
+          swal(
+            "Thank You!",
+            "Your changes has been accepted! You will get new Updated Quote",
+            {
+              icon: "success"
+            }
+          );
+        }
+      });
+    },
     async show() {
       let formIsValid = this.validateForm();
       if (!formIsValid) {
         return;
       }
-
+    var temp_uuid;
       this.loading = true;
       this.error = null;
-
+  if (localStorage.getItem("token")) {
+        temp_uuid = this.userData;
+        console.log("temp_uuid login after", temp_uuid);
+      } else {
+        temp_uuid = this.uuid;
+        console.log("temp_uuid no login after", temp_uuid);
+      }
+      
       try {
         let data = await API.post("company/save", {
           key: "eldProvider",
           val: this.formData,
-          userId:localStorage.getItem("userId"),
-          uuid:localStorage.getItem("uuid")
+          user_id: localStorage.getItem("userId"),
+          uuid: temp_uuid
         });
 
         if (data.status === "OK") {
-            if(this.showmodel){
-          this.showmodel = false;
-          
-        }else{
-          this.showmodel = true;
-        }
+          if(!localStorage.getItem("token")){
+            if (this.showmodel) {
+            this.showmodel = false;
+          } else {
+            this.showmodel = true;
+          }
+          }
           
         } else if (data.status === "ERROR") {
           this.showmodel = true;
@@ -255,28 +326,28 @@ if(localStorage.getItem("showModal") == "true")
       }
 
       this.userProviders.push({ value: this.userProviderName });
-      this.userProviderName = '';
+      this.userProviderName = "";
     },
     selectProvider(providerValue) {
       if (this.eldProviderMap[providerValue]) {
         this.formData.eldProvider = this.formData.eldProvider.filter(
           val => val !== providerValue
         );
-        this.$emit('update-hint', '');
+        this.$emit("update-hint", "");
       } else {
         this.formData.eldProvider.push(providerValue);
-        this.$emit('update-hint', this.hints[providerValue]);
+        this.$emit("update-hint", this.hints[providerValue]);
       }
 
       this.formErrors = {};
     },
     goPrevForm() {
-      this.$emit('update-hint', '');
-      this.$emit('go-to-form', this.prevForm);
+      this.$emit("update-hint", "");
+      this.$emit("go-to-form", this.prevForm);
     },
     goNextForm() {
-      this.$emit('update-hint', '');
-      this.$emit('go-to-form', this.nextForm);
+      this.$emit("update-hint", "");
+      this.$emit("go-to-form", this.nextForm);
     },
     validateField(fieldName) {
       validateField(fieldName, this.formData, this.rules, this.formErrors);
@@ -290,10 +361,11 @@ if(localStorage.getItem("showModal") == "true")
       this.error = null;
 
       try {
-        let data = await API.get('company/current');
+        let data = await API.get("company/current");
 
-        if (data.status === 'OK') {
+        if (data.status === "OK") {
           let { eldProvider: eldProviderTab } = data.data;
+          this.uuid = data.data.b;
           if (eldProviderTab) {
             this.formData = {
               ...this.formData,
@@ -303,7 +375,7 @@ if(localStorage.getItem("showModal") == "true")
             let { eldProvider } = eldProviderTab;
             this.addUserProviders(eldProvider);
           }
-        } else if (data.status === 'ERROR') {
+        } else if (data.status === "ERROR") {
           // this.$router.replace({ name: 'Home' });
         }
       } catch (err) {
@@ -331,20 +403,33 @@ if(localStorage.getItem("showModal") == "true")
 
       this.loading = true;
       this.error = null;
-
+         if(localStorage.getItem('token')){
+        
+          this.final_uuid = this.userData;
+          console.log("this.final_uuid login after",this.final_uuid )
+      }else{
+        this.final_uuid = this.uuid;
+        console.log("this.final_uuid no login after",this.final_uuid )
+      }
       try {
-        let data = await API.post('company/save', {
-          key: 'eldProvider',
+        let data = await API.post("company/save", {
+          key: "eldProvider",
           val: this.formData,
-          userId:localStorage.getItem("userId"),
-          uuid:localStorage.getItem("uuid")
+          user_id: localStorage.getItem("userId"),
+          uuid:  this.final_uuid
         });
 
-        if (data.status === 'OK') {
+        if (data.status === "OK") {
           this.goNextForm();
-        } else if (data.status === 'ERROR') {
+        } else if (data.status === "ERROR") {
           this.error = data.messages[0] || data.data;
         }
+        axios.post(
+          "http://3.13.68.92/luckytrucker_admin/api/CompanyController/postUserIdByUuid?uuid="+ this.final_uuid +"&user_id="+localStorage.getItem("userId")
+        )
+        .then(res => {
+          console.log("ress post",res)
+        })
       } catch (err) {
         console.error(err);
         this.error = err.message;
@@ -377,27 +462,26 @@ if(localStorage.getItem("showModal") == "true")
       display: flex;
       align-items: center;
       justify-content: center;
-    
+
       border-radius: 5px;
       // min-height: 50px;
       // height: 100%;
       word-break: break-word;
 
       &.selected {
-        
-          color: #5e98f9;
+        color: #5e98f9;
       }
     }
   }
-@media screen and (max-width: 639px) {
-    .cargo-group-page .col-3{
+  @media screen and (max-width: 639px) {
+    .cargo-group-page .col-3 {
       flex: 0 0 33.333%;
       max-width: 33.333%;
     }
   }
 
-   @media screen and (max-width: 479px) {
-    .cargo-group-page .col-3{
+  @media screen and (max-width: 479px) {
+    .cargo-group-page .col-3 {
       flex: 0 0 50%;
       max-width: 50%;
     }

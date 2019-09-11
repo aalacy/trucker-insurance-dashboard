@@ -15,8 +15,8 @@
        
      
             <div>NEED HELP?</div>
-            <div class="">Speak now with a licenece insurance agent</div>
-            <button type="submit" class="bt-call pr-4 pl-4 mt-2 mb-2">Request a call</button>
+            <div class="">Speak now with a license insurance agent</div>
+            <a href="tel:16469330419" class="bt-call ">Click to Talk</a>
             <div class=" justify-content-center">
 or call us 24/7?
             
@@ -26,7 +26,7 @@ or call us 24/7?
                   icon="phone-alt"
                   size="1x"
                   class=" color-fb d-flex  justify-content-center"
-                /> +1 (XXX) XXX-XXXX</div>
+                /> <a href="tel:16469330419">1-646-933-0419</a></div>
               </div>
            
           </div>
@@ -147,9 +147,13 @@ export default {
   data() {
     return {
       msg:false,
-      showSidebar: true,
+      showSidebar: isMobile
+        ? false
+        : true,
       showLink: false,
-      showLabel: true,
+      showLabel:  isMobile
+        ? false
+        : true,
       showLabelLink: false,
       itemsa:
       [
@@ -178,7 +182,7 @@ export default {
             { title: "ELD Provider", to: { name: "AccountInfoEldProvider" } },
             { title: "Drivers", to: { name: "AccountInfoDrivers" } },
             { title: "Owner", to: { name: "AccountInfoOwners" } },
-            { title: "Questions", to: { name: "AccountInfoQuestions" } },
+            { title: "Comments", to: { name: "AccountInfoQuestions" } },
             {
               title: "Document Upload",
               to: { name: "AccountInfoDocumentUpload" }
@@ -187,74 +191,6 @@ export default {
             {title:"Download Quote",to:{name:"AccountInfoThankYou"}}
           ]
         },
-        // {
-        //   title: "Quotes",
-        //   to: { name: "Quotes" },
-        //   subItems: [
-        //     { title: "See All Quotes", to: { name: "QuotesAllQuotes" } },
-        //     {
-        //       title: "Request New Quote",
-        //       to: { name: "QuotesRequestNewQuote" }
-        //     }
-        //   ]
-        // },
-        // {
-        //   title: "Policies",
-        //   to: { name: "Policies" },
-        //   subItems: [
-        //     { title: "Review Policies", to: { name: "PoliciesReview" } },
-        //     { title: "+ / - Drivers", to: { name: "PoliciesDrivers" } },
-        //     {
-        //       title: "+ / - Vehicles & Trailers",
-        //       to: { name: "PoliciesVehiclesAndTrailers" }
-        //     },
-        //     { title: "Other Coverages", to: { name: "PoliciesOtherCoverages" } }
-        //   ]
-        // },
-        // {
-        //   title: "Certificates",
-        //   to: { name: "Certificates" },
-        //   subItems: [
-        //     { title: "Past Certificates", to: { name: "CertificatesPast" } },
-        //     {
-        //       title: "Request New Certificate",
-        //       to: { name: "CertificatesRequestNewCertificate" }
-        //     }
-        //   ]
-        // },
-        // {
-        //   title: "Billing",
-        //   to: { name: "Billing" },
-        //   subItems: [
-        //     {
-        //       title: "Payment Information",
-        //       to: { name: "BillingPaymentInformation" }
-        //     },
-        //     {
-        //       title: "Payment Schedule",
-        //       to: { name: "BillingPaymentSchedule" }
-        //     },
-        //     { title: "Payment History", to: { name: "BillingPaymentHistory" } },
-        //     { title: "Make a Payment", to: { name: "BillingMakePayment" } }
-        //   ]
-        // },
-        // {
-        //   title: "Resources",
-        //   to: { name: "Resourses" },
-        //   subItems: [
-        //     { title: "ELD Providers", to: { name: "ResoursesEldProviders" } },
-        //     {
-        //       title: "Risk Management",
-        //       to: { name: "ResoursesRiskManagement" }
-        //     },
-        //     {
-        //       title: "Buy a New Truck/Trailer",
-        //       to: { name: "ResoursesBuyNewTruckTrailer" }
-        //     },
-        //     { title: "Find a Driver", to: { name: "ResoursesFindDriver" } },
-        //     { title: "Freight Board", to: { name: "ResoursesFreightBoard" } }
-        //   ]
-        // }
       ],
         itemMobile: [
         {
@@ -272,13 +208,13 @@ export default {
             { title: "ELD Provider", to: { name: "AccountInfoEldProvider" } },
             { title: "Drivers", to: { name: "AccountInfoDrivers" } },
             { title: "Owner", to: { name: "AccountInfoOwners" } },
-            { title: "Questions", to: { name: "AccountInfoQuestions" } },
+            { title: " Comments", to: { name: "AccountInfoQuestions" } },
             {
               title: "Document Upload",
               to: { name: "AccountInfoDocumentUpload" }
             },
             {title:"Sign & Complete", to:{name:"AccountInfoSignComplete"}},
-            {title:"Download Quote",to:{name:"AccountInfoThankYou"}}
+            {title:"Download PDF",to:{name:"AccountInfoThankYou"}}
           ]
         },
       
@@ -315,9 +251,13 @@ export default {
 }
 .bt-call {
   border-radius: 12px;
-  color: #f7f7f7;
-  background-color: #1c4894;
-  height: 38px;
+    color: #f7f7f7;
+    background-color: #1c4894;
+    height: 38px;
+    display: block;
+    max-width: 148px;
+    line-height: 38px;
+    margin: 0 auto;
 }
 
 .controla {
@@ -357,7 +297,7 @@ export default {
   left: 0;
   width: 0px;
   max-height: 100%;
-  background-color: rgba($color: #81b121, $alpha: 0.8);
+  // background-color: rgba($color: #81b121, $alpha: 0.8);
   border: solid #fff;
   border-width: 0 1px 0 0;
   transition: all 0.5s ease-in-out;
@@ -456,6 +396,7 @@ export default {
 .containeraa {
   // position: absolute;
   top: 165px;
+  padding-top: 20px;
   left: 0;
   width: 0px;
     

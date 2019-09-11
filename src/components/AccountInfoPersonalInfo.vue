@@ -4,7 +4,11 @@
       <div class="card">
         <div class="card-body">
           <h4 class="card-title form-sub-title">Business Information</h4>
+          <div class="col-md-6 col-lg-12 py-3">
+              <h6 class="pt-2">Mailing Address</h6>
+            </div>
           <div class="row">
+            
             <div class="col">
               <div class="form-group">
                 <input
@@ -24,7 +28,7 @@
           </div>
 
           <div class="row">
-            <div class="col-6">
+            <div class="col-12 col-md-6 col-lg-6 ">
               <div class="form-group">
                 <input
                   v-model="formData.city"
@@ -42,70 +46,19 @@
               </div>
             </div>
 
-            <div class="col-4">
+            <div class="col-12 col-md-6 col-lg-6 ">
               <div class="form-group">
-                <select
+                <input
                   v-model="formData.state"
                   :class="{ 'has-error': formErrors.state }"
+                  type="text"
                   class="lt-input"
+                  placeholder="State*"
                   required
                   @change="validateField('state')"
                   @focus="onFocus('state')"
                   @blur="onBlur"
                 >
-                  <option disabled value>State/Province</option>
-                  <option value="AL">Alabama</option>
-                  <option value="AK">Alaska</option>
-                  <option value="AZ">Arizona</option>
-                  <option value="AR">Arkansas</option>
-                  <option value="CA">California</option>
-                  <option value="CO">Colorado</option>
-                  <option value="CT">Connecticut</option>
-                  <option value="DE">Delaware</option>
-                  <option value="DC">District Of Columbia</option>
-                  <option value="FL">Florida</option>
-                  <option value="GA">Georgia</option>
-                  <option value="HI">Hawaii</option>
-                  <option value="ID">Idaho</option>
-                  <option value="IL">Illinois</option>
-                  <option value="IN">Indiana</option>
-                  <option value="IA">Iowa</option>
-                  <option value="KS">Kansas</option>
-                  <option value="KY">Kentucky</option>
-                  <option value="LA">Louisiana</option>
-                  <option value="ME">Maine</option>
-                  <option value="MD">Maryland</option>
-                  <option value="MA">Massachusetts</option>
-                  <option value="MI">Michigan</option>
-                  <option value="MN">Minnesota</option>
-                  <option value="MS">Mississippi</option>
-                  <option value="MO">Missouri</option>
-                  <option value="MT">Montana</option>
-                  <option value="NE">Nebraska</option>
-                  <option value="NV">Nevada</option>
-                  <option value="NH">New Hampshire</option>
-                  <option value="NJ">New Jersey</option>
-                  <option value="NM">New Mexico</option>
-                  <option value="NY">New York</option>
-                  <option value="NC">North Carolina</option>
-                  <option value="ND">North Dakota</option>
-                  <option value="OH">Ohio</option>
-                  <option value="OK">Oklahoma</option>
-                  <option value="OR">Oregon</option>
-                  <option value="PA">Pennsylvania</option>
-                  <option value="RI">Rhode Island</option>
-                  <option value="SC">South Carolina</option>
-                  <option value="SD">South Dakota</option>
-                  <option value="TN">Tennessee</option>
-                  <option value="TX">Texas</option>
-                  <option value="UT">Utah</option>
-                  <option value="VT">Vermont</option>
-                  <option value="VA">Virginia</option>
-                  <option value="WA">Washington</option>
-                  <option value="WV">West Virginia</option>
-                  <option value="WI">Wisconsin</option>
-                  <option value="WY">Wyoming</option>
-                </select>
 
                 <div v-if="formErrors.state" class="text-danger">{{ formErrors.state }}</div>
               </div>
@@ -113,7 +66,7 @@
           </div>
 
           <div class="row">
-            <div class="col-6">
+            <div class="col-12 col-md-6 col-lg-6 ">
               <div class="form-group">
                 <input
                   v-model="formData.zip"
@@ -132,7 +85,7 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-6">
+            <div class="col-12 col-md-6 col-lg-6 ">
               <div class="form-group">
                 <input
                   v-model="formData.USDOT"
@@ -166,7 +119,7 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-6">
+            <div class="col-12 col-md-6 col-lg-6 ">
               <div class="form-group">
                 <input
                   v-model="formData.phone"
@@ -183,7 +136,7 @@
             </div>
           </div>
           <div class="col-md-12 col-sm-6 col-lg-12">
-            <input type="checkbox" id="checkbox" v-model="checked">
+            <input type="checkbox" id="checkbox" v-model="checked" v-on:change="changeData()">
             <label for="checkbox" class="st-padding d-inline">Is Garaging address the same location?</label>
           </div>
           <div>
@@ -213,7 +166,7 @@
             </div>
 
             <div class="row">
-              <div class="col-6">
+              <div class="col-12 col-md-6 col-lg-6 ">
                 <div class="form-group">
                   <input
                     v-model="formData.city1"
@@ -230,78 +183,25 @@
                 </div>
               </div>
 
-              <div class="col-4">
+              <div class="col-12 col-md-6 col-lg-6 ">
                 <div class="form-group">
-                  <select
+                  <input
                     v-model="formData.state1"
                     :class="{ 'has-error': formErrors.state1 }"
+                    type="text"
                     class="lt-input"
+                    placeholder="State*"
                     required
                     @change="validateField('state1')"
                     @focus="onFocus('state1')"
                     @blur="onBlur"
                   >
-                    <option disabled value>State/Province</option>
-                    <option value="AL">Alabama</option>
-                    <option value="AK">Alaska</option>
-                    <option value="AZ">Arizona</option>
-                    <option value="AR">Arkansas</option>
-                    <option value="CA">California</option>
-                    <option value="CO">Colorado</option>
-                    <option value="CT">Connecticut</option>
-                    <option value="DE">Delaware</option>
-                    <option value="DC">District Of Columbia</option>
-                    <option value="FL">Florida</option>
-                    <option value="GA">Georgia</option>
-                    <option value="HI">Hawaii</option>
-                    <option value="ID">Idaho</option>
-                    <option value="IL">Illinois</option>
-                    <option value="IN">Indiana</option>
-                    <option value="IA">Iowa</option>
-                    <option value="KS">Kansas</option>
-                    <option value="KY">Kentucky</option>
-                    <option value="LA">Louisiana</option>
-                    <option value="ME">Maine</option>
-                    <option value="MD">Maryland</option>
-                    <option value="MA">Massachusetts</option>
-                    <option value="MI">Michigan</option>
-                    <option value="MN">Minnesota</option>
-                    <option value="MS">Mississippi</option>
-                    <option value="MO">Missouri</option>
-                    <option value="MT">Montana</option>
-                    <option value="NE">Nebraska</option>
-                    <option value="NV">Nevada</option>
-                    <option value="NH">New Hampshire</option>
-                    <option value="NJ">New Jersey</option>
-                    <option value="NM">New Mexico</option>
-                    <option value="NY">New York</option>
-                    <option value="NC">North Carolina</option>
-                    <option value="ND">North Dakota</option>
-                    <option value="OH">Ohio</option>
-                    <option value="OK">Oklahoma</option>
-                    <option value="OR">Oregon</option>
-                    <option value="PA">Pennsylvania</option>
-                    <option value="RI">Rhode Island</option>
-                    <option value="SC">South Carolina</option>
-                    <option value="SD">South Dakota</option>
-                    <option value="TN">Tennessee</option>
-                    <option value="TX">Texas</option>
-                    <option value="UT">Utah</option>
-                    <option value="VT">Vermont</option>
-                    <option value="VA">Virginia</option>
-                    <option value="WA">Washington</option>
-                    <option value="WV">West Virginia</option>
-                    <option value="WI">Wisconsin</option>
-                    <option value="WY">Wyoming</option>
-                  </select>
-
-                  <div v-if="formErrors.state" class="text-danger">{{ formErrors.state1 }}</div>
+                  <div v-if="formErrors.city1" class="text-danger">{{ formErrors.state1 }}</div>
                 </div>
               </div>
             </div>
-
             <div class="row">
-              <div class="col-6">
+              <div class="col-12 col-md-6 col-lg-6 ">
                 <div class="form-group">
                   <input
                     v-model="formData.zip1"
@@ -332,14 +232,11 @@
               <button
                 :disabled="loading"
                 type="submit"
-                class="lt-button lt-button-main btn-block btn-border-radius-rb p-1"
+                class="lt-button lt-button-main btn-block btn-border-radius-rb p-1 button-icon d-flex align-itmes-center justify-content-center"
               >
                 <!-- <font-awesome-icon icon="amazon-pay" size="2x" class="m-1"></font-awesome-icon> -->
-                {{ loading ? 'Loading...' : 'Next' }}
-                <div class="next-title text-center d-inline text-white">
-                  Business Structure
-                  <font-awesome-icon icon="caret-right" size="2x" class="m-1"></font-awesome-icon>
-                </div>
+                <span class="arrow-button">{{ loading ? 'Loading...' : 'Next' }}</span>Business Structure
+                <font-awesome-icon icon="caret-right" size="2x" class="m-1 fill-white"></font-awesome-icon>
               </button>
             </div>
           </div>
@@ -349,6 +246,10 @@
       <div class="d-flex justify-content-center m-4" @click="show" v-if="save">
         <span class="save-hover">Save & Continue</span>
       </div>
+      <div class="d-flex justify-content-center m-4" @click="newQuoteReq" v-else>
+        <span class="save-hover">Save Changes</span>
+      </div>
+
       <div v-if="showmodel">
         <modelLogin/>
       </div>
@@ -361,14 +262,18 @@ import { validateField, validateForm, required } from "../validators.js";
 import { API } from "../api.js";
 import ChatBoat from "./ChatBoat.vue";
 import ModalLogin from "./ModalLogin.vue";
-import { mapState } from "vuex";
+import { mapState, mutations } from "vuex";
+import axios from "axios";
+import headerAssistant from "./header.vue";
+import { setTimeout } from "timers";
 
 export default {
   name: "AccountInfoPersonalInfo",
 
   components: {
     "chat-boat": ChatBoat,
-    modelLogin: ModalLogin
+    modelLogin: ModalLogin,
+    headerAssistant: headerAssistant
   },
   props: {
     nextForm: {
@@ -380,44 +285,119 @@ export default {
       required: true
     }
   },
-  beforeMount() {
-    // console.log("beforeMount");
-    localStorage.setItem("usdot", "");
-  },
   mounted() {
-    this.formData.USDOT = localStorage.getItem("usdot");
-    this.formData.company = localStorage.getItem("company");
-    this.formData.address = localStorage.getItem(["Mailing address"]);
-    // [this.formData.dobD, this.formData.dobM, this.formData.dobY] = b.dateOfBirth.split('/');
-    let x = localStorage.getItem("Mailing address");
-    // this.formData.zip = x.split(',')
-    this.formData.address1 = localStorage.getItem(["Physical address"]);
-    this.formData.phone = localStorage.getItem("Phone");
-
     if (localStorage.getItem("token")) {
       this.save = false;
-      this.$store.dispatch("loadData", this.uuid);
-       let a = this.$store.state.getData.data[2]
-      console.log("aaaa",a);
-      let b = JSON.parse(a.val);
-      this.formData.address = b.address;
-      this.formData.city = b.city;
-      this.formData.zip = b.zip;
+      axios
+        .get(
+          "http://3.13.68.92/luckytrucker_admin/api/CompanyController/getuuidbyuserid?user_id=" +
+            localStorage.getItem("userId")
+        )
+        .then(coins => {
+          this.userData = coins.data.uuid;
+          localStorage.setItem("uuid",coins.data.uuid);
+          console.log("this.userData", this.userData);
+        });
+      setTimeout(() => {
+        this.$store.dispatch("loadData", this.userData).then(res => {
+          console.log("llllll")
+          let len = this.$store.state.getData.data;
+          console.log("ll")
+          for (let k = 0; k <= len.length; k++) {
+            if (this.$store.state.getData.data[k].key == "personalInfo") {
+              let a = this.$store.state.getData.data[k];
+              let b = JSON.parse(a.val);
+              console.log("b", b);
+              this.formData.address = b.address;
+              this.formData.city = b.city;
+              this.formData.zip = b.zip;
+              this.formData.USDOT = b.USDOT;
+              this.formData.company = b.company;
+              this.formData.phone = b.phone;
+              this.formData.state = b.state;
+              this.formData.address1 = b.address1;
+              this.formData.city1 = b.city1;
+              this.formData.zip1 = b.zip1;
+              this.formData.state1 = b.state1;
+            }
+          }
+        });
+
+        // console.log("Address Data full val", fullAddress);
+      }, 1000);
       this.formData.USDOT = localStorage.getItem("usdot");
       this.formData.company = localStorage.getItem("company");
       this.formData.phone = localStorage.getItem("Phone");
-      this.formData.state = b.state;
-      this.formData.address1 = b.address1;
-      this.formData.city1 = b.city1;
-      this.formData.zip1 = b.zip1;
-      this.formData.state1 = b.state1;
-    } else {
-      this.save = true;
+      let fullAddress = localStorage.getItem(["Mailing address"]);
 
-      console.log("not logged in");
+      let MailingAddress = this.formatAddress(
+        localStorage.getItem(["Mailing address"])
+      );
+      let PhysicalAddress = this.formatAddress(
+        localStorage.getItem(["Physical address"])
+      );
+      this.formData.address = MailingAddress[3].trim().replace(",", "");
+      this.formData.city = MailingAddress[1].trim().replace(",", "");
+      this.formData.state = MailingAddress[2].trim().replace(",", "");
+      this.formData.zip = MailingAddress[0].trim().replace(",", "");
+
+      this.formData.address1 = PhysicalAddress[3].trim().replace(",", "");
+      this.formData.city1 = PhysicalAddress[1].trim().replace(",", "");
+      this.formData.state1 = PhysicalAddress[2].trim().replace(",", "");
+      this.formData.zip1 = PhysicalAddress[0].trim().replace(",", "");
+    } else {
+      console.log("save token no", this.save);
+      this.save = true;
+      setTimeout(() => {
+        this.$store
+          .dispatch("loadData", this.uuid)
+          .then(res => {
+            let len = this.$store.state.getData.data;
+            for (let i = 0; i <= len.length; i++) {
+              if (this.$store.state.getData.data[i].key == "personalInfo") {
+                let a = this.$store.state.getData.data[i];
+                let b = JSON.parse(a.val);
+                this.formData.address = b.address;
+                this.formData.city = b.city;
+                this.formData.zip = b.zip;
+                this.formData.USDOT = b.USDOT;
+                this.formData.company = b.company;
+                this.formData.phone = b.phone;
+                this.formData.state = b.state;
+                this.formData.address1 = b.address1;
+                this.formData.city1 = b.city1;
+                this.formData.zip1 = b.zip1;
+                this.formData.state1 = b.state1;
+              }
+            }
+          })
+          .catch(() => {});
+      }, 1000);
+      this.formData.USDOT = localStorage.getItem("usdot");
+      this.formData.company = localStorage.getItem("company");
+      this.formData.phone = localStorage.getItem("Phone");
+      let fullAddress = localStorage.getItem(["Mailing address"]);
+
+      let MailingAddress = this.formatAddress(
+        localStorage.getItem(["Mailing address"])
+      );
+      this.formData.address = MailingAddress[3].trim().replace(",", "");
+      this.formData.state = MailingAddress[1].trim().replace(",", "");
+      this.formData.city = MailingAddress[2].trim().replace(",", "");
+      this.formData.zip = MailingAddress[0].trim().replace(",", "");
+      let PhysicalAddress = this.formatAddress(
+        localStorage.getItem(["Physical address"])
+      );
+      this.formData.address1 = PhysicalAddress[3].trim().replace(",", "");
+      this.formData.state1 = PhysicalAddress[1].trim().replace(",", "");
+      this.formData.city1 = PhysicalAddress[2].trim().replace(",", "");
+      this.formData.zip1 = PhysicalAddress[0].trim().replace(",", "");
     }
+    // console.log("this.uuuuid mount",this.uuid);
   },
-  beforeMount() {},
+  beforeMount() {
+    // localStorage.setItem("uuid", null);
+  },
   computed: {
     ...mapState(["data"])
   },
@@ -426,8 +406,11 @@ export default {
     return {
       checked: true,
       showmodel: false,
+      final_uuid:"",
       save: true,
       uuid: "",
+      // newQuote: false,
+      userData: "",
       formData: {
         // firstName: "",
         // lastName: "",
@@ -457,7 +440,14 @@ export default {
       },
       formErrors: {},
       hints: {
-        address: "Another hint"
+        address: "Please enter Mailing Address",
+        state: "Please enter State of Mailing Address",
+        city: "Please enter State of Mailing Address",
+        zip: "Please enter Zipcode of Mailing Address",
+        address1: "Please enter Garaging Address",
+        city1: "Please enter State of Garaging Address",
+        state1: "Please enter State of Garaging Address",
+        zip1: "Please enter Zipcode of Garaging Address"
       },
       loading: false,
       error: null
@@ -465,10 +455,9 @@ export default {
   },
   created() {
     this.$emit("update-progress", this.progress);
+    localStorage.setItem("uuid", null);
+
     this.loadCompany();
-    this.uuid = localStorage.getItem("uuid");
-    // console.log("be",this.uuid)
-    // console.log("mount api",JSON.parse(this.data.data[0].val).businessType)
   },
   updated() {
     if (localStorage.getItem("showModal") == "true") {
@@ -478,39 +467,83 @@ export default {
     }
   },
   methods: {
+    changeData() {
+      if (this.checked) {
+        this.formData.address1 = this.formData.address;
+        this.formData.city1 = this.formData.city;
+        this.formData.state1 = this.formData.state;
+        this.formData.zip1 = this.formData.zip;
+      } else {
+        this.formData.address1 = "";
+        this.formData.city1 = "";
+        this.formData.state1 = "";
+        this.formData.zip1 = "";
+      }
+    },
+    newQuoteReq() {
+      swal({
+        title: "Are you sure?",
+        text: "Do you want to continue editing?",
+        icon: "warning",
+        buttons: ["No", "Yes"]
+      }).then(willDelete => {
+        console.log("willbe", willDelete);
+        this.show();
+        if (willDelete) {
+          
+          this.$router.push({ name: "AccountInfoPersonalInfo" });
+          
+        } else {
+          swal(
+            "Thank You!",
+            "Your changes has been accepted! You will get new Updated Quote",
+            {
+              icon: "success"
+            }
+          );
+        }
+      });
+    },
     async show() {
       let formIsValid = this.validateForm();
       if (!formIsValid) {
         return;
       }
-
+    var temp_uuid;
       this.loading = true;
       this.error = null;
-
+      if (localStorage.getItem("token")) {
+        temp_uuid = this.userData;
+        console.log("temp_uuid login after", temp_uuid);
+      } else {
+        temp_uuid = this.uuid;
+        console.log("temp_uuid no login after", temp_uuid);
+      }
       try {
         let data = await API.post("company/save", {
           key: "personalInfo",
           val: this.formData,
-          userId: localStorage.getItem("userId"),
-          uuid: localStorage.getItem("uuid")
+          user_id: localStorage.getItem("userId"),
+          uuid: temp_uuid
         });
         console.log("this.formData per", this.formData);
         if (data.status === "OK") {
-          if (this.showmodel) {
+          if(!localStorage.getItem("token")){
+            if (this.showmodel) {
             this.showmodel = false;
           } else {
             this.showmodel = true;
+           }
           }
+          
         } else if (data.status === "ERROR") {
-          this.showmodel = true;
+          // this.showmodel = true;
           this.error = data.messages[0] || data.data;
         }
       } catch (err) {
         console.error(err);
-        // this.showmodel = true;
         this.error = err.message;
       } finally {
-        // this.showmodel = true;
         this.loading = false;
       }
     },
@@ -534,12 +567,13 @@ export default {
     async loadCompany() {
       this.loading = false;
       this.error = null;
-
       try {
         let data = await API.get("company/current");
         this.uuid = data.data.b;
-        localStorage.setItem("uuid", data.data.b);
+        console.log("this.uuid", this.uuid);
         if (data.status === "OK") {
+          console.log("this VICKY", data.data.b);
+          // localStorage.setItem("uuid",data.data.b)
           let { personalInfo } = data.data;
           if (personalInfo) {
             this.formData = {
@@ -555,7 +589,34 @@ export default {
         this.error = err.message;
       } finally {
         this.loading = false;
+
+        // }, 5000);
       }
+    },
+    formatAddress(fullAddress) {
+      let splitAddress = fullAddress.split(" ");
+      splitAddress.reverse();
+      let cnt = 0,
+        val = [],
+        index = 0;
+      while (cnt != 4 && splitAddress.length > index) {
+        if (splitAddress[index].trim() != "") {
+          if (cnt < 2) {
+            val[cnt++] = splitAddress[index];
+          } else {
+            val[cnt] = "";
+            do {
+              val[cnt] = splitAddress[index] + " " + val[cnt];
+            } while (
+              splitAddress[index++].trim() != "" &&
+              splitAddress.length > index
+            );
+            cnt++;
+          }
+        }
+        index++;
+      }
+      return val;
     },
     async updateCompany() {
       let formIsValid = this.validateForm();
@@ -565,22 +626,43 @@ export default {
 
       this.loading = true;
       this.error = null;
-
+      if(localStorage.getItem('token')){
+        
+          this.final_uuid = this.userData;
+          console.log("this.final_uuid login after",this.final_uuid )
+      }else{
+        this.final_uuid = this.uuid;
+        console.log("this.final_uuid no login after",this.final_uuid )
+      }
       try {
         let data = await API.post("company/save", {
           key: "personalInfo",
           val: this.formData,
-          userId: localStorage.getItem("userId"),
-          uuid: localStorage.getItem("uuid")
+          user_id: localStorage.getItem("userId"),
+          uuid: this.final_uuid
         });
-        // console.log(localStorage.getItem("userId"))
-        // console.log(localStorage.getItem("uuid"))
+        console.log("this.formData per", this.formData);
         if (data.status === "OK") {
           this.goNextForm();
         } else if (data.status === "ERROR") {
           // console.log("data",data)
           this.error = data.messages[0] || data.data;
         }
+
+        // second API
+        // axios.post
+        axios
+          .post(
+            "http://3.13.68.92/luckytrucker_admin/api/CompanyController/postUserIdByUuid?uuid=" +
+              this.uuid +
+              "&user_id=" +
+              localStorage.getItem("userId")
+          )
+          .then(res => {
+            console.log("ress post", res);
+          });
+        // .catch(err => this.$swal("Opps!",err, "error"))
+        // .finally(() => console.log("hiiiiiiii"));
       } catch (err) {
         // console.error(err);
         this.error = err.message;

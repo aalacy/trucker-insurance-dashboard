@@ -1,9 +1,10 @@
 <template>
   <div class="cargo-hauled-form container-fluid mob-2">
+    
     <form @submit.prevent="updateCompany">
       <div class="mb-4">
         <img src="https://picsum.photos/g/100/100" alt style="width:50px;" class="d-inline mr-2">
-        <h4 class="card-title d-inline form-sub-title">Cargo Group</h4>
+        <h4 class="card-title d-inline form-sub-title">Cargo Hauled</h4>
       </div>
       <div class="card">
         <div class="card-body">
@@ -24,7 +25,7 @@
                   @click="selectHaulType(item.value, subItem.value)"
                 >
                   <div class="p-1">
-                    <img src="https://picsum.photos/g/100/100" alt>
+                    <img :src="subItem.img" alt>
                   </div>
 
                   <div
@@ -76,6 +77,9 @@
       <div class="d-flex justify-content-center m-4" @click="show" v-if="save">
         <span class="save-hover">Save & Continue</span>
       </div>
+      <div class="d-flex justify-content-center m-4" @click="newQuoteReq" v-else>
+        <span class="save-hover">Save Changes</span>
+      </div>
       <div v-if="showmodel">
         <modelLogin/>
       </div>
@@ -88,6 +92,9 @@ import { mapState } from "vuex";
 import { validateField, validateForm, minLength } from "../validators.js";
 import { API } from "../api.js";
 import ModalLogin from "./ModalLogin.vue";
+import axios from "axios";
+import headerAssistant from "./header.vue";
+import { setTimeout } from 'timers';
 
 export default {
   name: "AccountInfoCargoHauled",
@@ -106,18 +113,22 @@ export default {
     }
   },
   components: {
-    modelLogin: ModalLogin
+    modelLogin: ModalLogin,
+    headerAssistant: headerAssistant
   },
   data() {
     return {
+      final_uuid:"",
       showmodel: false,
-      save:true,
+      save: true,
+      userData:"",
+      uuid:"",
       cargoGroup: [],
       formData: {
         haulType: {}
       },
       rules: {
-        haulType: [val => minLength(val, 1, "Please select Haul Type")]
+        haulType: [val => minLength(val, 1, "Please select Cargo Type")]
       },
       formErrors: {},
       loading: false,
@@ -129,9 +140,8 @@ export default {
     selectedCargoGroups() {
       return this.cargoGroups.filter(
         group => this.cargoGroup.indexOf(group.value) > -1
-        
       );
-    // console.log("this.cargoGroup",this.cargoGroup)
+      // console.log("this.cargoGroup",this.cargoGroup)
     },
     cargoHauledMap() {
       let map = {};
@@ -147,10 +157,7 @@ export default {
 
       return map;
     },
-    ...mapState([
-    'data'
-  ])
-    
+    ...mapState(["data"])
   },
   created() {
     this.$emit("update-progress", this.progress);
@@ -163,35 +170,85 @@ export default {
       this.showmodel = false;
     }
   },
- mounted(){
-    if(localStorage.getItem("token")){
-     this.save = false
-     this.$store.dispatch('loadData',localStorage.getItem("uuid"))
-     let a = this.$store.state.getData.data[2]
-    // let b = JSON.parse(a.val).haulType
-    console.log("aaa",JSON.parse(a.val))
-    // let c =[]
-    for(let i =0;i<this.cargoGroups.length;i++)
-    {
-      for (let j=0;j<this.cargoGroups[i].cargoHauled.length;j++)
-      {
-        console.log("aaass",this.cargoGroups[i].cargoHauled[j].value);
+  mounted() {
+    if (localStorage.getItem("token")) {
+      this.save = false;
+        axios
+      .get(
+        "http://3.13.68.92/luckytrucker_admin/api/CompanyController/getuuidbyuserid?user_id=" +
+          localStorage.getItem("userId")
+      )
+      .then(coins => {
+        this.userData = coins.data.uuid;
+      });
+      setTimeout(()=>{
+            this.$store.dispatch("loadData", this.userData).then(() => {
+      let len = this.$store.state.getData.data;
+      for (let j = 0; j < len.length; j++) {
+        if (this.$store.state.getData.data[j].key == "cargoHauled") {
+          let a = this.$store.state.getData.data[j];
+          let b = JSON.parse(a.val).haulType;
+          console.log("aaa", b);
+        }
       }
-      
+
+      // let c =[]
+      for (let i = 0; i < this.cargoGroups.length; i++) {
+        for (let j = 0; j < this.cargoGroups[i].cargoHauled.length; j++) {
+          // console.log("aaass",this.cargoGroups[i].cargoHauled[j].value);
+        }
+      }
+    });
+      },1000)
+    } else {
+      this.save = true;
+           setTimeout(()=>{
+            this.$store.dispatch("loadData", this.uuid).then(() => {
+      let len = this.$store.state.getData.data;
+      for (let j = 0; j < len.length; j++) {
+        if (this.$store.state.getData.data[j].key == "cargoHauled") {
+          let a = this.$store.state.getData.data[j];
+          let b = JSON.parse(a.val).haulType;
+          console.log("aaa", b);
+        }
+      }
+
+      // let c =[]
+      for (let i = 0; i < this.cargoGroups.length; i++) {
+        for (let j = 0; j < this.cargoGroups[i].cargoHauled.length; j++) {
+          // console.log("aaass",this.cargoGroups[i].cargoHauled[j].value);
+        }
+      }
+    });
+      },1000)
     }
-    //  let filteredKeywords = c.filter((word)=> b.includes(word));
-    // console.log("filteredKeywords",filteredKeywords);
-    // for(var i=0;i<filteredKeywords.length;i++){
-    // this.selectCargoGroup(filteredKeywords[i])
-    // console.log("aaass",this.cargoGroups[0].cargoHauled[0].value)
-    
-// for(var i=0;i<)
-   }else{
-     
-     this.save = true
-   }
- },
+  
+  },
   methods: {
+    newQuoteReq() {
+      swal({
+        title: "Are you sure?",
+        text: "Do you want to continue editing?",
+        icon: "warning",
+        buttons: ["No", "Yes"]
+      }).then(willDelete => {
+        console.log("willbe", willDelete);
+        this.show();
+        if (willDelete) {
+          
+          this.$router.push({ name: "AccountInfoCargoHauled" });
+        } else {
+          
+          swal(
+            "Thank You!",
+            "Your changes has been accepted! You will get new Updated Quote",
+            {
+              icon: "success"
+            }
+          );
+        }
+      });
+    },
     async show() {
       let formIsValid = this.validateForm();
       if (!formIsValid) {
@@ -200,22 +257,33 @@ export default {
 
       this.loading = true;
       this.error = null;
+      var temp_uuid;
+        if (localStorage.getItem("token")) {
+         temp_uuid = this.userData;
+        console.log("temp_uuid login after", temp_uuid);
+      } else {
+        temp_uuid = this.uuid;
+        console.log("temp_uuid no login after", temp_uuid);
+      }
 
       try {
         let data = await API.post("company/save", {
           key: "cargoHauled",
           val: this.formData,
-          userId:localStorage.getItem("userId"),
-          uuid:localStorage.getItem("uuid")
+          user_id: localStorage.getItem("userId"),
+          uuid: temp_uuid
         });
-        console.log("show", this.formData);
-        console.log("data.sattus", data);
+        // console.log("show", this.formData);
+        // console.log("data.sattus", data);
         if (data.status === "OK") {
-          if (this.showmodel) {
+          if(!localStorage.getItem("token")){
+              if (this.showmodel) {
             this.showmodel = false;
           } else {
             this.showmodel = true;
           }
+          }
+          
         } else if (data.status === "ERROR") {
           // this.showmodel = true;
           this.error = data.messages[0] || data.data;
@@ -231,7 +299,6 @@ export default {
       }
     },
     selectHaulType(cargoGroupValue, haulTypeValue) {
-    
       if (!this.formData.haulType[cargoGroupValue]) {
         this.$set(this.formData.haulType, cargoGroupValue, []);
       }
@@ -239,8 +306,8 @@ export default {
       let haulTypeIndex = this.formData.haulType[cargoGroupValue].indexOf(
         haulTypeValue
       );
-       console.log("cargoGroupValue",cargoGroupValue)
-       console.log("haulTypeValue",haulTypeValue)
+      console.log("cargoGroupValue", cargoGroupValue);
+      console.log("haulTypeValue", haulTypeValue);
       if (haulTypeIndex > -1) {
         this.formData.haulType[cargoGroupValue].splice(haulTypeIndex, 1);
 
@@ -278,9 +345,9 @@ export default {
         if (data.status === "OK") {
           let { cargoGroup: cargoGroupTab, cargoHauled } = data.data.a;
           let { cargoGroup } = cargoGroupTab;
-          let groupData = data.data.a.cargoGroup
+          let groupData = data.data.a.cargoGroup;
           this.cargoGroup = groupData.cargoGroup;
-
+this.uuid = data.data.b;
           if (cargoHauled) {
             this.formData = {
               ...this.formData,
@@ -305,13 +372,20 @@ export default {
 
       this.loading = true;
       this.error = null;
-
+      if(localStorage.getItem('token')){
+        
+          this.final_uuid = this.userData;
+          console.log("this.final_uuid login after",this.final_uuid )
+      }else{
+        this.final_uuid = this.uuid;
+        console.log("this.final_uuid no login after",this.final_uuid )
+      }
       try {
         let data = await API.post("company/save", {
           key: "cargoHauled",
           val: this.formData,
-          userId:localStorage.getItem("userId"),
-          uuid:localStorage.getItem("uuid")
+          user_id: localStorage.getItem("userId"),
+          uuid:  this.final_uuid
         });
 
         if (data.status === "OK") {
@@ -319,6 +393,16 @@ export default {
         } else if (data.status === "ERROR") {
           this.error = data.messages[0] || data.data;
         }
+        axios
+          .post(
+            "http://3.13.68.92/luckytrucker_admin/api/CompanyController/postUserIdByUuid?uuid=" +
+             this.final_uuid+
+              "&user_id=" +
+              localStorage.getItem("userId")
+          )
+          .then(res => {
+            console.log("ress post", res);
+          });
       } catch (err) {
         console.error(err);
         this.error = err.message;
@@ -331,9 +415,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-// div {
-//   outline: 1px solid red;
-// }
 .ft-clr {
   padding: 10px;
   color: #5e98f9;
@@ -372,12 +453,4 @@ export default {
   }
 }
 
-// .next-wrapper {
-//   display: flex;
-//   justify-content: space-between;
-
-//   .next-title {
-//     font-size: 1.2rem;
-//   }
-// }
 </style>

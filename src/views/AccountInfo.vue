@@ -7,7 +7,7 @@
     </div>
 
     <div class="row main-wrapper">
-      <div class="col sidebar d-none-mob">
+      <div class="col sidebar d-none-mob side-bg">
         <side />
         <!-- <router-link
         :to="{ name: 'side' }"
@@ -95,10 +95,11 @@ export default {
     flex-wrap: nowrap;
 
     .sidebar {
-      padding: 0;
-      width: 300px;
-      min-width: 300px;
-      max-width: 300px;
+    padding: 0;
+    width: 279px;
+    min-width: 279px;
+    max-width: 279px;
+    // background: #484f59;
     }
 
     .forms {

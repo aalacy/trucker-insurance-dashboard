@@ -12,7 +12,6 @@
                 class="col-3 text-center pointer mb-2 p-1 cargo-group"
                 @click="selectCargoGroup(item.value)"
               >
-
                 <div class="p-1">
                   <img :src="item.src" alt>
                 </div>
@@ -60,6 +59,9 @@
       <div class="d-flex justify-content-center m-4" @click="show" v-if="save">
         <span class="save-hover">Save & Continue</span>
       </div>
+      <div class="d-flex justify-content-center m-4" @click="newQuoteReq" v-else>
+        <span class="save-hover">Save Changes</span>
+      </div>
       <div v-if="showmodel">
         <modalLogin/>
       </div>
@@ -68,13 +70,13 @@
 </template>
 
 <script>
+import headerAssistant from "./header.vue";
 import { mapState } from "vuex";
 import { validateField, validateForm, minLength } from "../validators.js";
 import { API } from "../api.js";
 import ModalLogin from "./ModalLogin.vue";
-
-
-
+import axios from "axios";
+import { setTimeout } from "timers";
 export default {
   name: "AccountInfoCargoGroup",
   props: {
@@ -91,37 +93,83 @@ export default {
       required: true
     }
   },
-  mounted(){
-    if(localStorage.getItem("token")){
-     this.save = false
-      this.$store.dispatch('loadData',localStorage.getItem("uuid"))
-     let a = this.$store.state.getData.data[3]
-    let b = JSON.parse(a.val).cargoGroup
-     let c =[];
-     for(var i=0;i<this.cargoGroups.length;i++){
-        c.push(this.cargoGroups[i].value)
-     }
-    let filteredKeywords = c.filter((word)=> b.includes(word));
-    console.log("filteredKeywords",filteredKeywords);
-    for(var i=0;i<filteredKeywords.length;i++){
-    this.selectCargoGroup(filteredKeywords[i])
-    
-   }}else{
-     this.save = true  
-}
- },
-  components: {
-    modalLogin: ModalLogin
+  mounted() {
+    if (localStorage.getItem("token")) {
+      console.log("save token", this.save);
+      this.save = false;
+      axios
+        .get(
+          "http://3.13.68.92/luckytrucker_admin/api/CompanyController/getuuidbyuserid?user_id=" +
+            localStorage.getItem("userId")
+        )
+        .then(coins => {
+          this.userData = coins.data.uuid;
+        });
+      setTimeout(() => {
+        this.$store.dispatch("loadData", this.userData).then(() => {
+          let len = this.$store.state.getData.data;
+          for (let j = 0; j <= len.length; j++) {
+            if (this.$store.state.getData.data[j].key == "cargoGroup") {
+              let a = this.$store.state.getData.data[j];
+              let b = JSON.parse(a.val).cargoGroup;
+              console.log("b", b);
+              let c = [];
+              for (var i = 0; i < this.cargoGroups.length; i++) {
+                c.push(this.cargoGroups[i].value);
+              }
+              let filteredKeywords = c.filter(word => b.includes(word));
+              console.log("filteredKeywords", filteredKeywords);
+              for (var i = 0; i < filteredKeywords.length; i++) {
+                this.selectCargoGroup(filteredKeywords[i]);
+              }
+            }
+          }
+          // let b = JSON.parse(a.val).cargoGroup;
+        });
+      }, 1000);
+    } else {
+      console.log("save token no", this.save);
+      this.save = true;
+      setTimeout(() => {
+        this.$store.dispatch("loadData", this.uuid).then(() => {
+          let len = this.$store.state.getData.data;
+          for (let j = 0; j <= len.length; j++) {
+            if (this.$store.state.getData.data[j].key == "cargoGroup") {
+              let a = this.$store.state.getData.data[j];
+              let b = JSON.parse(a.val).cargoGroup;
+              console.log("b", b);
+              let c = [];
+              for (var i = 0; i < this.cargoGroups.length; i++) {
+                c.push(this.cargoGroups[i].value);
+              }
+              let filteredKeywords = c.filter(word => b.includes(word));
+              console.log("filteredKeywords", filteredKeywords);
+              for (var i = 0; i < filteredKeywords.length; i++) {
+                this.selectCargoGroup(filteredKeywords[i]);
+              }
+            }
+          }
+          // let b = JSON.parse(a.val).cargoGroup;
+        });
+      }, 1000);
+    }
   },
- 
+  components: {
+    modalLogin: ModalLogin,
+    headerAssistant: headerAssistant
+  },
+
   data() {
     return {
+      final_uuid:"",
+      uuid: "",
       showmodel: false,
-      save:true,
+      save: true,
+      userData: "",
       formData: {
         cargoGroup: []
       },
-      selectedCargoGroup:[],
+      selectedCargoGroup: [],
       rules: {
         cargoGroup: [val => minLength(val, 1, "Please select Cargo Group")]
       },
@@ -142,34 +190,50 @@ export default {
       // console.log("map",map)
       return map;
     },
-    ...mapState([
-    'data'
-  ])
+    ...mapState(["data"])
   },
   created() {
     this.$emit("update-progress", this.progress);
-    // this.loadCompany();
+    this.loadCompany();
   },
-   updated(){
+  updated() {
+    if (localStorage.getItem("showModal") == "true") {
+      this.showmodel = true;
+    } else {
+      this.showmodel = false;
+    }
+  },
 
-     if(localStorage.getItem("showModal") == "true")
-     {
-       this.showmodel = true;
-     }
-     else{
-       this.showmodel = false;
-     }
-
-    
- },
-  
   methods: {
+    newQuoteReq() {
+      swal({
+        title: "Are you sure?",
+        text: "Do you want to continue editing?",
+        icon: "warning",
+        buttons: ["No", "Yes"]
+      }).then(willDelete => {
+        console.log("willbe", willDelete);
+        this.show();
+        if (willDelete) {
+          
+          this.$router.push({ name: "AccountInfoCargoGroup" });
+        } else {
+          
+          swal(
+            "Thank You!",
+            "Your changes has been accepted! You will get new Updated Quote",
+            {
+              icon: "success"
+            }
+          );
+        }
+      });
+    },
     selectCargoGroup(cargoGroupValue) {
       // console.log("cargoGroupValue",cargoGroupValue)
       // this.formData.cargoGroup.push(cargoGroupValue)
       // console.log("this.formData.cargoGroup",this.formData.cargoGroup)
       if (this.cargoGroupMap[cargoGroupValue]) {
-      
         this.formData.cargoGroup = this.formData.cargoGroup.filter(
           val => val !== cargoGroupValue
         );
@@ -198,29 +262,50 @@ export default {
     },
     async show() {
       let formIsValid = this.validateForm();
+      var temp_uuid;
       if (!formIsValid) {
         return;
       }
-      
+      if (localStorage.getItem("token")) {
+        temp_uuid = this.userData;
+        console.log("this.final_uuid login after", temp_uuid);
+      } else {
+        temp_uuid = this.uuid;
+        console.log("this.final_uuid no login after", temp_uuid);
+      }
+
       this.loading = true;
       this.error = null;
       try {
         let data = await API.post("company/save", {
           key: "cargoGroup",
           val: this.formData,
-          userId:localStorage.getItem("userId"),
-          uuid:localStorage.getItem("uuid")
+          user_id: localStorage.getItem("userId"),
+          uuid: temp_uuid
         });
-         if (data.status === "OK") {
-           if(this.showmodel){
-          this.showmodel = false;
-        }else{
-          this.showmodel = true;
-        }
+        if (data.status === "OK") {
+          if(!localStorage.getItem("token")){
+            if (this.showmodel) {
+            this.showmodel = false;
+          } else {
+            this.showmodel = true;
+          }
+          }
+          
         } else if (data.status === "ERROR") {
           // this.showmodel = true;
           this.error = data.messages[0] || data.data;
         }
+        // axios
+        //   .post(
+        //     "http://3.13.68.92/luckytrucker_admin/api/CompanyController/postUserIdByUuid?uuid=" +
+        //       this.uuid +
+        //       "&user_id=" +
+        //       localStorage.getItem("userId")
+        //   )
+        //   .then(res => {
+        //     console.log("ress post", res);
+        //   });
       } catch (err) {
         // this.showmodel = true;
 
@@ -240,6 +325,7 @@ export default {
 
         if (data.status === "OK") {
           let { cargoGroup } = data.data;
+          this.uuid = data.data.b;
           if (cargoGroup) {
             this.formData = {
               ...this.formData,
@@ -265,13 +351,19 @@ export default {
 
       this.loading = true;
       this.error = null;
-
+      if (localStorage.getItem("token")) {
+        this.final_uuid = this.userData;
+        console.log("this.final_uuid login after", this.final_uuid);
+      } else {
+        this.final_uuid = this.uuid;
+        console.log("this.final_uuid no login after", this.final_uuid);
+      }
       try {
         let data = await API.post("company/save", {
           key: "cargoGroup",
           val: this.formData,
-          userId:localStorage.getItem("userId"),
-          uuid:localStorage.getItem("uuid")
+          user_id: localStorage.getItem("userId"),
+          uuid: this.final_uuid
         });
         console.log("this.formData", this.formData);
         if (data.status === "OK") {
@@ -279,6 +371,16 @@ export default {
         } else if (data.status === "ERROR") {
           this.error = data.messages[0] || data.data;
         }
+        axios
+          .post(
+            "http://3.13.68.92/luckytrucker_admin/api/CompanyController/postUserIdByUuid?uuid=" +
+             this.final_uuid +
+              "&user_id=" +
+              localStorage.getItem("userId")
+          )
+          .then(res => {
+            console.log("ress post", res);
+          });
       } catch (err) {
         console.error(err);
         this.error = err.message;

@@ -1,25 +1,23 @@
 <template>
   <div class="account-progress">
-    <div class="title mb-0 font-weight-bold">Your Profile is {{ progress }}% complete.</div>
-    <button
-      v-if="myacchide"
-      @click="myacc"
-      type="submit"
-      class="lt-button lt-button-main justify-content-end go-button btn-myaccount "
-    >My Account</button>
-    <button
-      type="submit"
-      @click="logout"
-      class="lt-button lt-button-main go-button d-flex btn-logout justify-content-end spl-logout"
-      v-if="localtoken"
-    >Logout</button>
-    <button
-      type="submit"
-      @click="login"
-      class="lt-button lt-button-main  d-flex btn-logout justify-content-end spl-login go-button"
-      v-if="quote"
-    >Login</button>
+    <div class="font-weight-bold ">
+        <span class="text-a-mob">For assistance, please call us at <a href="tel:16469330419" style="font-weight:bold;white-space:nowrap;">1-646-933-0419</a></span>
+       <!-- <div class="d-flex"> -->
+      <div class="title mb-0">Your Profile is {{ progress }}% complete.</div>
+      
+    <div v-if="count" class="d-flex">
+      
+      <div class="title d-flex justify-content-end" v-if="status">Status:  Completed!</div>
+      <div class="title d-flex justify-content-end" v-else>Status:  Started</div>
 
+      <button
+        type="submit"
+        class="lt-button lt-button-main justify-content-end go-button btn-viewPDF"
+        @click="downloadPDF"
+      >Download PDF</button>
+    </div>
+<!-- </div> -->
+    </div>
     <div class="progress rounded-0">
       <div
         :style="{ width: `${progress}%` }"
@@ -35,6 +33,8 @@
 
 <script>
 import { API } from "../api.js";
+import axios from "axios";
+import { setTimeout } from "timers";
 export default {
   name: "AccountInfoAccountProgress",
 
@@ -46,89 +46,77 @@ export default {
       this.localtoken = true;
       this.quote = false;
     }
-    if(localStorage.getItem("accBtn") === "true"){
+    if (localStorage.getItem("accBtn") === "true") {
       this.myacchide = true;
-    }
-    else{
+    } else {
       this.myacchide = false;
     }
-    
   },
   mounted() {
     // console.log("mounted",localStorage.getItem('viewQuote'))
     // console.log("this.quote",this.quote)
-    if (
-      !localStorage.getItem("token") ||
-      localStorage.getItem("token") == null
-    ) {
-      // alert("")
-    }
-
     if (localStorage.getItem("token")) {
-      try {
-        console.log("token acc", localStorage.getItem("token"));
-        this.localtoken = true;
-      } catch (e) {
-        console.log(e);
-        localStorage.removeItem("token");
-      }
-    } else {
-      this.quote = "true";
+      this.count = true;
+      setTimeout(() => {
+        axios
+          .get(
+            "http://3.13.68.92/luckytrucker_admin/api/CompanyController/getcountofcompanybyuserid?user_id=" +
+              localStorage.getItem("userId")
+          )
+          .then(res => {
+            console.log("res", res.data.count);
+            // this.count = res.data.count;
+            if(res.data.count>=10){
+              this.status = true;
+            }else{
+              this.status = false;
+            }
+          });
+      }, 500);
+    //   try {
+    //     console.log("token acc", localStorage.getItem("token"));
+    //     this.localtoken = true;
+    //   } catch (e) {
+    //     console.log(e);
+    //     localStorage.removeItem("token");
+    //   }
+    // } else {
+    //   this.quote = "true";
+    // }
+    // if (localStorage.getItem("accBtn") === "true") {
+    //   this.myacchide = true;
+    // } else {
+    //   this.myacchide = false;
+    // }
+    }else{
+      this.count = false;
     }
-     if(localStorage.getItem("accBtn") === "true"){
-      this.myacchide = true;
-    }
-    else{
-      this.myacchide = false;
-    }
-    
   },
-  
+
   methods: {
-    async logout() {
-      console.log("mounted", localStorage.getItem("viewQuote"));
-      console.log("this.quote", this.quote);
-      if(localStorage.getItem("viewQuote") == "true"){
-        this.quote = true;
-      }
-      else{
-        this.quote = false;
+    downloadPDF() {
+      if(this.status){
+          window.open(`${process.env.VUE_APP_BACKEND_URL}/company/pdf`);
+      }else{
+           swal(
+            "Sorry",
+            "You need to complete 10 steps process first",
+            {
+              icon: "warning"
+            }
+          );
       }
       
-      this.loading = true;
-      this.error = null;
-      try {
-        let data = await API.post("users/logout");
-        localStorage.removeItem("token");
-        localStorage.setItem("viewQuote", true);
-        console.log(data);
-        if (data.status === "ok") {
-          localStorage.removeItem("accBtn")
-          this.quote = "true";
-          this.$router.push({ name: "Home" });
-
-          // } else if (data.status === "ERROR") {
-          //   this.error = data.messages[0] || data.data;
-          // }
-        }
-      } catch (err) {
-        console.error("catch", err);
-        this.error = err.message;
-      } finally {
-        this.loading = false;
-      }
     },
     login() {
       console.log("login");
-      localStorage.removeItem("viewQuote");
-      localStorage.setItem("accBtn",true)
+      localStorage.setItem("accBtn", true);
       this.$router.push({ name: "LogIn" });
     },
-        myacc(){
-      this.$router.push({name:'QuotesAllQuotes'})
-      localStorage.setItem("viewQuote",true)
-      this.myacchide = false
-      }
+    myacc() {
+      this.$router.push({ name: "QuotesAllQuotes" });
+      this.myacchide = false;
+    }
   },
 
   props: {
@@ -139,8 +127,10 @@ export default {
   },
   data() {
     return {
+      status:false,
+      count: false,
       localtoken: false,
-      myacchide:true,
+      myacchide: true,
       quote: false
     };
   }
@@ -148,26 +138,26 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.spl-logout {
-  width: 80px;
-}
-.btn-myaccount{
+
+.btn-myaccount {
   position: absolute;
   z-index: 99999999999;
   right: 98px;
   top: -50px;
-}
-.spl-login {
-  // width: 80px;
-  // align-items: center;
-  // text-align: center;
-  // display: flex;
 }
 .btn-logout {
   position: absolute;
   z-index: 99999999999;
   right: 9px;
   top: -50px;
+}
+.btn-viewPDF {
+  position: absolute;
+  right: 0px;
+  // top:-3px;
+  margin: 10px;
+
+  // left: 4px;
 }
 .account-progress {
   background-color: $color_lightblue_1;

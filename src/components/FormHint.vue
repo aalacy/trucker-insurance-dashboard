@@ -40,7 +40,7 @@ export default {
   .hint-card-triangle {
     position: absolute;
     top: 70px;
-    left: -30px;
+    left: -21px;
     width: 0;
     height: 0;
     border-style: solid;

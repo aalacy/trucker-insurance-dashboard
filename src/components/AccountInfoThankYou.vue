@@ -4,38 +4,73 @@
       <div class="card-body">
         <h4 class="card-title form-sub-title">Thank You!</h4>
 
-        <p class="font-weight-bold">
-          A rep will call you within 24hrs to discuss. You will receive your
-          first few quotes within 24 hrs, some insurance companies take longer
-          than others, we will make sure to present quotes to you as they come
-          in.
-        </p>
+        <p
+          class="font-weight-bold"
+        >After we process your information, we should be able to get you the first few quotes within 24 hours but some of them may take some time, due to the insurance company being used. A representative will call you to discuss options as soon as they are able.</p>
       </div>
 
       <div class="card-footer">
         <form @submit.prevent="download">
-          <div v-if="error" class="alert alert-danger" role="alert">
-            {{ error }}
-          </div>
+          <div v-if="error" class="alert alert-danger" role="alert">{{ error }}</div>
 
           <button
             :disabled="loading"
             type="submit"
             class="lt-button lt-button-main btn-block"
-          >
-            {{ loading ? 'Loading...' : 'Download PDF' }}
-          </button>
+          >{{ loading ? 'Loading...' : 'Download PDF' }}</button>
         </form>
+      </div>
+    </div>
+    <!-- </div> -->
+    <div v-if="showmodel">
+      <div id="modal-template ">
+        <transition name="modal">
+          <div class="modal-mask">
+            <div class="modal-wrapper col-12 col-sm-10 col-md-8 col-lg-5">
+              <div class="modal-container bor-rad">
+                <form class="login-form" @submit.prevent>
+                  <div class="form-title">
+                    <div class="title log-in-text">Register</div>
+                    <div class="form-group cross-arrow-relative">
+                      <button type="button" class="btn ico-btna btn-reset" @click="dosomething">
+                        <font-awesome-icon icon="times" size="2x" class="d-flex ml-5 cross-arrow"/>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <input
+                      v-model="email"
+                      type="email"
+                      class="lt-input lt-input-border"
+                      placeholder="Email Address"
+                    >
+                  </div>
+
+                  <div class="d-flex align-items-center">
+                    <div class="text-right flex-grow-1">
+                      <button
+                        type="submit"
+                        @click="getRegister"
+                        class="lt-button lt-button-main go-button"
+                      >Done</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </transition>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { API } from '../api.js';
-
+import { API } from "../api.js";
+import axios from "axios";
+import { setTimeout } from 'timers';
 export default {
-  name: 'AccountInfoThankYou',
+  name: "AccountInfoThankYou",
   props: {
     progress: {
       type: Number,
@@ -44,50 +79,101 @@ export default {
   },
   data() {
     return {
+      apires: "",
       loading: false,
-      error: null
+      error: null,
+      uuid: "",
+      email: "",
+      showmodel: false
     };
   },
   created() {
-    this.$emit('update-progress', this.progress);
+    this.$emit("update-progress", this.progress);
     this.loadCompany();
   },
+
   methods: {
+    async getRegister() {
+      // window.open(`${process.env.VUE_APP_BACKEND_URL}/company/pdf`);
+      console.log("email",this.email)
+      console.log("uuid",this.uuid)
+      let data = await API.post("company/pdf",{email:this.email,uuid:this.uuid});
+      console.log("data",data)
+      axios
+        .post(
+          "http://3.13.68.92/luckytrucker_admin/api/CompanyController/sendmailcompanypdf?email_id=" +
+            this.email +
+            "&uuid=" +
+            this.uuid
+        )
+        .then(res => {
+          this.apires = res.data;
+          if (this.apires.flag === "1") {
+            this.$swal("Done", this.apires.msg, "success");
+            this.showmodel = false;
+            setTimeout(()=>{this.email=""},500)
+          } else {
+            this.showmodel = true;
+            this.$swal("Opps!", this.apires.msg, "error");
+          }
+        });
+    },
+    dosomething() {
+      if (this.showmodel) {
+        this.showmodel = false;
+      } else {
+        this.showmodel = true;
+      }
+    },
+
     download() {
-      window.open(`${process.env.VUE_APP_BACKEND_URL}/company/pdf`);
+      if (localStorage.getItem("token")) {
+        axios
+          .get(
+            "http://3.13.68.92/luckytrucker_admin/api/CompanyController/getcountofcompanybyuserid?user_id=" +
+              localStorage.getItem("userId")
+          )
+          .then(res => {
+            console.log("res", res.data.count);
+            // this.count = res.data.count;
+            if (res.data.count >= 10) {
+              window.open(`${process.env.VUE_APP_BACKEND_URL}/company/pdf`);
+            } else {
+              swal("Sorry", "You need to complete 10 steps process first", {
+                icon: "warning"
+              });
+              
+            }
+          });
+      } else {
+        this.showmodel = true;
+        // window.open(`${process.env.VUE_APP_BACKEND_URL}/company/pdf`);
+        //   swal({
+        //   title: "To Continue,",
+        //   text: "You need to login first",
+        //   icon: "warning",
+        //   buttons: ["No", "Yes"]
+        // }).then(willDelete => {
+        //   console.log("willbe", willDelete);
+        //   if (willDelete) {
+        //     this.$router.push({ name: "LogIn" });
+        //     localStorage.setItem("accountStatus","1")
+        //   } else {
+        //     this.$router.push({ name: "AccountInfoThankYou" });
+        //   }
+        // });
+      }
+      // window.open(`${process.env.VUE_APP_BACKEND_URL}/company/pdf`);
       // window.open(`localhost:3000/api/company/pdf`);
     },
-    // async download() {
-    //   this.loading = true;
-    //   this.error = null;
-
-    //   try {
-    //     let data = await API.get('company/pdf', null, {
-    //       responseType: 'blob'
-    //     });
-
-    //     if (data.status === 'ERROR') {
-    //       this.error = data.messages[0] || data.data;
-    //     } else {
-    //       let blob = new Blob([data], { type: 'application/pdf' });
-    //       let url = window.URL.createObjectURL(blob);
-    //       window.open(url);
-    //     }
-    //   } catch (err) {
-    //     console.error(err);
-    //     this.error = err.message;
-    //   } finally {
-    //     this.loading = false;
-    //   }
-    // },
     async loadCompany() {
       this.loading = true;
       this.error = null;
 
       try {
-        let data = await API.get('company/current');
-
-        if (data.status === 'ERROR') {
+        let data = await API.get("company/current");
+        this.uuid = data.data.b;
+        if (data.status === "ERROR") {
           // this.$router.replace({ name: 'Home' });
         }
       } catch (err) {
@@ -102,7 +188,71 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-// div {
-//   outline: 1px solid red;
-// }
+.modal-mask {
+  position: fixed;
+  z-index: 9998;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: table;
+  transition: opacity 0.3s ease;
+}
+
+.modal-wrapper {
+  display: table-cell;
+  vertical-align: middle;
+}
+.cross-arrow {
+  text-align: right;
+  position: absolute;
+  /* z-index: 333px; */
+  /* left: 0px; */
+  right: 0;
+  top: -33px;
+}
+.cross-arrow-relative {
+  position: relative;
+}
+.modal-container {
+  width: 360px;
+  margin: 0px auto;
+  padding: 20px 30px;
+  background-color: #fff;
+  border-radius: 30px !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
+  transition: all 0.3s ease;
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+.modal-header h3 {
+  margin-top: 0;
+  color: #42b983;
+}
+
+.modal-body {
+  margin: 20px 0;
+}
+
+.modal-default-button {
+  float: right;
+}
+
+.modal-enter {
+  opacity: 0;
+}
+.log-in-text {
+  font-size: 1.2rem;
+}
+
+.modal-leave-active {
+  opacity: 0;
+}
+
+.modal-enter .modal-container,
+.modal-leave-active .modal-container {
+  -webkit-transform: scale(1.1);
+  transform: scale(1.1);
+}
 </style>

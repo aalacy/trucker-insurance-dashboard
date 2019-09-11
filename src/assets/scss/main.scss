@@ -3,12 +3,53 @@
 * {
   color: $color_grey;
 }
+.side-bg{
+  background: #484f59;
+}
+.lt-button:focus{
+  box-shadow: none;
+  // color:white;
 
+}
+// select{
+//   position: relative;
+//   -webkit-appearance: none;
+//   background-image: require('../images/arrow-dropdown.png') no-repeat 96% center;
+//   -moz-appearance: none;
+// }
+.mob-showa{
+  display: none !important;
+}
+#btna-main button{
+font-size: 12px;
+line-height: 7px;
+padding: 10px;
+}
+#btna-main table{
+  font-size: 15px;
+}
 a {
   font-weight: 300;
   // text-decoration: underline;
 }
+// button next
+.fill-white path{
+  fill: #fff;
+}
+.text-a-mob{
+  display: none;
+}
+.arrow-button{
+font-size:14px; color:#fff;    margin-right: 10px;
+}
 
+.button-icon{
+  align-items:center;align-items: center;
+    font-size: 12px;
+    line-height: 14px; color:#ffff; 
+    font-weight: normal;
+    height: fit-content;
+}
 img {
   max-width: 100%;
   height: auto;
@@ -25,7 +66,7 @@ body{
   color:$color_blue;
 }
 .width-200{
-  max-width: 200px;
+  // max-width: 200px;
   margin: 20px;
 }   
 #app {
@@ -140,12 +181,21 @@ body{
 }
 @media screen and (max-width:1024px)
 {
+  
   .pat-abst{
     position: absolute;
   z-index: 2;
 }}
 @media screen and (max-width:992px)
 {
+  .text-a-mob ,.text-right-a{
+    background: #fff;
+    padding: 10px;
+    margin: 0 auto;
+    text-align: center;
+    width: 100%;
+    display: block;
+  }
   .pat-abst{
     position: absolute;
   z-index: 2;
@@ -156,14 +206,21 @@ body{
      padding-top: 30px !important;
     text-align: center;
   }
-  .lt-button{
-    padding: 0px;
+  // .lt-button{
+  //   padding: 0px;
+  // }
+  .hide-que{
+    display: none;
+  }
+  .pad-0{
+    padding: 0px !important;
   }
   .flex-mob-a{
     margin-bottom: 10px;
     text-align: center;
   }
   .navbar-nav{
+    z-index: 1;
     width: 50%;
     background: #5e98f7;
     margin-top: 9px;
@@ -201,17 +258,48 @@ body{
 #app .app-footer.lt-fixed
 {
   position: relative;
-  z-index: 14;
+  z-index: 0;
 }
 }
 @media screen and (max-width:992px)
 {
+  .account-info .main-wrapper{
+    // padding-top: 30px;
+  }
+  .text-right-a{
+    display: block;
+    position:  absolute;
+    top: 53px;
+    width: 100% !important;
+    left: 0px;
+    background: #ffff;
+   }
   .mob-hint {
     display: flex;
     flex-wrap: wrap;
     flex-direction: column-reverse;
 }
-
+.text-cent{
+  text-align: center;
+  display: block;
+  margin-bottom: 3px;
+}
+.white-space{
+  width: 100%;
+  display: block;
+  text-align: center;
+  margin-left: 0px !important;
+  margin-right: 0px !important;
+  // max-width: 280px;
+  padding-top: 7px !important;
+}
+#text-date .lt-input{
+  text-align: center;
+  margin-top: 10px;
+}
+#text-date .mt-1{
+  margin-top: 16px !important;
+}
   .d-none-mob{
     display: none;
   }
@@ -241,8 +329,30 @@ body{
 
 @media screen and (max-width:768px)
 {
+  // .containeraa{
+  //   display: none;
+  // }
+  #card-pad .card-body{
+    padding: 20px 22px !important;
+  }
+  .text-a-mob{
+    background: #fff;
+    padding: 10px;
+    margin: 0 auto;
+    text-align: center;
+    width: 100%;
+    display: block;
+    
+  }
+  .card-body {
+    flex: 1 1 auto;
+    padding: 20px 30px !important;
+}
 	.form-hint{
     margin: 30px 30px 0px 30px;
+  }
+  .hide-mob{
+    width: 0px;
   }
   .mob-hint{
     display: flex;
@@ -251,6 +361,9 @@ body{
   }
   .mar-10{
     font-size: 14px;
+  }
+  .header{
+    padding-left: 10px;
   }
   .controla{
     z-index: 3 !important; 
@@ -264,6 +377,9 @@ body{
   }
   .name{
     font-size: 14px !important; 
+      }
+      .pad-10{
+        padding: 10px;
       }
   
 
@@ -282,6 +398,17 @@ body{
   }
   
  }
+ @media screen and (max-width:375px)
+{
+  .mob-showa{
+    display: inline-block !important;
+    
+  }
+  .mob-hide{
+    display: none;
+    
+  }
+}
 @media screen and (max-width:375px)
 {
   .mob-2{
@@ -325,13 +452,16 @@ body{
 @media screen and (max-width:320px)
 {
 
- 
+  .get-data{
+    font-size: 11px !important;
+  }
   .controla{
     z-index: 3 !important; 
     left: 0px;
     top: 23% !important; 
    
   }
+  
  
 }
 .back{
@@ -388,5 +518,12 @@ body{
 }
 .save-hover:hover {
   text-decoration: underline;
- 
+ cursor: pointer;
+}
+#text-date .lt-input{
+  text-align: center;
+  
+}
+#text-date .col{
+  padding: 0px 10px;
 }

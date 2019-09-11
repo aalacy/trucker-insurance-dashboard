@@ -1,22 +1,26 @@
 <template>
-  <div class="vehicles-and-trailers-form-item container-fluid mob-2">
+  <div class="vehicles-and-trailers-form-item  container-fluid mob-2">
     <div class="row">
-       <!-- <div class="col">
-        <h2 class="h5">Trailer #{{ index + 1 }}</h2>
-      </div> -->
+      <div class="col" v-if="vehicle">
+        <h2 class="h5">Vehicle #{{ index+1 }}</h2>
+      </div>
+      <div class="col" v-else>
+        <h2 class="h5">Trailer #{{ index+1 }}</h2>
+      </div>
 
-       <!-- <div class="col text-right">
+      <!-- <div class="col text-right">
         <a class="pointer" @click="removeForm(index)">Remove</a>
-      </div> -->
-         <button type="button" class="lt-button mx-2 mb-3 text-right col" @click="removeForm(index)">
-       <h3> - </h3>
+      </div>-->
+      <button type="button" class="lt-button mx-2 mb-3 text-right col  btn-bg-white" @click="removeForm(index)" title="Remove Vehicle/Trialer">
+        <h3>-</h3>
       </button>
     </div>
 
     <div class="row">
-      <div class="col-8">
+      <div class="col-8 col-lg-8">
         <div class="form-group">
           <input
+            
             v-model="formData.VIN"
             :class="{ 'has-error': formErrors.VIN }"
             type="text"
@@ -32,15 +36,13 @@
         </div>
       </div>
 
-      <div class="col-4">
+      <div class="col-4 col-lg-4 pl-0">
         <button
           :disabled="loading"
           type="button"
           class="lt-button lt-button-main get-data"
           @click="getVinData"
-        >
-          {{ loading ? 'Loading...' : 'Get Data' }}
-        </button>
+        >{{ loading ? 'Loading...' : 'Get Data' }}</button>
       </div>
     </div>
 
@@ -48,6 +50,7 @@
       <div class="col-5">
         <div class="form-group">
           <input
+            disabled
             v-model="formData.year"
             :class="{ 'has-error': formErrors.year }"
             type="text"
@@ -58,10 +61,7 @@
             @blur="onBlur"
             @change="validateField('year')"
           >
-            <!-- <option value disabled>year</option>
-            <option>2004</option>
-            <option>2005</option>
-          </select> -->
+        
 
           <div v-if="formErrors.year" class="text-danger">{{ formErrors.year }}</div>
         </div>
@@ -72,6 +72,7 @@
       <div class="col-5">
         <div class="form-group">
           <input
+            disabled
             v-model="formData.make"
             :class="{ 'has-error': formErrors.make }"
             type="text"
@@ -82,10 +83,7 @@
             @blur="onBlur"
             @change="validateField('make')"
           >
-            <!-- <option value disabled>Make</option>
-            <option>2004</option>
-            <option>2005</option> -->
-          
+         
 
           <div v-if="formErrors.make" class="text-danger">{{ formErrors.make }}</div>
         </div>
@@ -96,6 +94,7 @@
       <div class="col-5">
         <div class="form-group">
           <input
+          disabled
             v-model="formData.model"
             :class="{ 'has-error': formErrors.model }"
             type="text"
@@ -104,9 +103,10 @@
             required
             @focus="onFocus('model')"
             @blur="onBlur"
-            @change="validateField('model')" >
-            <!-- <option value disabled>Model</option> -->
-        
+            @change="validateField('model')"
+          >
+          <!-- <option value disabled>Model</option> -->
+
           <div v-if="formErrors.model" class="text-danger">{{ formErrors.model }}</div>
         </div>
       </div>
@@ -114,88 +114,140 @@
 
     <div class="row border-top">
       <div class="col-10 pt-4">
-        <div class="form-group">
-          <div class="border-bottom p-1">
-            <span>Select Vehicle and Trailer type</span>
-          </div>
+        <div class="form-group"> 
           <div v-if="vehicle">
-          <div class="containera-hov d-inline">
-            <label class="d-block">
-              <input type="radio" name="test" value="Tractor" checked v-model="formData.vehicleImage">
-              <img
-                alt="Tractor"
-                src="../assets/images/tracktor.png"     
-                style="width:100px;"
-                class="d-inline mt-2 image mr-2"
-              >
-              
-              <p>Tractor</p>
-            </label>
-          </div>
-          <div class="containera-hov d-inline">
-            <label class="d-block">
-              <input type="radio" name="test" value="Box Truck" checked v-model="formData.vehicleImage">
-              <img
-                src="../assets/images/boxtruck.png"
-                
-                style="width:100px;"
-                class="d-inline mt-2 image mr-2"
-              >
-              <span>Box Truck</span>
-            </label>
-          </div>
+              <div class="border-bottom p-1">
+                <span>Select Vehicle Type</span>
+             </div>
+         
+            <div class="containera-hov d-inline">
+              <label class="d-block">
+                <input
+                  type="radio"
+                  name="test"
+                  value="Tractor"
+                  checked
+                  v-model="formData.vehicleImage"
+                >
+                <img
+                  alt="Tractor"
+                  src="../assets/images/tracktor.png"
+                  style="width:100px;"
+                  class="d-inline mt-2 image mr-2"
+                >
 
-          <div class="containera-hov d-inline">
-            <label class="d-block">
-              <input type="radio" name="test" value="Dump Truck" checked v-model="formData.vehicleImage">
-              <img
-                src="../assets/images/dumptruck.png"
-                alt
-                style="width:100px;"
-                class="d-inline mt-2 image mr-2"
-              >
-              <span>Dump Truck</span>
-            </label>
+                <span>Tractor</span>
+              </label>
+            </div>
+            <div class="containera-hov d-inline">
+              <label class="d-block">
+                <input
+                  type="radio"
+                  name="test"
+                  value="Box Truck"
+                  checked
+                  v-model="formData.vehicleImage"
+                >
+                <img
+                  src="../assets/images/boxtruck.png"
+                  style="width:100px;"
+                  class="d-inline mt-2 image mr-2"
+                >
+                <span>Box Truck</span>
+              </label>
+            </div>
+
+            <div class="containera-hov d-inline">
+              <label class="d-block">
+                <input
+                  type="radio"
+                  name="test"
+                  value="Dump Truck"
+                  checked
+                  v-model="formData.vehicleImage"
+                >
+                <img
+                  src="../assets/images/dumptruck.png"
+                  alt
+                  style="width:100px;"
+                  class="d-inline mt-2 image mr-2"
+                >
+                <span>Dump Truck</span>
+              </label>
+            </div>
+            <div class="containera-hov d-inline">
+              <label class="d-block">
+                <input
+                  type="radio"
+                  name="test"
+                  value="Tow Trucks"
+                  checked
+                  v-model="formData.vehicleImage"
+                >
+                <img
+                  src="../assets/images/twotrucks.png"
+                  alt
+                  style="width:100px;"
+                  class="d-inline mt-2 image mr-2"
+                >
+                <span>Tow Trucks</span>
+              </label>
+            </div>
+            <div class="containera-hov d-inline">
+              <label class="d-block">
+                <input
+                  type="radio"
+                  name="test"
+                  value="Pickup Truck"
+                  checked
+                  v-model="formData.vehicleImage"
+                >
+                <img
+                  src="../assets/images/pickup_truck.png"
+                  alt
+                  style="width:100px;"
+                  class="d-inline mt-2 image mr-2"
+                >
+                <span>Pickup Truck</span>
+              </label>
+            </div>
+        
+
+          
+          <div class="p-3">
+              <!-- <span>Select Vehicle Type</span> -->
           </div>
-          <div class="containera-hov d-inline">
-            <label class="d-block">
-              <input type="radio" name="test" value="Two Trucks" checked v-model="formData.vehicleImage">
-              <img
-                src="../assets/images/twotrucks.png"
-                alt
-                style="width:100px;"
-                class="d-inline mt-2 image mr-2"
-              >
-              <span>Two Trucks</span>
-            </label>
+            <select
+              v-model="formData.vehicleImage"
+              class="lt-input"
+              :class="{ 'has-error': formErrors.vehicleImage }"
+              @focus="onFocus('vehicleType')"
+              @blur="onBlur"
+              @change="validateField('vehicleType')"
+            >
+              <option value >Select Other Vehicle type</option>
+              <option v-for="item in otherVehicleType" :key="item" :value="item">{{ item }}</option>
+            </select>
           </div>
-          <div class="containera-hov d-inline">
-            <label class="d-block">
-              <input type="radio" name="test" value="Pickup Truck" checked v-model="formData.vehicleImage">
-              <img
-                src="../assets/images/pickup_truck.png"
-                alt
-                style="width:100px;"
-                class="d-inline mt-2 image mr-2"
-              >
-              <span>Pickup Truck</span>
-            </label>
+          <!-- <div v-if="formErrors.vehicleType" class="text-danger">{{ formErrors.vehicleType }}</div> -->
+        
+          <div v-else>
+             <div class="border-bottom p-1">
+            <span>Select Trailer Type</span>
           </div>
+            <select
+              v-model="formData.vehicleType"
+              class="lt-input"
+              required
+              :class="{ 'has-error': formErrors.vehicleType }"
+              @focus="onFocus('vehicleType')"
+              @blur="onBlur"
+              @change="validateField('vehicleType')"
+            >
+              <option value disabled>Select Trailer type</option>
+              <option v-for="item in vehicleTypes" :key="item" :value="item">{{ item }}</option>
+            </select>
           </div>
-          <div v-else> 
-          <select
-            v-model="formData.vehicleType"
-            class="lt-input"
-            required
-            :class="{ 'has-error': formErrors.vehicleType }"
-            @focus="onFocus('vehicleType')"
-            @blur="onBlur"
-            @change="validateField('vehicleType')"
-          >
-            <option value disabled>Select Other Vehicle/Trailer type</option>
-            <option v-for="item in vehicleTypes" :key="item" :value="item">{{ item }}</option>
-          </select>
-        </div>
           <div v-if="formErrors.vehicleType" class="text-danger">{{ formErrors.vehicleImage }}</div>
         </div>
       </div>
@@ -208,7 +260,8 @@
             v-model="formData.zipCode"
             :class="{ 'has-error': formErrors.zipCode }"
             type="text"
-             
+        
+            minlength="5"
             class="lt-input"
             placeholder="Garaging Zip Code*"
             required
@@ -325,13 +378,9 @@
 
           <div v-if="formErrors.deductible" class="text-danger">{{ formErrors.deductible }}</div>
         </div>
-        
       </div>
     </template>
-    
-    
   </div>
-  
 </template>
 
 <script>
@@ -342,15 +391,15 @@ import {
   requiredWith
 } from "../validators.js";
 import { API } from "../api.js";
-import {mapState} from "vuex"
-
+import { mapState } from "vuex";
+import { setTimeout } from 'timers';
 
 export default {
   name: "AccountInfoVehiclesAndTrailersItem",
   props: {
-    vehicleOrTrailer:{
-      type:String,
-      required:true
+    vehicleOrTrailer: {
+      type: String,
+      required: true
     },
     index: {
       type: Number,
@@ -362,68 +411,105 @@ export default {
       default() {
         return {};
       }
-    },
+    }
   },
 
-  beforeMount(){
-
-  console.log("this.vehicle",this.vehicleOrTrailer)
-  if(this.vehicleOrTrailer == "Vehicle"){
-    this.vehicle = true
-  }
-  else{
-    this.vehicle = false
-  }
+  beforeMount() {
+    console.log("this.vehicle", this.vehicleOrTrailer);
+    if (this.vehicleOrTrailer == "Vehicle") {
+      // this.vehicleIndex++;
+      // this.index=+1;
+      this.vehicle = true;
+    } else {
+      // this.trailerIndex++;
+      // this.index=+1;
+      this.vehicle = false;
+      
+    }
+    
   },
-  mounted(){
-console.log("this.vehicle",this.vehicleOrTrailer)
-if(localStorage.getItem("token")){
-    this.$store.dispatch('loadData',localStorage.getItem("uuid"))
-     let a = this.$store.state.getData.data[5]
-     let b = JSON.parse(a.val)[0]
-     console.log("bbb",b)
-    //  for(var i=0;i<b.length;i++){
-    // this.formData.VIN = b[i].VIN;
-    // this.formData.make=b[i].make;
-    // this.formData.year=b[i].year;
-    // this.formData.zipCode=b[i].zipCode;
-    // this.formData.model=b[i].model;
-    // this.formData.vehicleImage=b[i].vehicleImage;
-    // this.formData.vehicleType=b[i].vehicleType;
-    // this.formData.radiusOfTravel=b[i].radiusOfTravel;
-    //  }
+  mounted() {
+    if (localStorage.getItem("token")) {
+      this.save = false;
+      axios
+      .get(
+        "http://3.13.68.92/luckytrucker_admin/api/CompanyController/getuuidbyuserid?user_id=" +
+          localStorage.getItem("userId")
+      )
+      .then(coins => {
+        this.userData = coins.data.uuid;
+      });
+      setTimeout(()=>{
+          this.$store.dispatch("loadData",this.userData).then(() => {
+      let len = this.$store.state.getData.data;
+      console.log("len",len.length);
+      for(let j=0;j<len.length;j++){
+        if(this.$store.state.getData.data[j].key == "vehiclesTrailers"){
+          let a = this.$store.state.getData.data[j];
+          let b = JSON.parse(a.val)[0];
+          console.log("bbb", b);
+          console.log("this.vehicle", b.vehicleType);
+      this.formData.VIN = b.VIN;
+      this.formData.make = b.make;
+      this.formData.year = b.year;
+      this.formData.zipCode = b.zipCode;
+      this.formData.model = b.model;
+      this.formData.vehicleImage = b.vehicleImage;
+      this.formData.vehicleType = b.vehicleType;
+      this.formData.radiusOfTravel = b.radiusOfTravel;
+        }
 
-    this.formData.VIN = b.VIN;
-    this.formData.make=b.make;
-    this.formData.year=b.year;
-    this.formData.zipCode=b.zipCode;
-    this.formData.model=b.model;
-    this.formData.vehicleImage=b.vehicleImage;
-    this.formData.vehicleType=b.vehicleType;
-    this.formData.radiusOfTravel=b.radiusOfTravel;
-       
-    // console.log("ba",b)
-   
-}
-else{
-  
-    }  },
+      }
+    });
+      },1000)
+      
+    }else{
+
+    setTimeout(()=>{
+      this.$store.dispatch("loadData", this.uuid).then(() => {
+      let len = this.$store.state.getData.data;
+      console.log("len",len.length);
+      for(let j=0;j<len.length;j++){
+        if(this.$store.state.getData.data[j].key == "vehiclesTrailers"){
+          let a = this.$store.state.getData.data[j];
+          let b = JSON.parse(a.val)[0];
+          console.log("bbb", b);
+          console.log("this.vehicle", b.vehicleType);
+      this.formData.VIN = b.VIN;
+      this.formData.make = b.make;
+      this.formData.year = b.year;
+      this.formData.zipCode = b.zipCode;
+      this.formData.model = b.model;
+      this.formData.vehicleImage = b.vehicleImage;
+      this.formData.vehicleType = b.vehicleType;
+      this.formData.radiusOfTravel = b.radiusOfTravel;
+        }
+
+      }     
+      
+    });
+    
+    },1000)
+    }
+  },
   data() {
     return {
+      uuid:"",
       formData: {
         VIN: "",
         year: "",
         make: "",
         model: "",
         vehicleType: "",
-        vehicleImage:"",
+        vehicleImage: "",
         zipCode: "",
         radiusOfTravel: 50,
         coverage: false,
         currentValue: "",
-        deductible: "",
-        
-      },vehicle:false,
+        deductible: ""
+      },
+      userData:"",
+      vehicle: false,
       rules: {
         VIN: [required],
         year: [required],
@@ -436,13 +522,27 @@ else{
       },
       formErrors: {},
       hints: {
-        VIN: "Some hint"
+        VIN:
+          "Please enter the full VIN for vehicles. Don’t have it? Feel welcome to press save and come back or call us at 646-933-0419”"
       },
       deductibles: [
         { name: "$ 500", value: "500" },
         { name: "$ 1000", value: "1000" },
         { name: "$ 2500", value: "2500" },
         { name: "$ 5000", value: "5000" }
+      ],
+      otherVehicleType:[
+         "Bus",
+        "Car",
+        "Cargo Van",
+        "Hearse",
+        "Limousine",
+        "Mini Van",
+        "Motor Home",
+        "PASSENGER CAR",
+        "Sport Utility Vehicle",
+        "Emergency Vehicle",
+        "Military Vehicle"
       ],
       vehicleTypes: [
         "Auto Hauler",
@@ -463,21 +563,13 @@ else{
         "Tilt Trailer",
         "Travel Trailer",
         "Utility Trailer",
-        "Bus",
-        "Car",
-        "Cargo Van",
-        "Hearse",
-        "Limousine",
-        "Mini Van",
-        "Motor Home",
-        "PASSENGER CAR",
-        "Sport Utility Vehicle",
-        "Emergency Vehicle",
-        "Military Vehicle"
       ],
-      radiuses: [0, 100, 200, 300, 500, 1000, "Unlimited"],
+      
+      radiuses: [50, 100, 200, 300, 500, "500+"],
       loading: false,
-      error: null
+      error: null,
+      vehicleIndex:0,
+      trailerIndex:0
     };
   },
   computed: {
@@ -493,9 +585,7 @@ else{
           .replace(/,/g, ".");
         this.formData.currentValue = price;
       },
-      ...mapState([
-    'data'
-  ])
+      ...mapState(["data"])
     },
 
     radiusOfTravel: {
@@ -528,11 +618,24 @@ else{
     if (!this.formData.VIN) {
       this.formData.VIN = process.env.VUE_APP_TEST_VIN || "";
     }
+    this.loadCompany();
   },
-updated(){
-console.log("oo",this.formData.vehicleImage)
-},
+  updated() {
+    console.log("oo", this.formData.vehicleImage);
+  },
   methods: {
+      async loadCompany(){
+          try {
+        let data = await API.get("company/current");
+        if (data.status === "OK") {
+          // let data = data.data;
+          this.uuid = data.data.b;
+        }}
+        catch{
+
+        }
+          
+    },
     getFormData() {
       return this.formData;
     },
@@ -554,7 +657,7 @@ console.log("oo",this.formData.vehicleImage)
     },
     async getVinData() {
       if (!this.formData.VIN) {
-        console.log("VIN EMPTY")
+        console.log("VIN EMPTY");
         return;
       }
 
@@ -569,18 +672,18 @@ console.log("oo",this.formData.vehicleImage)
           ...this.formData,
           ...data.data
         };
-        
-     console.log("data vin",data.data)
-     this.formData.year = data.data.year;
-     this.formData.make = data.data.make;
-     this.formData.model = data.data.model;
-    this.formData.vehicleType = data.data.vehicleType;
-    console.log("this.formData.vehicleType",this.formData.vehicleType)
-    // console.log("this.v",this.vehicleTypes)
-    // console.log("data.data.vehicleType",data.data.vehicleType)
-    // var type = this.vehicleTypes.filter(v => v == data.data.vehicleType)
 
-    // console.log("type",type)
+        console.log("data vin", data.data);
+        this.formData.year = data.data.year;
+        this.formData.make = data.data.make;
+        this.formData.model = data.data.model;
+        // this.formData.vehicleType = data.data.vehicleType;
+        console.log("this.formData.vehicleType", this.formData.vehicleType);
+        // console.log("this.v",this.vehicleTypes)
+        // console.log("data.data.vehicleType",data.data.vehicleType)
+        // var type = this.vehicleTypes.filter(v => v == data.data.vehicleType)
+
+        // console.log("type",type)
       } catch (err) {
         console.error(err);
         this.error = err.message;
@@ -593,6 +696,12 @@ console.log("oo",this.formData.vehicleImage)
 </script>
 
 <style lang="scss" scoped>
+select{
+  position: relative;
+  -webkit-appearance: none;
+  background: url('../assets/images/arrow-dropdown.png') no-repeat 96% center;
+  -moz-appearance: none;
+}
 // div {
 //   outline: 1px solid red;
 // }
@@ -603,7 +712,8 @@ console.log("oo",this.formData.vehicleImage)
 
   .get-data {
     font-weight: 300;
-    font-size: 1.3rem;
+        font-size: 17px;
+    padding: 8px;
   }
   .containera-hov {
     position: relative;
@@ -632,7 +742,7 @@ console.log("oo",this.formData.vehicleImage)
   }
 
   .containera-hov:hover .image {
-    opacity: 0.8;
+    opacity: 1;
     cursor: pointer;
   }
 
@@ -661,6 +771,15 @@ console.log("oo",this.formData.vehicleImage)
   /* CHECKED STYLES */
   [type="radio"]:checked + img {
     outline: 2px solid #5e98f9;
+
   }
+  [type="radio"]:checked + img + span {
+    // outline: 2px solid #5e98f9;
+    color:#5e98f9;
+    text-decoration: underline;
+  }
+}
+.btn-bg-white{
+  background: #fff;
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div class="upload-documents container py-2">
+  <div class="upload-documents container py-2" id="input-width">
     <div class="card">
       <div class="card-body">
         <h3 class="title">Upload documents</h3>
@@ -37,7 +37,8 @@
                 >{{ formErrors.imageIdFront }}</div>
 
                 <div v-if="preview.imageIdFront" class="preview">
-                  <img :src="preview.imageIdFront" alt class="preview-image">
+                  
+                  <img :src="preview.imageIdFront" alt="image front" class="preview-image">
                 </div>
               </div>
             </div>
@@ -139,6 +140,9 @@
     <div class="d-flex justify-content-center m-4" @click="show" v-if="save">
       <span class="save-hover">Save & Continue</span>
     </div>
+    <div class="d-flex justify-content-center m-4" @click="newQuoteReq" v-else>
+      <span class="save-hover">Save Changes</span>
+    </div>
     <div class v-if="showmodel">
       <modelLogin/>
     </div>
@@ -148,8 +152,11 @@
 <script>
 import { validateField, validateForm, required } from "../validators.js";
 import { API } from "../api.js";
+import axios from "axios";
 import { isMobile } from "mobile-device-detect";
 import ModalLogin from "./ModalLogin.vue";
+import headerAssistant from "./header.vue";
+
 export default {
   name: "AccountInfoUploadDocuments",
   mobile: "phone",
@@ -164,22 +171,171 @@ export default {
     }
   },
   components: {
-    modelLogin: ModalLogin
+    modelLogin: ModalLogin,
+    headerAssistant: headerAssistant
   },
- mounted(){
-    if(localStorage.getItem("token")){
-     this.save = false
-   }else{
-     this.save = true
-   }
- },
+  mounted() {
+    if (localStorage.getItem("token")) {
+      this.save = false;
+      axios
+        .get(
+          "http://3.13.68.92/luckytrucker_admin/api/CompanyController/getuuidbyuserid?user_id=" +
+            localStorage.getItem("userId")
+        )
+        .then(coins => {
+          this.userData = coins.data.uuid;
+        });
+      setTimeout(() => {
+        this.$store.dispatch("loadData", this.userData).then(() => {
+          let len = this.$store.state.getData.data;
+          for (let i = 0; i <= len.length; i++) {
+            console.log("len doc data", len);
+            if (this.$store.state.getData.data[i].key === "imageDOT") {
+              let a = this.$store.state.getData.data[i];
+              let b = JSON.parse(a.val);
+              var url = "";
+              this.previewFile(b[0].filename, "imageDOT");
+              this.getBase64Image(
+                "http://3.13.68.92:3000/company/" + b[0].filename,
+                base64image => {
+                  // console.log(base64image);
+                  url = base64image;
+                  // console.log("$$$$$$$", url);
+                  this.previewFile(url, "imageDOT");
+                }
+              );
+            }
+            if (this.$store.state.getData.data[i].key === "imageRegistration") {
+              let a = this.$store.state.getData.data[i];
+              let b = JSON.parse(a.val);
+              var url = "";
+              this.previewFile(b[0].filename, "imageRegistration");
+              this.getBase64Image(
+                "http://3.13.68.92:3000/company/" + b[0].filename,
+                base64image => {
+                  // console.log(base64image);
+                  url = base64image;
+                  // console.log("$$$$$$$", url);
+                  this.previewFile(url, "imageRegistration");
+                }
+              );
+            }
+            if (this.$store.state.getData.data[i].key === "imageIdFront") {
+              let a = this.$store.state.getData.data[i];
+              let b = JSON.parse(a.val);
+              var url = "";
+              this.previewFile(b[0].filename, "imageIdFront");
+              this.getBase64Image(
+                "http://3.13.68.92:3000/company/" + b[0].filename,
+                base64image => {
+                  // console.log(base64image);
+                  url = base64image;
+                  // console.log("$$$$$$$", url);
+                  this.previewFile(url, "imageIdFront");
+                }
+              );
+            }
+            if (this.$store.state.getData.data[i].key === "imageIdBack") {
+              let a = this.$store.state.getData.data[i];
+              let b = JSON.parse(a.val);
+              var url = "";
+              this.previewFile(b[0].filename, "imageIdBack");
+              this.getBase64Image(
+                "http://3.13.68.92:3000/company/" + b[0].filename,
+                base64image => {
+                  // console.log(base64image);
+                  url = base64image;
+                  // console.log("$$$$$$$", url);
+                  this.previewFile(url, "imageIdBack");
+                }
+              );
+            }
+          }
+        });
+      }, 1000);
+    } else {
+      this.save = true;
+      setTimeout(() => {
+        this.$store.dispatch("loadData", this.uuid).then(() => {
+          let len = this.$store.state.getData.data;
+          for (let i = 0; i <= len.length; i++) {
+            console.log("len doc data", len);
+            if (this.$store.state.getData.data[i].key === "imageDOT") {
+              let a = this.$store.state.getData.data[i];
+              let b = JSON.parse(a.val);
+              var url = "";
+              this.previewFile(b[0].filename, "imageDOT");
+              this.getBase64Image(
+                "http://3.13.68.92:3000/company/" + b[0].filename,
+                base64image => {
+                  // console.log(base64image);
+                  url = base64image;
+                  // console.log("$$$$$$$", url);
+                  this.previewFile(url, "imageDOT");
+                }
+              );
+            }
+            if (this.$store.state.getData.data[i].key === "imageRegistration") {
+              let a = this.$store.state.getData.data[i];
+              let b = JSON.parse(a.val);
+              var url = "";
+              this.previewFile(b[0].filename, "imageRegistration");
+              this.getBase64Image(
+                "http://3.13.68.92:3000/company/" + b[0].filename,
+                base64image => {
+                  // console.log(base64image);
+                  url = base64image;
+                  // console.log("$$$$$$$", url);
+                  this.previewFile(url, "imageRegistration");
+                }
+              );
+            }
+            if (this.$store.state.getData.data[i].key === "imageIdFront") {
+              let a = this.$store.state.getData.data[i];
+              let b = JSON.parse(a.val);
+              var url = "";
+              this.previewFile(b[0].filename, "imageIdFront");
+              this.getBase64Image(
+                "http://3.13.68.92:3000/company/" + b[0].filename,
+                base64image => {
+                  // console.log(base64image);
+                  url = base64image;
+                  // console.log("$$$$$$$", url);
+                  this.previewFile(url, "imageIdFront");
+                }
+              );
+            }
+            if (this.$store.state.getData.data[i].key === "imageIdBack") {
+              let a = this.$store.state.getData.data[i];
+              let b = JSON.parse(a.val);
+              var url = "";
+              this.previewFile(b[0].filename, "imageIdBack");
+              this.getBase64Image(
+                "http://3.13.68.92:3000/company/" + b[0].filename,
+                base64image => {
+                  // console.log(base64image);
+                  url = base64image;
+                  // console.log("$$$$$$$", url);
+                  this.previewFile(url, "imageIdBack");
+                }
+              );
+            }
+          }
+        });
+      }, 1000);
+    }
+    console.log("this.uuid", this.uuid);
+  },
   data() {
     return {
+      uuid: "",
+      final_uuid:"",
+      userData:"",
       msg: isMobile
         ? "Welcome to Your Vue.js mobile App!"
         : "Welcome to Your Vue.js App",
       showmodel: false,
-      save:true,
+      save: true,
       formData: {
         imageIdFront: null,
         imageIdBack: null,
@@ -219,44 +375,135 @@ export default {
       return "Skip";
     }
   },
- 
+  updated() {
+    if (localStorage.getItem("showModal") == "true") {
+      this.showmodel = true;
+    } else {
+      this.showmodel = false;
+    }
+  },
   created() {
     this.$emit("update-progress", this.progress);
     // this.uploadDocuments()
+    this.loadCompany();
   },
   methods: {
-    // validateField(fieldName) {
-    //   validateField(fieldName, this.formData, this.rules, this.formErrors);
-    // },
-    // validateForm() {
-    //   this.formErrors = {};
-    //   return validateForm(this.formData, this.rules, this.formErrors);
-    // },
+    getBase64Image(imgUrl, callback) {
+      var img = new Image();
+      img.onload = function() {
+        var canvas = document.createElement("canvas");
+        canvas.width = img.width;
+        canvas.height = img.height;
+        var ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0);
+        var dataURL = canvas.toDataURL("image/png");
+        callback(dataURL);
+      };
+
+      // set attributes and src
+      img.setAttribute("crossOrigin", "anonymous"); //
+      img.src = imgUrl;
+    },
+    async loadCompany() {
+      try {
+        let data = await API.get("company/current");
+        if (data.status === "OK") {
+          // let data = data.data;
+          this.uuid = data.data.b;
+        }
+      } catch {}
+    },
+    newQuoteReq() {
+      swal({
+        title: "Are you sure?",
+        text: "Do you want to continue editing?",
+        icon: "warning",
+        buttons: ["No", "Yes"]
+      }).then(willDelete => {
+        console.log("willbe", willDelete);
+        this.show();
+        if (willDelete) {
+          this.$router.push({ name: "AccountInfoUploadDocuments" });
+        } else {
+          swal(
+            "Thank You!",
+            "Your changes has been accepted! You will get new Updated Quote",
+            {
+              icon: "success"
+            }
+          );
+        }
+      });
+    },
+    async show() {
+      this.loading = true;
+      this.error = null;
+      var temp_uuid;
+      if (localStorage.getItem("token")) {
+        temp_uuid = this.userData;
+        console.log("temp_uuid login after", temp_uuid);
+      } else {
+        temp_uuid = this.uuid;
+        console.log("temp_uuid no login after", temp_uuid);
+      }
+      try {
+        let data = await API.formData("company/upload", temp_uuid);
+        if (data.status === "OK") {
+          if (!localStorage.getItem("token")) {
+            if (this.showmodel) {
+              this.showmodel = false;
+            } else {
+              this.showmodel = true;
+            }
+          }
+        } else if (data.status === "ERROR") {
+          this.error = data.messages[0] || data.data;
+        }
+        axios
+          .post(
+            "http://3.13.68.92/luckytrucker_admin/api/CompanyController/postUserIdByUuid?uuid=" +
+              this.uuid +
+              "&user_id=" +
+              localStorage.getItem("userId")
+          )
+          .then(res => {
+            console.log("ress post", res);
+          });
+      } catch (err) {
+        // this.showmodel = true;
+
+        console.error(err);
+        this.error = err.message;
+      } finally {
+        // this.showmodel = true;
+        this.loading = false;
+      }
+    },
     setImage(event, fieldName) {
+      console.log("event",event);
+      console.log("filedName",fieldName)
       let { files } = event.target;
 
       let image = files[0] || null;
 
       this.formData[fieldName] = image;
+      console.log("image",image)
       this.previewFile(image, fieldName);
 
       // this.validateField(fieldName);
     },
-    show() {
-      if (this.showmodel) {
-        this.showmodel = false;
-      } else {
-        this.showmodel = true;
-      }
-    },
+
     previewFile(file, fieldName) {
       let reader = new FileReader();
 
       reader.onloadend = () => {
         this.preview[fieldName] = reader.result;
+        
       };
 
       if (file) {
+        this.preview[fieldName] = file;
+        // console.log("this.preview[fieldName]",this.preview[fieldName])
         reader.readAsDataURL(file);
       } else {
         this.preview[fieldName] = null;
@@ -270,7 +517,14 @@ export default {
 
       try {
         let data = await API.formData("company/upload", this.formData);
-
+     if(localStorage.getItem('token')){
+        
+          this.final_uuid = this.userData;
+          console.log("this.final_uuid login after",this.final_uuid )
+      }else{
+        this.final_uuid = this.uuid;
+        console.log("this.final_uuid no login after",this.final_uuid )
+      }
         // console.log(data);
 
         if (data.status === "OK") {
@@ -279,6 +533,12 @@ export default {
         } else if (data.status === "ERROR") {
           this.error = data.messages[0] || data.data;
         }
+        axios.post(
+          "http://3.13.68.92/luckytrucker_admin/api/CompanyController/postUserIdByUuid?uuid=" +
+           this.final_uuid +
+            "&user_id=" +
+            localStorage.getItem("userId")
+        );
       } catch (err) {
         console.error(err);
         this.error = err.message;
@@ -293,7 +553,8 @@ export default {
 <style lang="scss" scoped>
 .upload-documents {
   .preview {
-    height: 200px;
+    // height: 200px;
+    padding-top: 10px;
     text-align: center;
 
     .preview-image {
@@ -302,3 +563,10 @@ export default {
   }
 }
 </style>
+<style>
+#input-width .lt-input {
+  font-size: 12px;
+  text-align: center;
+}
+</style>
+

@@ -23,6 +23,7 @@
   @include lt-form-input;
   border: 1px solid $color_grey;
   color: $color_grey;
+  
   background-color: white;
   width: 100%;
   margin-bottom: 0.25rem;
@@ -83,6 +84,7 @@
   // height: auto;
   font-weight: 600;
   border:0;
+  background: #fff;
 
   &.lt-button-main {
     background-color: $color_blue;

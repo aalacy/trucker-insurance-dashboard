@@ -1,6 +1,9 @@
 <template>
   <div class="policies-drivers container-fluid">
+
     <div class="card mb-5">
+                  
+
       <div class="card-body">
         <div class="d-flex">
           <h4 class="card-title form-sub-title flex-grow-1">
@@ -91,9 +94,13 @@
 
 <script>
 import moment from 'moment';
+import headerAssistant from "./header.vue";
 
 export default {
   name: 'PoliciesDrivers',
+    components: {
+ headerAssistant:headerAssistant
+},
   filters: {
     date(date) {
       return moment(date).format('MM/DD/YYYY');

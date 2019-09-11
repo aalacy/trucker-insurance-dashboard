@@ -5,13 +5,18 @@
         <h2 class="h5">Driver # {{ index + 1 }}</h2>
       </div>
 
-       <button type="button" class="lt-button mx-2 mb-3" @click="removeForm(index)">
-       <h3> - </h3>
+      <button
+        type="button"
+        class="lt-button mx-2 mb-3"
+        @click="removeForm(index)"
+        title="Remove Driver"
+      >
+        <h3>-</h3>
       </button>
     </div>
 
     <div class="row">
-      <div class="col-6">
+      <div class="col-12 col-lg-5">
         <div class="form-group">
           <input
             v-model="formData.firstName"
@@ -28,8 +33,15 @@
           <div v-if="formErrors.firstName" class="text-danger">{{ formErrors.firstName }}</div>
         </div>
       </div>
+      <div class="col-4 col-lg-2">
+        <div class="form-group">
+          <input>
 
-      <div class="col-6">
+          <div v-if="formErrors.middleName" class="text-danger">{{ formErrors.middleName }}</div>
+        </div>
+      </div>
+
+      <div class="col-12 col-lg-5">
         <div class="form-group">
           <input
             v-model="formData.lastName"
@@ -49,13 +61,13 @@
     </div>
 
     <div class="row">
-      <div class="col-12 col-md-4 pt-2">
-        <div>Date of Birthday</div>
+      <div class="col-12 col-md-6 pt-2">
+        <div>Date of Birth</div>
 
         <div v-if="formErrors.dateOfBirth" class="text-danger">{{ formErrors.dateOfBirth }}</div>
       </div>
 
-      <div class="col-12 col-md-8">
+      <div class="col-12 col-md-6" id="text-date">
         <div class="row">
           <div class="col">
             <div class="form-group">
@@ -147,173 +159,89 @@
 
           <div v-if="formErrors.CDL" class="text-danger">{{ formErrors.CDL }}</div>
         </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-12 col-md-6 ">
-          <!-- <div class="form-group">
-            <select
-              v-model="formData.state"
-              :class="{ 'has-error': formErrors.state }"
-              class="lt-input"
-              required
-              @change="validateField('state')"
-              @focus="onFocus('state')"
-              @blur="onBlur"
-            >
-              <option disabled value>State/Province</option>
-              <option value="AL">Alabama</option>
-              <option value="AK">Alaska</option>
-              <option value="AZ">Arizona</option>
-              <option value="AR">Arkansas</option>
-              <option value="CA">California</option>
-              <option value="CO">Colorado</option>
-              <option value="CT">Connecticut</option>
-              <option value="DE">Delaware</option>
-              <option value="DC">District Of Columbia</option>
-              <option value="FL">Florida</option>
-              <option value="GA">Georgia</option>
-              <option value="HI">Hawaii</option>
-              <option value="ID">Idaho</option>
-              <option value="IL">Illinois</option>
-              <option value="IN">Indiana</option>
-              <option value="IA">Iowa</option>
-              <option value="KS">Kansas</option>
-              <option value="KY">Kentucky</option>
-              <option value="LA">Louisiana</option>
-              <option value="ME">Maine</option>
-              <option value="MD">Maryland</option>
-              <option value="MA">Massachusetts</option>
-              <option value="MI">Michigan</option>
-              <option value="MN">Minnesota</option>
-              <option value="MS">Mississippi</option>
-              <option value="MO">Missouri</option>
-              <option value="MT">Montana</option>
-              <option value="NE">Nebraska</option>
-              <option value="NV">Nevada</option>
-              <option value="NH">New Hampshire</option>
-              <option value="NJ">New Jersey</option>
-              <option value="NM">New Mexico</option>
-              <option value="NY">New York</option>
-              <option value="NC">North Carolina</option>
-              <option value="ND">North Dakota</option>
-              <option value="OH">Ohio</option>
-              <option value="OK">Oklahoma</option>
-              <option value="OR">Oregon</option>
-              <option value="PA">Pennsylvania</option>
-              <option value="RI">Rhode Island</option>
-              <option value="SC">South Carolina</option>
-              <option value="SD">South Dakota</option>
-              <option value="TN">Tennessee</option>
-              <option value="TX">Texas</option>
-              <option value="UT">Utah</option>
-              <option value="VT">Vermont</option>
-              <option value="VA">Virginia</option>
-              <option value="WA">Washington</option>
-              <option value="WV">West Virginia</option>
-              <option value="WI">Wisconsin</option>
-              <option value="WY">Wyoming</option>
-            </select>
-
-            <div v-if="formErrors.state" class="text-danger">{{ formErrors.state }}</div>
-          </div> -->
-          <div class="form-group">
-              <input
-                v-model="formData.address"
-                :class="{ 'has-error': formErrors.address }"
-                type="text"
-                class="lt-input"
-                placeholder="Address"
-                required
-                @focus="onFocus('address')"
-                @blur="onBlur"
-                @change="validateField('address')"
-              >
-            
-              <div v-if="formErrors.address" class="text-danger">{{ formErrors.address }}</div>
-            </div>
-         </div> 
-          <div class="col-12 col-md-6 ">
-            
-            <div class="form-group">
-            <select
-              v-model="formData.state"
-              :class="{ 'has-error': formErrors.state }"
-              class="lt-input"
-              required
-              @change="validateField('state')"
-              @focus="onFocus('state')"
-              @blur="onBlur"
-            >
-              <option disabled value>State/Province</option>
-              <option value="AL">Alabama</option>
-              <option value="AK">Alaska</option>
-              <option value="AZ">Arizona</option>
-              <option value="AR">Arkansas</option>
-              <option value="CA">California</option>
-              <option value="CO">Colorado</option>
-              <option value="CT">Connecticut</option>
-              <option value="DE">Delaware</option>
-              <option value="DC">District Of Columbia</option>
-              <option value="FL">Florida</option>
-              <option value="GA">Georgia</option>
-              <option value="HI">Hawaii</option>
-              <option value="ID">Idaho</option>
-              <option value="IL">Illinois</option>
-              <option value="IN">Indiana</option>
-              <option value="IA">Iowa</option>
-              <option value="KS">Kansas</option>
-              <option value="KY">Kentucky</option>
-              <option value="LA">Louisiana</option>
-              <option value="ME">Maine</option>
-              <option value="MD">Maryland</option>
-              <option value="MA">Massachusetts</option>
-              <option value="MI">Michigan</option>
-              <option value="MN">Minnesota</option>
-              <option value="MS">Mississippi</option>
-              <option value="MO">Missouri</option>
-              <option value="MT">Montana</option>
-              <option value="NE">Nebraska</option>
-              <option value="NV">Nevada</option>
-              <option value="NH">New Hampshire</option>
-              <option value="NJ">New Jersey</option>
-              <option value="NM">New Mexico</option>
-              <option value="NY">New York</option>
-              <option value="NC">North Carolina</option>
-              <option value="ND">North Dakota</option>
-              <option value="OH">Ohio</option>
-              <option value="OK">Oklahoma</option>
-              <option value="OR">Oregon</option>
-              <option value="PA">Pennsylvania</option>
-              <option value="RI">Rhode Island</option>
-              <option value="SC">South Carolina</option>
-              <option value="SD">South Dakota</option>
-              <option value="TN">Tennessee</option>
-              <option value="TX">Texas</option>
-              <option value="UT">Utah</option>
-              <option value="VT">Vermont</option>
-              <option value="VA">Virginia</option>
-              <option value="WA">Washington</option>
-              <option value="WV">West Virginia</option>
-              <option value="WI">Wisconsin</option>
-              <option value="WY">Wyoming</option>
-            </select>
-
-            <div v-if="formErrors.state" class="text-danger">{{ formErrors.state }}</div>
-          </div>
-          
       </div>
     </div>
-  
-
     <div class="row">
-      <div class="col-12 col-md-4 pt-2">
+      <div class="col-12 col-md-6">
+        <div class="form-group">
+          <input
+            v-model="formData.address"
+            :class="{ 'has-error': formErrors.address }"
+            type="text"
+            class="lt-input"
+            placeholder="Address"
+            required
+            @focus="onFocus('address')"
+            @blur="onBlur"
+            @change="validateField('address')"
+          >
+
+          <div v-if="formErrors.address" class="text-danger">{{ formErrors.address }}</div>
+        </div>
+      </div>
+      <div class="col-12 col-md-6">
+        <div class="form-group">
+          <input
+            v-model="formData.city"
+            :class="{ 'has-error': formErrors.city }"
+            type="text"
+            class="lt-input"
+            placeholder="City"
+            required
+            @focus="onFocus('city')"
+            @blur="onBlur"
+            @change="validateField('city')"
+          >
+
+          <div v-if="formErrors.city" class="text-danger">{{ formErrors.city }}</div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-6">
+        <div class="form-group">
+          <input
+            v-model="formData.state"
+            :class="{ 'has-error': formErrors.state }"
+            type="text"
+            class="lt-input"
+            placeholder="State"
+            required
+            @focus="onFocus('state')"
+            @blur="onBlur"
+            @change="validateField('state')"
+          >
+
+          <div v-if="formErrors.state" class="text-danger">{{ formErrors.state }}</div>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="form-group">
+          <input
+            v-model="formData.zip"
+            :class="{ 'has-error': formErrors.zip }"
+            type="text"
+            minlength="5"
+            class="lt-input hide-scroll"
+            placeholder="Zip"
+            required
+            @focus="onFocus('zip')"
+            @blur="minLength('zip')"
+            @change="validateField('zip')"
+          >
+
+          <div v-if="formErrors.zip" class="text-danger">{{ formErrors.zip }}</div>
+        </div>
+      </div>
+    </div>
+    <div class="row" id="text-date">
+      <div class="col-12 col-md-6 pt-2">
         <div>Date of Hire</div>
 
         <div v-if="formErrors.dateOfHire" class="text-danger">{{ formErrors.dateOfHire }}</div>
       </div>
 
-      <div class="col-12 col-md-8">
+      <div class="col-12 col-md-6">
         <div class="row">
           <div class="col">
             <div class="form-group">
@@ -386,7 +314,7 @@
             @blur="onBlur"
             @change="validateField('yearsOfExperience')"
           >
-            <option value disabled>Years of Experience</option>
+            <option value>Years of Experience</option>
 
             <option>1</option>
             <option>2</option>
@@ -465,8 +393,16 @@
 </template>
 
 <script>
-import { validateField, validateForm, required } from "../validators.js";
+import {
+  validateField,
+  validateForm,
+  required,
+  minLength
+} from "../validators.js";
 import { mapState } from "vuex";
+import { API } from "../api.js";
+import axios from "axios";
+import { setTimeout } from "timers";
 export default {
   name: "AccountInfoDriversItem",
   props: {
@@ -484,39 +420,101 @@ export default {
   },
   mounted() {
     if (localStorage.getItem("token")) {
-      this.$store.dispatch("loadData", localStorage.getItem("uuid"));
-      let a = this.$store.state.getData.data[7];
-      let b = JSON.parse(a.val)[0];
-      this.formData.firstName = b.firstName;
-      this.formData.lastName = b.lastName;
-      [
-        this.formData.dobD,
-        this.formData.dobM,
-        this.formData.dobY
-      ] = b.dateOfBirth.split("/");
-      // this.formData.dobM = dobM;
-      console.log("f", this.formData.dobM);
-      this.formData.address = b.address;
-      this.formData.licenseNumber = b.licenseNumber;
-      this.formData.state = b.state;
-      [
-        this.formData.dohD,
-        this.formData.dohM,
-        this.formData.dohY
-      ] = b.dateOfHire.split("/");
-      this.formData.yearsOfExperience = b.yearsOfExperience;
-      this.formData.CDL = b.CDL;
+      axios
+        .get(
+          "http://3.13.68.92/luckytrucker_admin/api/CompanyController/getuuidbyuserid?user_id=" +
+            localStorage.getItem("userId")
+        )
+        .then(coins => {
+          this.userData = coins.data.uuid;
+        });
+      setTimeout(() => {
+        this.$store.dispatch("loadData", this.userData).then(() => {
+          let len = this.$store.state.getData.data;
+          console.log("len", len);
+          for (let i = 0; i < len.length; i++) {
+            if (this.$store.state.getData.data[i].key == "drivers") {
+              let a = this.$store.state.getData.data[i];
+              console.log("a", a.val);
+              let b = JSON.parse(a.val)[0];
+              this.formData.firstName = b.firstName;
+              console.log("this.formData.firstname", this.formData.firstName);
+              this.formData.lastName = b.lastName;
+              this.formData.middleName = b.middleName;
+              [
+                this.formData.dobD,
+                this.formData.dobM,
+                this.formData.dobY
+              ] = b.dateOfBirth.split("/");
+              // this.formData.dobM = dobM;
+              console.log("f", this.formData.dobM);
+              this.formData.address = b.address;
+              this.formData.licenseNumber = b.licenseNumber;
+              this.formData.state = b.state;
+              this.formData.city = b.city;
+              this.formData.zip = b.zip;
+              [
+                this.formData.dohD,
+                this.formData.dohM,
+                this.formData.dohY
+              ] = b.dateOfHire.split("/");
+              this.formData.yearsOfExperience = b.yearsOfExperience;
+              this.formData.CDL = b.CDL;
+            }
+          }
+        });
+      }, 1000);
+    } else {
+      setTimeout(() => {
+        this.$store.dispatch("loadData", this.uuid).then(() => {
+          let len = this.$store.state.getData.data;
+          for (let i = 0; i < len.length; i++) {
+            if (this.$store.state.getData.data[i].key == "drivers") {
+              let a = this.$store.state.getData.data[i];
+              let b = JSON.parse(a.val)[0];
+              this.formData.firstName = b.firstName;
+              this.formData.middleName = b.middleName;
+              this.formData.lastName = b.lastName;
+              [
+                this.formData.dobD,
+                this.formData.dobM,
+                this.formData.dobY
+              ] = b.dateOfBirth.split("/");
+              // this.formData.dobM = dobM;
+              console.log("f", this.formData.dobM);
+              this.formData.address = b.address;
+              this.formData.licenseNumber = b.licenseNumber;
+              this.formData.state = b.state;
+              this.formData.city = b.city;
+              this.formData.zip = b.zip;
+              [
+                this.formData.dohD,
+                this.formData.dohM,
+                this.formData.dohY
+              ] = b.dateOfHire.split("/");
+              this.formData.yearsOfExperience = b.yearsOfExperience;
+              this.formData.CDL = b.CDL;
+            }
+          }
+        });
+      }, 1000);
     }
   },
   data() {
     return {
+      uuid: "",
+      value: 5,
+      error1: "Zip number Invalid! Must be minmum of 5 digits",
       formData: {
         firstName: "",
         lastName: "",
+        middleName: "",
         dobM: "",
         dobD: "",
         dobY: "",
-        address:"",
+        address: "",
+        city: "",
+        zip: "",
         licenseNumber: "",
         state: "",
         dohM: "",
@@ -528,6 +526,9 @@ export default {
       rules: {
         firstName: [required],
         lastName: [required],
+        middleName: [required],
+        city: [required],
+        zip: [required],
         dobM: [required],
         dobD: [required],
         dobY: [required],
@@ -540,6 +541,7 @@ export default {
       },
       formErrors: {},
       hints: {},
+      userData: "",
       loading: false,
       error: null
     };
@@ -599,8 +601,18 @@ export default {
       dohD,
       dohY
     };
+    this.loadCompany();
   },
   methods: {
+    async loadCompany() {
+      try {
+        let data = await API.get("company/current");
+        if (data.status === "OK") {
+          // let data = data.data;
+          this.uuid = data.data.b;
+        }
+      } catch {}
+    },
     getFormData() {
       let formData = {
         ...this.formData,
@@ -629,6 +641,9 @@ export default {
     validateField(fieldName) {
       validateField(fieldName, this.formData, this.rules, this.formErrors);
     },
+    minLength(fieldName, value, errorMessage) {
+      return minLength(fieldName, this.value, this.errorzip);
+    },
     validateForm() {
       this.formErrors = {};
       return validateForm(this.formData, this.rules, this.formErrors);
@@ -637,4 +652,13 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style>
+select {
+  position: relative;
+  -webkit-appearance: none;
+  background: url("../assets/images/arrow-dropdown.png") no-repeat 96% center;
+  -moz-appearance: none;
+}
+</style>
+
+

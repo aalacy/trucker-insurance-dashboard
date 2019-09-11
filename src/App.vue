@@ -1,10 +1,10 @@
 <template>
   <div id="app">
     <nav class="app-navbar navbar navbar-expand-lg navbar-light bg-white py-0 px-4">
-      <router-link :to="{ name: 'Home' }" class="navbar-brand font-weight-bold lt-link">
-        <img src="./assets/images/logo.png">
+      <router-link :to="{ name: 'Home' }" class="navbar-brand font-weight-bold lt-link" > 
+        <img src="./assets/images/logo.svg" alt="logo" height="46px" width="269px">
       </router-link>
-
+   <span class="text-right-a">For assistance, please call us at <a href="tel:16469330419" style="font-weight:bold; white-space:nowrap;">1-646-933-0419</a></span>
       <button
         class="navbar-toggler"
         type="button"
@@ -17,47 +17,73 @@
         <span class="navbar-toggler-icon"></span>
       </button>
 
-      <div
-        v-if="showSignLinks"
-        id="navbarSupportedContent"
-        class="ml-auto collapse navbar-collapse"
-      >
+      <div id="navbarSupportedContent" class="ml-auto collapse navbar-collapse">
         <div class="mr-auto"></div>
 
         <div class="d-flex align-items-center justify-content-end">
           <ul class="navbar-nav">
             <li class="nav-item">
-
-              <div v-if="msg">
-                <router-link
-                  :to="{ name: 'AccountInfoUploadDocuments' }"
-                  class="lt-button lt-button-main viewquote"
-                  active-class="font-weight-bold"
-                  @click.native="savequote"
-                >View Quotes</router-link>
+            
+              <div v-if="show">
+                <div v-if="msg">
+                  <router-link
+                    :to="{ name: 'AccountInfoUploadDocuments' }"
+                    class="lt-button lt-button-main viewquote"
+                    active-class="font-weight-bold"
+                    @click.native="savequote"
+                  >View Quotes</router-link>
+                </div>
+                <div v-else>
+                  <router-link
+                    :to="{ name: 'AccountInfo' }"
+                    class="lt-button lt-button-main viewquote"
+                    active-class="font-weight-bold"
+                    @click.native="savequote"
+                  >View Quotes</router-link>
+                </div>
               </div>
               <div v-else>
-                <router-link
-                  :to="{ name: 'AccountInfo' }"
-                  class="lt-button lt-button-main viewquote"
-                  active-class="font-weight-bold"
-                  @click.native="savequote"
-                >View Quotes</router-link>
+                <div v-if="myacchide">
+                  <router-link
+                    :to="{ name: '' }"
+                    @click.native="myacc"
+                    active-class="font-weight-bold"
+                    class="lt-button lt-button-main viewquote"
+                  >My Account</router-link>
+                </div>
+                <!-- <div v-else> -->
+
+                <!-- </div> -->
               </div>
             </li>
             <li class="nav-item">
-              <span class="mx-3">|</span>
+              <span class="mx-3"> </span>
             </li>
-            <li class="nav-item">
-              <router-link
-                :to="{ name: 'LogIn' }"
-                class="lt-link"
-                active-class="font-weight-bold"
-              >Login</router-link>
-            </li>
+            <div v-if="quote">
+              <li class="nav-item">
+                <router-link
+                  @click.native="loginHide"
+                  :to="{ name: 'LogIn' }"
+                  class="lt-link"
+                  active-class="font-weight-bold"
+                >Login</router-link>
+              </li>
+            </div>
+            <div v-else>
+              <li class="nav-item">
+                <router-link
+                  :to="{ name:'' }"
+                  class="lt-link"
+                  @click.native="logoutPopUp"
+                  active-class="font-weight-bold"
+                >Logout</router-link>
+              </li>
+            </div>
           </ul>
         </div>
+       
       </div>
+      
     </nav>
 
     <main class="app-main">
@@ -84,11 +110,11 @@
       <div class="d-flex"></div>
 
       <div class="d-flex flex-mob">
-        <div class="px-3 py-1">&copy;2019 LuckTruck LLC. All rights Reserved</div>
+        <div class="px-3 py-1">&copy;2019 LuckyTrucking!, Inc</div>
 
         <div class="px-3 py-1">
           <a
-            href="./PRIVACY_POLICY_FOR_LuckyTruck.pdf"
+            href="http://3.13.68.92/PRIVACY_POLICY_FOR_LuckyTruck.pdf"
             rel="noopener noreferrer"
             target="_blank"
           >PRIVACY POLICY</a>
@@ -96,7 +122,7 @@
 
         <div class="px-3 py-1">
           <a
-            href="./TERMS_OF_SERVICE_FOR_LuckyTruckers.com.pdf"
+            href="http://3.13.68.92/TERMS_OF_SERVICE_FOR_LuckyTruckers.com.pdf"
             rel="noopener noreferrer"
             target="_blank"
           >TERMS OF USE</a>
@@ -107,45 +133,195 @@
   </div>
 </template>
 
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-144855806-1"></script>
+<script>
+import { setTimeout } from "timers";
+
+window.dataLayer = window.dataLayer || [];
+function gtag() {
+  dataLayer.push(arguments);
+}
+gtag("js", new Date());
+gtag("config", "UA-144855806-1");
+</script>
+
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag() {
+  dataLayer.push(arguments);
+}
+gtag("js", new Date());
+gtag("config", "UA-144855806-1");
+</script>
+
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag() {
+  dataLayer.push(arguments);
+}
+gtag("js", new Date());
+gtag("config", "UA-144855806-1");
+</script>
+
 <script>
 import ChatBoat from "./components/ChatBoat.vue";
 import { isMobile } from "mobile-device-detect";
+import { mapState,mutations } from "vuex";
+import { API } from "./api.js";
+
 export default {
   name: "App",
-  beforeMount(){
-localStorage.removeItem("Phone");
-      localStorage.removeItem("Physical address");
-      localStorage.removeItem("Mailing address");
-      localStorage.removeItem("company");
-      localStorage.removeItem("usdot");
+  updated() {
+    if (localStorage.getItem("token"))
+     {
+        this.quote = false;
+        // localStorage.removeItem("token");
+      }
+
+    else {
+      this.quote =true;
+    }
+     if(localStorage.getItem("accBtn") === "true"){
+      this.myacchide = true;
+    }
+    // else{
+    //   this.myacchide = false;
+    // }
+    
   },
+  
   mounted() {
+  if(localStorage.getItem("token")){
+     this.show=true;
+
+   }else{
+     this.quote=false;
+     this.show=false;
+     console.log("this.quote m",this.quote)
+     console.log("this.show m",this.show)
+   }
+     if(localStorage.getItem("accBtn") === "true"){
+      this.myacchide = true;
+    }
+    else{
+      this.myacchide = false;
+    }
     this.msg = isMobile ? true : false;
-    console.log("isMobile", this.msg);
   },
+    
   data() {
     return {
+       localtoken: false,
+      myacchide:false,
+      quote: true,
       msg: false,
-      show: true
+      show: false,
+      extraquote:false,
     };
   },
   components: {
     "chat-boat": ChatBoat
   },
   methods: {
+    loginHide()
+    {
+      // setTimeout(()=>{
+        this.show=false;
+        console.log("this.show",this.show);
+      // },500)
+      
+      // this.quote = false;
+    },
+        myacc(){
+      localStorage.setItem("accBtn",true)
+      this.myacchide = false;
+      this.show = true;
+      this.$router.push({name:'QuotesAllQuotes'})
+      // localStorage.setItem("viewQuote",true)
+     
+      },
+async logout(){
+
+      this.loading = true;
+      this.error = null;
+   try {
+        let data = await API.post("users/logout");
+        localStorage.removeItem("token");
+        // localStorage.setItem("viewQuote", true);
+        console.log(data);
+        
+          if (data.status === "ok") {
+            
+        
+            setTimeout(()=>{
+        this.quote = false;
+        this.show=false;
+        this.myacchide = false;
+          localStorage.removeItem("accBtn");
+          localStorage.removeItem("token");
+          localStorage.removeItem("userId")
+          // localStorage.removeItem("registredUserId");
+          localStorage.removeItem("redirect");
+              this.$router.push({ name: "Home" });
+          },500)
+          
+        }
+      } catch (err) {
+        console.error("catch", err);
+        this.error = err.message;
+      } finally {
+        // this.quote = false;
+        // this.show=false;
+        // this.loading = false;
+        // this.myacchide = false;
+      }
+},
+
+    logoutPopUp() {
+        swal({
+        title: "Are you sure?",
+        text: "Do you want to logout?",
+        icon: "warning",
+        buttons: ["No", "Yes"]
+      }).then(willDelete => {
+        console.log("willbe", willDelete);
+      this.logout();
+        // this.show();
+        if (willDelete) {
+          
+          // this.$router.push({ name: "AccountInfoBusinessStructure" });
+        } else {
+          
+          // swal(
+          //   "Thank You!",
+          //   "Your changes has been accepted! You will get new Updated Quote",
+          //   {
+          //     icon: "success"
+          //   }
+          // );
+        }
+      });
+    },
+
     savequote() {
-      // console.log("hi");
-      localStorage.setItem("viewQuote", false);
+      if (localStorage.getItem("token"))
+     {
+        this.myacchide = true;
+      }
+
+    else {
+      this.myacchide =false;
+    }
       localStorage.setItem("accBtn",false)
       this.show = false;
-      localStorage.removeItem("Phone");
-      localStorage.removeItem("Physical address");
-      localStorage.removeItem("Mailing address");
-      localStorage.removeItem("company");
-      localStorage.removeItem("usdot");
+      localStorage.setItem("Phone","");
+      localStorage.setItem("Physical address","");
+      localStorage.setItem("Mailing address","");
+      localStorage.setItem("company","");
+      localStorage.setItem("usdot","");
     },
     // accountBtn(){
-    //   localStorage.setItem("accBtn",true)
+     
     // }
   },
 
@@ -169,9 +345,19 @@ localStorage.removeItem("Phone");
 <style lang="scss">
 @import "~bootstrap/scss/bootstrap.scss";
 @import "./assets/scss/main.scss";
+.text-right-a{
+        /* color: black; */
+    font-size: 16px;
+    font-weight: bold;
+    width: 58%;
+    text-align: center;
+    /* position: absolute; */
+    /* z-index: 111; */
 
+}
 .viewquote {
   padding-bottom: 10px;
   padding-top: 9px;
 }
 </style>
+

@@ -5,6 +5,8 @@ import axios from "axios"
 import cargo from './modules/cargo.js';
 import eld from './modules/eld';
 import getData from "./modules/getData.js"
+import getPolicyData from "./modules/getPolicyData.js"
+// import getUserData from "./modules/getUserData.js"
 
 Vue.use(Vuex);
 Vue.use(VueAxios,axios)
@@ -13,9 +15,17 @@ export default new Vuex.Store({
   modules: {
     cargo,
     eld,
-    getData
+    getData,
+    getPolicyData,
+    // getUserData
   },
   state: {},
   mutations: {},
   actions: {}
 });
+
+// const initialStateCopy = JSON.parse(JSON.stringify(store.state))
+
+// export function resetState () {
+//   store.replaceState(JSON.parse(JSON.stringify(initialStateCopy)))
+// }

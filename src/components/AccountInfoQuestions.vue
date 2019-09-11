@@ -1,15 +1,21 @@
 <template>
   <div class="account-info-questions-form container-fluid mob-2">
+            
+
     <form @submit.prevent="updateCompany">
       <div class="card mb-5">
         <div class="card-body">
-          <h4 class="card-title form-sub-title">Additional Underwriting Questions</h4>
+          <h4 class="card-title form-sub-title">Additional Comments</h4>
 
-          <div v-for="{ text, key, required } in questions" :key="key" class="mb-2">
+          <div v-for="{ text, key } in questions" :key="key" class="mb-2">
             <div>{{ text }}</div>
+               <div class="m-1 pb-2">
+           <span>If you have any additional comments or concerns regarding your quotation, please list them here. 
+</span>
+           </div>
 
             <div>
-              <textarea v-model="formData[key]" class="answer" :required="required"></textarea>
+              <textarea v-model="formData[key]" class="answer"></textarea>
             </div>
           </div>
 
@@ -46,6 +52,9 @@
       <div class="d-flex justify-content-center m-4" @click="show" v-if="save">
         <span class="save-hover">Save & Continue</span>
       </div>
+      <div class="d-flex justify-content-center m-4" @click="newQuoteReq" v-else>
+        <span class="save-hover">Save Changes</span>
+      </div>
       <div v-if="showmodel">
         <modelLogin/>
       </div>
@@ -57,7 +66,11 @@
 import { required } from "../validators.js";
 import { API } from "../api.js";
 import ModalLogin from "./ModalLogin.vue";
-import {mapState} from "vuex";
+import { mapState } from "vuex";
+import axios from "axios";
+import headerAssistant from "./header.vue";
+import { setTimeout } from 'timers';
+
 export default {
   name: "AccountInfoQuestions",
   props: {
@@ -75,42 +88,86 @@ export default {
     }
   },
   components: {
-    modelLogin: ModalLogin
+    modelLogin: ModalLogin,
+     headerAssistant:headerAssistant
+
   },
- mounted(){
-    if(localStorage.getItem("token")){
-      this.$store.dispatch('loadData',localStorage.getItem("uuid"))
-     let a = this.$store.state.getData.data[9]
-     let b = JSON.parse(a.val)
-     this.formData.question1 = b.question1;
-     this.formData.question2 = b.question2;
-     console.log("b",b)
-     this.save = false
-   }else{
-     this.save = true
-   }
- },
- computed:{
-...mapState([
-    'data'
-  ])
-} ,
+  mounted() {
+    if (localStorage.getItem("token")) {
+      this.save = false;
+      axios
+      .get(
+        "http://3.13.68.92/luckytrucker_admin/api/CompanyController/getuuidbyuserid?user_id=" +
+          localStorage.getItem("userId")
+      )
+      .then(coins => {
+        this.userData = coins.data.uuid;
+      });
+      setTimeout(()=>{
+ this.$store
+        .dispatch("loadData", this.userData)
+        .then(() => {
+          let len = this.$store.state.getData.data;
+          for(let i=0;i<=len.length;i++){
+            if(this.$store.state.getData.data[i].key=="questions"){
+          let a = this.$store.state.getData.data[i];
+          let b = JSON.parse(a.val);
+                    console.log("b", b);
+
+          this.formData.question1 = b.question1;
+            }
+          }
+          
+          //  this.formData.question2 = b.question2;
+        });
+      },1000)
+  
+     
+    } else {
+      this.save = true;
+      setTimeout(()=>{
+         this.$store
+        .dispatch("loadData",this.uuid)
+        .then(() => {
+          let len = this.$store.state.getData.data;
+          for(let i=0;i<=len.length;i++){
+            if(this.$store.state.getData.data[i].key=="questions"){
+          let a = this.$store.state.getData.data[i];
+          let b = JSON.parse(a.val);
+                    console.log("b", b);
+
+          this.formData.question1 = b.question1;
+            }
+          }
+          
+          //  this.formData.question2 = b.question2;
+        });
+    
+      },1000)
+    } 
+     
+  },
+  computed: {
+    ...mapState(["data"])
+  },
 
   data() {
     return {
       showmodel: false,
-      save:true,
+      save: true,
+      final_uuid:"",
+      userData:"",
       questions: [
-        { key: "question1", text: "Question 1", required: true },
-        { key: "question2", text: "Question 2", required: true }
+        { key: "question1", text: "", required: true }
+        // { key: "question2", text: "Question 2", required: true }
       ],
       formData: {
-        question1: "",
-        question2: ""
+        question1: ""
+        // question2: ""
       },
       rules: {
-        question1: [required],
-        question2: [required]
+        question1: [required]
+        // question2: [required]
       },
       loading: false,
       error: null
@@ -128,24 +185,58 @@ export default {
     }
   },
   methods: {
+    newQuoteReq() {
+      swal({
+        title: "Are you sure?",
+        text: "Do you want to continue editing?",
+        icon: "warning",
+        buttons: ["No", "Yes"]
+      }).then(willDelete => {
+        console.log("willbe", willDelete);
+        this.show();
+        if (willDelete) {
+          
+          this.$router.push({ name: "AccountInfoQuestions" });
+        } else {
+          swal(
+            "Thank You!",
+            "Your changes has been accepted! You will get new Updated Quote",
+            {
+              icon: "success"
+            }
+          );
+        }
+      });
+    },
     async show() {
       this.loading = true;
       this.error = null;
-
+      var temp_uuid;
+       if (localStorage.getItem("token")) {
+        temp_uuid = this.userData;
+        console.log("temp_uuid login after", temp_uuid);
+      } else {
+        temp_uuid = this.uuid;
+        console.log("temp_uuid no login after", temp_uuid);
+      }
+      
       try {
         let data = await API.post("company/save", {
           key: "questions",
           val: this.formData,
-          userId:localStorage.getItem("userId"),
-          uuid:localStorage.getItem("uuid")
+          user_id: localStorage.getItem("userId"),
+          uuid: temp_uuid
         });
 
         if (data.status === "OK") {
-          if (this.showmodel) {
+          if(!localStorage.getItem("token")){
+              if (this.showmodel) {
             this.showmodel = false;
           } else {
             this.showmodel = true;
           }
+          }
+          
         } else if (data.status === "ERROR") {
           // this.showmodel = true;
           this.error = data.messages[0] || data.data;
@@ -175,7 +266,7 @@ export default {
 
         if (data.status === "OK") {
           let { questions } = data.data;
-
+          this.uuid = data.data.b;
           if (questions) {
             this.formData = {
               ...this.formData,
@@ -195,13 +286,20 @@ export default {
     async updateCompany() {
       this.loading = true;
       this.error = null;
-
+          if(localStorage.getItem('token')){
+        
+          this.final_uuid = this.userData;
+          console.log("this.final_uuid login after",this.final_uuid )
+      }else{
+        this.final_uuid = this.uuid;
+        console.log("this.final_uuid no login after",this.final_uuid )
+      }
       try {
         let data = await API.post("company/save", {
           key: "questions",
           val: this.formData,
-          userId:localStorage.getItem("userId"),
-          uuid:localStorage.getItem("uuid")
+          user_id: localStorage.getItem("userId"),
+          uuid: this.final_uuid,
         });
 
         if (data.status === "OK") {
@@ -209,6 +307,12 @@ export default {
         } else if (data.status === "ERROR") {
           this.error = data.messages[0] || data.data;
         }
+             axios.post(
+          "http://3.13.68.92/luckytrucker_admin/api/CompanyController/postUserIdByUuid?uuid="+ this.final_uuid+"&user_id="+localStorage.getItem("userId")
+        )
+        .then(res => {
+          console.log("ress post",res)
+        })
       } catch (err) {
         console.error(err);
         this.error = err.message;

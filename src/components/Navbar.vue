@@ -15,9 +15,9 @@
        
      
             <div>NEED HELP?</div>
-            <div class="">Speak now with a licenece insurance agent</div>
-            <button type="submit" class="bt-call pr-4 pl-4 mt-2 mb-2">Request a call</button>
-            <div class=" justify-content-center">
+            <div class="">Speak now with a license insurance agent</div>
+<a href="tel:16469330419" class="bt-call ">Click to Talk</a>         
+   <div class=" justify-content-center">
 or call us 24/7?
             
              
@@ -26,7 +26,7 @@ or call us 24/7?
                   icon="phone-alt"
                   size="1x"
                   class=" color-fb d-flex  justify-content-center"
-                /> +1 (XXX) XXX-XXXX</div>
+                /> <a href="tel:16469330419">1-646-933-0419</a></div>
               </div>
            
           </div>
@@ -43,7 +43,7 @@ or call us 24/7?
         <img src="../assets/images/hame.png" height="100" width="100" class="d-block mx-auto">
       </button>
     </div>
-    <div class="containera" :class="{'show': showSidebar}">
+    <div class="containera " :class="{'show': showSidebar}">
       <transition-group name="fade" class="sidebar-menu">
         <div v-for="(item, index) in items" :key="index" class="menu-item navigation-links">
           <router-link
@@ -82,6 +82,8 @@ or call us 24/7?
 </template>
 
 <script>
+import { isMobile } from "mobile-device-detect";
+
 export default {
   name: "SidebarMenu",
   methods: {
@@ -115,11 +117,17 @@ export default {
       }
     }
   },
+  
   data() {
     return {
-      showSidebar: true,
+      // msg:false,
+      showSidebar: isMobile
+        ? false
+        : true,
       showLink: false,
-      showLabel: true,
+      showLabel:  isMobile
+        ? false
+        : true,
       showLabelLink: false,
       itemsa:
       [
@@ -231,9 +239,13 @@ export default {
 }
 .bt-call {
   border-radius: 12px;
-  color: #f7f7f7;
-  background-color: #1c4894;
-  height: 38px;
+    color: #f7f7f7;
+    background-color: #1c4894;
+    height: 38px;
+    display: block;
+    max-width: 148px;
+    line-height: 38px;
+    margin: 0 auto;
 }
 
 .controla {
@@ -273,7 +285,7 @@ export default {
   left: 0;
   width: 0px;
   max-height: 100%;
-  background-color: rgba($color: #81b121, $alpha: 0.8);
+  // background-color: rgba($color: #81b121, $alpha: 0.8);
   border: solid #fff;
   border-width: 0 1px 0 0;
   transition: all 0.5s ease-in-out;
@@ -374,7 +386,7 @@ export default {
   top: 165px;
   left: 0;
   width: 0px;
-    
+    padding-top: 20px;
     height: 207px;
       background-color: #e3e3e3;
     
