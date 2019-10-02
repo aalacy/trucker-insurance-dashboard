@@ -32,7 +32,7 @@ export default {
           { value: 'Pipe',img: require('../../assets/images/cargo_haul/building_supplies/pipe.jpg')  },
           { value: 'Pumping Supplies' ,img: require('../../assets/images/cargo_haul/building_supplies/pumping_supply.jpg') },
           { value: 'Tools' ,img: require('../../assets/images/cargo_haul/building_supplies/tools.jpg') },
-          { value: 'Wire (Non-Fiber Optic)' ,img: require('../../assets/images/cargo_haul/building_supplies/wire-nonfab.jpg') },
+          { value: 'Wire (Non-Fiber Optic)' ,img: require('../../assets/images/cargo_haul/building_supplies/wire-nonfab.png') },
           { value: 'Wood Products (Not Furniture or Caskets)' ,img: require('../../assets/images/cargo_haul/building_supplies/woodsproduct.jpg') },
           { value: 'Other Building Supplies',img: require('../../assets/images/cargo_haul/building_supplies/pipe.jpg')  }
         ]

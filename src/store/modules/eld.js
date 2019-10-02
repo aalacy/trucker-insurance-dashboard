@@ -73,7 +73,8 @@ export default {
         value:'Zed Connect (ZED)',
         image: require('../../assets/images/eld_provider/zed.png')
       },{
-        value:'None'
+        value:'None',
+        image: require('../../assets/images/eld_provider/none_eld.png')
       }
     ]
   }

@@ -126,14 +126,23 @@
           </div>
 
           <div v-if="error" class="alert alert-danger" role="alert">{{ error }}</div>
-
-          <div class="text-right">
+          <div class="d-flex row  justify-content-center">
+          <div class="text-right m-1">
             <button
               :disabled="loading"
               type="submit"
               class="lt-button btn-md lt-button-main"
-            >{{ submitBtnText }}</button>
+            >Upload</button>
           </div>
+          <div class="text-right m-1">
+            <button
+              :disabled="loading"
+              type="button"
+              @click="goNextForm"
+              class="lt-button btn-md lt-button-main"
+            >Skip</button>
+          </div>
+      </div>
         </form>
       </div>
     </div>
@@ -155,7 +164,7 @@ import { API } from "../api.js";
 import axios from "axios";
 import { isMobile } from "mobile-device-detect";
 import ModalLogin from "./ModalLogin.vue";
-import headerAssistant from "./header.vue";
+
 
 export default {
   name: "AccountInfoUploadDocuments",
@@ -172,7 +181,6 @@ export default {
   },
   components: {
     modelLogin: ModalLogin,
-    headerAssistant: headerAssistant
   },
   mounted() {
     if (localStorage.getItem("token")) {
@@ -189,8 +197,9 @@ export default {
         this.$store.dispatch("loadData", this.userData).then(() => {
           let len = this.$store.state.getData.data;
           for (let i = 0; i <= len.length; i++) {
-            console.log("len doc data", len);
+          
             if (this.$store.state.getData.data[i].key === "imageDOT") {
+              this.fnCall = true;
               let a = this.$store.state.getData.data[i];
               let b = JSON.parse(a.val);
               var url = "";
@@ -198,14 +207,15 @@ export default {
               this.getBase64Image(
                 "http://3.13.68.92:3000/company/" + b[0].filename,
                 base64image => {
-                  // console.log(base64image);
+                
                   url = base64image;
-                  // console.log("$$$$$$$", url);
+                
                   this.previewFile(url, "imageDOT");
                 }
               );
             }
             if (this.$store.state.getData.data[i].key === "imageRegistration") {
+              this.fnCall = true;
               let a = this.$store.state.getData.data[i];
               let b = JSON.parse(a.val);
               var url = "";
@@ -213,14 +223,15 @@ export default {
               this.getBase64Image(
                 "http://3.13.68.92:3000/company/" + b[0].filename,
                 base64image => {
-                  // console.log(base64image);
+                  //
                   url = base64image;
-                  // console.log("$$$$$$$", url);
+                  //
                   this.previewFile(url, "imageRegistration");
                 }
               );
             }
             if (this.$store.state.getData.data[i].key === "imageIdFront") {
+              this.fnCall = true;
               let a = this.$store.state.getData.data[i];
               let b = JSON.parse(a.val);
               var url = "";
@@ -228,14 +239,15 @@ export default {
               this.getBase64Image(
                 "http://3.13.68.92:3000/company/" + b[0].filename,
                 base64image => {
-                  // console.log(base64image);
+                  //
                   url = base64image;
-                  // console.log("$$$$$$$", url);
+                  //
                   this.previewFile(url, "imageIdFront");
                 }
               );
             }
             if (this.$store.state.getData.data[i].key === "imageIdBack") {
+              this.fnCall = true;
               let a = this.$store.state.getData.data[i];
               let b = JSON.parse(a.val);
               var url = "";
@@ -243,9 +255,9 @@ export default {
               this.getBase64Image(
                 "http://3.13.68.92:3000/company/" + b[0].filename,
                 base64image => {
-                  // console.log(base64image);
+                  //
                   url = base64image;
-                  // console.log("$$$$$$$", url);
+                  //
                   this.previewFile(url, "imageIdBack");
                 }
               );
@@ -257,10 +269,12 @@ export default {
       this.save = true;
       setTimeout(() => {
         this.$store.dispatch("loadData", this.uuid).then(() => {
+          // this.fnCall = true;
           let len = this.$store.state.getData.data;
           for (let i = 0; i <= len.length; i++) {
-            console.log("len doc data", len);
+          
             if (this.$store.state.getData.data[i].key === "imageDOT") {
+              this.fnCall = true;
               let a = this.$store.state.getData.data[i];
               let b = JSON.parse(a.val);
               var url = "";
@@ -268,14 +282,15 @@ export default {
               this.getBase64Image(
                 "http://3.13.68.92:3000/company/" + b[0].filename,
                 base64image => {
-                  // console.log(base64image);
+                  //
                   url = base64image;
-                  // console.log("$$$$$$$", url);
+                  //
                   this.previewFile(url, "imageDOT");
                 }
               );
             }
             if (this.$store.state.getData.data[i].key === "imageRegistration") {
+              this.fnCall = true;
               let a = this.$store.state.getData.data[i];
               let b = JSON.parse(a.val);
               var url = "";
@@ -283,14 +298,15 @@ export default {
               this.getBase64Image(
                 "http://3.13.68.92:3000/company/" + b[0].filename,
                 base64image => {
-                  // console.log(base64image);
+                  //
                   url = base64image;
-                  // console.log("$$$$$$$", url);
+                  //
                   this.previewFile(url, "imageRegistration");
                 }
               );
             }
             if (this.$store.state.getData.data[i].key === "imageIdFront") {
+              this.fnCall = true;
               let a = this.$store.state.getData.data[i];
               let b = JSON.parse(a.val);
               var url = "";
@@ -298,14 +314,15 @@ export default {
               this.getBase64Image(
                 "http://3.13.68.92:3000/company/" + b[0].filename,
                 base64image => {
-                  // console.log(base64image);
+                  //
                   url = base64image;
-                  // console.log("$$$$$$$", url);
+                  //
                   this.previewFile(url, "imageIdFront");
                 }
               );
             }
             if (this.$store.state.getData.data[i].key === "imageIdBack") {
+              this.fnCall = true;
               let a = this.$store.state.getData.data[i];
               let b = JSON.parse(a.val);
               var url = "";
@@ -313,9 +330,9 @@ export default {
               this.getBase64Image(
                 "http://3.13.68.92:3000/company/" + b[0].filename,
                 base64image => {
-                  // console.log(base64image);
+                  //
                   url = base64image;
-                  // console.log("$$$$$$$", url);
+                  //
                   this.previewFile(url, "imageIdBack");
                 }
               );
@@ -324,11 +341,12 @@ export default {
         });
       }, 1000);
     }
-    console.log("this.uuid", this.uuid);
+  
   },
   data() {
     return {
       uuid: "",
+      fnCall:false,
       final_uuid:"",
       userData:"",
       msg: isMobile
@@ -388,6 +406,9 @@ export default {
     this.loadCompany();
   },
   methods: {
+    goNextForm() {
+      this.$emit("go-to-form", this.nextForm);
+    },
     getBase64Image(imgUrl, callback) {
       var img = new Image();
       img.onload = function() {
@@ -420,7 +441,7 @@ export default {
         icon: "warning",
         buttons: ["No", "Yes"]
       }).then(willDelete => {
-        console.log("willbe", willDelete);
+      
         this.show();
         if (willDelete) {
           this.$router.push({ name: "AccountInfoUploadDocuments" });
@@ -441,10 +462,10 @@ export default {
       var temp_uuid;
       if (localStorage.getItem("token")) {
         temp_uuid = this.userData;
-        console.log("temp_uuid login after", temp_uuid);
+      
       } else {
         temp_uuid = this.uuid;
-        console.log("temp_uuid no login after", temp_uuid);
+      
       }
       try {
         let data = await API.formData("company/upload", temp_uuid);
@@ -467,7 +488,7 @@ export default {
               localStorage.getItem("userId")
           )
           .then(res => {
-            console.log("ress post", res);
+          
           });
       } catch (err) {
         // this.showmodel = true;
@@ -480,35 +501,45 @@ export default {
       }
     },
     setImage(event, fieldName) {
-      console.log("event",event);
-      console.log("filedName",fieldName)
+      
+      
       let { files } = event.target;
 
       let image = files[0] || null;
 
       this.formData[fieldName] = image;
-      console.log("image",image)
+    
       this.previewFile(image, fieldName);
 
       // this.validateField(fieldName);
     },
 
     previewFile(file, fieldName) {
+      //
       let reader = new FileReader();
-
-      reader.onloadend = () => {
+      //
+      reader.onload = () => {
         this.preview[fieldName] = reader.result;
+        //
         
       };
-
-      if (file) {
-        this.preview[fieldName] = file;
-        // console.log("this.preview[fieldName]",this.preview[fieldName])
+  
+      if (file && !this.fnCall) {
+      
+        //
         reader.readAsDataURL(file);
       } else {
         this.preview[fieldName] = null;
       }
+
+      if(file && this.fnCall){
+        this.preview[fieldName] = file;
+      } else {
+        this.preview[fieldName] = null;
+      
+      }
     },
+    
     async uploadDocuments() {
       // let formIsValid = this.validateForm();
       // if (!formIsValid) {
@@ -520,16 +551,16 @@ export default {
      if(localStorage.getItem('token')){
         
           this.final_uuid = this.userData;
-          console.log("this.final_uuid login after",this.final_uuid )
+        
       }else{
         this.final_uuid = this.uuid;
-        console.log("this.final_uuid no login after",this.final_uuid )
+      
       }
-        // console.log(data);
+        //
 
         if (data.status === "OK") {
-          console.log("this.nextForm", this.nextForm);
-          this.$router.push({ name: this.nextForm });
+          this.goNextForm();
+          // this.$router.push({ name: this.nextForm });
         } else if (data.status === "ERROR") {
           this.error = data.messages[0] || data.data;
         }

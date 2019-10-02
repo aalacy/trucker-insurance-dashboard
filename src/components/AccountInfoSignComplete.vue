@@ -163,14 +163,12 @@ import ModalLogin from "./ModalLogin.vue";
 import axios from "axios";
 import { API } from "../api.js";
 import { mapState } from "vuex";
-import headerAssistant from "./header.vue";
 import { setTimeout } from "timers";
 
 export default {
   name: "AccountInfoSignComplete",
   components: {
     modelLogin: ModalLogin,
-    headerAssistant: headerAssistant
   },
   props: {
     prevForm: {
@@ -233,13 +231,13 @@ export default {
     // if (this.driver.dateOfSign) {
     //       [dobM, dobD, dobY] = this.driver.dateOfSign.split('/');
     //     }
-    this.formData = {
-      ...this.formData,
-      //   ...this.driver,
-      dobM,
-      dobD,
-      dobY
-    };
+    // this.formData = {
+    //   ...this.formData,
+    //   //   ...this.driver,
+    //   dobM,
+    //   dobD,
+    //   dobY
+    // };
     this.loadCompany();
   },
   mounted() {
@@ -268,8 +266,8 @@ export default {
       setTimeout(() => {
         this.$store.dispatch("loadData", this.userData).then(res => {
           let len = this.$store.state.getData.data;
-          console.log("len", this.$store.state.getData.data);
-          console.log("len", len.length);
+          
+          
           for (let i = 0; i <= len.length; i++) {
             if (this.$store.state.getData.data[i].key == "imageSign") {
               let a = this.$store.state.getData.data[i];
@@ -278,9 +276,9 @@ export default {
               this.getBase64Image(
                 "http://3.13.68.92:3000/company/" + b[0].filename,
                 base64image => {
-                  console.log(base64image);
+                  
                   url = base64image;
-                  console.log("$$$$$$$", url);
+                  
                   this.previewFile(url, "imageSign");
                 }
               );
@@ -293,8 +291,8 @@ export default {
       setTimeout(() => {
         this.$store.dispatch("loadData", this.uuid).then(res => {
           let len = this.$store.state.getData.data;
-          console.log("len", this.$store.state.getData.data);
-          console.log("len", len);
+    
+    
           for (let i = 0; i <= len.length; i++) {
             if (this.$store.state.getData.data[i].key == "imageSign") {
               let a = this.$store.state.getData.data[i];
@@ -305,9 +303,9 @@ export default {
               this.getBase64Image(
                 "http://3.13.68.92:3000/company/" + b[0].filename,
                 base64image => {
-                  // console.log(base64image);
+                  
                   url = base64image;
-                  // console.log("$$$$$$$", url);
+                  
                   this.previewFile(url, "imageSign");
                 }
               );
@@ -325,10 +323,11 @@ export default {
       this.$refs.signaturePad.clearSignature();
     },
     saveSignature() {
+
       const { isEmpty, data } = this.$refs.signaturePad.saveSignature();
-    // if(isEmpty){
-      
-    // }
+    if(isEmpty){
+
+    }
       var a = this.base64toBlob(data.split(",")[1], "jpeg");
       this.formData.imageSign = a;
       this.updateCompany();
@@ -386,7 +385,7 @@ export default {
         icon: "warning",
         buttons: ["No", "Yes"]
       }).then(willDelete => {
-        console.log("willbe", willDelete);
+  
         if (willDelete) {
           this.show();
           this.$router.push({ name: "AccountInfoSignComplete" });
@@ -413,9 +412,9 @@ export default {
     },
     setImage(event, fieldName) {
       let { files } = event.target;
-      // console.log("event",event);
-      //   console.log("file",event.target);
-      //   console.log("fieldName",fieldName);
+      
+      //
+      //
       let image = files[0] || null;
 
       this.formData[fieldName] = image;
@@ -425,7 +424,7 @@ export default {
     },
     previewFile(file, fieldName) {
       let reader = new FileReader();
-      console.log("reader", reader);
+
       reader.onloadend = () => {
         this.preview[fieldName] = reader.result;
       };
@@ -442,7 +441,7 @@ export default {
     },
     async updateCompany() {
       // if(this.$refs.signaturePad.isEmpty()){
-      //   // console.log("empty")
+      //   
       // }
       let formIsValid = this.validateForm();
       if (!formIsValid) {
@@ -452,20 +451,20 @@ export default {
       this.error = null;
       if (localStorage.getItem("token")) {
         this.final_uuid = this.userData;
-        console.log("this.final_uuid login after", this.final_uuid);
+  
       } else {
         this.final_uuid = this.uuid;
-        console.log("this.final_uuid no login after", this.final_uuid);
+  
       }
-      // console.log("this", this.formData);
+      
       // this.saveSignature;
       try {
         let data = await API.formData("company/upload", this.formData);
-        console.log("this.formdata image", this.formData);
-        console.log("aaaadd", data);
+  
+  
         if (data.status === "OK") {
           this.goNextForm;
-          // console.log("this.nextForm", this.nextForm);
+          
           this.$router.push({ name: this.nextForm });
         } else if (data.status === "ERROR") {
           this.error = data.messages[0] || data.data;
@@ -478,7 +477,7 @@ export default {
               localStorage.getItem("userId")
           )
           .then(res => {
-            console.log("ress post", res);
+      
           });
       } catch (err) {
         console.error(err);

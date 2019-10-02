@@ -227,11 +227,8 @@ export default {
       required: false
     }
   },
-  updated() {
-    // console.log("VICKY#");
-  },
   mounted() {
-    console.log("this.selectedDriver", this.editedFrivers);
+    
 
     if (localStorage.getItem("token")) {
       this.save = false;
@@ -249,9 +246,9 @@ export default {
           for (let i = 0; i <= len.length; i++) {
             if (this.$store.state.getData.data[i].key == "owners") {
               let a = this.$store.state.getData.data[i];
-              console.log("a.length", a.length);
+              
               let b = JSON.parse(a.val).owners[0];
-              console.log("b", b);
+              
               this.formData.firstName = b.firstName;
               this.formData.lastName = b.lastName;
               [
@@ -274,9 +271,9 @@ export default {
           for (let i = 0; i <= len.length; i++) {
             if (this.$store.state.getData.data[i].key == "owners") {
               let a = this.$store.state.getData.data[i];
-              console.log("a.length", a.length);
+              
               let b = JSON.parse(a.val).owners[0];
-              console.log("b", b);
+              
               this.formData.firstName = b.firstName;
               this.formData.lastName = b.lastName;
               [

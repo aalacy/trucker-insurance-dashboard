@@ -208,6 +208,7 @@ export default new Router({
           name: 'AccountInfoPersonalInfo',
           component: () => import('./components/AccountInfoPersonalInfo.vue'),
           props: {
+            prevForm:'AccountInfoUploadDocuments',
             nextForm: 'AccountInfoBusinessStructure',
             progress: 10
           }

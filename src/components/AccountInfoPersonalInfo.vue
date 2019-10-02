@@ -4,7 +4,7 @@
       <div class="card">
         <div class="card-body">
           <h4 class="card-title form-sub-title">Business Information</h4>
-          <div class="col-md-6 col-lg-12 py-3">
+          <div class="col-md-6 col-lg-12 py-3 row">
               <h6 class="pt-2">Mailing Address</h6>
             </div>
           <div class="row">
@@ -75,6 +75,7 @@
                   class="lt-input"
                   placeholder="Zip Code*"
                   required
+                  minlength="5"
                   @change="validateField('zip')"
                   @focus="onFocus('zip')"
                   @blur="onBlur"
@@ -136,7 +137,7 @@
             </div>
           </div>
           <div class="col-md-12 col-sm-6 col-lg-12">
-            <input type="checkbox" id="checkbox" v-model="checked" v-on:change="changeData()">
+            <input type="checkbox" id="checkbox" class = "mt-1" v-model="checked" v-on:change="changeData()">
             <label for="checkbox" class="st-padding d-inline">Is Garaging address the same location?</label>
           </div>
           <div>
@@ -210,6 +211,7 @@
                     class="lt-input"
                     placeholder="Zip Code*"
                     required
+                    minlength="5"
                     @change="validateField('zip1')"
                     @focus="onFocus('zip1')"
                     @blur="onBlur"
@@ -224,19 +226,36 @@
         </div>
         <div class="card-footer">
           <div class="form-buttons next-wrapper">
-            <div class="col-6 p-0 d-flex pl-4 align-items-center color-font">
-              <font-awesome-icon icon="caret-left" size="2x" class="m-1"></font-awesome-icon>Previous
+            <div v-if="mobile" class="col-6 p-0">
+            
+              <button
+                :disabled="loading"
+                type="button"
+                class="lt-button px-4 text-center lt-button-default btn-block btn-border-radius-lb  d-flex align-itmes-center justify-content-center h-100"
+                @click="goPrevForm"
+              >
+                Prev
+                <div class="next-title  px-4 text-center d-inline pl-2 mob-2 button-icon color-bg">Upload Documents</div>
+              </button>
+            
+            </div>
+              <div v-else class="w-100">
+            <div class="lt-button px-4 text-center lt-button-default btn-block btn-border-radius-lb ">
+              <!-- <font-awesome-icon icon="caret-left" size="2x" class="m-1"></font-awesome-icon> -->
+              Previous
+              
+            </div>
             </div>
             <div class="col-6 p-0">
-              <!-- <i class="fas fa-home" aria-hidden="true"></i>  -->
+              
               <button
                 :disabled="loading"
                 type="submit"
-                class="lt-button lt-button-main btn-block btn-border-radius-rb p-1 button-icon d-flex align-itmes-center justify-content-center"
+                class="lt-button lt-button-main btn-block btn-border-radius-rb p-1 button-icon d-flex align-itmes-center justify-content-center h-100"
               >
-                <!-- <font-awesome-icon icon="amazon-pay" size="2x" class="m-1"></font-awesome-icon> -->
-                <span class="arrow-button">{{ loading ? 'Loading...' : 'Next' }}</span>Business Structure
-                <font-awesome-icon icon="caret-right" size="2x" class="m-1 fill-white"></font-awesome-icon>
+              
+                <span class="arrow-button ">{{ loading ? 'Loading...' : 'Next' }}</span>Business Structure
+                <!-- <font-awesome-icon icon="caret-right" size="2x" class="m-1 fill-white"></font-awesome-icon> -->
               </button>
             </div>
           </div>
@@ -263,8 +282,8 @@ import { API } from "../api.js";
 import ChatBoat from "./ChatBoat.vue";
 import ModalLogin from "./ModalLogin.vue";
 import { mapState, mutations } from "vuex";
+import { isMobile } from "mobile-device-detect";
 import axios from "axios";
-import headerAssistant from "./header.vue";
 import { setTimeout } from "timers";
 
 export default {
@@ -273,12 +292,15 @@ export default {
   components: {
     "chat-boat": ChatBoat,
     modelLogin: ModalLogin,
-    headerAssistant: headerAssistant
+    
   },
   props: {
     nextForm: {
       type: String,
       required: true
+    },
+    prevForm:{
+      type:String,
     },
     progress: {
       type: Number,
@@ -286,6 +308,7 @@ export default {
     }
   },
   mounted() {
+    this.mobile = isMobile ? true : false;
     if (localStorage.getItem("token")) {
       this.save = false;
       axios
@@ -296,18 +319,15 @@ export default {
         .then(coins => {
           this.userData = coins.data.uuid;
           localStorage.setItem("uuid",coins.data.uuid);
-          console.log("this.userData", this.userData);
+          
         });
       setTimeout(() => {
         this.$store.dispatch("loadData", this.userData).then(res => {
-          console.log("llllll")
           let len = this.$store.state.getData.data;
-          console.log("ll")
           for (let k = 0; k <= len.length; k++) {
             if (this.$store.state.getData.data[k].key == "personalInfo") {
               let a = this.$store.state.getData.data[k];
               let b = JSON.parse(a.val);
-              console.log("b", b);
               this.formData.address = b.address;
               this.formData.city = b.city;
               this.formData.zip = b.zip;
@@ -323,7 +343,7 @@ export default {
           }
         });
 
-        // console.log("Address Data full val", fullAddress);
+        
       }, 1000);
       this.formData.USDOT = localStorage.getItem("usdot");
       this.formData.company = localStorage.getItem("company");
@@ -346,8 +366,31 @@ export default {
       this.formData.state1 = PhysicalAddress[2].trim().replace(",", "");
       this.formData.zip1 = PhysicalAddress[0].trim().replace(",", "");
     } else {
-      console.log("save token no", this.save);
       this.save = true;
+      
+      this.formData.USDOT = localStorage.getItem("usdot");
+      this.formData.company = localStorage.getItem("company");
+      this.formData.phone = localStorage.getItem("Phone");
+      let fullAddress = localStorage.getItem(["Mailing address"]);
+      
+
+
+      let MailingAddress = this.formatAddress(
+        localStorage.getItem(["Mailing address"])
+      );
+      this.formData.address = MailingAddress[3].trim().replace(",", "");
+      this.formData.state = MailingAddress[1].trim().replace(",", "");
+      this.formData.city = MailingAddress[2].trim().replace(",", "");
+      this.formData.zip = MailingAddress[0].trim().replace(",", "");
+      let PhysicalAddress = this.formatAddress(
+        localStorage.getItem(["Physical address"])
+      );
+      this.formData.address1 = PhysicalAddress[3].trim().replace(",", "");
+      this.formData.state1 = PhysicalAddress[1].trim().replace(",", "");
+      this.formData.city1 = PhysicalAddress[2].trim().replace(",", "");
+      this.formData.zip1 = PhysicalAddress[0].trim().replace(",", "");
+
+
       setTimeout(() => {
         this.$store
           .dispatch("loadData", this.uuid)
@@ -373,27 +416,8 @@ export default {
           })
           .catch(() => {});
       }, 1000);
-      this.formData.USDOT = localStorage.getItem("usdot");
-      this.formData.company = localStorage.getItem("company");
-      this.formData.phone = localStorage.getItem("Phone");
-      let fullAddress = localStorage.getItem(["Mailing address"]);
-
-      let MailingAddress = this.formatAddress(
-        localStorage.getItem(["Mailing address"])
-      );
-      this.formData.address = MailingAddress[3].trim().replace(",", "");
-      this.formData.state = MailingAddress[1].trim().replace(",", "");
-      this.formData.city = MailingAddress[2].trim().replace(",", "");
-      this.formData.zip = MailingAddress[0].trim().replace(",", "");
-      let PhysicalAddress = this.formatAddress(
-        localStorage.getItem(["Physical address"])
-      );
-      this.formData.address1 = PhysicalAddress[3].trim().replace(",", "");
-      this.formData.state1 = PhysicalAddress[1].trim().replace(",", "");
-      this.formData.city1 = PhysicalAddress[2].trim().replace(",", "");
-      this.formData.zip1 = PhysicalAddress[0].trim().replace(",", "");
     }
-    // console.log("this.uuuuid mount",this.uuid);
+    
   },
   beforeMount() {
     // localStorage.setItem("uuid", null);
@@ -408,6 +432,7 @@ export default {
       showmodel: false,
       final_uuid:"",
       save: true,
+      mobile:false,
       uuid: "",
       // newQuote: false,
       userData: "",
@@ -455,18 +480,19 @@ export default {
   },
   created() {
     this.$emit("update-progress", this.progress);
-    localStorage.setItem("uuid", null);
+    // localStorage.setItem("uuid", null);
 
     this.loadCompany();
   },
   updated() {
-    if (localStorage.getItem("showModal") == "true") {
-      this.showmodel = true;
-    } else {
-      this.showmodel = false;
-    }
+    // if (localStorage.getItem("showModal") == "true") {
+    //   this.showmodel = true;
+    // } else {
+    //   this.showmodel = false;
+    // }
   },
   methods: {
+    
     changeData() {
       if (this.checked) {
         this.formData.address1 = this.formData.address;
@@ -487,7 +513,7 @@ export default {
         icon: "warning",
         buttons: ["No", "Yes"]
       }).then(willDelete => {
-        console.log("willbe", willDelete);
+  
         this.show();
         if (willDelete) {
           
@@ -514,10 +540,10 @@ export default {
       this.error = null;
       if (localStorage.getItem("token")) {
         temp_uuid = this.userData;
-        console.log("temp_uuid login after", temp_uuid);
+  
       } else {
         temp_uuid = this.uuid;
-        console.log("temp_uuid no login after", temp_uuid);
+  
       }
       try {
         let data = await API.post("company/save", {
@@ -526,7 +552,7 @@ export default {
           user_id: localStorage.getItem("userId"),
           uuid: temp_uuid
         });
-        console.log("this.formData per", this.formData);
+  
         if (data.status === "OK") {
           if(!localStorage.getItem("token")){
             if (this.showmodel) {
@@ -557,6 +583,9 @@ export default {
     goNextForm() {
       this.$emit("go-to-form", this.nextForm);
     },
+    goPrevForm() {
+      this.$emit("go-to-form", this.prevForm);
+    },
     validateField(fieldName) {
       validateField(fieldName, this.formData, this.rules, this.formErrors);
     },
@@ -570,9 +599,8 @@ export default {
       try {
         let data = await API.get("company/current");
         this.uuid = data.data.b;
-        console.log("this.uuid", this.uuid);
+  
         if (data.status === "OK") {
-          console.log("this VICKY", data.data.b);
           // localStorage.setItem("uuid",data.data.b)
           let { personalInfo } = data.data;
           if (personalInfo) {
@@ -629,10 +657,10 @@ export default {
       if(localStorage.getItem('token')){
         
           this.final_uuid = this.userData;
-          console.log("this.final_uuid login after",this.final_uuid )
+    
       }else{
         this.final_uuid = this.uuid;
-        console.log("this.final_uuid no login after",this.final_uuid )
+  
       }
       try {
         let data = await API.post("company/save", {
@@ -641,11 +669,11 @@ export default {
           user_id: localStorage.getItem("userId"),
           uuid: this.final_uuid
         });
-        console.log("this.formData per", this.formData);
+  
         if (data.status === "OK") {
           this.goNextForm();
         } else if (data.status === "ERROR") {
-          // console.log("data",data)
+          
           this.error = data.messages[0] || data.data;
         }
 
@@ -659,10 +687,10 @@ export default {
               localStorage.getItem("userId")
           )
           .then(res => {
-            console.log("ress post", res);
+      
           });
         // .catch(err => this.$swal("Opps!",err, "error"))
-        // .finally(() => console.log("hiiiiiiii"));
+        // .finally(() 
       } catch (err) {
         // console.error(err);
         this.error = err.message;
@@ -675,6 +703,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.color-bg{
+  color:#6f6f6f
+}
 .st-padding {
   // color: black;
   padding-left: 10px;

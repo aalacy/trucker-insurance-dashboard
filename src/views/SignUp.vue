@@ -166,11 +166,18 @@ export default {
 
         if (data.status === "ok") {
           this.loading = false;
-          console.log("register data", data);
+          console.log("data reg",data);
+          localStorage.setItem("token", data.data.Tokens[0].token);
+          localStorage.setItem("userId",data.data.id);
+          // console.log("register data", data.account_status);
           loader.hide();
           this.$swal("", "You are successfully Registered!", "success");
-
-          this.$router.push({ name: "LogIn" });
+          if (data.data.account_status == "0") {
+                  this.$router.push({ name: "Home" });
+                } else {
+                  this.$router.push({ name: "AccountInfo" });
+                }
+                // this.$router.push({ name: "LogIn" });
         } else if (data.status === "error") {
           this.loading = false;
           loader.hide();

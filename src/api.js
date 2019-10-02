@@ -2,17 +2,17 @@ import axios from 'axios';
 
 class APIService {
   get(url, params, options) {
-    console.log("Stuti", url, null, params, options)
+    
     return this.request('GET', url, null, params, options);
   }
 
   post(url, data, params, options) {
-    console.log("Stuti post", url, null, params, options)
+    
     return this.request('POST', url, data, params, options);
   }
 
   formData(url, data, params, options) {
-    console.log("Stuti formdata", url, null, params, options)
+    
     let formData = this._getFormData(data);
     return this.request('POST', url, formData, params, options);
   }

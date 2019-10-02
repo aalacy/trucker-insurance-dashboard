@@ -33,9 +33,10 @@
               <div
                 v-for="(item, index) in allProviders"
                 :key="index"
-                class="col-3 text-center pointer mb-2 p-1 eld-provider"
-                @click="selectProvider(item.value)"
+                class="col-3 text-center pointer mb-2 p-1 "
+                @click="selectProvider(item.value)"  :class="{ selected: eldProviderMap[item.value] }"
               >
+              <div class="eld-provider">
                 <div class="p-1 provider-img-wrapper">
                   <img v-if="item.image" :src="item.image" alt class="provider-img rounded">
                   <!-- <div v-else class="p-1 provider-img-wrapper">
@@ -52,6 +53,7 @@
                   class="font-weight-bold name"
                   :class="{ selected: eldProviderMap[item.value] }"
                 >{{ item.value }}</div>
+              </div>
               </div>
             </div>
           </div>
@@ -108,7 +110,6 @@ import { validateField, validateForm, minLength } from "../validators.js";
 import { API } from "../api.js";
 import ModalLogin from "./ModalLogin.vue";
 import axios from "axios";
-import headerAssistant from "./header.vue";
 import { setTimeout } from 'timers';
 
 export default {
@@ -166,7 +167,6 @@ export default {
   },
   components: {
     modelLogin: ModalLogin,
-     headerAssistant:headerAssistant
 
   },
   mounted() {
@@ -191,13 +191,13 @@ export default {
             {
           let a = this.$store.state.getData.data[j];
           let b = JSON.parse(a.val).eldProvider;
-          console.log(b);
+          
           let c = [];
           for (var i = 0; i < b.length; i++) {
             c.push(b[i]);
           }
           let filteredKeywords = c.filter(word => b.includes(word));
-          console.log("filteredKeywords", filteredKeywords);
+          
           for (var i = 0; i < filteredKeywords.length; i++) {
             this.selectProvider(filteredKeywords[i]);
           }
@@ -221,13 +221,13 @@ export default {
             {
           let a = this.$store.state.getData.data[j];
           let b = JSON.parse(a.val).eldProvider;
-          console.log(b);
+          
           let c = [];
           for (var i = 0; i < b.length; i++) {
             c.push(b[i]);
           }
           let filteredKeywords = c.filter(word => b.includes(word));
-          console.log("filteredKeywords", filteredKeywords);
+          
           for (var i = 0; i < filteredKeywords.length; i++) {
             this.selectProvider(filteredKeywords[i]);
           }
@@ -257,7 +257,7 @@ export default {
         buttons: ["No", "Yes"]
       }).then(willDelete => {
         this.show();
-        console.log("willbe", willDelete);
+        
         if (willDelete) {
           this.$router.push({ name: "AccountInfoEldProvider" });
         } else {
@@ -281,10 +281,10 @@ export default {
       this.error = null;
   if (localStorage.getItem("token")) {
         temp_uuid = this.userData;
-        console.log("temp_uuid login after", temp_uuid);
+        
       } else {
         temp_uuid = this.uuid;
-        console.log("temp_uuid no login after", temp_uuid);
+        
       }
       
       try {
@@ -406,10 +406,10 @@ export default {
          if(localStorage.getItem('token')){
         
           this.final_uuid = this.userData;
-          console.log("this.final_uuid login after",this.final_uuid )
+          
       }else{
         this.final_uuid = this.uuid;
-        console.log("this.final_uuid no login after",this.final_uuid )
+        
       }
       try {
         let data = await API.post("company/save", {
@@ -428,7 +428,7 @@ export default {
           "http://3.13.68.92/luckytrucker_admin/api/CompanyController/postUserIdByUuid?uuid="+ this.final_uuid +"&user_id="+localStorage.getItem("userId")
         )
         .then(res => {
-          console.log("ress post",res)
+          
         })
       } catch (err) {
         console.error(err);

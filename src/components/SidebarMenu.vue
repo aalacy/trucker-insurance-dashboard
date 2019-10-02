@@ -14,8 +14,8 @@
         <div v-for="(item, indexa) in itemsa" :key="indexa" class="menu-item p-2   navigation-links">
        
      
-            <div>NEED HELP?</div>
-            <div class="">Speak now with a license insurance agent</div>
+            <div>Need Help?</div>
+            <div class="">Speak now with a licensed insurance agent</div>
             <a href="tel:16469330419" class="bt-call ">Click to Talk</a>
             <div class=" justify-content-center">
 or call us 24/7?

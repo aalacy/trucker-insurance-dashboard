@@ -431,14 +431,14 @@ export default {
       setTimeout(() => {
         this.$store.dispatch("loadData", this.userData).then(() => {
           let len = this.$store.state.getData.data;
-          console.log("len", len);
+          
           for (let i = 0; i < len.length; i++) {
             if (this.$store.state.getData.data[i].key == "drivers") {
               let a = this.$store.state.getData.data[i];
-              console.log("a", a.val);
+              
               let b = JSON.parse(a.val)[0];
               this.formData.firstName = b.firstName;
-              console.log("this.formData.firstname", this.formData.firstName);
+              
               this.formData.lastName = b.lastName;
               this.formData.middleName = b.middleName;
               [
@@ -447,7 +447,7 @@ export default {
                 this.formData.dobY
               ] = b.dateOfBirth.split("/");
               // this.formData.dobM = dobM;
-              console.log("f", this.formData.dobM);
+              
               this.formData.address = b.address;
               this.formData.licenseNumber = b.licenseNumber;
               this.formData.state = b.state;
@@ -481,7 +481,7 @@ export default {
                 this.formData.dobY
               ] = b.dateOfBirth.split("/");
               // this.formData.dobM = dobM;
-              console.log("f", this.formData.dobM);
+              
               this.formData.address = b.address;
               this.formData.licenseNumber = b.licenseNumber;
               this.formData.state = b.state;

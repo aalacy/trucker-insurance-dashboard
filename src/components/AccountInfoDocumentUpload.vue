@@ -230,12 +230,10 @@
 import { API } from "../api.js";
 import ModalLogin from "./ModalLogin.vue";
 import axios from "axios";
-import headerAssistant from "./header.vue";
 import { setTimeout } from "timers";
 export default {
   components: {
     modelLogin: ModalLogin,
-    headerAssistant: headerAssistant
   },
   name: "AccountInfoDocumentUpload",
   props: {
@@ -312,25 +310,25 @@ export default {
               let a = JSON.parse(this.$store.state.getData.data[i].val)[0]
                 .originalname;
               this.preview.lossRun = a;
-              console.log("A", a);
+              
             }
             if (this.$store.state.getData.data[i].key === "ifta") {
               let a = JSON.parse(this.$store.state.getData.data[i].val)[0]
                 .originalname;
               this.preview.ifta = a;
-              console.log("A", a);
+              
             }
             if (this.$store.state.getData.data[i].key === "contracts") {
               let a = JSON.parse(this.$store.state.getData.data[i].val)[0]
                 .originalname;
               this.preview.contracts = a;
-              console.log("A", a);
+              
             }
             if (this.$store.state.getData.data[i].key === "declarations") {
               let a = JSON.parse(this.$store.state.getData.data[i].val)[0]
                 .originalname;
               this.preview.declarations = a;
-              console.log("A", a);
+              
             }
             if (
               this.$store.state.getData.data[i].key === "rentalLeaseAgreement"
@@ -338,7 +336,7 @@ export default {
               let a = JSON.parse(this.$store.state.getData.data[i].val)[0]
                 .originalname;
               this.preview.rentalLeaseAgreement = a;
-              console.log("A", a);
+              
             }
             if (
               this.$store.state.getData.data[i].key ===
@@ -347,7 +345,7 @@ export default {
               let a = JSON.parse(this.$store.state.getData.data[i].val)[0]
                 .originalname;
               this.preview.previouslyCompletedApplications = a;
-              console.log("A", a);
+              
             }
             if (
               this.$store.state.getData.data[i].key === "insuranceRequirements"
@@ -355,7 +353,7 @@ export default {
               let a = JSON.parse(this.$store.state.getData.data[i].val)[0]
                 .originalname;
               this.preview.insuranceRequirements = a;
-              console.log("A", a);
+              
             }
           }
         });
@@ -370,25 +368,25 @@ export default {
               let a = JSON.parse(this.$store.state.getData.data[i].val)[0]
                 .originalname;
               this.preview.lossRun = a;
-              console.log("A", a);
+              
             }
             if (this.$store.state.getData.data[i].key === "ifta") {
               let a = JSON.parse(this.$store.state.getData.data[i].val)[0]
                 .originalname;
               this.preview.ifta = a;
-              console.log("A", a);
+              
             }
             if (this.$store.state.getData.data[i].key === "contracts") {
               let a = JSON.parse(this.$store.state.getData.data[i].val)[0]
                 .originalname;
               this.preview.contracts = a;
-              console.log("A", a);
+              
             }
             if (this.$store.state.getData.data[i].key === "declarations") {
               let a = JSON.parse(this.$store.state.getData.data[i].val)[0]
                 .originalname;
               this.preview.declarations = a;
-              console.log("A", a);
+              
             }
             if (
               this.$store.state.getData.data[i].key === "rentalLeaseAgreement"
@@ -396,7 +394,7 @@ export default {
               let a = JSON.parse(this.$store.state.getData.data[i].val)[0]
                 .originalname;
               this.preview.rentalLeaseAgreement = a;
-              console.log("A", a);
+              
             }
             if (
               this.$store.state.getData.data[i].key ===
@@ -405,7 +403,7 @@ export default {
               let a = JSON.parse(this.$store.state.getData.data[i].val)[0]
                 .originalname;
               this.preview.previouslyCompletedApplications = a;
-              console.log("A", a);
+              
             }
             if (
               this.$store.state.getData.data[i].key === "insuranceRequirements"
@@ -413,13 +411,13 @@ export default {
               let a = JSON.parse(this.$store.state.getData.data[i].val)[0]
                 .originalname;
               this.preview.insuranceRequirements = a;
-              console.log("A", a);
+              
             }
           }
         });
       }, 1000);
     }
-    console.log("this.uuid", this.uuid);
+    
   },
   methods: {
     newQuoteReq() {
@@ -429,7 +427,7 @@ export default {
         icon: "warning",
         buttons: ["No", "Yes"]
       }).then(willDelete => {
-        console.log("willbe", willDelete);
+        
         this.show();
         if (willDelete) {
           this.$router.push({ name: "AccountInfoDocumentUpload" });
@@ -445,12 +443,12 @@ export default {
       });
     },
     removeDoc(fieldName) {
-      console.log(fieldName);
+      
       switch (fieldName) {
         case "lossRun":
-          console.log("this.formData.lossRun",this.formData.lossRun);
+          
           this.formData.lossRun = null;
-          console.log("this.formData.lossRun",this.formData);
+          
           this.preview.lossRun = null;
           break;
         case "ifta":
@@ -485,10 +483,10 @@ export default {
       var temp_uuid;
       if (localStorage.getItem("token")) {
         temp_uuid = this.userData;
-        console.log("temp_uuid login after", temp_uuid);
+        
       } else {
         temp_uuid = this.uuid;
-        console.log("temp_uuid no login after", temp_uuid);
+        
       }
       try {
         let data = await API.formData("company/upload", temp_uuid);
@@ -511,7 +509,7 @@ export default {
               localStorage.getItem("userId")
           )
           .then(res => {
-            console.log("ress post", res);
+            
           });
       } catch (err) {
         // this.showmodel = true;
@@ -532,22 +530,22 @@ export default {
     onFileChange(event, fieldName) {
       let file = event.target.files[0] || null;
       this.formData[fieldName] = file;
-      console.log("this.formData.fieldName",this.formData[fieldName])
+      
       this.previewFile(file, fieldName);
     },
     previewFile(file, fieldName) {
       let reader = new FileReader();
       reader.onloadend = () => {
         // this.preview[fieldName] = reader.result;
-        console.log("this.preview[fieldName] ", fieldName);
+        
       };
 
       if (file) {
         reader.readAsDataURL(file);
         this.preview[fieldName] = file.name;
-        // console.log("file",file.name)
+        // 
       } else {
-        // console.log("this.preview[fieldName]",this.preview[fieldName])
+        // 
         this.preview[fieldName] = null;
       }
     },
@@ -558,7 +556,7 @@ export default {
       try {
         let data = await API.get("company/current");
         this.uuid = data.data.b;
-        console.log("this.uuid", this.uuid);
+        
         if (data.status === "ERROR") {
           // this.$router.replace({ name: "Home" });
         }
@@ -572,21 +570,21 @@ export default {
     async updateCompany() {
       this.loading = true;
       this.error = null;
-      console.log("updateCompany", this.formData);
+      
       try {
         let data = await API.formData("company/upload", this.formData);
       
-        console.log("this.formData document",this.formData)
+        
          if(localStorage.getItem('token')){
         
           this.final_uuid = this.userData;
-          console.log("this.final_uuid login after",this.final_uuid )
+          
       }else{
         this.final_uuid = this.uuid;
-        console.log("this.final_uuid no login after",this.final_uuid )
+        
       }
         if (data.status === "OK") {
-          console.log("status ok")
+          
           this.goNextForm();
         } else if (data.status === "ERROR") {
           this.error = data.messages[0] || data.data;
@@ -599,7 +597,7 @@ export default {
               localStorage.getItem("userId")
           )
           .then(res => {
-            console.log("ress post", res);
+            
           });
       } catch (err) {
         console.error(err);

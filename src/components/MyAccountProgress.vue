@@ -52,7 +52,7 @@ export default {
         // localStorage.setItem("viewQuote", true);
         console.log(data);
         if (data.status === "ok") {
-          localStorage.removeItem("accBtn");
+          
           localStorage.removeItem("uuid");
           localStorage.removeItem("redirect");
           this.quote = "true";
@@ -115,7 +115,7 @@ export default {
   background-color: $color_lightblue_1;
 
   .title {
-    padding: 1rem 2.5rem;
+    padding: 1rem ;
     color: $color_darkblue;
   }
 

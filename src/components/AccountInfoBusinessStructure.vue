@@ -12,11 +12,15 @@
                   v-model="formData.businessStructure"
                   :class="{ 'has-error': formErrors.businessStructure }"
                   class="lt-input"
+                  @blur="onBlur"
+                   @click="onFocus('businessStructure')"
                   required
                   @change="validateField('businessStructure')"
-                  @focus="onFocus('businessStructure')"
-                  @blur="onBlur"
+                  
+                  
                 >
+                <!-- @focus="onFocus('businessStructure')" -->
+                <!-- @blur="onBlur" -->
                   <option value>Business Structure*</option>
                   <option v-for="item in businessStructures" :key="item" :value="item">{{ item }}</option>
                 </select>
@@ -92,16 +96,17 @@
 
           <div class="row">
             <div class="col-12">
-              <div class="form-group">
+              <div class="form-group" @click="onFocus('businessType')">
                 <select
                   v-model="formData.businessType"
                   :class="{ 'has-error': formErrors.businessType }"
                   class="lt-input"
                   required
                   @change="validateField('businessType')"
-                  @focus="onFocus('businessType')"
+                  
                   @blur="onBlur"
                 >
+                <!-- @focus="onFocus('businessType')" -->
                   <option value>Business Type*</option>
                   <option v-for="item in businessTypes" :key="item" :value="item">{{ item }}</option>
                 </select>
@@ -122,7 +127,7 @@
               <button
                 :disabled="loading"
                 type="button"
-                class="lt-button lt-button-default px-4 btn-block btn-border-radius-lb"
+                class="lt-button lt-button-default btn-block btn-border-radius-lb"
                 @click="goPrevForm"
               >
                 Prev
@@ -168,7 +173,6 @@ import { API } from "../api.js";
 import { mapState } from "vuex";
 import { constants } from "fs";
 import axios from "axios";
-import headerAssistant from "./header.vue";
 import { setTimeout } from "timers";
 
 export default {
@@ -188,7 +192,7 @@ export default {
     }
   },
   components: {
-    headerAssistant: headerAssistant,
+    
     modelLogin: ModalLogin
   },
   data() {
@@ -261,8 +265,7 @@ export default {
         )
         .then(coins => {
           this.userData = coins.data.uuid;
-          console.log( localStorage.getItem("userId"))
-          console.log("this.userDataaa",this.userData)
+
         });
       setTimeout(() => {
         this.$store.dispatch("loadData", this.userData).then(res => {
@@ -271,7 +274,7 @@ export default {
             if (this.$store.state.getData.data[i].key == "businessStructure") {
               let a = this.$store.state.getData.data[i];
               let b = JSON.parse(a.val);
-              //  console.log("bbb",b)
+              
               this.formData.businessStructure = b.businessStructure;
               this.formData.businessType = b.businessType;
               this.formData.MC = b.MC;
@@ -281,7 +284,7 @@ export default {
       }, 1000);
     } else {
       this.save = true;
-      console.log("busi", this.uuid);
+      
       setTimeout(() => {
         this.$store.dispatch("loadData", this.uuid).then(res => {
           let len = this.$store.state.getData.data;
@@ -289,7 +292,7 @@ export default {
             if (this.$store.state.getData.data[i].key == "businessStructure") {
               let a = this.$store.state.getData.data[i];
               let b = JSON.parse(a.val);
-              //  console.log("bbb",b)
+              
               this.formData.businessStructure = b.businessStructure;
               this.formData.businessType = b.businessType;
               this.formData.MC = b.MC;
@@ -322,12 +325,11 @@ export default {
         icon: "warning",
         buttons: ["No", "Yes"]
       }).then(willDelete => {
-        console.log("willbe", willDelete);
+        
         this.show();
         if (willDelete) {
           this.$router.push({ name: "AccountInfoBusinessStructure" });
         } else {
-          
           swal(
             "Thank You!",
             "Your changes has been accepted! You will get new Updated Quote",
@@ -349,10 +351,10 @@ export default {
       this.error = null;
       if (localStorage.getItem("token")) {
         temp_uuid = this.userData;
-        console.log("temp_uuid login after", temp_uuid);
+        
       } else {
         temp_uuid = this.uuid;
-        console.log("temp_uuid no login after", temp_uuid);
+        
       }
 
       try {
@@ -436,13 +438,13 @@ export default {
       this.error = null;
       if (localStorage.getItem("token")) {
         this.final_uuid = this.userData;
-        console.log("this.final_uuid login after", this.final_uuid);
+        
       } else {
         this.final_uuid = this.uuid;
-        console.log("this.final_uuid no login after", this.final_uuid);
+
       }
       try {
-        console.log("this.final_uuid login in api call", this.final_uuid);
+
         let data = await API.post("company/save", {
           key: "businessStructure",
           val: this.formData,
@@ -463,10 +465,10 @@ export default {
               localStorage.getItem("userId")
           )
           .then(res => {
-            console.log("ress post", res);
+            
           });
       } catch (err) {
-        console.error(err);
+        
         this.error = err.message;
       } finally {
         this.loading = false;

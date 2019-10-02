@@ -68,7 +68,6 @@ import { API } from "../api.js";
 import ModalLogin from "./ModalLogin.vue";
 import { mapState } from "vuex";
 import axios from "axios";
-import headerAssistant from "./header.vue";
 import { setTimeout } from 'timers';
 
 export default {
@@ -89,7 +88,6 @@ export default {
   },
   components: {
     modelLogin: ModalLogin,
-     headerAssistant:headerAssistant
 
   },
   mounted() {
@@ -112,7 +110,7 @@ export default {
             if(this.$store.state.getData.data[i].key=="questions"){
           let a = this.$store.state.getData.data[i];
           let b = JSON.parse(a.val);
-                    console.log("b", b);
+                   
 
           this.formData.question1 = b.question1;
             }
@@ -134,7 +132,7 @@ export default {
             if(this.$store.state.getData.data[i].key=="questions"){
           let a = this.$store.state.getData.data[i];
           let b = JSON.parse(a.val);
-                    console.log("b", b);
+                   
 
           this.formData.question1 = b.question1;
             }
@@ -192,7 +190,7 @@ export default {
         icon: "warning",
         buttons: ["No", "Yes"]
       }).then(willDelete => {
-        console.log("willbe", willDelete);
+       
         this.show();
         if (willDelete) {
           
@@ -214,10 +212,10 @@ export default {
       var temp_uuid;
        if (localStorage.getItem("token")) {
         temp_uuid = this.userData;
-        console.log("temp_uuid login after", temp_uuid);
+       
       } else {
         temp_uuid = this.uuid;
-        console.log("temp_uuid no login after", temp_uuid);
+       
       }
       
       try {
@@ -289,10 +287,10 @@ export default {
           if(localStorage.getItem('token')){
         
           this.final_uuid = this.userData;
-          console.log("this.final_uuid login after",this.final_uuid )
+         
       }else{
         this.final_uuid = this.uuid;
-        console.log("this.final_uuid no login after",this.final_uuid )
+       
       }
       try {
         let data = await API.post("company/save", {
@@ -311,7 +309,7 @@ export default {
           "http://3.13.68.92/luckytrucker_admin/api/CompanyController/postUserIdByUuid?uuid="+ this.final_uuid+"&user_id="+localStorage.getItem("userId")
         )
         .then(res => {
-          console.log("ress post",res)
+         
         })
       } catch (err) {
         console.error(err);

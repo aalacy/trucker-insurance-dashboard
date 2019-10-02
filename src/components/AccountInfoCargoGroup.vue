@@ -9,9 +9,10 @@
               <div
                 v-for="(item, index) in cargoGroups"
                 :key="index"
-                class="col-3 text-center pointer mb-2 p-1 cargo-group"
+                class="col-3 text-center pointer mb-2 p-1 "
                 @click="selectCargoGroup(item.value)"
-              >
+              :class="{ selected: cargoGroupMap[item.value] }">
+              <div class="cargo-group">
                 <div class="p-1">
                   <img :src="item.src" alt>
                 </div>
@@ -20,6 +21,7 @@
                   class="font-weight-bold name"
                   :class="{ selected: cargoGroupMap[item.value] }"
                 >{{ item.value }}</div>
+              </div>
               </div>
             </div>
           </div>
@@ -70,7 +72,6 @@
 </template>
 
 <script>
-import headerAssistant from "./header.vue";
 import { mapState } from "vuex";
 import { validateField, validateForm, minLength } from "../validators.js";
 import { API } from "../api.js";
@@ -95,7 +96,7 @@ export default {
   },
   mounted() {
     if (localStorage.getItem("token")) {
-      console.log("save token", this.save);
+     
       this.save = false;
       axios
         .get(
@@ -112,13 +113,13 @@ export default {
             if (this.$store.state.getData.data[j].key == "cargoGroup") {
               let a = this.$store.state.getData.data[j];
               let b = JSON.parse(a.val).cargoGroup;
-              console.log("b", b);
+             
               let c = [];
               for (var i = 0; i < this.cargoGroups.length; i++) {
                 c.push(this.cargoGroups[i].value);
               }
               let filteredKeywords = c.filter(word => b.includes(word));
-              console.log("filteredKeywords", filteredKeywords);
+             
               for (var i = 0; i < filteredKeywords.length; i++) {
                 this.selectCargoGroup(filteredKeywords[i]);
               }
@@ -128,7 +129,7 @@ export default {
         });
       }, 1000);
     } else {
-      console.log("save token no", this.save);
+     
       this.save = true;
       setTimeout(() => {
         this.$store.dispatch("loadData", this.uuid).then(() => {
@@ -137,13 +138,13 @@ export default {
             if (this.$store.state.getData.data[j].key == "cargoGroup") {
               let a = this.$store.state.getData.data[j];
               let b = JSON.parse(a.val).cargoGroup;
-              console.log("b", b);
+             
               let c = [];
               for (var i = 0; i < this.cargoGroups.length; i++) {
                 c.push(this.cargoGroups[i].value);
               }
               let filteredKeywords = c.filter(word => b.includes(word));
-              console.log("filteredKeywords", filteredKeywords);
+             
               for (var i = 0; i < filteredKeywords.length; i++) {
                 this.selectCargoGroup(filteredKeywords[i]);
               }
@@ -156,7 +157,7 @@ export default {
   },
   components: {
     modalLogin: ModalLogin,
-    headerAssistant: headerAssistant
+    
   },
 
   data() {
@@ -185,9 +186,9 @@ export default {
       let map = {};
       this.formData.cargoGroup.forEach(val => {
         map[val] = true;
-        // console.log("val",val)
+        //
       });
-      // console.log("map",map)
+      //
       return map;
     },
     ...mapState(["data"])
@@ -212,7 +213,7 @@ export default {
         icon: "warning",
         buttons: ["No", "Yes"]
       }).then(willDelete => {
-        console.log("willbe", willDelete);
+       
         this.show();
         if (willDelete) {
           
@@ -230,9 +231,9 @@ export default {
       });
     },
     selectCargoGroup(cargoGroupValue) {
-      // console.log("cargoGroupValue",cargoGroupValue)
+      //
       // this.formData.cargoGroup.push(cargoGroupValue)
-      // console.log("this.formData.cargoGroup",this.formData.cargoGroup)
+      //
       if (this.cargoGroupMap[cargoGroupValue]) {
         this.formData.cargoGroup = this.formData.cargoGroup.filter(
           val => val !== cargoGroupValue
@@ -268,10 +269,10 @@ export default {
       }
       if (localStorage.getItem("token")) {
         temp_uuid = this.userData;
-        console.log("this.final_uuid login after", temp_uuid);
+       
       } else {
         temp_uuid = this.uuid;
-        console.log("this.final_uuid no login after", temp_uuid);
+       
       }
 
       this.loading = true;
@@ -304,12 +305,12 @@ export default {
         //       localStorage.getItem("userId")
         //   )
         //   .then(res => {
-        //     console.log("ress post", res);
+        //    
         //   });
       } catch (err) {
         // this.showmodel = true;
 
-        console.error(err);
+       
         this.error = err.message;
       } finally {
         // this.showmodel = true;
@@ -334,10 +335,10 @@ export default {
           }
         } else if (data.status === "ERROR") {
           // this.$router.replace({ name: 'Home' });
-          console.log("error", data.status);
+         
         }
       } catch (err) {
-        console.error(err);
+       
         this.error = err.message;
       } finally {
         this.loading = false;
@@ -353,10 +354,10 @@ export default {
       this.error = null;
       if (localStorage.getItem("token")) {
         this.final_uuid = this.userData;
-        console.log("this.final_uuid login after", this.final_uuid);
+       
       } else {
         this.final_uuid = this.uuid;
-        console.log("this.final_uuid no login after", this.final_uuid);
+       
       }
       try {
         let data = await API.post("company/save", {
@@ -365,7 +366,7 @@ export default {
           user_id: localStorage.getItem("userId"),
           uuid: this.final_uuid
         });
-        console.log("this.formData", this.formData);
+       
         if (data.status === "OK") {
           this.goNextForm();
         } else if (data.status === "ERROR") {
@@ -379,10 +380,10 @@ export default {
               localStorage.getItem("userId")
           )
           .then(res => {
-            console.log("ress post", res);
+           
           });
       } catch (err) {
-        console.error(err);
+       
         this.error = err.message;
       } finally {
         this.loading = false;

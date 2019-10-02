@@ -21,9 +21,15 @@
                 <div
                   v-for="(subItem, subIndex) in item.cargoHauled"
                   :key="subIndex"
-                  class="col-3 text-center mb-2 p-1 pointer haul-type"
+                  class="col-3 text-center mb-2 p-1 pointer "
                   @click="selectHaulType(item.value, subItem.value)"
+                  :class="{
+                      selected:
+                          cargoHauledMap[item.value] &&
+                        cargoHauledMap[item.value][subItem.value]
+                    }"
                 >
+                <div class="haul-type">
                   <div class="p-1">
                     <img :src="subItem.img" alt>
                   </div>
@@ -36,6 +42,7 @@
                         cargoHauledMap[item.value][subItem.value]
                     }"
                   >{{ subItem.value }}</div>
+                </div>
                 </div>
               </div>
             </div>
@@ -63,9 +70,9 @@
               <button
                 :disabled="loading"
                 type="submit"
-                class="lt-button lt-button-main px-4 btn-block btn-border-radius-rb mob-2"
-              >
-                {{ loading ? 'Loading...' : 'Next' }}
+                class="lt-button lt-button-main btn-block btn-border-radius-rb mob-2"
+              ><span class="load-12">
+                {{ loading ? 'Loading...' : 'Next' }}</span>
                 <div
                   class="next-title text-center d-inline pl-3 text-white mob-2"
                 >Vehicles & Trailers</div>
@@ -93,7 +100,6 @@ import { validateField, validateForm, minLength } from "../validators.js";
 import { API } from "../api.js";
 import ModalLogin from "./ModalLogin.vue";
 import axios from "axios";
-import headerAssistant from "./header.vue";
 import { setTimeout } from 'timers';
 
 export default {
@@ -114,7 +120,7 @@ export default {
   },
   components: {
     modelLogin: ModalLogin,
-    headerAssistant: headerAssistant
+    
   },
   data() {
     return {
@@ -141,7 +147,7 @@ export default {
       return this.cargoGroups.filter(
         group => this.cargoGroup.indexOf(group.value) > -1
       );
-      // console.log("this.cargoGroup",this.cargoGroup)
+      
     },
     cargoHauledMap() {
       let map = {};
@@ -188,14 +194,14 @@ export default {
         if (this.$store.state.getData.data[j].key == "cargoHauled") {
           let a = this.$store.state.getData.data[j];
           let b = JSON.parse(a.val).haulType;
-          console.log("aaa", b);
+    
         }
       }
 
       // let c =[]
       for (let i = 0; i < this.cargoGroups.length; i++) {
         for (let j = 0; j < this.cargoGroups[i].cargoHauled.length; j++) {
-          // console.log("aaass",this.cargoGroups[i].cargoHauled[j].value);
+          
         }
       }
     });
@@ -209,14 +215,14 @@ export default {
         if (this.$store.state.getData.data[j].key == "cargoHauled") {
           let a = this.$store.state.getData.data[j];
           let b = JSON.parse(a.val).haulType;
-          console.log("aaa", b);
+    
         }
       }
 
       // let c =[]
       for (let i = 0; i < this.cargoGroups.length; i++) {
         for (let j = 0; j < this.cargoGroups[i].cargoHauled.length; j++) {
-          // console.log("aaass",this.cargoGroups[i].cargoHauled[j].value);
+          
         }
       }
     });
@@ -232,7 +238,7 @@ export default {
         icon: "warning",
         buttons: ["No", "Yes"]
       }).then(willDelete => {
-        console.log("willbe", willDelete);
+  
         this.show();
         if (willDelete) {
           
@@ -260,10 +266,10 @@ export default {
       var temp_uuid;
         if (localStorage.getItem("token")) {
          temp_uuid = this.userData;
-        console.log("temp_uuid login after", temp_uuid);
+  
       } else {
         temp_uuid = this.uuid;
-        console.log("temp_uuid no login after", temp_uuid);
+  
       }
 
       try {
@@ -273,8 +279,8 @@ export default {
           user_id: localStorage.getItem("userId"),
           uuid: temp_uuid
         });
-        // console.log("show", this.formData);
-        // console.log("data.sattus", data);
+        
+        
         if (data.status === "OK") {
           if(!localStorage.getItem("token")){
               if (this.showmodel) {
@@ -287,7 +293,7 @@ export default {
         } else if (data.status === "ERROR") {
           // this.showmodel = true;
           this.error = data.messages[0] || data.data;
-          console.log("error", data);
+    
         }
       } catch (err) {
         console.error(err);
@@ -306,8 +312,8 @@ export default {
       let haulTypeIndex = this.formData.haulType[cargoGroupValue].indexOf(
         haulTypeValue
       );
-      console.log("cargoGroupValue", cargoGroupValue);
-      console.log("haulTypeValue", haulTypeValue);
+
+
       if (haulTypeIndex > -1) {
         this.formData.haulType[cargoGroupValue].splice(haulTypeIndex, 1);
 
@@ -341,7 +347,7 @@ export default {
 
       try {
         let data = await API.get("company/current");
-        console.log("data", data);
+  
         if (data.status === "OK") {
           let { cargoGroup: cargoGroupTab, cargoHauled } = data.data.a;
           let { cargoGroup } = cargoGroupTab;
@@ -375,10 +381,10 @@ this.uuid = data.data.b;
       if(localStorage.getItem('token')){
         
           this.final_uuid = this.userData;
-          console.log("this.final_uuid login after",this.final_uuid )
+    
       }else{
         this.final_uuid = this.uuid;
-        console.log("this.final_uuid no login after",this.final_uuid )
+  
       }
       try {
         let data = await API.post("company/save", {
@@ -401,7 +407,7 @@ this.uuid = data.data.b;
               localStorage.getItem("userId")
           )
           .then(res => {
-            console.log("ress post", res);
+      
           });
       } catch (err) {
         console.error(err);

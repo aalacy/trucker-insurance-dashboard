@@ -17,7 +17,7 @@
 
           <div v-if="formData.driverIsOwner" class="col-12 col-md-6">
             <select v-model="formData.driverOwnerIndex" @change="onChange($event)" class="lt-input" id="driverList" >
-              <option value="">Select Driver</option>
+              <option value="" disabled>Select Driver</option>
  
               <option
                 v-for="(item, index) in drivers.drivers"
@@ -56,7 +56,8 @@
                       type="text"
                       class="lt-input"
                       placeholder="First name"
-                 
+                      :class="{ 'has-error': !validations.driversData[index].firstName.is_valid }"
+                      @change="validateFieldCustom('firstName', index)"
                     />
                       <!-- required -->
                       <!-- @focus="onFocus('firstName')"
@@ -75,6 +76,8 @@
                       type="text"
                       class="lt-input"
                       placeholder="Last name"
+                      :class="{ 'has-error': !validations.driversData[index].lastName.is_valid }"
+                      @change="validateFieldCustom('lastName', index)"
                     />
                       <!-- required -->
                       <!-- @focus="onFocus('lastName')"
@@ -103,8 +106,10 @@
                           <!-- :class="{ 'has-error': formErrors.dobM }" -->
                         <input
                           v-model="driversData[index].dobM"
-                          type="text"
+                          type="number"
                           class="lt-input"
+                          :class="{ 'has-error': !validations.driversData[index].dobM.is_valid }"
+                          @change="validateFieldCustom('Month', index)"
                           placeholder="MM"
                         />
                           <!-- required -->
@@ -121,8 +126,10 @@
                           <!-- :class="{ 'has-error': formErrors.dobD }" -->
                         <input
                           v-model="driversData[index].dobD"
-                          type="text"
+                          type="number"
                           class="lt-input"
+                          :class="{ 'has-error': !validations.driversData[index].dobD.is_valid }"
+                          @change="validateFieldCustom('Day', index)"
                           placeholder="DD"
                         />
                           <!-- required -->
@@ -139,9 +146,11 @@
                           <!-- :class="{ 'has-error': formErrors.dobY }" -->
                         <input
                           v-model="driversData[index].dobY"
-                          type="text"
+                          type="number"
                           class="lt-input"
                           placeholder="YYYY"
+                          :class="{ 'has-error': !validations.driversData[index].dobY.is_valid }"
+                          @change="validateFieldCustom('Year', index)"
                         />
                           <!-- required -->
                           <!-- @focus="onFocus('dobY')"
@@ -164,6 +173,8 @@
                       type="text"
                       class="lt-input"
                       placeholder="Address"
+                      :class="{ 'has-error': !validations.driversData[index].address.is_valid }"
+                      @change="validateFieldCustom('address', index)"
                     >
                       <!-- required -->
                       <!-- @focus="onFocus('address')"
@@ -181,6 +192,8 @@
                       type="text"
                       class="lt-input"
                       placeholder="City"
+                      :class="{ 'has-error': !validations.driversData[index].city.is_valid }"
+                      @change="validateFieldCustom('city', index)"
                     >
                       <!-- required -->
                       <!-- @focus="onFocus('city')"
@@ -200,6 +213,8 @@
                       type="text"
                       class="lt-input"
                       placeholder="State"
+                      :class="{ 'has-error': !validations.driversData[index].state.is_valid }"
+                      @change="validateFieldCustom('state', index)"
                     >
                       <!-- required -->
                       <!-- @focus="onFocus('state')"
@@ -216,7 +231,10 @@
                       v-model="driversData[index].zip"
                       type="text"
                       class="lt-input"
+                      minlength="5"
                       placeholder="Zip"
+                      :class="{ 'has-error': !validations.driversData[index].zip.is_valid }"
+                       @change="validateFieldCustom('zip', index)"
                     >
                       <!-- required -->
                       <!-- @focus="onFocus('zip')"
@@ -303,14 +321,12 @@ import uuidv4 from "uuid/v4";
 import { API } from "../api.js";
 import ModalLogin from "./ModalLogin.vue";
 import axios from "axios";
-import headerAssistant from "./header.vue";
 
 export default {
   name: "AccountInfoOwners",
   components: {
-    AccountInfoOwnersItem: () => import("./AccountInfoOwnersItem.vue"),
+    // AccountInfoOwnersItem: () => import("./AccountInfoOwnersItem.vue"),
     modelLogin: ModalLogin,
-    headerAssistant:headerAssistant
 
   },
   props: {
@@ -329,6 +345,7 @@ export default {
   },
   data() {
     return {
+      userData:"",
       uuid:"",
       final_uuid:"",
       selected:"Select Driver",
@@ -345,7 +362,7 @@ export default {
       error: null,
       selectedDriver: "",
       validations: {
-        driversData: [],
+        driversData: {},
         oneDriver: {
           is_valid: true,
           text: ""
@@ -366,7 +383,6 @@ export default {
   },
   watch: {
     "formData.driverIsOwner"(driverIsOwner) {
-      // console.log("VICKY@", driverIsOwner);
       if (!driverIsOwner) {
         this.formData.driverOwnerIndex = -1;
       }
@@ -376,8 +392,34 @@ export default {
     }
   },
   mounted() {
-    if (localStorage.getItem("token")) {
+      if (localStorage.getItem("token")) {
       this.save = false;
+        axios
+        .get(
+          "http://3.13.68.92/luckytrucker_admin/api/CompanyController/getuuidbyuserid?user_id=" +
+            localStorage.getItem("userId")
+        )
+        .then(coins => {
+          this.userData = coins.data.uuid;
+        });
+
+      setTimeout(() => {
+        this.$store.dispatch("loadData", this.userData).then(() => {
+          let len = this.$store.state.getData.data;
+          
+          for (let i = 0; i < len.length; i++) {
+            if (this.$store.state.getData.data[i].key == "owners") {
+              let a = this.$store.state.getData.data[i];
+              let b = JSON.parse(a.val);
+              
+              if(b.owners.length>0){
+                this.driversData = b.owners; 
+                this.addDriverDataValidation(b.owners.length)
+              }
+            }
+          }
+        }
+      )},1000)
     } else {
       this.save = true;
     }
@@ -394,9 +436,24 @@ export default {
     }
   },
   methods: {
+    validateFieldCustom(fieldName, index){
+      if (this.driversData[index][fieldName].trim() == '') {
+        this.validations.driversData[index][fieldName].is_valid = false;
+        this.validations.driversData[index][fieldName].text = 'Please enter   ' + fieldName + '!';
+      } else {
+        this.validations.driversData[index][fieldName].is_valid = true;
+      }
+    },
+    sizeOfObject(obj) {
+      var size = 0, key;
+      for (key in obj) {
+          if (obj.hasOwnProperty(key)) size++;
+      }
+      return size;
+    },
     changeData(){
       if(!this.driverIsOwner){
-        console.log("this.driversData",this.driversData)
+        
         this.driversData[0].firstName = "";
         this.driversData[0].lastName = "";
         this.driversData[0].dobM = "";
@@ -409,9 +466,10 @@ export default {
       }
     },
     addDriverDataValidation(count){
-      let driverDatavalidationsLength = this.validations.driversData.length;
+      let driverDatavalidationsLength = this.sizeOfObject(this.validations.driversData);
       for (let index = 0; index < count; index++) {
-        this.validations.driversData[driverDatavalidationsLength + index] = {
+
+        this.$set(this.validations.driversData, driverDatavalidationsLength + index, {
           firstName: {
             is_valid: true,
             text: ""
@@ -448,11 +506,11 @@ export default {
             is_valid: true,
             text: ""
           }
-        };
+        });
       }
     },
     addDriverData(data) {
-      console.log("owener data",data)
+      
       if  (data == undefined || data.firstName == undefined) {
         this.driversData.push({
           firstName: "",
@@ -472,7 +530,8 @@ export default {
     },
     removeDriverData( key ){
       this.driversData.splice( key, 1 );
-      this.validations.driversData.splice( key, 1 );
+      Vue.delete(this.validations.driversData,key)
+      // this.validations.driversData.splice( key, 1 );
     },
     validateNewDriverData() {
       let validNewDriverForm = true;
@@ -497,32 +556,53 @@ export default {
             this.validations.driversData[index].lastName.text = '';
           }
 
+          if (this.driversData[index].dobM < 1 || this.driversData[index].dobM > 12)  {
+              validNewDriverForm = false;
+              this.validations.driversData[index].dobM.is_valid = false;
+              this.validations.driversData[index].dobM.text =
+              "Please enter valid month!";
           if( this.driversData[index].dobM.trim() == '' ){
             validNewDriverForm = false;
             this.validations.driversData[index].dobM.is_valid = false;
             this.validations.driversData[index].dobM.text = 'Please enter month!';
-          }else{
+          }}
+          else{
             this.validations.driversData[index].dobM.is_valid = true;
             this.validations.driversData[index].dobM.text = '';
           }
 
+
+
+          if (this.driversData[index].dobD < 1 || this.driversData[index].dobD > 31)  {
+            validNewDriverForm = false;
+            this.validations.driversData[index].dobD.is_valid = false;
+            this.validations.driversData[index].dobD.text =
+              "Please enter valid date!";
           if( this.driversData[index].dobD.trim() == '' ){
             validNewDriverForm = false;
             this.validations.driversData[index].dobD.is_valid = false;
             this.validations.driversData[index].dobD.text = 'Please enter date!';
-          }else{
+          }}else{
             this.validations.driversData[index].dobD.is_valid = true;
             this.validations.driversData[index].dobD.text = '';
           }
 
+          
+          
+          if(this.driversData[index].dobY.length<4){
+              validNewDriverForm = false;
+            this.validations.driversData[index].dobY.is_valid = false;
+            this.validations.driversData[index].dobY.text =
+              "Please enter valid year!";
           if( this.driversData[index].dobY.trim() == '' ){
             validNewDriverForm = false;
             this.validations.driversData[index].dobY.is_valid = false;
             this.validations.driversData[index].dobY.text = 'Please enter year!';
-          }else{
+          }}else{
             this.validations.driversData[index].dobY.is_valid = true;
             this.validations.driversData[index].dobY.text = '';
           }
+
 
           if( this.driversData[index].address.trim() == '' ){
             validNewDriverForm = false;
@@ -551,11 +631,16 @@ export default {
             this.validations.driversData[index].state.text = '';
           }
 
-          if(this.driversData[index].zip.trim() == '') {
+
+          if(!this.driversData[index].zip.match(/(^\d{5}$)/)){
+            validNewDriverForm = false;
+            this.validations.driversData[index].zip.is_valid = false;
+            this.validations.driversData[index].zip.text = 'Please enter minimum 5 character!';
+          if(this.driversData[index].zip.trim() == '' ) {
             validNewDriverForm = false;
             this.validations.driversData[index].zip.is_valid = false;
             this.validations.driversData[index].zip.text = 'Please enter zip!';
-          } else {
+          }} else {
             this.validations.driversData[index].zip.is_valid = true;
             this.validations.driversData[index].zip.text = '';
           }
@@ -571,7 +656,7 @@ export default {
         buttons: ["No", "Yes"]
       }).then(willDelete => {
         this.show();
-        console.log("willbe", willDelete);
+        
         if (willDelete) {
 
           this.$router.push({ name: "AccountInfoOwners" });
@@ -612,18 +697,17 @@ export default {
       this.error = null;
       if (localStorage.getItem("token")) {
         temp_uuid = this.userData;
-        console.log("temp_uuid login after", temp_uuid);
+        
       } else {
         temp_uuid = this.uuid;
-        console.log("temp_uuid no login after", temp_uuid);
+        
       }
       try {
-        console.log("VICKY", this.formData)
         let data = await API.post("company/save", {
           key: "owners",
+          
           val: {
-            ...this.formData,
-            owners: this.formData.owners.map(o => {
+              owners:this.driversData.map(o => {
               let owner = { ...o };
               delete owner._uuid;
               return owner;
@@ -656,13 +740,13 @@ export default {
       }
     },
     addForm() {
-      // console.log(" _uuid: uuidv4()", uuidv4())
+      // 
 
       // var dropDown = document.getElementById("driverList");
-      // console.log("drop",dropDown)
+      // 
       // dropDown.selectedIndex = 0;
-      // console.log("document.getElementById(driverList)",document.getElementById("driverList"))
-      // console.log("aaaa",dropDown.selectedIndex)
+      // 
+      // 
       this.formData.owners.push({ _uuid: uuidv4() });
       this.error = null;
     },
@@ -672,7 +756,7 @@ export default {
 
     onChange($event) {
       
-      console.log("this.drivers[$event.target.value]",this.drivers.drivers[$event.target.value])
+      
       // if(this.drivers.drivers[$event.target.value] != undefined){
       this.driversData[0] = Object.assign({}, this.driversData[0], this.drivers.drivers[$event.target.value]);
       this.driversData[0].dobD = this.drivers.drivers[$event.target.value].dateOfBirth.split('/')[1];
@@ -680,7 +764,7 @@ export default {
       this.driversData[0].dobY = this.drivers.drivers[$event.target.value].dateOfBirth.split('/')[2];
       // }
       // else{
-      //   console.log("else",this.formData.driverIsOwner)
+      //   
         
       // this.formData.driverIsOwner= false;
       //     this.driversData[0] = "";
@@ -706,22 +790,27 @@ export default {
 
         if (data.status === "OK") {
           let { drivers, owners: ownersTab } = data.data.a;
-          console.log("sssss", data.data.a);
+          
+          // 
           this.uuid = data.data.b;
           if (drivers) {
             this.drivers = drivers;
           }
           if (ownersTab) {
-            let { owners } = ownersTab;
+            
+          let { owners } = ownersTab;
+            
+            
 
-            this.formData = {
-              ...this.formData,
-              ...ownersTab,
-              owners: owners.map(o => ({ ...o, _uuid: uuidv4() }))
-            };
+            // this.formData = {
+            //   ...this.formData,
+            //   ...ownersTab,
+            //   owners: ownersTab.map(o => ({ ...o, _uuid: uuidv4() }))
+            // };
 
             if(data.data.a.owners.owners.length > 0) {
-              this.driversData = data.data.a.owners.owners
+              this.driversData = data.data.a.owners.owners;
+              
               this.addDriverDataValidation(data.data.a.owners.owners.length)
             } else {
               this.addDriverData();
@@ -733,12 +822,15 @@ export default {
           }
         } else if (data.status === "ERROR") {
           // this.$router.replace({ name: 'Home' });
+          
         }
       } catch (err) {
         console.error(err);
         this.error = err.message;
       } finally {
         this.loading = false;
+        // this.addDriverData();
+
       }
     },
     // setDataFromForms() {
@@ -754,7 +846,7 @@ export default {
     //   this.formData.owners = owners;
     // },
     async updateCompany() {
-      console.log("update company")
+      
       if ( this.formData.driverIsOwner && this.formData.driverOwnerIndex === -1 ) {
         this.formData.driverIsOwner = false;
       }
@@ -771,10 +863,10 @@ export default {
 
       let allFormAreValid = this.validateNewDriverData();
       if (!allFormAreValid) {
-        console.log('FORM IS INVALID');
+        
         return;
       } else {
-        console.log('FORM IS VALID');
+        
       }
 
       this.loading = true;
@@ -782,26 +874,30 @@ export default {
       if(localStorage.getItem('token')){
 
         this.final_uuid = this.userData;
-        console.log("this.final_uuid login after",this.final_uuid )
+        
       }else{
         this.final_uuid = this.uuid;
-        console.log("this.final_uuid no login after",this.final_uuid )
+        
       }
       try {
         let data = await API.post("company/save", {
           key: "owners",
           val: {
-            ...this.driversData,
+             owners:this.driversData.map(o => {
+              let owner = { ...o };
+              delete owner._uuid;
+              return owner;
             // owners: this.formData.owners.map(o => {
             //   let owner = { ...o };
             //   delete owner._uuid;
             //   return owner;
             // })
-            owners: this.driversData.map(o => {
-              let owner = { ...o };
-              delete owner._uuid;
-              return owner;
-            })
+            // owners: this.driversData.map(o => {
+            //   let owner = { ...o };
+            //   delete owner._uuid;
+            //   return owner;
+            // })
+             })
           },
           user_id: localStorage.getItem("userId"),
           uuid: this.final_uuid
@@ -816,7 +912,7 @@ export default {
           "http://3.13.68.92/luckytrucker_admin/api/CompanyController/postUserIdByUuid?uuid="+this.final_uuid+"&user_id="+localStorage.getItem("userId")
           )
           .then(res => {
-            console.log("ress post",res)
+            
           })
       } catch (err) {
         console.error(err);

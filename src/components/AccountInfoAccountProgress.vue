@@ -46,15 +46,10 @@ export default {
       this.localtoken = true;
       this.quote = false;
     }
-    if (localStorage.getItem("accBtn") === "true") {
-      this.myacchide = true;
-    } else {
-      this.myacchide = false;
-    }
+    
   },
   mounted() {
-    // console.log("mounted",localStorage.getItem('viewQuote'))
-    // console.log("this.quote",this.quote)
+  
     if (localStorage.getItem("token")) {
       this.count = true;
       setTimeout(() => {
@@ -64,7 +59,7 @@ export default {
               localStorage.getItem("userId")
           )
           .then(res => {
-            console.log("res", res.data.count);
+            
             // this.count = res.data.count;
             if(res.data.count>=10){
               this.status = true;
@@ -73,21 +68,7 @@ export default {
             }
           });
       }, 500);
-    //   try {
-    //     console.log("token acc", localStorage.getItem("token"));
-    //     this.localtoken = true;
-    //   } catch (e) {
-    //     console.log(e);
-    //     localStorage.removeItem("token");
-    //   }
-    // } else {
-    //   this.quote = "true";
-    // }
-    // if (localStorage.getItem("accBtn") === "true") {
-    //   this.myacchide = true;
-    // } else {
-    //   this.myacchide = false;
-    // }
+    
     }else{
       this.count = false;
     }
@@ -109,8 +90,8 @@ export default {
       
     },
     login() {
-      console.log("login");
-      localStorage.setItem("accBtn", true);
+      
+      // localStorage.setItem("accBtn", true);
       this.$router.push({ name: "LogIn" });
     },
     myacc() {
@@ -163,7 +144,7 @@ export default {
   background-color: $color_lightblue_1;
 
   .title {
-    padding: 1rem 2.5rem;
+    padding: 1rem ;
     color: $color_darkblue;
   }
 

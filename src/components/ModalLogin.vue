@@ -149,8 +149,11 @@ export default {
     };
     
   },
+  created(){
+        localStorage.setItem("showModal",true)
+  },
   mounted(){
-    localStorage.setItem("showModal",true)
+    // localStorage.setItem("showModal",true)
 
   },
   methods:{
@@ -180,6 +183,7 @@ export default {
     },
     accountStatusUpdate(){
       localStorage.setItem("register_status","1");
+      localStorage.setItem("showModal",false);
     },
      async login() {
      
@@ -187,7 +191,7 @@ export default {
         let data = await API.post("users/login", {
           email: this.formData.email,
           password: this.formData.password,
-          accountStatus:'1'
+          // accountStatus:'1'
         });
         console.log("data", data.data.id);
 
@@ -199,14 +203,15 @@ export default {
            console.log("status",t);
             localStorage.setItem("showModal",false)
            localStorage.setItem("token", t);  
-           localStorage.setItem("accBtn",true);
+          
            localStorage.setItem("userId",data.data.id)
-           localStorage.setItem("accountStatus",t.account_status);
-            if(t.account_status=="0"){
-            this.$router.push({ name: "Home" });
-          }else{
              this.$router.push({ name: "AccountInfoPersonalInfo" });
-          }
+          //  localStorage.setItem("accountStatus",t.account_status);
+          //   if(t.account_status=="0"){
+          //   this.$router.push({ name: "Home" });
+          // }else{
+          //    this.$router.push({ name: "AccountInfoPersonalInfo" });
+          // }
           
         } else if (data.status === "error") {
             this.$swal("Opps!", this.error, "error");

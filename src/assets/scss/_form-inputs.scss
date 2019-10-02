@@ -1,9 +1,12 @@
+
+
 @mixin lt-form-input {
   padding: 0.5rem;
   // font-size: 1.1rem;
   font-weight: 200;  
   border-radius: 10px;  
   height: calc(1.5em + 0.75rem + 2px);
+  
 
   &.has-error {
     border: 1px solid $color_red;

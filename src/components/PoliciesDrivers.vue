@@ -94,13 +94,10 @@
 
 <script>
 import moment from 'moment';
-import headerAssistant from "./header.vue";
 
 export default {
   name: 'PoliciesDrivers',
-    components: {
- headerAssistant:headerAssistant
-},
+ 
   filters: {
     date(date) {
       return moment(date).format('MM/DD/YYYY');

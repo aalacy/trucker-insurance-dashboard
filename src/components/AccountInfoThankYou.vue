@@ -55,6 +55,11 @@
                       >Done</button>
                     </div>
                   </div>
+                  <div class="pt-4 save-hover">
+                <router-link :to="{ name: 'LogIn' }">
+                    <span>Already registered? Login</span>
+              </router-link>
+               </div>
                 </form>
               </div>
             </div>
@@ -95,10 +100,10 @@ export default {
   methods: {
     async getRegister() {
       // window.open(`${process.env.VUE_APP_BACKEND_URL}/company/pdf`);
-      console.log("email",this.email)
-      console.log("uuid",this.uuid)
+      
+      
       let data = await API.post("company/pdf",{email:this.email,uuid:this.uuid});
-      console.log("data",data)
+      
       axios
         .post(
           "http://3.13.68.92/luckytrucker_admin/api/CompanyController/sendmailcompanypdf?email_id=" +
@@ -134,7 +139,7 @@ export default {
               localStorage.getItem("userId")
           )
           .then(res => {
-            console.log("res", res.data.count);
+            
             // this.count = res.data.count;
             if (res.data.count >= 10) {
               window.open(`${process.env.VUE_APP_BACKEND_URL}/company/pdf`);
@@ -146,22 +151,22 @@ export default {
             }
           });
       } else {
-        this.showmodel = true;
+        // this.showmodel = true;
         // window.open(`${process.env.VUE_APP_BACKEND_URL}/company/pdf`);
-        //   swal({
-        //   title: "To Continue,",
-        //   text: "You need to login first",
-        //   icon: "warning",
-        //   buttons: ["No", "Yes"]
-        // }).then(willDelete => {
-        //   console.log("willbe", willDelete);
-        //   if (willDelete) {
-        //     this.$router.push({ name: "LogIn" });
-        //     localStorage.setItem("accountStatus","1")
-        //   } else {
-        //     this.$router.push({ name: "AccountInfoThankYou" });
-        //   }
-        // });
+          swal({
+          title: "To Continue,",
+          text: "You need to login first",
+          icon: "warning",
+          buttons: ["No", "Yes"]
+        }).then(willDelete => {
+          
+          if (willDelete) {
+            this.$router.push({ name: "LogIn" });
+            localStorage.setItem("accountStatus","1")
+          } else {
+            this.$router.push({ name: "AccountInfoThankYou" });
+          }
+        });
       }
       // window.open(`${process.env.VUE_APP_BACKEND_URL}/company/pdf`);
       // window.open(`localhost:3000/api/company/pdf`);

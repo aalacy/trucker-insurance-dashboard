@@ -25,7 +25,7 @@
               >
             </div>
 
-            <div class="form-group">
+            <div class="form-group mb-0">
               <input
                 v-model="formData.password"
                 type="password"
@@ -38,21 +38,18 @@
               <div>
                 <a
                   href="#forgot-password"
-                  class="text-reset"
+                  class="text-reset font-small"
                   @click.prevent="model"
                 >Forgot your password?</a>
               </div>
 
-              <div class="text-right flex-grow-1">
-                <button
-                  :disabled="loading"
-                  type="submit"
-                  @click="login"
-                  class="lt-button lt-button-main go-button"
-                >LOGIN</button>
+              <div class="text-right flex-grow-1 font-small">
+                <router-link :to="{ name: 'SignUp' }" @click.native="accountStatusUpdate">
+                <span>New user? Sign up</span>
+              </router-link>
               </div>
             </div>
-            <div class="row align-items-stretch sign-in-with">
+            <!-- <div class="row align-items-stretch sign-in-with">
               <div class="col mt-4 text-center">
                 <div class="border-top pt-2 pb-2">Sign in With</div>
                 <font-awesome-icon
@@ -66,11 +63,15 @@
                   class="color-g"
                 />
               </div>
-            </div>
-            <div>
-              <router-link :to="{ name: 'SignUp' }" @click.native="accountStatusUpdate">
-                <span>New user? Sign up</span>
-              </router-link>
+            </div> -->
+            <div class="text-center mt-3">
+              
+              <button
+                  :disabled="loading"
+                  type="submit"
+                  @click="login"
+                  class="lt-button lt-button-main go-button"
+                >LOGIN</button>
             </div>
           </form>
         </div>
@@ -149,13 +150,13 @@ export default {
     };
   },
   mounted(){
-     if( localStorage.getItem("accountStatus")== "1")
-      {
-        this.sendStatus = "1";
-      }
-      else{
-        this.sendStatus = "0"
-      }
+    //  if( localStorage.getItem("accountStatus")== "1")
+    //   {
+    //     this.sendStatus = "1";
+    //   }
+    //   else{
+    //     this.sendStatus = "0"
+    //   }
   },
 
   methods: {
@@ -206,7 +207,7 @@ export default {
         let data = await API.post("users/login", {
           email: this.formData.email,
           password: this.formData.password,
-          accountStatus: this.sendStatus
+          // accountStatus: this.sendStatus
         });
         console.log("data", data);
 
@@ -218,16 +219,18 @@ export default {
           let t = data.data;
           console.log("data", data);
           localStorage.setItem("userId", data.data.id);
-          localStorage.setItem("accBtn", true);
+          
           localStorage.setItem("token", t);
           localStorage.setItem("showModal", false);
-          localStorage.setItem("accountStatus", t.account_status);
+          this.$router.push({ name: "AccountInfoPersonalInfo" });
 
-          if (t.account_status == "0") {
-            this.$router.push({ name: "Home" });
-          } else {
-            this.$router.push({ name: "AccountInfo" });
-          }
+          // localStorage.setItem("accountStatus", t.account_status);
+
+          // if (t.account_status == "0") {
+          //   this.$router.push({ name: "Home" });
+          // } else {
+          //   this.$router.push({ name: "AccountInfo" });
+          // }
         } else if (data.status === "error") {
           this.loading = false;
           loader.hide();
@@ -323,6 +326,9 @@ export default {
 .modal-leave-active .modal-container {
   -webkit-transform: scale(1.1);
   transform: scale(1.1);
+}
+.font-small{
+  font-size: 1rem;
 }
 .color-fb,
 .color-g {

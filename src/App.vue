@@ -21,9 +21,9 @@
         <div class="mr-auto"></div>
 
         <div class="d-flex align-items-center justify-content-end">
+         
           <ul class="navbar-nav">
             <li class="nav-item">
-            
               <div v-if="show">
                 <div v-if="msg">
                   <router-link
@@ -56,15 +56,15 @@
                 <!-- </div> -->
               </div>
             </li>
-            <li class="nav-item">
+            <!-- <li class="nav-item">
               <span class="mx-3"> </span>
-            </li>
+            </li> -->
             <div v-if="quote">
               <li class="nav-item">
                 <router-link
                   @click.native="loginHide"
                   :to="{ name: 'LogIn' }"
-                  class="lt-link"
+                  class="lt-button lt-button-main viewquote"
                   active-class="font-weight-bold"
                 >Login</router-link>
               </li>
@@ -73,7 +73,7 @@
               <li class="nav-item">
                 <router-link
                   :to="{ name:'' }"
-                  class="lt-link"
+                  class="lt-button lt-button-main viewquote"
                   @click.native="logoutPopUp"
                   active-class="font-weight-bold"
                 >Logout</router-link>
@@ -93,15 +93,15 @@
       <div class="d-flex flex-row width-100">
         <form class="form-footer">
           <div class="form-group row d-flex align-items-center">
-            <div class="col-sm-4 flex-mob-a">Subscribe to the Newsletter:</div>
-            <div class="col-sm-8 position-relative">
+            <div class="col-sm-12 col-lg-4 col-md-12 col-12 flex-mob-a">Subscribe to the Newsletter:</div>
+            <div class="col-sm-12 col-lg-8 col-md-12 col-12 position-relative">
               <input
                 id="inputEmail"
                 type="email"
                 class="footer-input my-footer"
                 placeholder="Enter Email Address"
               >
-              <button type="submit" class="text-light bg-primary subscribe">Subscribe</button>
+              <button type="submit" class="text-light bg-primary subscribea subscribe">Subscribe</button>
             </div>
           </div>
         </form>
@@ -175,37 +175,29 @@ export default {
     if (localStorage.getItem("token"))
      {
         this.quote = false;
+        this.myacchide = true;
+        // this.show = true;
         // localStorage.removeItem("token");
       }
-
     else {
       this.quote =true;
+      this.myacchide = false;
+      
     }
-     if(localStorage.getItem("accBtn") === "true"){
-      this.myacchide = true;
-    }
-    // else{
-    //   this.myacchide = false;
-    // }
+  
     
   },
   
   mounted() {
+    
   if(localStorage.getItem("token")){
      this.show=true;
-
    }else{
      this.quote=false;
      this.show=false;
-     console.log("this.quote m",this.quote)
-     console.log("this.show m",this.show)
+    
    }
-     if(localStorage.getItem("accBtn") === "true"){
-      this.myacchide = true;
-    }
-    else{
-      this.myacchide = false;
-    }
+    
     this.msg = isMobile ? true : false;
   },
     
@@ -227,13 +219,13 @@ export default {
     {
       // setTimeout(()=>{
         this.show=false;
-        console.log("this.show",this.show);
+        
       // },500)
       
       // this.quote = false;
     },
-        myacc(){
-      localStorage.setItem("accBtn",true)
+    myacc(){
+      // localStorage.setItem("accBtn",true)
       this.myacchide = false;
       this.show = true;
       this.$router.push({name:'QuotesAllQuotes'})
@@ -248,16 +240,16 @@ async logout(){
         let data = await API.post("users/logout");
         localStorage.removeItem("token");
         // localStorage.setItem("viewQuote", true);
-        console.log(data);
+        
         
           if (data.status === "ok") {
             
-        
-            setTimeout(()=>{
         this.quote = false;
         this.show=false;
+      setTimeout(()=>{
+        
         this.myacchide = false;
-          localStorage.removeItem("accBtn");
+          // localStorage.removeItem("accBtn");
           localStorage.removeItem("token");
           localStorage.removeItem("userId")
           // localStorage.removeItem("registredUserId");
@@ -284,11 +276,11 @@ async logout(){
         icon: "warning",
         buttons: ["No", "Yes"]
       }).then(willDelete => {
-        console.log("willbe", willDelete);
-      this.logout();
+        
+      
         // this.show();
         if (willDelete) {
-          
+        this.logout();    
           // this.$router.push({ name: "AccountInfoBusinessStructure" });
         } else {
           
@@ -312,7 +304,8 @@ async logout(){
     else {
       this.myacchide =false;
     }
-      localStorage.setItem("accBtn",false)
+  
+      // localStorage.setItem("accBtn",false)
       this.show = false;
       localStorage.setItem("Phone","");
       localStorage.setItem("Physical address","");
@@ -345,11 +338,27 @@ async logout(){
 <style lang="scss">
 @import "~bootstrap/scss/bootstrap.scss";
 @import "./assets/scss/main.scss";
+
+@font-face {
+  font-family: 'proxima_novabold';
+  src: url('./assets/fonts/proxima_ssv/proxima_nova_bold-webfont.woff2') format('woff2'),
+       url('./assets/fonts/proxima_ssv/proxima_nova_bold-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'proxima_novaregular';
+  src: url('./assets/fonts/proxima_ssv/proximanova-regular-webfont.woff2') format('woff2'),
+       url('./assets/fonts/proxima_ssv/proximanova-regular-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+
+}
 .text-right-a{
         /* color: black; */
     font-size: 16px;
     font-weight: bold;
-    width: 58%;
+    width: 60%;
     text-align: center;
     /* position: absolute; */
     /* z-index: 111; */
@@ -357,6 +366,8 @@ async logout(){
 }
 .viewquote {
   padding-bottom: 10px;
+  white-space: nowrap;
+  margin-left: 10px;
   padding-top: 9px;
 }
 </style>

@@ -16,7 +16,7 @@
                   >
                   <button
                     type="submit"
-                    class="text-light bg-primary subscribe"
+                    class="text-light bg-primary subscribe mobbtn"
                     :disabled="loading"
                   >Get a Quote</button>
                 </div>
@@ -111,7 +111,7 @@
                 <div class="width-200 text-center">
                   <h2>Insurance</h2>
                   <p
-                    class
+                    class="text-justify"
                   >LuckyTruck makes your insurance more convenient. We provide an effective service, don’t charge extra fees and do what we can to keep you moving even if that’s taking a late night call or answering an email. We genuinely care about keeping you on the road and providing a reliable service. </p>
                 </div>
               </div>
@@ -127,7 +127,7 @@
                 <div class="width-200 text-center">
                   <h2>Loads, Vehicles, and Drivers</h2>
                   <p
-                    class
+                      class="text-justify"
                   >Many trucking businesses are constantly changing. If yours is one of them, let us know. Our goal is to help you manage those changes. Stay tuned for more product updates and let us know what you want. We want to build what you need. </p>
                 </div>
               </div>
@@ -147,7 +147,7 @@
                 <div class="width-200 text-center">
                   <h2>Manage My Authority</h2>
                   <p
-                    class
+                     class="text-justify"
                   >Insurance is a key part of maintaining your authority. Talk to us about any concerns and we’ll try to figure it out</p>
                 </div>
               </div>
@@ -164,7 +164,7 @@
                 <div class="width-200 text-center">
                   <h2>Maintainence</h2>
                   <p
-                    class
+                      class="text-justify"
                   >As you operate, let us know what holds you back. Our goal is to keep you running and we’re working on products to meet your operational goals. </p>
                 </div>
               </div>
@@ -208,6 +208,7 @@ export default {
     }
   },
   mounted() {
+    localStorage.setItem("showModal",false);
     this.msg = isMobile ? true : false;
     console.log("isMobile", this.msg);
     this.$store
@@ -277,7 +278,7 @@ export default {
         localStorage.setItem("Physical address", data.data["Physical Address"]);
         localStorage.setItem("Mailing address", data.data["Mailing Address"]);
         localStorage.setItem("Phone", data.data.Phone);
-        localStorage.setItem("accBtn", false);
+        
         if (data.status === "OK") {
           if(localStorage.getItem("token") && (localStorage.getItem("accountStatus") == "0")){
             axios.get("http://3.13.68.92/luckytrucker_admin/api/CompanyController/updateaccountinfostatus?user_id="+localStorage.getItem("userId")).then((res)=>console.log("home res",res))
@@ -382,4 +383,13 @@ export default {
     max-height: 400px;
     overflow-y: scroll;
   }
+    //  .subscrib-A {
+    //  width:100% !important;
+    //  border-radius: 20px;
+    // //  border-bottom-left-radius: 20px;
+    // //  border-top-left-radius: 20px;  
+    //  left:32% !important; 
+    //  bottom: -44px; 
+    //  top:40px
+    //  }
 </style>
