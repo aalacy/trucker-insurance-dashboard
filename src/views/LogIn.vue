@@ -73,6 +73,20 @@
                   class="lt-button lt-button-main go-button"
                 >LOGIN</button>
             </div>
+
+            <div class="d-flex justify-content-center mt-2">
+              <v-facebook-login app-id="456259108336704"></v-facebook-login>
+            </div>
+
+            <div class="d-flex justify-content-center align-items-center mt-2">
+              <g-signin-button
+                      :params="{client_id: 'xxx'}"
+                      @success=""
+                      @error="">
+                <img src="https://developers.google.com/identity/images/g-logo.png" style="width: 24px"/>
+                <div class="d-inline-block ml-3">Sign in with Google</div>
+              </g-signin-button>
+            </div>
           </form>
         </div>
       </div>
@@ -128,11 +142,16 @@
 import { API } from "../api.js";
 import Vue from "vue";
 import axios from "axios";
+import VFacebookLogin from 'vue-facebook-login-component'
+import GSignInButton from 'vue-google-signin-button'
+Vue.use(GSignInButton)
 import Loading from "vue-loading-overlay";
 import "vue-loading-overlay/dist/vue-loading.css";
 Vue.use(Loading);
+
 export default {
   name: "LogInView",
+  components: {VFacebookLogin},
 
   data() {
     return {
@@ -219,7 +238,7 @@ export default {
           let t = data.data;
           console.log("data", data);
           localStorage.setItem("userId", data.data.id);
-          
+
           localStorage.setItem("token", t);
           localStorage.setItem("showModal", false);
           this.$router.push({ name: "AccountInfoPersonalInfo" });
@@ -385,5 +404,16 @@ export default {
   .dispay {
     display: block !important;
   }
+}
+.g-signin-button:hover {
+  opacity: 0.8;
+}
+.g-signin-button {
+  display: inline-block;
+  padding: 7px 24px;
+  border-radius: 3px;
+  background-color: #ffffff;
+  border: 1px solid #cdcdcd;
+  cursor: pointer;
 }
 </style>

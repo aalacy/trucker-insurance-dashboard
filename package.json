@@ -6,7 +6,8 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build --modern",
     "staging": "vue-cli-service build --modern --mode staging",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "deploy:live": "npm run build && rsync -ar --progress --delete -e 'ssh -i ~/.ssh/luckytruck_node.pem' ec2-user@18.221.2.76:~/test dist/"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.19",
@@ -27,6 +28,8 @@
     "uuid": "^3.3.2",
     "vue": "^2.6.10",
     "vue-axios": "^2.1.4",
+    "vue-facebook-login-component": "^1.3.7",
+    "vue-google-signin-button": "^1.0.4",
     "vue-loading-overlay": "^3.2.0",
     "vue-router": "^3.0.5",
     "vue-signature-pad": "^1.1.15",
@@ -49,7 +52,7 @@
     "vue-template-compiler": "^2.5.21"
   },
   "gitHooks": {
-    "pre-commit": "lint-staged"
+
   },
   "lint-staged": {
     "*.{js,vue}": [

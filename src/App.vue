@@ -370,5 +370,8 @@ async logout(){
   margin-left: 10px;
   padding-top: 9px;
 }
+.v-facebook-login span {
+  color: white !important;
+}
 </style>
 
