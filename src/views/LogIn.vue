@@ -171,7 +171,7 @@ export default {
       showmodel: false,
       formErrors: {},
       googleSignInParams: {
-        client_id: '141093155676-j45u2vmph8034af70593re5n7ng6g3tv.apps.googleusercontent.com'
+        client_id: '39806248401-q3p9hhtt0d0v8arj9hrrmu4gdevppoej.apps.googleusercontent.com'
       }
     };
   },
