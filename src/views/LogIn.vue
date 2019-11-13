@@ -144,7 +144,7 @@
 import { API } from "../api.js";
 import Vue from "vue";
 import axios from "axios";
-import {VFacebookLogin } from 'vue-facebook-login-component'
+import { VFBLogin as VFacebookLogin } from 'vue-facebook-login-component'
 import GSignInButton from 'vue-google-signin-button'
 Vue.use(GSignInButton)
 import Loading from "vue-loading-overlay";
