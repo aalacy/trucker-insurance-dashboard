@@ -75,14 +75,16 @@
             </div>
 
             <div class="d-flex justify-content-center mt-2">
-              <v-facebook-login app-id="456259108336704"></v-facebook-login>
+              <v-facebook-login 
+                app-id="456259108336704"
+                @login="onFBLogin">
+              </v-facebook-login>
             </div>
-
             <div class="d-flex justify-content-center align-items-center mt-2">
               <g-signin-button
-                      :params="{client_id: 'xxx'}"
-                      @success=""
-                      @error="">
+                      :params="googleSignInParams"
+                      @success="onGoogleSignInSuccess"
+                      @error="onGoogleSignInError">
                 <img src="https://developers.google.com/identity/images/g-logo.png" style="width: 24px"/>
                 <div class="d-inline-block ml-3">Sign in with Google</div>
               </g-signin-button>
@@ -142,7 +144,7 @@
 import { API } from "../api.js";
 import Vue from "vue";
 import axios from "axios";
-import VFacebookLogin from 'vue-facebook-login-component'
+import {VFacebookLogin } from 'vue-facebook-login-component'
 import GSignInButton from 'vue-google-signin-button'
 Vue.use(GSignInButton)
 import Loading from "vue-loading-overlay";
@@ -151,7 +153,9 @@ Vue.use(Loading);
 
 export default {
   name: "LogInView",
-  components: {VFacebookLogin},
+  components: {
+    VFacebookLogin
+  },
 
   data() {
     return {
@@ -165,7 +169,10 @@ export default {
       reset_email: " ",
       sendStatus:"",
       showmodel: false,
-      formErrors: {}
+      formErrors: {},
+      googleSignInParams: {
+        client_id: '141093155676-j45u2vmph8034af70593re5n7ng6g3tv.apps.googleusercontent.com'
+      }
     };
   },
   mounted(){
@@ -207,6 +214,38 @@ export default {
           }
         });
     },
+    proceedAfterLogin(data, loader) {
+      if (data.status === "ok") {
+          this.loading = false;
+          if (loader) {
+            loader.hide();
+          }
+          // console.log("data", data.data.Tokens[0].token);
+          this.$swal("Thank You!", data.message, "success");
+          let t = data.data;
+          console.log("data", data);
+          localStorage.setItem("userId", data.data.id);
+
+          localStorage.setItem("token", t);
+          localStorage.setItem("showModal", false);
+          this.$router.push({ name: location.search.split('=')[1] });
+
+          // localStorage.setItem("accountStatus", t.account_status);
+
+          // if (t.account_status == "0") {
+          //   this.$router.push({ name: "Home" });
+          // } else {
+          //   this.$router.push({ name: "AccountInfo" });
+          // }
+        } else if (data.status === "error") {
+          this.loading = false;
+          if (loader) {
+            loader.hide();
+          }
+          this.error = data.message || data.data;
+          this.$swal("Opps!", this.error, "error");
+        }
+    },
     async login() {
       let loader = this.$loading.show({
         // Optional parameters
@@ -230,32 +269,7 @@ export default {
         });
         console.log("data", data);
 
-        if (data.status === "ok") {
-          this.loading = false;
-          loader.hide();
-          // console.log("data", data.data.Tokens[0].token);
-          this.$swal("Thank You!", data.message, "success");
-          let t = data.data;
-          console.log("data", data);
-          localStorage.setItem("userId", data.data.id);
-
-          localStorage.setItem("token", t);
-          localStorage.setItem("showModal", false);
-          this.$router.push({ name: "AccountInfoPersonalInfo" });
-
-          // localStorage.setItem("accountStatus", t.account_status);
-
-          // if (t.account_status == "0") {
-          //   this.$router.push({ name: "Home" });
-          // } else {
-          //   this.$router.push({ name: "AccountInfo" });
-          // }
-        } else if (data.status === "error") {
-          this.loading = false;
-          loader.hide();
-          this.error = data.message || data.data;
-          this.$swal("Opps!", this.error, "error");
-        }
+        this.proceedAfterLogin(data, loader)
       } catch (err) {
         console.error("catch", err);
         this.error = err.message;
@@ -263,6 +277,23 @@ export default {
         this.loading = false;
         loader.hide();
       }
+    },
+    async onGoogleSignInSuccess (googleUser) {
+      // `googleUser` is the GoogleUser object that represents the just-signed-in user.
+      // See https://developers.google.com/identity/sign-in/web/reference#users
+      const profile = googleUser.getBasicProfile() // etc etc
+      let data = await API.post("users/login/social", {
+          email: profile.U3,
+        });
+      
+      this.proceedAfterLogin(data);
+    },
+    onGoogleSignInError (error) {
+      // `error` contains any error occurred.
+      console.log('OH NOES', error)
+    },
+    onFBLogin (response) {
+      console.log(response);
     }
   }
 };

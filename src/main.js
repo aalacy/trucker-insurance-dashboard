@@ -14,9 +14,6 @@ import {faFacebookSquare,faGoogle} from '@fortawesome/free-brands-svg-icons'
 import VueSwal from 'vue-swal'
 import VueSignaturePad from 'vue-signature-pad';
 
-
-
-
 library.add(faCaretLeft,faSpinner, faAlignLeft,faCaretRight,faFacebookSquare,faGoogle,faPhoneAlt,faQuestion,faTimes)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
@@ -25,8 +22,6 @@ Vue.use(Vuelidate);
 Vue.use(VueSwal);
 Vue.use(BootstrapVue);
 Vue.use(VueSignaturePad);
-
-
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 

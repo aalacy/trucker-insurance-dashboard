@@ -63,7 +63,7 @@
               <li class="nav-item">
                 <router-link
                   @click.native="loginHide"
-                  :to="{ name: 'LogIn' }"
+                  :to="{ name: 'LogIn', query: {next: this.$router.history.current.name == 'login' ?  '' : this.$router.history.current.name} }"
                   class="lt-button lt-button-main viewquote"
                   active-class="font-weight-bold"
                 >Login</router-link>

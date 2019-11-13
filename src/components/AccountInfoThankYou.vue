@@ -147,26 +147,26 @@ export default {
               swal("Sorry", "You need to complete 10 steps process first", {
                 icon: "warning"
               });
-              
             }
           });
       } else {
+        this.$router.push({ name: "LogIn", query: {next: this.$router.history.current.name == 'login' ?  '' : this.$router.history.current.name} });
         // this.showmodel = true;
         // window.open(`${process.env.VUE_APP_BACKEND_URL}/company/pdf`);
-          swal({
-          title: "To Continue,",
-          text: "You need to login first",
-          icon: "warning",
-          buttons: ["No", "Yes"]
-        }).then(willDelete => {
+        //   swal({
+        //   title: "To Continue,",
+        //   text: "You need to login first",
+        //   icon: "warning",
+        //   buttons: ["No", "Yes"]
+        // }).then(willDelete => {
           
-          if (willDelete) {
-            this.$router.push({ name: "LogIn" });
-            localStorage.setItem("accountStatus","1")
-          } else {
-            this.$router.push({ name: "AccountInfoThankYou" });
-          }
-        });
+        //   if (willDelete) {
+        //     this.$router.push({ name: "LogIn", query: {next: this.$router.history.current.name == 'login' ?  '' : this.$router.history.current.name} });
+        //     localStorage.setItem("accountStatus","1")
+        //   } else {
+        //     this.$router.push({ name: "AccountInfoThankYou" });
+        //   }
+        // });
       }
       // window.open(`${process.env.VUE_APP_BACKEND_URL}/company/pdf`);
       // window.open(`localhost:3000/api/company/pdf`);

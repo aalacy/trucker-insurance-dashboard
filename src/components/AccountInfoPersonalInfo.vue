@@ -353,9 +353,11 @@ export default {
       let MailingAddress = this.formatAddress(
         localStorage.getItem(["Mailing address"])
       );
+      console.log('MailingAddress', MailingAddress);
       let PhysicalAddress = this.formatAddress(
         localStorage.getItem(["Physical address"])
       );
+      console.log('PhysicalAddress', PhysicalAddress);
       this.formData.address = MailingAddress[3].trim().replace(",", "");
       this.formData.city = MailingAddress[1].trim().replace(",", "");
       this.formData.state = MailingAddress[2].trim().replace(",", "");

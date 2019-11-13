@@ -25,21 +25,27 @@
           </form>
         </div>
 
-        <div class="row mt-5 white-bg">
-          <div v-if="loading" class="col-12">Loading...</div>
+        <div class="row mt-5 search-result">
+          <div v-if="loading" class="col-12">
+            <img
+                src="../assets/images/loading/loading_truck_128.gif"
+                class="d-block mx-auto rounded"
+                alt="Loading"
+              >
+          </div>
 
           <div v-if="error" class="col-12 alert alert-danger" role="alert">{{ error }}</div>
 
           <div v-if="noData" class="col-12">No data for your request.</div>
 
           <template v-else-if="(companies.length || company) && !loading">
-            <div class="col-sm-12 p-2">
-              Here’s the data we’re pulling, please go through the form and
-              confirm the information.
+            <div class="col-sm-12 header-note">
+              Please choose your company.
             </div>
             <div class="table-responsive company-table" id="btna-main">
-              <table class="table table-light table-bordered">
-                <thead>
+              <table class="table table-responsive-md table-striped table-bordered table-hover">
+                <caption >List of Companies <span v-if="companies.length">{{companies.length}}</span></caption>
+                <thead class="thead-dark">
                   <tr>
                     <th>Name</th>
                     <th>US DOT</th>
@@ -50,7 +56,7 @@
 
                 <tbody v-if="companies.length">
                   <tr v-for="(companyItem, index) in companies" :key="index">
-                    <td>{{ companyItem.name }} <br/> 
+                    <td>{{ toUpper(companyItem.name)}} <br/> 
                     <button
                         class="lt-button   mt-1  mob-showa lt-button-main"
                         @click="createCompany(companyItem.usdot,companyItem.name)"
@@ -199,6 +205,7 @@
 import { API } from "../api.js";
 import { isMobile } from "mobile-device-detect";
 import axios from 'axios';
+import { toUpper as _toUpper } from '../util.js';
 
 export default {
   name: "HomeView",
@@ -298,6 +305,9 @@ export default {
       } finally {
         this.loading = false;
       }
+    },
+    toUpper(str) {
+      return _toUpper(str);
     }
   }
 };
@@ -374,7 +384,29 @@ export default {
   .white-bg {
     background-color: white;
   }
+
+  .header-note {
+    text-align: center;
+    padding: 0.75rem 0.75rem 0 0.75rem;
+    font-size: 24px;
+    font-weight: 600;
+  }
+
+  #btna-main {
+    padding: 0.5rem;
+
+    
+    caption {
+      caption-side: top;
+      text-align: right;
+      // padding: 0 0.75rem 0 0;
+    }
+  }
   
+  .search-result {
+    border-radius: 6px;
+    background-color: white;
+  }
 }
 .homeImage img{
     width:70% !important;
