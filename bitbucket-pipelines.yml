@@ -1,0 +1,21 @@
+image: node:8.16.2
+
+pipelines:
+  branches:
+    master:
+      - step:
+          name: Generate Static Files
+          caches:
+            - node
+          script:
+            - npm install
+            - npm run build
+          artifacts:
+            - dist/*
+            - dist/**/*
+            - dist/**/**
+      - step:
+          name: Deploy to S3
+          image: atlassian/pipelines-awscli
+          script: 
+            - aws s3 sync --acl public-read --delete ./dist s3://luckytruck.co

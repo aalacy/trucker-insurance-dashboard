@@ -154,15 +154,20 @@ export default {
       });
       try {
         this.loading = true;
-        let data = await API.post("users/register", {
-          firstName: this.formData.firstName,
-          lastName: this.formData.lastName,
-          email: this.formData.email,
-          password: this.formData.password,
-          passwordConfirm: this.formData.confirmpassword,
-          account_status :this.formData.account_status
-          
-        });
+        let data;
+        try {
+          data = await API.post("users/register", {
+            firstName: this.formData.firstName,
+            lastName: this.formData.lastName,
+            email: this.formData.email,
+            password: this.formData.password,
+            passwordConfirm: this.formData.confirmpassword,
+            account_status :this.formData.account_status
+            
+          });
+        } catch (err) {
+          console.log(err);
+        }
 
         if (data.status === "ok") {
           this.loading = false;
