@@ -176,12 +176,15 @@ export default {
           localStorage.setItem("userId",data.data.id);
           // console.log("register data", data.account_status);
           loader.hide();
-          this.$swal("", "You are successfully Registered!", "success");
-          if (data.data.account_status == "0") {
-                  this.$router.push({ name: "Home" });
-                } else {
-                  this.$router.push({ name: "AccountInfo" });
-                }
+          this.$swal("", "You are successfully Registered!", "success")
+              .then((value) => {
+                this.$router.push({ name: location.search.split('=')[1] });
+              });
+          // if (data.data.account_status == "0") {
+          //         this.$router.push({ name: "Home" });
+          //       } else {
+          //         this.$router.push({ name: "AccountInfo" });
+          //       }
                 // this.$router.push({ name: "LogIn" });
         } else if (data.status === "error") {
           this.loading = false;

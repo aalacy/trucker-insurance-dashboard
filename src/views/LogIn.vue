@@ -44,7 +44,7 @@
               </div>
 
               <div class="text-right flex-grow-1 font-small">
-                <router-link :to="{ name: 'SignUp' }" @click.native="accountStatusUpdate">
+                <router-link :to="{ name: 'SignUp', query: {next: this.$router.history.current.query.next} }" @click.native="accountStatusUpdate">
                 <span>New user? Sign up</span>
               </router-link>
               </div>
@@ -176,6 +176,7 @@ export default {
     };
   },
   mounted(){
+    console.log('route', this.$router.history.current.query.next);
     //  if( localStorage.getItem("accountStatus")== "1")
     //   {
     //     this.sendStatus = "1";
