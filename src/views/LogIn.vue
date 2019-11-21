@@ -44,7 +44,7 @@
               </div>
 
               <div class="text-right flex-grow-1 font-small">
-                <router-link :to="{ name: 'SignUp', query: {next: this.$router.history.current.query.next} }" @click.native="accountStatusUpdate">
+                <router-link :to="{ name: 'SignUp', query: {next: this.$router.history.current.name == 'SignUp' ?  this.$router.history.current.query.next : this.$router.history.current.name}  }" @click.native="accountStatusUpdate">
                 <span>New user? Sign up</span>
               </router-link>
               </div>

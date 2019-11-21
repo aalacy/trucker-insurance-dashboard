@@ -4,7 +4,7 @@
       <router-link :to="{ name: 'Home' }" class="navbar-brand font-weight-bold lt-link" > 
         <img src="./assets/images/logo.svg" alt="logo" height="46px" width="269px">
       </router-link>
-   <span class="text-right-a">For assistance, please call us at <a href="tel:16469330419" style="font-weight:bold; white-space:nowrap;">1-646-933-0419</a></span>
+   <span class="text-right-a">For assistance, please call us at <a href="tel:15135062400 " style="font-weight:bold; white-space:nowrap;">1-513-506-2400</a></span>
       <button
         class="navbar-toggler"
         type="button"
@@ -63,7 +63,7 @@
               <li class="nav-item">
                 <router-link
                   @click.native="loginHide"
-                  :to="{ name: 'LogIn', query: {next: this.$router.history.current.name == 'login' ?  '' : this.$router.history.current.name} }"
+                  :to="{ name: 'LogIn', query: {next: this.$router.history.current.name == 'LogIn' ?  this.$router.history.current.query.next : this.$router.history.current.name} }"
                   class="lt-button lt-button-main viewquote"
                   active-class="font-weight-bold"
                 >Login</router-link>
@@ -79,6 +79,16 @@
                 >Logout</router-link>
               </li>
             </div>
+            <div v-if="quote">
+              <li class="nav-item">
+                <router-link
+                  @click.native="loginHide"
+                  :to="{ name: 'SignUp', query: {next: this.$router.history.current.name == 'SignUp' ?  this.$router.history.current.query.next : this.$router.history.current.name} }"
+                  class="lt-button lt-button-main viewquote"
+                  active-class="font-weight-bold"
+                >Signup</router-link>
+              </li>
+            </div>
           </ul>
         </div>
        
@@ -89,11 +99,17 @@
     <main class="app-main">
       <router-view/>
     </main>
-    <footer class="app-footer lt-fixed px-4 flex-column">
+    <footer class="app-footer lt-fixed px-4 bg-white flex-column">
       <div class="d-flex flex-row width-100">
         <form class="form-footer">
-          <div class="form-group row d-flex align-items-center">
-            <div class="col-sm-12 col-lg-4 col-md-12 col-12 flex-mob-a">Subscribe to the Newsletter:</div>
+          <div class="form-group row d-flex flex-column align-items-center">
+            <img
+              src="./assets/images/loading/loading_truck_128.gif"
+              class="d-block mx-auto rounded mb-3"
+              alt="Loading"
+              style="width: 100px; height: auto"
+            >
+            <h2 class="col-sm-12 col-lg-4 col-md-12 col-12 text-center text-dark mb-4">Subscribe to the Newsletter:</h2>
             <div class="col-sm-12 col-lg-8 col-md-12 col-12 position-relative">
               <input
                 id="inputEmail"
@@ -108,28 +124,50 @@
       </div>
 
       <div class="d-flex"></div>
-
-      <div class="d-flex flex-mob">
+      <chat-boat/>
+    </footer>
+    <div class="d-flex flex-column flex-mob bottom-section">
+      <img
+        src="./assets/images/loading/loading_truck_128.gif"
+        class="rounded mb-3"
+        alt="Loading"
+        style="width: 90px; height: auto"
+      >
+      <ul class="list-group">
+        <li class="list-group item">
+          <a href="/signin">Sign In</a>
+        </li>
+        <li class="list-group item">
+          <router-link
+            @click.native="loginHide"
+            :to="{ name: 'SignUp', query: {next: this.$router.history.current.name == 'SignUp' ?  this.$router.history.current.query.next : this.$router.history.current.name} }"
+            class="lt-button lt-button-main viewquote"
+            active-class="font-weight-bold"
+          >Signup</router-link>
+        </li>
+      </ul>
+      <div class="bottom-company">
         <div class="px-3 py-1">&copy;2019 LuckyTrucking!, Inc</div>
 
-        <div class="px-3 py-1">
+        <span class="px-3 py-1">
           <a
+            class="text-white"
             href="http://3.13.68.92/PRIVACY_POLICY_FOR_LuckyTruck.pdf"
             rel="noopener noreferrer"
             target="_blank"
           >PRIVACY POLICY</a>
-        </div>
+        </span>
 
-        <div class="px-3 py-1">
+        <span class="px-3 py-1">
           <a
+            class="text-white"
             href="http://3.13.68.92/TERMS_OF_SERVICE_FOR_LuckyTruckers.com.pdf"
             rel="noopener noreferrer"
             target="_blank"
           >TERMS OF USE</a>
-        </div>
+        </span>
       </div>
-      <chat-boat/>
-    </footer>
+    </div>
   </div>
 </template>
 
@@ -189,7 +227,6 @@ export default {
   },
   
   mounted() {
-    
   if(localStorage.getItem("token")){
      this.show=true;
    }else{

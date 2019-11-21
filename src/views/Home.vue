@@ -25,14 +25,14 @@
           </form>
         </div>
 
+        <div v-if="loading" class="col-12">
+          <img
+              src="../assets/images/loading/loading_truck_128.gif"
+              class="d-block mx-auto rounded"
+              alt="Loading"
+            >
+        </div>
         <div class="row mt-5 search-result">
-          <div v-if="loading" class="col-12">
-            <img
-                src="../assets/images/loading/loading_truck_128.gif"
-                class="d-block mx-auto rounded"
-                alt="Loading"
-              >
-          </div>
 
           <div v-if="error" class="col-12 alert alert-danger" role="alert">{{ error }}</div>
 
@@ -92,7 +92,7 @@
       </div>
     </div>
 
-    <div class="container-fluid back" id="lt-section">
+    <div class="container-fluid back bg-white" id="lt-section">
       <div class="row d-flex pad-50 justify-content-center">
         <div class="col-sm-8 col-md-8 text-center">
           <h2>LuckyTruck Makes Trucking Easier.</h2>
@@ -101,82 +101,98 @@
       </div>
     </div>
 
-    <div class="container" id="img-text">
-      <div class="row d-flex margin-50 justify-content-center">
-        <div class="col-sm-8 col-md-8">
-          <div class="row homeImage">
-            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
-              <img
-                src="../assets/images/insurance.jpg"
-                height="200"
-                width="250"
-                class="d-block mx-auto rounded"
-                alt="Insurance"
-              >
-              <div class="d-flex justify-content-center">
-                <div class="width-200 text-center">
-                  <h2>Insurance</h2>
-                  <p
-                    class="text-justify"
-                  >LuckyTruck makes your insurance more convenient. We provide an effective service, don’t charge extra fees and do what we can to keep you moving even if that’s taking a late night call or answering an email. We genuinely care about keeping you on the road and providing a reliable service. </p>
+    <div class="container-fluid bg-blue pt-c-5 pb-5" id="img-text">
+      <div class="row d-flex justify-content-center">
+        <!-- <div class="col-sm-8 col-md-8"> -->
+          <!-- <div class="row homeImage"> -->
+            <div class="col-lg-3 col-md-6 col-sm-8 col-xs-12">
+              <div class="card mb-4  bg-white">
+                <div class="card-body">
+                  <div class="d-flex justify-content-center">
+                    <div class="width-200 text-center">
+                      <h1>Insurance</h1>
+                      <p
+                        class="text-justify"
+                      >LuckyTruck makes your insurance more convenient. We provide an effective service, don’t charge extra fees and do what we can to keep you moving even if that’s taking a late night call or answering an email. We genuinely care about keeping you on the road and providing a reliable service. </p>
+                    </div>
+                  </div>
+                  <img
+                    src="../assets/images/insurance.jpg"
+                    height="auto"
+                    width="85%"
+                    class="d-block mx-auto rounded"
+                    alt="Insurance"
+                  >
                 </div>
               </div>
             </div>
-            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-              <img
-                src="../assets/images/maint.jpg"
-                height="200"
-                width="250"
-                class="d-block mx-auto rounded"
-                alt="Insurance"
-              >      <div class="d-flex justify-content-center">
-                <div class="width-200 text-center">
-                  <h2>Loads, Vehicles, and Drivers</h2>
-                  <p
-                      class="text-justify"
-                  >Many trucking businesses are constantly changing. If yours is one of them, let us know. Our goal is to help you manage those changes. Stay tuned for more product updates and let us know what you want. We want to build what you need. </p>
-                </div>
-              </div>
-              
-            </div>
-          </div>
-          <div class="row homeImage">
-            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-              <img
-                src="../assets/images/risk.jpg"
-                height="200"
-                width="250"
-                class="d-block mx-auto rounded"
-                alt="Insurance"
-              >
-              <div class="d-flex justify-content-center">
-                <div class="width-200 text-center">
-                  <h2>Manage My Authority</h2>
-                  <p
-                     class="text-justify"
-                  >Insurance is a key part of maintaining your authority. Talk to us about any concerns and we’ll try to figure it out</p>
+            <div class="col-lg-3 col-md-6 col-sm-8 col-xs-12">
+              <div class="card mb-4  bg-white">
+                <div class="card-body">
+                  <div class="d-flex justify-content-center">
+                    <div class="width-200 text-center">
+                      <h1>Loads, Vehicles, and Drivers</h1>
+                      <p
+                          class="text-justify"
+                      >Many trucking businesses are constantly changing. If yours is one of them, let us know. Our goal is to help you manage those changes. Stay tuned for more product updates and let us know what you want. We want to build what you need. </p>
+                    </div>
+                  </div>
+                  <img
+                    src="../assets/images/maint.jpg"
+                    height="auto"
+                    width="85%"
+                    class="d-block mx-auto rounded"
+                    alt="Insurance"
+                  > 
                 </div>
               </div>
             </div>
-            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-              <img
-                src="../assets/images/fleet.png"
-                height="200"
-                width="250"
-                class="d-block mx-auto rounded"
-                alt="Insurance"
-              >
-        <div class="d-flex justify-content-center">
-                <div class="width-200 text-center">
-                  <h2>Maintainence</h2>
-                  <p
-                      class="text-justify"
-                  >As you operate, let us know what holds you back. Our goal is to keep you running and we’re working on products to meet your operational goals. </p>
+          <!-- </div> -->
+          <!-- <div class="row homeImage"> -->
+            <div class="col-lg-3 col-md-6 col-sm-8 col-xs-12">
+              <div class="card pb-4 mb-4  bg-white">
+                <div class="card-body">
+                  <div class="d-flex justify-content-center">
+                    <div class="width-200 text-center">
+                      <h1>Manage My Authority</h1>
+                      <p
+                        class="text-justify"
+                      >Insurance is a key part of maintaining your authority. Talk to us about any concerns and we’ll try to figure it out</p>
+                    </div>
+                  </div>
+                  <img
+                    src="../assets/images/risk.jpg"
+                    height="auto"
+                    width="85%"
+                    class="d-block mx-auto rounded"
+                    alt="Insurance"
+                  >
                 </div>
               </div>
             </div>
-          </div>
-        </div>
+            <div class="col-lg-3 col-md-6 col-sm-8 col-xs-12">
+              <div class="card pb-4 mb-4  bg-white">
+                <div class="card-body">
+                  <div class="d-flex justify-content-center">
+                    <div class="width-200 text-center">
+                      <h1>Maintainence</h1>
+                      <p
+                          class="text-justify"
+                      >As you operate, let us know what holds you back. Our goal is to keep you running and we’re working on products to meet your operational goals. </p>
+                    </div>
+                  </div>
+                  <img
+                    src="../assets/images/fleet.png"
+                    height="auto"
+                    width="85%"
+                    class="d-block mx-auto rounded"
+                    alt="Insurance"
+                  >
+                </div>
+              </div>
+            </div>
+          <!-- </div> -->
+        <!-- </div> -->
       </div>
     </div>
     <div class="modal" id="myModal">
