@@ -10,11 +10,11 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import { faCaretLeft,faSpinner, faAlignLeft,faCaretRight,faPhoneAlt,faQuestion,faTimes } from '@fortawesome/free-solid-svg-icons'
-import {faFacebookSquare,faGoogle} from '@fortawesome/free-brands-svg-icons'
+import {faFacebookSquare, faFacebookF,faGoogle, faTwitter, faLinkedinIn} from '@fortawesome/free-brands-svg-icons'
 import VueSwal from 'vue-swal'
 import VueSignaturePad from 'vue-signature-pad';
 
-library.add(faCaretLeft,faSpinner, faAlignLeft,faCaretRight,faFacebookSquare,faGoogle,faPhoneAlt,faQuestion,faTimes)
+library.add(faCaretLeft,faSpinner, faAlignLeft,faCaretRight,faFacebookSquare, faFacebookF,faGoogle, faTwitter, faLinkedinIn, faPhoneAlt,faQuestion,faTimes)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 Vue.config.productionTip = false;
@@ -23,7 +23,7 @@ Vue.use(VueSwal);
 Vue.use(BootstrapVue);
 Vue.use(VueSignaturePad);
 
-Vue.component('font-awesome-icon', FontAwesomeIcon)
+// Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 new Vue({
   router,

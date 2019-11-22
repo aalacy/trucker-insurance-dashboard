@@ -4,7 +4,7 @@
       <router-link :to="{ name: 'Home' }" class="navbar-brand font-weight-bold lt-link" > 
         <img src="./assets/images/logo.svg" alt="logo" height="46px" width="269px">
       </router-link>
-   <span class="text-right-a">For assistance, please call us at <a href="tel:15135062400 " style="font-weight:bold; white-space:nowrap;">1-513-506-2400</a></span>
+   <span class="text-right-a">For assistance, please call us at <a href="tel:15135062400 " style="color:#007bff; font-weight:bold; white-space:nowrap;">1-513-506-2400</a></span>
       <button
         class="navbar-toggler"
         type="button"
@@ -99,7 +99,7 @@
     <main class="app-main">
       <router-view/>
     </main>
-    <footer class="app-footer lt-fixed px-4 bg-white flex-column">
+    <footer class="app-footer lt-fixed px-4 flex-column">
       <div class="d-flex flex-row width-100">
         <form class="form-footer">
           <div class="form-group row d-flex flex-column align-items-center">
@@ -122,52 +122,81 @@
           </div>
         </form>
       </div>
+      <div class="container">
+        <div class="d-flex flex-column flex-mob bottom-section">
+          <div class="footer-contacts">
+            <ul>
+                <li>
+                    <a href="mailto:hello@embroker.com">hello@luckytruck.co</a>
+                </li>
+                <li>
+                    <a href="tel:15135062400">1-513-506-2400</a>
+                </li>
+                <li>
+                    Mon-Fri 6am-6pm PT
+                </li>
 
+                <!-- social networks -->
+                <li class="footer-social-networks">
+                    <span>
+                        <a href="#" target="_blank">
+                           <font-awesome-icon :icon="['fab', 'twitter']" />
+                        </a>
+                    </span>
+                    <span>
+                        <a href="#" target="_blank">
+                             <font-awesome-icon :icon="['fab', 'linkedin-in']"  />
+                        </a>
+                    </span>
+                    <span>
+                        <a href="#" target="_blank">
+                             <font-awesome-icon :icon="['fab', 'facebook-f']"  />
+                        </a>
+                    </span>
+                </li>
+            </ul>
+        </div>
+          <div class="bottom-company">
+            <div class="px-3 py-1">&copy;2019 LuckyTrucking!, Inc</div>
+            <span class="px-3 py-1">
+               <router-link
+                  @click.native="loginHide"
+                  :to="{ name: 'LogIn', query: {next: this.$router.history.current.name == 'LogIn' ?  this.$router.history.current.query.next : this.$router.history.current.name} }"
+                  class="text-white"
+                  active-class="font-weight-bold"
+                >Login</router-link>
+            </span>
+            <span class="px-3 py-1">
+              <router-link
+                  @click.native="loginHide"
+                  :to="{ name: 'SignUp', query: {next: this.$router.history.current.name == 'SignUp' ?  this.$router.history.current.query.next : this.$router.history.current.name} }"
+                  class="text-white"
+                >Signup</router-link>
+            </span>
+            <span class="px-3 py-1">
+              <a
+                class="text-white"
+                href="#"
+                rel="noopener noreferrer"
+                target="_blank"
+              >PRIVACY POLICY</a>
+            </span>
+
+            <span class="px-3 py-1">
+              <a
+                class="text-white"
+                href="#"
+                rel="noopener noreferrer"
+                target="_blank"
+              >TERMS OF USE</a>
+            </span>
+          </div>
+        </div>
+      </div>
       <div class="d-flex"></div>
       <chat-boat/>
     </footer>
-    <div class="d-flex flex-column flex-mob bottom-section">
-      <img
-        src="./assets/images/loading/loading_truck_128.gif"
-        class="rounded mb-3"
-        alt="Loading"
-        style="width: 90px; height: auto"
-      >
-      <ul class="list-group">
-        <li class="list-group item">
-          <a href="/signin">Sign In</a>
-        </li>
-        <li class="list-group item">
-          <router-link
-            @click.native="loginHide"
-            :to="{ name: 'SignUp', query: {next: this.$router.history.current.name == 'SignUp' ?  this.$router.history.current.query.next : this.$router.history.current.name} }"
-            class="lt-button lt-button-main viewquote"
-            active-class="font-weight-bold"
-          >Signup</router-link>
-        </li>
-      </ul>
-      <div class="bottom-company">
-        <div class="px-3 py-1">&copy;2019 LuckyTrucking!, Inc</div>
-
-        <span class="px-3 py-1">
-          <a
-            class="text-white"
-            href="http://3.13.68.92/PRIVACY_POLICY_FOR_LuckyTruck.pdf"
-            rel="noopener noreferrer"
-            target="_blank"
-          >PRIVACY POLICY</a>
-        </span>
-
-        <span class="px-3 py-1">
-          <a
-            class="text-white"
-            href="http://3.13.68.92/TERMS_OF_SERVICE_FOR_LuckyTruckers.com.pdf"
-            rel="noopener noreferrer"
-            target="_blank"
-          >TERMS OF USE</a>
-        </span>
-      </div>
-    </div>
+   
   </div>
 </template>
 
@@ -220,10 +249,7 @@ export default {
     else {
       this.quote =true;
       this.myacchide = false;
-      
     }
-  
-    
   },
   
   mounted() {
@@ -232,7 +258,6 @@ export default {
    }else{
      this.quote=false;
      this.show=false;
-    
    }
     
     this.msg = isMobile ? true : false;

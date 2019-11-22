@@ -95,7 +95,7 @@
     <div class="container-fluid back bg-white" id="lt-section">
       <div class="row d-flex pad-50 justify-content-center">
         <div class="col-sm-8 col-md-8 text-center">
-          <h2>LuckyTruck Makes Trucking Easier.</h2>
+          <h2 class="text-weight-bold">LuckyTruck Makes Trucking Easier.</h2>
           <p>Our team genuinely cares about your success and we do what we can to help you succeed by making trucking easier. </p>
         </div>
       </div>
@@ -154,7 +154,8 @@
                 <div class="card-body">
                   <div class="d-flex justify-content-center">
                     <div class="width-200 text-center">
-                      <h1>Manage My Authority</h1>
+                      <h1>
+                         My Authority</h1>
                       <p
                         class="text-justify"
                       >Insurance is a key part of maintaining your authority. Talk to us about any concerns and we’ll try to figure it out</p>
