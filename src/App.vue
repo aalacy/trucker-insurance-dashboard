@@ -109,7 +109,7 @@
               alt="Loading"
               style="width: 100px; height: auto"
             >
-            <h2 class="col-sm-12 col-lg-4 col-md-12 col-12 text-center text-dark mb-4">Subscribe to the Newsletter:</h2>
+            <h2 class="col-sm-12 col-lg-8 col-md-12 col-12 text-center text-white font-weight-bold mb-4">Subscribe to the Newsletter:</h2>
             <div class="col-sm-12 col-lg-8 col-md-12 col-12 position-relative">
               <input
                 id="inputEmail"
@@ -127,13 +127,16 @@
           <div class="footer-contacts">
             <ul>
                 <li>
-                    <a href="mailto:hello@embroker.com">hello@luckytruck.co</a>
+                    <a href="mailto:support@luckytruck.co">support@luckytruck.co</a>
                 </li>
                 <li>
                     <a href="tel:15135062400">1-513-506-2400</a>
                 </li>
                 <li>
-                    Mon-Fri 6am-6pm PT
+                    Mon-Fri 6am-6pm ET
+                </li>
+                <li>
+                  LuckyTruck, Inc.
                 </li>
 
                 <!-- social networks -->
@@ -157,7 +160,7 @@
             </ul>
         </div>
           <div class="bottom-company">
-            <div class="px-3 py-1">&copy;2019 LuckyTrucking!, Inc</div>
+            <div class="px-3 py-1">&copy;2019 LuckyTrucking, Inc.</div>
             <span class="px-3 py-1">
                <router-link
                   @click.native="loginHide"
@@ -176,7 +179,7 @@
             <span class="px-3 py-1">
               <a
                 class="text-white"
-                href="#"
+                href="/TERMS OF SERVICE FOR LuckyTruck.co.pdf"
                 rel="noopener noreferrer"
                 target="_blank"
               >PRIVACY POLICY</a>
@@ -185,7 +188,7 @@
             <span class="px-3 py-1">
               <a
                 class="text-white"
-                href="#"
+                href="/PRIVACY POLICY FOR LuckyTruck.pdf"
                 rel="noopener noreferrer"
                 target="_blank"
               >TERMS OF USE</a>

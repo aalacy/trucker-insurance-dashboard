@@ -578,6 +578,7 @@ body{
 #lt-section p{
   font-size: 20px;
   font-weight: bold;
+  margin-top: 45px;
 }
 
 .pad-50{
@@ -698,6 +699,23 @@ body{
       li.footer-social-networks span{
         margin-right: 1rem;
       }
+    }
+  }
+}
+
+.card-block {
+  .card-item {
+    flex: 1;
+
+    div.card {
+      height: 100%;
+
+      .card-body {
+        margin-bottom: 1.75rem;
+        & > div {
+          height: 100%;
+        }
+      } 
     }
   }
 }
