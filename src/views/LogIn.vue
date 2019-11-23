@@ -77,6 +77,7 @@
             <div class="d-flex justify-content-center mt-2">
               <v-facebook-login 
                 app-id="456259108336704"
+                login-options={scope: 'email' }
                 @login="onFBLogin">
               </v-facebook-login>
             </div>
@@ -144,7 +145,7 @@
 import { API } from "../api.js";
 import Vue from "vue";
 import axios from "axios";
-import { VFBLogin as VFacebookLogin } from 'vue-facebook-login-component'
+import { VFBLogin as VFacebookLogin, VFBLoginScope  } from 'vue-facebook-login-component'
 import GSignInButton from 'vue-google-signin-button'
 Vue.use(GSignInButton)
 import Loading from "vue-loading-overlay";
@@ -154,7 +155,8 @@ Vue.use(Loading);
 export default {
   name: "LogInView",
   components: {
-    VFacebookLogin
+    VFacebookLogin,
+    VFBLoginScope 
   },
 
   data() {
@@ -285,7 +287,7 @@ export default {
       const profile = googleUser.getBasicProfile() // etc etc
       let data = await API.post("users/login/social", {
           email: profile.U3,
-        });
+      });
       
       this.proceedAfterLogin(data);
     },
@@ -295,6 +297,11 @@ export default {
     },
     onFBLogin (response) {
       console.log(response);
+      let data = await API.post("users/login/social", {
+          email: profile.U3,
+      });
+      
+      this.proceedAfterLogin(data);
     }
   }
 };
