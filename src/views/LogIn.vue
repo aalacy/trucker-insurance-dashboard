@@ -78,6 +78,9 @@
               <v-facebook-login 
                 app-id="456259108336704"
                 login-options="{scope: 'email' }"
+                 @sdk-init="handleSdkInit"
+                @connect="handleConnect"
+                @logout="handleLogout"
                 @login="onFBLogin">
               </v-facebook-login>
             </div>
@@ -174,7 +177,12 @@ export default {
       formErrors: {},
       googleSignInParams: {
         client_id: '39806248401-q3p9hhtt0d0v8arj9hrrmu4gdevppoej.apps.googleusercontent.com'
-      }
+      },
+      facebook: {
+        FB: {},
+        model: {},
+        appId: '456259108336704'
+      },
     };
   },
   mounted(){
@@ -219,35 +227,28 @@ export default {
     },
     proceedAfterLogin(data, loader) {
       if (data.status === "ok") {
-          this.loading = false;
-          if (loader) {
-            loader.hide();
-          }
-          // console.log("data", data.data.Tokens[0].token);
-          this.$swal("Thank You!", data.message, "success");
-          let t = data.data;
-          console.log("data", data);
-          localStorage.setItem("userId", data.data.id);
-
-          localStorage.setItem("token", t);
-          localStorage.setItem("showModal", false);
-          this.$router.push({ name: location.search.split('=')[1] });
-
-          // localStorage.setItem("accountStatus", t.account_status);
-
-          // if (t.account_status == "0") {
-          //   this.$router.push({ name: "Home" });
-          // } else {
-          //   this.$router.push({ name: "AccountInfo" });
-          // }
-        } else if (data.status === "error") {
-          this.loading = false;
-          if (loader) {
-            loader.hide();
-          }
-          this.error = data.message || data.data;
-          this.$swal("Opps!", this.error, "error");
+        this.loading = false;
+        if (loader) {
+          loader.hide();
         }
+        // console.log("data", data.data.Tokens[0].token);
+        this.$swal("Thank You!", data.message, "success");
+        let t = data.data;
+        console.log("data", data);
+        localStorage.setItem("userId", data.data.id);
+
+        localStorage.setItem("token", t);
+        localStorage.setItem("showModal", false);
+        this.$router.push({ name: location.search.split('=')[1] });
+
+      } else if (data.status === "error") {
+        this.loading = false;
+        if (loader) {
+          loader.hide();
+        }
+        this.error = data.message || data.data;
+        this.$swal("Opps!", this.error, "error");
+      }
     },
     async login() {
       let loader = this.$loading.show({
@@ -295,14 +296,23 @@ export default {
       // `error` contains any error occurred.
       console.log('OH NOES', error)
     },
-    async onFBLogin (response) {
-      console.log(response);
-      let data = await API.post("users/login/social", {
-          email: profile.U3,
-      });
-      
-      this.proceedAfterLogin(data);
-    }
+    async getUserData() {
+      const { api } = this.facebook.FB
+      api('/me', { fields: 'id, email, name' }, async user => {
+        console.log(user);
+        let data = await API.post("users/login/social", {
+            email: user.email,
+        });
+        
+        this.proceedAfterLogin(data);
+      })
+    },
+    handleSdkInit({ FB }) {
+      this.facebook.FB = FB
+    },
+    handleConnect() {
+      this.getUserData()
+    },
   }
 };
 </script>
