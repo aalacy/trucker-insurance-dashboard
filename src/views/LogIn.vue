@@ -251,6 +251,8 @@ export default {
     },
     async logout() {
       try {
+        this.facebook.FB.logout();
+        
         let data = await API.post("users/logout");
         localStorage.removeItem("token");
         setTimeout(()=>{
@@ -263,7 +265,6 @@ export default {
           localStorage.removeItem("redirect");
               this.$router.push({ name: "Home" });
           },500)
-          this.facebook.FB.logout();
         } catch (err) {
           console.error("catch", err);
           this.error = err.message;
