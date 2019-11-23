@@ -303,7 +303,7 @@ async logout(){
       this.error = null;
    try {
        window.FB.logout();
-
+     
         let data = await API.post("users/logout");
         localStorage.removeItem("token");
         // localStorage.setItem("viewQuote", true);
