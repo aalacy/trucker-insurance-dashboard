@@ -77,7 +77,7 @@
             <div class="d-flex justify-content-center mt-2">
               <v-facebook-login 
                 app-id="456259108336704"
-                login-options={scope: 'email' }
+                login-options="{scope: 'email' }"
                 @login="onFBLogin">
               </v-facebook-login>
             </div>
