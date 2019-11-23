@@ -295,7 +295,7 @@ export default {
       // `error` contains any error occurred.
       console.log('OH NOES', error)
     },
-    onFBLogin (response) {
+    async onFBLogin (response) {
       console.log(response);
       let data = await API.post("users/login/social", {
           email: profile.U3,
