@@ -176,7 +176,7 @@ export default {
       showmodel: false,
       formErrors: {},
       googleSignInParams: {
-        client_id: '39806248401-q3p9hhtt0d0v8arj9hrrmu4gdevppoej.apps.googleusercontent.com'
+        client_id: '1036277225452-ogkscsi1akdhekt69mrsu2stbsgd9r6o.apps.googleusercontent.com'
       },
       facebook: {
         FB: {},
@@ -250,6 +250,25 @@ export default {
         this.$swal("Opps!", this.error, "error");
       }
     },
+    async logout() {
+      try {
+        let data = await API.post("users/logout");
+        localStorage.removeItem("token");
+        setTimeout(()=>{
+          
+        this.myacchide = false;
+          // localStorage.removeItem("accBtn");
+          localStorage.removeItem("token");
+          localStorage.removeItem("userId")
+          // localStorage.removeItem("registredUserId");
+          localStorage.removeItem("redirect");
+              this.$router.push({ name: "Home" });
+          },500)
+        } catch (err) {
+          console.error("catch", err);
+          this.error = err.message;
+        } 
+    },
     async login() {
       let loader = this.$loading.show({
         // Optional parameters
@@ -287,7 +306,11 @@ export default {
       // See https://developers.google.com/identity/sign-in/web/reference#users
       const profile = googleUser.getBasicProfile() // etc etc
       let data = await API.post("users/login/social", {
-          email: profile.U3,
+          email: profile.getEmail(),
+          id: profile.getId(),
+          lastName: profile.getFamilyName(),
+          firstName: profile.getGivenName(),
+          type: 'google'
       });
       
       this.proceedAfterLogin(data);
@@ -302,6 +325,10 @@ export default {
         console.log(user);
         let data = await API.post("users/login/social", {
             email: user.email,
+            id: user.id,
+            lastName: user.name.split(' ')[1],
+            firstName: user.name.split(' ')[0],
+            type: 'fb'
         });
         
         this.proceedAfterLogin(data);
@@ -313,6 +340,9 @@ export default {
     handleConnect() {
       this.getUserData()
     },
+    handleLogout() {
+      this.logout()
+    }
   }
 };
 </script>
