@@ -302,6 +302,8 @@ async logout(){
       this.loading = true;
       this.error = null;
    try {
+       window.FB.logout();
+
         let data = await API.post("users/logout");
         localStorage.removeItem("token");
         // localStorage.setItem("viewQuote", true);
@@ -312,6 +314,7 @@ async logout(){
         this.quote = false;
         this.show=false;
       setTimeout(()=>{
+        
         
         this.myacchide = false;
           // localStorage.removeItem("accBtn");

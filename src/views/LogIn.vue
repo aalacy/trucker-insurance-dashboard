@@ -251,8 +251,8 @@ export default {
     },
     async logout() {
       try {
-        this.facebook.FB.logout();
-        
+        window.FB.logout();
+
         let data = await API.post("users/logout");
         localStorage.removeItem("token");
         setTimeout(()=>{
@@ -321,7 +321,7 @@ export default {
       console.log('OH NOES', error)
     },
     async getUserData() {
-      const { api } = this.facebook.FB
+      const { api } = window.FB
       api('/me', { fields: 'id, email, name' }, async user => {
         console.log(user);
         let data = await API.post("users/login/social", {
@@ -336,7 +336,7 @@ export default {
       })
     },
     handleSdkInit({ FB }) {
-      this.facebook.FB = FB
+      window.FB = FB
     },
     handleConnect() {
       this.getUserData()
