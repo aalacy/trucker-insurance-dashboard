@@ -78,10 +78,9 @@
               <v-facebook-login 
                 app-id="456259108336704"
                 login-options="{scope: 'email' }"
-                 @sdk-init="handleSdkInit"
-                @connect="handleConnect"
-                @logout="handleLogout"
-                @login="onFBLogin">
+                @sdk-init="handleSdkInit"
+                @login="handleConnect"
+                @logout="handleLogout">
               </v-facebook-login>
             </div>
             <div class="d-flex justify-content-center align-items-center mt-2">
