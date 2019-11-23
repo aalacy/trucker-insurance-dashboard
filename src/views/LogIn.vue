@@ -176,7 +176,7 @@ export default {
       showmodel: false,
       formErrors: {},
       googleSignInParams: {
-        client_id: '1036277225452-ogkscsi1akdhekt69mrsu2stbsgd9r6o.apps.googleusercontent.com'
+        client_id: '1036277225452-r6btm0senuvjfaisvfpvgbtga7k7hsl3.apps.googleusercontent.com'
       },
       facebook: {
         FB: {},
