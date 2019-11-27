@@ -180,7 +180,7 @@
               <div class="px-3 py-1">
                 <a
                   class="text-white"
-                  href="https://luckytruck.co/api/PRIVACY_POLICY_FOR_LuckyTruck.pdf"
+                  href="https://luckytruck.co/backend/PRIVACY_POLICY_FOR_LuckyTruck.pdf"
                   rel="noopener noreferrer"
                   target="_blank"
                 >PRIVACY POLICY</a>
@@ -189,7 +189,7 @@
               <div class="px-3 py-1">
                 <a
                   class="text-white"
-                  href="https://luckytruck.co/api/TERMS_OF_SERVICE_FOR_LuckyTruck.co.pdf"
+                  href="https://luckytruck.co/backend/TERMS_OF_SERVICE_FOR_LuckyTruck.co.pdf"
                   rel="noopener noreferrer"
                   target="_blank"
                 >TERMS OF USE</a>
