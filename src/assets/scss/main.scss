@@ -279,10 +279,7 @@ body{
   
   
   }
-  #app .app-footer{
-    padding: 40px 0px; 
-    height: 300px;
-  }
+
   #app .app-navbar .lt-link{
     color: #ffffff  !important; 
     text-transform: uppercase;
@@ -648,7 +645,7 @@ body{
 }
 
 .bg-blue {
-  background: #6673ff;
+  background: #5E98F9;
 }
 
 #img-text h1{
@@ -672,6 +669,12 @@ body{
 
     div {
       color: #bcbdc3;
+    }
+    
+    div.lists {
+      display: flex;
+      flex-wrap:  wrap;
+      justify-content: center;
     }
   }
   

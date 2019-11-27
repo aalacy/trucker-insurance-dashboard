@@ -133,7 +133,7 @@
                     <a href="tel:15135062400">1-513-506-2400</a>
                 </li>
                 <li>
-                    Mon-Fri 6am-6pm ET
+                  8am-8pm ET
                 </li>
                 <li>
                   LuckyTruck, Inc.
@@ -160,39 +160,41 @@
             </ul>
         </div>
           <div class="bottom-company">
-            <div class="px-3 py-1">&copy;2019 LuckyTrucking, Inc.</div>
-            <span class="px-3 py-1">
-               <router-link
-                  @click.native="loginHide"
-                  :to="{ name: 'LogIn', query: {next: this.$router.history.current.name == 'LogIn' ?  this.$router.history.current.query.next : this.$router.history.current.name} }"
+            <div class="px-3 py-1">&copy;2019 LuckyTruck, Inc.</div>
+            <div class="lists">
+              <div class="px-3 py-1">
+                <router-link
+                    @click.native="loginHide"
+                    :to="{ name: 'LogIn', query: {next: this.$router.history.current.name == 'LogIn' ?  this.$router.history.current.query.next : this.$router.history.current.name} }"
+                    class="text-white"
+                    active-class="font-weight-bold"
+                  >Login</router-link>
+              </div>
+              <div class="px-3 py-1">
+                <router-link
+                    @click.native="loginHide"
+                    :to="{ name: 'SignUp', query: {next: this.$router.history.current.name == 'SignUp' ?  this.$router.history.current.query.next : this.$router.history.current.name} }"
+                    class="text-white"
+                  >Signup</router-link>
+              </div>
+              <div class="px-3 py-1">
+                <a
                   class="text-white"
-                  active-class="font-weight-bold"
-                >Login</router-link>
-            </span>
-            <span class="px-3 py-1">
-              <router-link
-                  @click.native="loginHide"
-                  :to="{ name: 'SignUp', query: {next: this.$router.history.current.name == 'SignUp' ?  this.$router.history.current.query.next : this.$router.history.current.name} }"
-                  class="text-white"
-                >Signup</router-link>
-            </span>
-            <span class="px-3 py-1">
-              <a
-                class="text-white"
-                href="/TERMS OF SERVICE FOR LuckyTruck.co.pdf"
-                rel="noopener noreferrer"
-                target="_blank"
-              >PRIVACY POLICY</a>
-            </span>
+                  href="https://luckytruck.co/api/PRIVACY_POLICY_FOR_LuckyTruck.pdf"
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >PRIVACY POLICY</a>
+              </div>
 
-            <span class="px-3 py-1">
-              <a
-                class="text-white"
-                href="/PRIVACY POLICY FOR LuckyTruck.pdf"
-                rel="noopener noreferrer"
-                target="_blank"
-              >TERMS OF USE</a>
-            </span>
+              <div class="px-3 py-1">
+                <a
+                  class="text-white"
+                  href="https://luckytruck.co/api/TERMS_OF_SERVICE_FOR_LuckyTruck.co.pdf"
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >TERMS OF USE</a>
+              </div>
+            </div>
           </div>
         </div>
       </div>
