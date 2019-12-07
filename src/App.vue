@@ -304,7 +304,9 @@ async logout(){
       this.loading = true;
       this.error = null;
    try {
-       window.FB.logout();
+       if (window.FB) {
+        window.FB.logout();
+      }
      
         let data = await API.post("users/logout");
         localStorage.removeItem("token");

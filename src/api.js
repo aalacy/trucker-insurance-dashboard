@@ -39,7 +39,6 @@ class APIService {
 
   async request(method, url, data, params, options = {'Content-Type': 'application/json'}) {
     let config = {
-      method,
       url: `${process.env.VUE_APP_BACKEND_URL}/${url}`,
       data,
       params,

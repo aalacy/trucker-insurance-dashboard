@@ -210,19 +210,14 @@ export default {
       this.showmodel = true;
     },
     async forgotPassword() {
-      axios
-        .post(
-          "http://3.13.68.92/luckytrucker_admin/api/CompanyController/forgotpassword?email_id=" +
-            this.reset_email
-        )
-        .then(res => {
-          console.log("res forgot password", res);
-          if (res.data.flag == "1") {
-            this.$swal("Done", res.data.msg, "success");
-          } else {
-            this.$swal("Opps!", res.data.msg, "error");
-          }
-        });
+      const res = await API.post("users/forgot_password", {
+        email: this.reset_email
+      });
+      if (res.data.flag == "1") {
+        this.$swal("Done", res.data.msg, "success");
+      } else {
+        this.$swal("Opps!", res.data.msg, "error");
+      }
     },
     proceedAfterLogin(data, loader) {
       if (data.status === "ok") {
@@ -251,7 +246,9 @@ export default {
     },
     async logout() {
       try {
+      if (this.facebook && this.facebook.FB) {
         this.facebook.FB.logout();
+      }
 
         let data = await API.post("users/logout");
         localStorage.removeItem("token");
