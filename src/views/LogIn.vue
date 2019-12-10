@@ -213,7 +213,7 @@ export default {
       const res = await API.post("users/forgot_password", {
         email: this.reset_email
       });
-      if (res.data.flag == "1") {
+      if (res.flag == "1") {
         this.$swal("Done", res.data.msg, "success");
       } else {
         this.$swal("Opps!", res.data.msg, "error");
