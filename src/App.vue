@@ -299,28 +299,26 @@ export default {
       // localStorage.setItem("viewQuote",true)
      
       },
-async logout(){
-
+    async logout(){
       this.loading = true;
       this.error = null;
-   try {
-       if (window.FB) {
-        window.FB.logout();
-      }
+      try {
+        if (window.FB) {
+          window.FB.logout();
+        }
      
         let data = await API.post("users/logout");
         localStorage.removeItem("token");
         // localStorage.setItem("viewQuote", true);
         
-        
-          if (data.status === "ok") {
+        if (data.status === "ok") {
             
-        this.quote = false;
-        this.show=false;
-      setTimeout(()=>{
-        
-        
-        this.myacchide = false;
+          this.quote = false;
+          this.show=false;
+          setTimeout(()=>{
+          
+          
+          this.myacchide = false;
           // localStorage.removeItem("accBtn");
           localStorage.removeItem("token");
           localStorage.removeItem("userId")
@@ -328,7 +326,7 @@ async logout(){
           localStorage.removeItem("redirect");
               this.$router.push({ name: "Home" });
           },500)
-          
+            
         }
       } catch (err) {
         console.error("catch", err);

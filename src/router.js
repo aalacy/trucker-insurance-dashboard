@@ -32,6 +32,11 @@ export default new Router({
       component: () => import('./views/LogIn.vue')
     },
     {
+      path: '/reset-password/:code',
+      name: 'Resetpassword',
+      component: () => import('./views/ResetPassword.vue')
+    },
+    {
       path: '/simple-estimate-wizard',
       name: 'SimpleEstimateWizard',
       component: () => import('./views/SimpleEstimateWizard.vue')
