@@ -129,7 +129,7 @@ export default {
       save: true,
       userData:"",
       uuid:"",
-      cargoGroup: [],
+      prevCargoGroup: [],
       formData: {
         haulType: {}
       },
@@ -145,7 +145,7 @@ export default {
     ...mapState("cargo", ["cargoGroups"]),
     selectedCargoGroups() {
       return this.cargoGroups.filter(
-        group => this.cargoGroup.indexOf(group.value) > -1
+        group => this.prevCargoGroup.indexOf(group.value) > -1
       );
       
     },
@@ -179,29 +179,19 @@ export default {
   mounted() {
     if (localStorage.getItem("token")) {
       this.save = false;
-        axios
-      .get(
-        "http://3.13.68.92/luckytrucker_admin/api/CompanyController/getuuidbyuserid?user_id=" +
-          localStorage.getItem("userId")
-      )
-      .then(coins => {
-        this.userData = coins.data.uuid;
-      });
       setTimeout(()=>{
             this.$store.dispatch("loadData", this.userData).then(() => {
       let len = this.$store.state.getData.data;
       for (let j = 0; j < len.length; j++) {
-        if (this.$store.state.getData.data[j].key == "cargoHauled") {
+        if (len && len[j].key == "cargoHauled") {
           let a = this.$store.state.getData.data[j];
           let b = JSON.parse(a.val).haulType;
-    
         }
       }
 
       // let c =[]
       for (let i = 0; i < this.cargoGroups.length; i++) {
         for (let j = 0; j < this.cargoGroups[i].cargoHauled.length; j++) {
-          
         }
       }
     });
@@ -269,7 +259,6 @@ export default {
   
       } else {
         temp_uuid = this.uuid;
-  
       }
 
       try {
@@ -352,8 +341,8 @@ export default {
           let { cargoGroup: cargoGroupTab, cargoHauled } = data.data.a;
           let { cargoGroup } = cargoGroupTab;
           let groupData = data.data.a.cargoGroup;
-          this.cargoGroup = groupData.cargoGroup;
-this.uuid = data.data.b;
+          this.prevCargoGroup = JSON.parse(groupData).cargoGroup;
+          this.uuid = data.data.b;
           if (cargoHauled) {
             this.formData = {
               ...this.formData,
@@ -373,6 +362,7 @@ this.uuid = data.data.b;
     async updateCompany() {
       let formIsValid = this.validateForm();
       if (!formIsValid) {
+        console.log('invalid');
         return;
       }
 
@@ -399,16 +389,6 @@ this.uuid = data.data.b;
         } else if (data.status === "ERROR") {
           this.error = data.messages[0] || data.data;
         }
-        axios
-          .post(
-            "http://3.13.68.92/luckytrucker_admin/api/CompanyController/postUserIdByUuid?uuid=" +
-             this.final_uuid+
-              "&user_id=" +
-              localStorage.getItem("userId")
-          )
-          .then(res => {
-      
-          });
       } catch (err) {
         console.error(err);
         this.error = err.message;

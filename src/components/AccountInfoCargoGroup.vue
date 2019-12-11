@@ -98,19 +98,19 @@ export default {
     if (localStorage.getItem("token")) {
      
       this.save = false;
-      axios
-        .get(
-          "http://3.13.68.92/luckytrucker_admin/api/CompanyController/getuuidbyuserid?user_id=" +
-            localStorage.getItem("userId")
-        )
-        .then(coins => {
-          this.userData = coins.data.uuid;
-        });
+      // axios
+      //   .get(
+      //     "http://3.13.68.92/luckytrucker_admin/api/CompanyController/getuuidbyuserid?user_id=" +
+      //       localStorage.getItem("userId")
+      //   )
+      //   .then(coins => {
+      //     this.userData = coins.data.uuid;
+      //   });
       setTimeout(() => {
         this.$store.dispatch("loadData", this.userData).then(() => {
           let len = this.$store.state.getData.data;
           for (let j = 0; j <= len.length; j++) {
-            if (this.$store.state.getData.data[j].key == "cargoGroup") {
+            if (len[j] && len[j].key == "cargoGroup") {
               let a = this.$store.state.getData.data[j];
               let b = JSON.parse(a.val).cargoGroup;
              
@@ -297,16 +297,6 @@ export default {
           // this.showmodel = true;
           this.error = data.messages[0] || data.data;
         }
-        // axios
-        //   .post(
-        //     "http://3.13.68.92/luckytrucker_admin/api/CompanyController/postUserIdByUuid?uuid=" +
-        //       this.uuid +
-        //       "&user_id=" +
-        //       localStorage.getItem("userId")
-        //   )
-        //   .then(res => {
-        //    
-        //   });
       } catch (err) {
         // this.showmodel = true;
 
@@ -372,16 +362,6 @@ export default {
         } else if (data.status === "ERROR") {
           this.error = data.messages[0] || data.data;
         }
-        axios
-          .post(
-            "http://3.13.68.92/luckytrucker_admin/api/CompanyController/postUserIdByUuid?uuid=" +
-             this.final_uuid +
-              "&user_id=" +
-              localStorage.getItem("userId")
-          )
-          .then(res => {
-           
-          });
       } catch (err) {
        
         this.error = err.message;

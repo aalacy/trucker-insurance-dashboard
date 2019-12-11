@@ -52,23 +52,27 @@ export default {
   
     if (localStorage.getItem("token")) {
       this.count = true;
-      setTimeout(() => {
-        axios
-          .get(
-            "http://3.13.68.92/luckytrucker_admin/api/CompanyController/getcountofcompanybyuserid?user_id=" +
-              localStorage.getItem("userId")
-          )
-          .then(res => {
+      // setTimeout(() => {
+      //   axios
+      //     .get(
+      //       "http://3.13.68.92/luckytrucker_admin/api/CompanyController/getcountofcompanybyuserid?user_id=" +
+      //         localStorage.getItem("userId")
+      //     )
+      //     .then(res => {
             
-            // this.count = res.data.count;
-            if(res.data.count>=10){
-              this.status = true;
-            }else{
-              this.status = false;
-            }
-          });
-      }, 500);
-    
+      //       // this.count = res.data.count;
+      //       if(res.data.count>=10){
+      //         this.status = true;
+      //       }else{
+      //         this.status = false;
+      //       }
+      //     });
+      // }, 500);
+      if(this.progress >= 100){
+        this.status = true;
+      }else{
+        this.status = false;
+      }
     }else{
       this.count = false;
     }
