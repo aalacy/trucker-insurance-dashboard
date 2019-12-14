@@ -171,73 +171,9 @@ export default {
   },
   mounted() {
     if (localStorage.getItem("token")) {
-      
      this.save = false;
-       axios
-      .get(
-        "http://3.13.68.92/luckytrucker_admin/api/CompanyController/getuuidbyuserid?user_id=" +
-          localStorage.getItem("userId")
-      )
-      .then(coins => {
-        this.userData = coins.data.uuid;
-      });
-      setTimeout(()=>{
-  this.$store
-        .dispatch("loadData", this.userData)
-        .then(() => {
-          let len = this.$store.state.getData.data;
-          for(let j=0;j<len.length;j++){
-            if(this.$store.state.getData.data[j].key == "eldProvider")
-            {
-          let a = this.$store.state.getData.data[j];
-          let b = JSON.parse(a.val).eldProvider;
-          
-          let c = [];
-          for (var i = 0; i < b.length; i++) {
-            c.push(b[i]);
-          }
-          let filteredKeywords = c.filter(word => b.includes(word));
-          
-          for (var i = 0; i < filteredKeywords.length; i++) {
-            this.selectProvider(filteredKeywords[i]);
-          }
-            }
-         
-           
-          }
-          
-     });
-      },1000)
-      
     } else {
       this.save = true;
-         setTimeout(()=>{
-  this.$store
-        .dispatch("loadData", this.uuid)
-        .then(() => {
-          let len = this.$store.state.getData.data;
-          for(let j=0;j<len.length;j++){
-            if(this.$store.state.getData.data[j].key == "eldProvider")
-            {
-          let a = this.$store.state.getData.data[j];
-          let b = JSON.parse(a.val).eldProvider;
-          
-          let c = [];
-          for (var i = 0; i < b.length; i++) {
-            c.push(b[i]);
-          }
-          let filteredKeywords = c.filter(word => b.includes(word));
-          
-          for (var i = 0; i < filteredKeywords.length; i++) {
-            this.selectProvider(filteredKeywords[i]);
-          }
-            }
-         
-           
-          }
-          
-     });
-      },1000)
     }
     
   },
@@ -361,21 +297,17 @@ export default {
       this.error = null;
 
       try {
-        let data = await API.get("company/current");
+        let res = await API.get("company/current");
 
-        if (data.status === "OK") {
-          let { eldProvider: eldProviderTab } = data.data;
-          this.uuid = data.data.b;
-          if (eldProviderTab) {
-            this.formData = {
-              ...this.formData,
-              ...eldProviderTab
-            };
-
-            let { eldProvider } = eldProviderTab;
-            this.addUserProviders(eldProvider);
+        if (res.status === "OK") {
+          let { company: { currentEldProvider } } = res.data;
+          this.uuid = res.data.uuid;
+          if (currentEldProvider) {
+            currentEldProvider = JSON.parse(currentEldProvider);
+            this.formData.eldProvider = currentEldProvider;
+            this.addUserProviders(currentEldProvider);
           }
-        } else if (data.status === "ERROR") {
+        } else if (res.status === "ERROR") {
           // this.$router.replace({ name: 'Home' });
         }
       } catch (err) {
@@ -412,24 +344,19 @@ export default {
         
       }
       try {
-        let data = await API.post("company/save", {
-          key: "eldProvider",
-          val: this.formData,
+        const { eldProvider } = this.formData;
+        const data = {
+          currentEldProvider: eldProvider,
           user_id: localStorage.getItem("userId"),
-          uuid:  this.final_uuid
-        });
+          uuid: this.final_uuid
+        };
+        let res = await API.post("company/save", { data });
 
-        if (data.status === "OK") {
+        if (res.status === "OK") {
           this.goNextForm();
-        } else if (data.status === "ERROR") {
-          this.error = data.messages[0] || data.data;
+        } else if (res.status === "ERROR") {
+          this.error = res.messages[0] || res.data;
         }
-        axios.post(
-          "http://3.13.68.92/luckytrucker_admin/api/CompanyController/postUserIdByUuid?uuid="+ this.final_uuid +"&user_id="+localStorage.getItem("userId")
-        )
-        .then(res => {
-          
-        })
       } catch (err) {
         console.error(err);
         this.error = err.message;

@@ -21,8 +21,8 @@
                   @change="onFileChange($event, 'lossRun')"
                 >
               </div>
-              <div v-if="preview.lossRun" class="d-flex justify-content-start align-base">
-                <p class="preview-image">{{preview.lossRun}}</p>
+              <div v-if="preview.lossRun.name" class="d-flex justify-content-start align-base">
+                <p class="preview-image">{{preview.lossRun.name}}</p>
                 <button type="button" class="btn btn-close1" @click="removeDoc('lossRun')">
                   <font-awesome-icon icon="times" />
                 </button>
@@ -43,8 +43,8 @@
                   @change="onFileChange($event, 'ifta')"
                 >
               </div>
-              <div v-if="preview.ifta" class="d-flex justify-content-start align-base">
-                <p class="preview-image">{{preview.ifta}}</p>
+              <div v-if="preview.ifta.name" class="d-flex justify-content-start align-base">
+                <p class="preview-image">{{preview.ifta.name}}</p>
                 <button type="button" class="btn btn-close1" @click="removeDoc('ifta')">
                   <font-awesome-icon icon="times" />
                 </button>
@@ -65,8 +65,8 @@
                   @change="onFileChange($event, 'contracts')"
                 >
               </div>
-              <div v-if="preview.contracts" class="d-flex justify-content-start align-base">
-                <p class="preview-image">{{preview.contracts}}</p>
+              <div v-if="preview.contracts.name" class="d-flex justify-content-start align-base">
+                <p class="preview-image">{{preview.contracts.name}}</p>
                 <button type="button" class="btn btn-close1" @click="removeDoc('contracts')">
                   <font-awesome-icon icon="times" />
                 </button>
@@ -87,8 +87,8 @@
                   @change="onFileChange($event, 'declarations')"
                 >
               </div>
-              <div v-if="preview.declarations" class="d-flex justify-content-start align-base">
-                <p class="preview-image">{{preview.declarations}}</p>
+              <div v-if="preview.declarations.name" class="d-flex justify-content-start align-base">
+                <p class="preview-image">{{preview.declarations.name}}</p>
                 <button type="button" class="btn btn-close1" @click="removeDoc('declarations')">
                   <font-awesome-icon icon="times" />
                 </button>
@@ -109,8 +109,8 @@
                   @change="onFileChange($event, 'rentalLeaseAgreement')"
                 >
               </div>
-              <div v-if="preview.rentalLeaseAgreement" class="d-flex justify-content-start align-base">
-                <p class="preview-image">{{preview.rentalLeaseAgreement}}</p>
+              <div v-if="preview.rentalLeaseAgreement.name" class="d-flex justify-content-start align-base">
+                <p class="preview-image">{{preview.rentalLeaseAgreement.name}}</p>
                 <button
                   type="button"
                   class="btn btn-close1"
@@ -141,10 +141,10 @@
                 >
               </div>
               <div
-                v-if="preview.previouslyCompletedApplications"
+                v-if="preview.previouslyCompletedApplications.name"
                 class="d-flex justify-content-start align-base"
               >
-                <p class="preview-image">{{preview.previouslyCompletedApplications}}</p>
+                <p class="preview-image">{{preview.previouslyCompletedApplications.name}}</p>
                 <button
                   type="button"
                   class="btn btn-close1"
@@ -169,8 +169,8 @@
                   @change="onFileChange($event, 'insuranceRequirements')"
                 >
               </div>
-              <div v-if="preview.insuranceRequirements" class="d-flex justify-content-start align-base">
-                <p class="preview-image">{{preview.insuranceRequirements}}</p>
+              <div v-if="preview.insuranceRequirements.name" class="d-flex justify-content-start align-base">
+                <p class="preview-image">{{preview.insuranceRequirements.name}}</p>
                 <button
                   type="button"
                   class="btn btn-close1"
@@ -258,22 +258,22 @@ export default {
       showmodel: false,
       save: true,
       formData: {
-        lossRun: null,
-        ifta: null,
-        contracts: null,
-        declarations: null,
-        rentalLeaseAgreement: null,
-        previouslyCompletedApplications: null,
-        insuranceRequirements: null
+        lossRun: {},
+        ifta: {},
+        contracts: {},
+        declarations: {},
+        rentalLeaseAgreement: {},
+        previouslyCompletedApplications: {},
+        insuranceRequirements: {}
       },
       preview: {
-        lossRun: null,
-        ifta: null,
-        contracts: null,
-        declarations: null,
-        rentalLeaseAgreement: null,
-        previouslyCompletedApplications: null,
-        insuranceRequirements: null
+        lossRun: {},
+        ifta: {},
+        contracts: {},
+        declarations: {},
+        rentalLeaseAgreement: {},
+        previouslyCompletedApplications: {},
+        insuranceRequirements: {}
       },
       formErrors: {},
       loading: false,
@@ -294,130 +294,9 @@ export default {
   mounted() {
     if (localStorage.getItem("token")) {
       this.save = false;
-      axios
-        .get(
-          "http://3.13.68.92/luckytrucker_admin/api/CompanyController/getuuidbyuserid?user_id=" +
-            localStorage.getItem("userId")
-        )
-        .then(coins => {
-          this.userData = coins.data.uuid;
-        });
-      setTimeout(() => {
-        this.$store.dispatch("loadData", this.userData).then(() => {
-          let len = this.$store.state.getData.data;
-          for (let i = 0; i < len.length; i++) {
-            if (this.$store.state.getData.data[i].key === "lossRun") {
-              let a = JSON.parse(this.$store.state.getData.data[i].val)[0]
-                .originalname;
-              this.preview.lossRun = a;
-              
-            }
-            if (this.$store.state.getData.data[i].key === "ifta") {
-              let a = JSON.parse(this.$store.state.getData.data[i].val)[0]
-                .originalname;
-              this.preview.ifta = a;
-              
-            }
-            if (this.$store.state.getData.data[i].key === "contracts") {
-              let a = JSON.parse(this.$store.state.getData.data[i].val)[0]
-                .originalname;
-              this.preview.contracts = a;
-              
-            }
-            if (this.$store.state.getData.data[i].key === "declarations") {
-              let a = JSON.parse(this.$store.state.getData.data[i].val)[0]
-                .originalname;
-              this.preview.declarations = a;
-              
-            }
-            if (
-              this.$store.state.getData.data[i].key === "rentalLeaseAgreement"
-            ) {
-              let a = JSON.parse(this.$store.state.getData.data[i].val)[0]
-                .originalname;
-              this.preview.rentalLeaseAgreement = a;
-              
-            }
-            if (
-              this.$store.state.getData.data[i].key ===
-              "previouslyCompletedApplications"
-            ) {
-              let a = JSON.parse(this.$store.state.getData.data[i].val)[0]
-                .originalname;
-              this.preview.previouslyCompletedApplications = a;
-              
-            }
-            if (
-              this.$store.state.getData.data[i].key === "insuranceRequirements"
-            ) {
-              let a = JSON.parse(this.$store.state.getData.data[i].val)[0]
-                .originalname;
-              this.preview.insuranceRequirements = a;
-              
-            }
-          }
-        });
-      }, 1000);
     } else {
       this.save = true;
-      setTimeout(() => {
-        this.$store.dispatch("loadData", this.uuid).then(() => {
-          let len = this.$store.state.getData.data;
-          for (let i = 0; i < len.length; i++) {
-            if (this.$store.state.getData.data[i].key === "lossRun") {
-              let a = JSON.parse(this.$store.state.getData.data[i].val)[0]
-                .originalname;
-              this.preview.lossRun = a;
-              
-            }
-            if (this.$store.state.getData.data[i].key === "ifta") {
-              let a = JSON.parse(this.$store.state.getData.data[i].val)[0]
-                .originalname;
-              this.preview.ifta = a;
-              
-            }
-            if (this.$store.state.getData.data[i].key === "contracts") {
-              let a = JSON.parse(this.$store.state.getData.data[i].val)[0]
-                .originalname;
-              this.preview.contracts = a;
-              
-            }
-            if (this.$store.state.getData.data[i].key === "declarations") {
-              let a = JSON.parse(this.$store.state.getData.data[i].val)[0]
-                .originalname;
-              this.preview.declarations = a;
-              
-            }
-            if (
-              this.$store.state.getData.data[i].key === "rentalLeaseAgreement"
-            ) {
-              let a = JSON.parse(this.$store.state.getData.data[i].val)[0]
-                .originalname;
-              this.preview.rentalLeaseAgreement = a;
-              
-            }
-            if (
-              this.$store.state.getData.data[i].key ===
-              "previouslyCompletedApplications"
-            ) {
-              let a = JSON.parse(this.$store.state.getData.data[i].val)[0]
-                .originalname;
-              this.preview.previouslyCompletedApplications = a;
-              
-            }
-            if (
-              this.$store.state.getData.data[i].key === "insuranceRequirements"
-            ) {
-              let a = JSON.parse(this.$store.state.getData.data[i].val)[0]
-                .originalname;
-              this.preview.insuranceRequirements = a;
-              
-            }
-          }
-        });
-      }, 1000);
     }
-    
   },
   methods: {
     newQuoteReq() {
@@ -447,33 +326,33 @@ export default {
       switch (fieldName) {
         case "lossRun":
           
-          this.formData.lossRun = null;
+          this.formData.lossRun = {};
           
-          this.preview.lossRun = null;
+          this.preview.lossRun = {};
           break;
         case "ifta":
-          this.formData.ifta = null;
-          this.preview.ifta = null;
+          this.formData.ifta = {};
+          this.preview.ifta = {};
           break;
         case "contracts":
-          this.formData.contracts = null;
-          this.preview.contracts = null;
+          this.formData.contracts = {};
+          this.preview.contracts = {};
           break;
         case "declarations":
-          this.formData.declarations = null;
-          this.preview.declarations = null;
+          this.formData.declarations = {};
+          this.preview.declarations = {};
           break;
         case "rentalLeaseAgreement":
-          this.formData.rentalLeaseAgreement = null;
-          this.preview.rentalLeaseAgreement = null;
+          this.formData.rentalLeaseAgreement = {};
+          this.preview.rentalLeaseAgreement = {};
           break;
         case "previouslyCompletedApplications":
-          this.formData.previouslyCompletedApplications = null;
-          this.preview.previouslyCompletedApplications = null;
+          this.formData.previouslyCompletedApplications = {};
+          this.preview.previouslyCompletedApplications = {};
           break;
         case "insuranceRequirements":
-          this.formData.insuranceRequirements = null;
-          this.preview.insuranceRequirements = null;
+          this.formData.insuranceRequirements = {};
+          this.preview.insuranceRequirements = {};
           break;
       }
     },
@@ -501,16 +380,6 @@ export default {
         } else if (data.status === "ERROR") {
           this.error = data.messages[0] || data.data;
         }
-        axios
-          .post(
-            "http://3.13.68.92/luckytrucker_admin/api/CompanyController/postUserIdByUuid?uuid=" +
-              this.uuid +
-              "&user_id=" +
-              localStorage.getItem("userId")
-          )
-          .then(res => {
-            
-          });
       } catch (err) {
         // this.showmodel = true;
 
@@ -535,29 +404,32 @@ export default {
     },
     previewFile(file, fieldName) {
       let reader = new FileReader();
-      reader.onloadend = () => {
-        // this.preview[fieldName] = reader.result;
-        
+      let tempObj = this.preview[fieldName];
+      reader.onloadend = (evt) => {
+        tempObj.content = evt.target.result;
+        this.preview[fieldName] = Object.assign({}, tempObj);
       };
 
       if (file) {
         reader.readAsDataURL(file);
-        this.preview[fieldName] = file.name;
+        tempObj.name = file.name;
         // 
       } else {
         // 
-        this.preview[fieldName] = null;
+        tempObj.name = "";
       }
+
+      this.preview[fieldName] = Object.assign({}, tempObj);
     },
     async loadCompany() {
       this.loading = true;
       this.error = null;
 
       try {
-        let data = await API.get("company/current");
-        this.uuid = data.data.b;
+        let res = await API.get("company/current");
+        this.uuid = res.data.uuid;
         
-        if (data.status === "ERROR") {
+        if (res.status === "ERROR") {
           // this.$router.replace({ name: "Home" });
         }
       } catch (err) {
@@ -572,33 +444,25 @@ export default {
       this.error = null;
       
       try {
-        let data = await API.formData("company/upload", this.formData);
-      
-        
-         if(localStorage.getItem('token')){
-        
-          this.final_uuid = this.userData;
-          
-      }else{
-        this.final_uuid = this.uuid;
-        
-      }
-        if (data.status === "OK") {
-          
+        const attachmentList = []
+        const self = this;
+        Object.keys(this.preview).forEach(function(key) {
+          attachmentList.push({
+            name: self.preview[key].name,
+            content: self.preview[key].content
+          })
+        });
+        const data = {
+          attachmentList,
+          user_id: localStorage.getItem("userId"),
+          uuid: this.uuid
+        };
+        let res = await API.post("company/save", { data });
+        if (res.status === "OK") {
           this.goNextForm();
-        } else if (data.status === "ERROR") {
-          this.error = data.messages[0] || data.data;
+        } else if (res.status === "ERROR") {
+          this.error = res.messages[0] || res.data;
         }
-        axios
-          .post(
-            "http://3.13.68.92/luckytrucker_admin/api/CompanyController/postUserIdByUuid?uuid=" +
-             this.final_uuid  +
-              "&user_id=" +
-              localStorage.getItem("userId")
-          )
-          .then(res => {
-            
-          });
       } catch (err) {
         console.error(err);
         this.error = err.message;

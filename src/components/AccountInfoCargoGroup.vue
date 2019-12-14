@@ -98,61 +98,10 @@ export default {
     if (localStorage.getItem("token")) {
      
       this.save = false;
-      // axios
-      //   .get(
-      //     "http://3.13.68.92/luckytrucker_admin/api/CompanyController/getuuidbyuserid?user_id=" +
-      //       localStorage.getItem("userId")
-      //   )
-      //   .then(coins => {
-      //     this.userData = coins.data.uuid;
-      //   });
-      setTimeout(() => {
-        this.$store.dispatch("loadData", this.userData).then(() => {
-          let len = this.$store.state.getData.data;
-          for (let j = 0; j <= len.length; j++) {
-            if (len[j] && len[j].key == "cargoGroup") {
-              let a = this.$store.state.getData.data[j];
-              let b = JSON.parse(a.val).cargoGroup;
-             
-              let c = [];
-              for (var i = 0; i < this.cargoGroups.length; i++) {
-                c.push(this.cargoGroups[i].value);
-              }
-              let filteredKeywords = c.filter(word => b.includes(word));
-             
-              for (var i = 0; i < filteredKeywords.length; i++) {
-                this.selectCargoGroup(filteredKeywords[i]);
-              }
-            }
-          }
-          // let b = JSON.parse(a.val).cargoGroup;
-        });
-      }, 1000);
+      
     } else {
      
       this.save = true;
-      setTimeout(() => {
-        this.$store.dispatch("loadData", this.uuid).then(() => {
-          let len = this.$store.state.getData.data;
-          for (let j = 0; j <= len.length; j++) {
-            if (this.$store.state.getData.data[j].key == "cargoGroup") {
-              let a = this.$store.state.getData.data[j];
-              let b = JSON.parse(a.val).cargoGroup;
-             
-              let c = [];
-              for (var i = 0; i < this.cargoGroups.length; i++) {
-                c.push(this.cargoGroups[i].value);
-              }
-              let filteredKeywords = c.filter(word => b.includes(word));
-             
-              for (var i = 0; i < filteredKeywords.length; i++) {
-                this.selectCargoGroup(filteredKeywords[i]);
-              }
-            }
-          }
-          // let b = JSON.parse(a.val).cargoGroup;
-        });
-      }, 1000);
     }
   },
   components: {
@@ -231,9 +180,6 @@ export default {
       });
     },
     selectCargoGroup(cargoGroupValue) {
-      //
-      // this.formData.cargoGroup.push(cargoGroupValue)
-      //
       if (this.cargoGroupMap[cargoGroupValue]) {
         this.formData.cargoGroup = this.formData.cargoGroup.filter(
           val => val !== cargoGroupValue
@@ -278,29 +224,29 @@ export default {
       this.loading = true;
       this.error = null;
       try {
-        let data = await API.post("company/save", {
-          key: "cargoGroup",
-          val: this.formData,
+        const { cargoGroup } = this.formData;
+        const data = {
+          cargoGroup,
           user_id: localStorage.getItem("userId"),
-          uuid: temp_uuid
-        });
-        if (data.status === "OK") {
+          uuid: this.final_uuid
+        };
+        let res = await API.post("company/save", { data });
+        if (res.status === "OK") {
           if(!localStorage.getItem("token")){
             if (this.showmodel) {
-            this.showmodel = false;
-          } else {
-            this.showmodel = true;
-          }
+              this.showmodel = false;
+            } else {
+              this.showmodel = true;
+            }
           }
           
-        } else if (data.status === "ERROR") {
+        } else if (res.status === "ERROR") {
           // this.showmodel = true;
-          this.error = data.messages[0] || data.data;
+          this.error = res.messages[0] || res.data;
         }
       } catch (err) {
         // this.showmodel = true;
 
-       
         this.error = err.message;
       } finally {
         // this.showmodel = true;
@@ -312,18 +258,16 @@ export default {
       this.error = null;
 
       try {
-        let data = await API.get("company/current");
+        let res = await API.get("company/current");
 
-        if (data.status === "OK") {
-          let { cargoGroup } = data.data;
-          this.uuid = data.data.b;
+        if (res.status === "OK") {
+          this.uuid = res.data.uuid;
+          let { company: { cargoGroup } } = res.data;
           if (cargoGroup) {
-            this.formData = {
-              ...this.formData,
-              ...cargoGroup
-            };
+            this.formData.cargoGroup = JSON.parse(cargoGroup);
           }
-        } else if (data.status === "ERROR") {
+          console.log(this.formData);
+        } else if (res.status === "ERROR") {
           // this.$router.replace({ name: 'Home' });
          
         }
@@ -350,17 +294,17 @@ export default {
        
       }
       try {
-        let data = await API.post("company/save", {
-          key: "cargoGroup",
-          val: this.formData,
+        const { cargoGroup } = this.formData;
+        const data = {
+          cargoGroup,
           user_id: localStorage.getItem("userId"),
           uuid: this.final_uuid
-        });
-       
-        if (data.status === "OK") {
+        };
+        let res = await API.post("company/save", { data });
+        if (res.status === "OK") {
           this.goNextForm();
-        } else if (data.status === "ERROR") {
-          this.error = data.messages[0] || data.data;
+        } else if (res.status === "ERROR") {
+          this.error = res.messages[0] || res.data;
         }
       } catch (err) {
        
@@ -374,9 +318,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-// div {
-//   outline: 1px solid red;
-// }
 .cargo-group-form {
   .cargo-group {
     .pad-none {
@@ -411,14 +352,5 @@ export default {
       max-width: 50%;
     }
   }
-
-  // .next-wrapper {
-  //   display: flex;
-  //   justify-content: space-between;
-
-  //   .next-title {
-  //     font-size: 1.2rem;
-  //   }
-  // }
 }
 </style>

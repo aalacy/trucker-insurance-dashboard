@@ -7,16 +7,13 @@
         <div class="card-body">
           <h4 class="card-title form-sub-title">Additional Comments</h4>
 
-          <div v-for="{ text, key } in questions" :key="key" class="mb-2">
-            <div>{{ text }}</div>
-               <div class="m-1 pb-2">
-           <span>If you have any additional comments or concerns regarding your quotation, please list them here. 
+             <div class="m-1 pb-2">
+         <span>If you have any additional comments or concerns regarding your quotation, please list them here. 
 </span>
-           </div>
+         </div>
 
-            <div>
-              <textarea v-model="formData[key]" class="answer"></textarea>
-            </div>
+          <div>
+            <textarea v-model="formData.comments" class="answer"></textarea>
           </div>
 
           <div v-if="error" class="alert alert-danger" role="alert">{{ error }}</div>
@@ -93,55 +90,9 @@ export default {
   mounted() {
     if (localStorage.getItem("token")) {
       this.save = false;
-      axios
-      .get(
-        "http://3.13.68.92/luckytrucker_admin/api/CompanyController/getuuidbyuserid?user_id=" +
-          localStorage.getItem("userId")
-      )
-      .then(coins => {
-        this.userData = coins.data.uuid;
-      });
-      setTimeout(()=>{
- this.$store
-        .dispatch("loadData", this.userData)
-        .then(() => {
-          let len = this.$store.state.getData.data;
-          for(let i=0;i<=len.length;i++){
-            if(this.$store.state.getData.data[i].key=="questions"){
-          let a = this.$store.state.getData.data[i];
-          let b = JSON.parse(a.val);
-                   
-
-          this.formData.question1 = b.question1;
-            }
-          }
-          
-          //  this.formData.question2 = b.question2;
-        });
-      },1000)
-  
-     
+      
     } else {
       this.save = true;
-      setTimeout(()=>{
-         this.$store
-        .dispatch("loadData",this.uuid)
-        .then(() => {
-          let len = this.$store.state.getData.data;
-          for(let i=0;i<=len.length;i++){
-            if(this.$store.state.getData.data[i].key=="questions"){
-          let a = this.$store.state.getData.data[i];
-          let b = JSON.parse(a.val);
-                   
-
-          this.formData.question1 = b.question1;
-            }
-          }
-          
-          //  this.formData.question2 = b.question2;
-        });
-    
-      },1000)
     } 
      
   },
@@ -155,16 +106,12 @@ export default {
       save: true,
       final_uuid:"",
       userData:"",
-      questions: [
-        { key: "question1", text: "", required: true }
-        // { key: "question2", text: "Question 2", required: true }
-      ],
       formData: {
-        question1: ""
+        comments: ""
         // question2: ""
       },
       rules: {
-        question1: [required]
+        comments: [required]
         // question2: [required]
       },
       loading: false,
@@ -260,18 +207,15 @@ export default {
       this.error = null;
 
       try {
-        let data = await API.get("company/current");
+        let res = await API.get("company/current");
 
-        if (data.status === "OK") {
-          let { questions } = data.data;
-          this.uuid = data.data.b;
-          if (questions) {
-            this.formData = {
-              ...this.formData,
-              ...questions
-            };
+        if (res.status === "OK") {
+          let { company } = res.data;
+          this.uuid = res.data.uuid;
+          if (company) {
+            this.formData.comments = company.comments;
           }
-        } else if (data.status === "ERROR") {
+        } else if (res.status === "ERROR") {
           // this.$router.replace({ name: 'Home' });
         }
       } catch (err) {
@@ -293,24 +237,19 @@ export default {
        
       }
       try {
-        let data = await API.post("company/save", {
-          key: "questions",
-          val: this.formData,
+        const { comments } = this.formData;
+        const data = {
+          comments,
           user_id: localStorage.getItem("userId"),
-          uuid: this.final_uuid,
-        });
+          uuid: this.final_uuid
+        };
+        let res = await API.post("company/save", { data });
 
-        if (data.status === "OK") {
+        if (res.status === "OK") {
           this.goNextForm();
-        } else if (data.status === "ERROR") {
-          this.error = data.messages[0] || data.data;
+        } else if (res.status === "ERROR") {
+          this.error = res.messages[0] || res.data;
         }
-             axios.post(
-          "http://3.13.68.92/luckytrucker_admin/api/CompanyController/postUserIdByUuid?uuid="+ this.final_uuid+"&user_id="+localStorage.getItem("userId")
-        )
-        .then(res => {
-         
-        })
       } catch (err) {
         console.error(err);
         this.error = err.message;

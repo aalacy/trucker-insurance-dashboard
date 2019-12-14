@@ -5,17 +5,6 @@
         <div class="card-body">
           <h4 class="card-title form-sub-title">Drivers</h4>
 
-          <!-- <account-info-drivers-item
-            v-for="(item, index) in drivers"
-            ref="driverForm"
-            :key="item._uuid"
-            :index="index"
-            :driver="item"
-            class="mb-5"
-            @update-hint="updateHint"
-            @remove-form="removeForm"
-          />-->
-
           <hr>
 
           <template>
@@ -113,7 +102,7 @@
                             class="lt-input"
                             placeholder="MM"
                             :class="{ 'has-error': !validations.driversData[index].dobM.is_valid }"
-                            @change="validateFieldCustom('Month', index)"
+                            @change="validateFieldCustom('dobM', index)"
                           >
                           <!-- required -->
                           <!-- @focus="onFocus('dobM')"
@@ -136,7 +125,7 @@
                             class="lt-input"
                             placeholder="DD"
                             :class="{ 'has-error': !validations.driversData[index].dobD.is_valid }"
-                            @change="validateFieldCustom('Day', index)"
+                            @change="validateFieldCustom('dobD', index)"
                           >
                           <!-- required -->
                           <!-- @focus="onFocus('dobD')"
@@ -159,7 +148,7 @@
                             class="lt-input"
                             placeholder="YYYY"
                             :class="{ 'has-error': !validations.driversData[index].dobY.is_valid }"
-                            @change="validateFieldCustom('Year', index)"
+                            @change="validateFieldCustom('dobY', index)"
                           >
                           
 
@@ -363,70 +352,6 @@
                   </div>
                 </div>
              
-              <!-- <div class="row">
-                <div class="col-12">
-                  <div class="form-group">
-                    <select
-                      v-model="driversData[index].yearsOfExperience"
-                      type="text"
-                      class="lt-input"
-                      placeholder="Years of Experience"
-                    >
-                      <option value>Years of Experience</option>
-
-                      <option>1</option>
-                      <option>2</option>
-                      <option>3</option>
-                      <option>4</option>
-                      <option>5</option>
-                      <option>6</option>
-                      <option>7</option>
-                      <option>8</option>
-                      <option>9</option>
-                      <option>10</option>
-                      <option>11</option>
-                      <option>12</option>
-                      <option>13</option>
-                      <option>14</option>
-                      <option>15</option>
-                      <option>16</option>
-                      <option>17</option>
-                      <option>18</option>
-                      <option>19</option>
-                      <option>20</option>
-                      <option>21</option>
-                      <option>22</option>
-                      <option>23</option>
-                      <option>24</option>
-                      <option>25</option>
-                      <option>26</option>
-                      <option>27</option>
-                      <option>28</option>
-                      <option>29</option>
-                      <option>30</option>
-                      <option>31</option>
-                      <option>32</option>
-                      <option>33</option>
-                      <option>34</option>
-                      <option>35</option>
-                      <option>36</option>
-                      <option>37</option>
-                      <option>38</option>
-                      <option>39</option>
-                      <option>40</option>
-                      <option>41</option>
-                      <option>42</option>
-                      <option>43</option>
-                      <option>44</option>
-                      <option>45+</option>
-                    </select>
-                    <div
-                      class="text-danger"
-                      v-show="!validations.driversData[index].zip.is_valid"
-                    >{{ validations.driversData[index].zip.text }}</div>
-                  </div>
-                </div>
-              </div> -->
             </div>
             </div>
           </template>
@@ -543,32 +468,6 @@ export default {
   mounted() {
     if (localStorage.getItem("token")) {
       this.save = false;
-        axios
-        .get(
-          "http://3.13.68.92/luckytrucker_admin/api/CompanyController/getuuidbyuserid?user_id=" +
-            localStorage.getItem("userId")
-        )
-        .then(coins => {
-          this.userData = coins.data.uuid;
-        });
-
-      setTimeout(() => {
-        this.$store.dispatch("loadData", this.userData).then(() => {
-          let len = this.$store.state.getData.data;
-          
-          for (let i = 0; i < len.length; i++) {
-            if (this.$store.state.getData.data[i].key == "drivers") {
-              let a = this.$store.state.getData.data[i];
-              let b = JSON.parse(a.val);
-              
-              if(b.drivers.length>0){
-                this.driversData = b.drivers; 
-                this.addDriverDataValidation(b.drivers.length)
-              }
-            }
-          }
-        }
-      )},1000)
     } else {
       this.save = true;
     }
@@ -763,7 +662,6 @@ export default {
             this.validations.driversData[index].dobD.text = "";
           }
 
-
           if(this.driversData[index].dobY.length<4){
               validNewDriverForm = false;
             this.validations.driversData[index].dobY.is_valid = false;
@@ -794,7 +692,6 @@ export default {
             this.validations.driversData[index].dohM.is_valid = true;
             this.validations.driversData[index].dohM.text = "";
           }
-
           
           if (this.driversData[index].dohD < 1 || this.driversData[index].dohD > 31)  {
             validNewDriverForm = false;
@@ -810,7 +707,6 @@ export default {
             this.validations.driversData[index].dohD.is_valid = true;
             this.validations.driversData[index].dohD.text = "";
           }
-
 
           if(this.driversData[index].dohY.length<4){
               validNewDriverForm = false;
@@ -994,18 +890,19 @@ export default {
       this.error = null;
 
       try {
-     let data = await API.get("company/current");
-        this.uuid = data.data.b;
-        if (data.status === "OK") {
-          let { drivers } = data.data.a;
+        let res = await API.get("company/current");
+        this.uuid = res.data.uuid;
+        if (res.status === "OK") {
+          let { company: { driverInformationList } } = res.data;
           
-          if (drivers.drivers && drivers.drivers.length) {
-            this.drivers = drivers.drivers.map(d => ({ ...d, _uuid: uuidv4() }));
+          if (driverInformationList) {
+            driverInformationList = JSON.parse(driverInformationList);
+            this.drivers = driverInformationList.map(d => ({ ...d, _uuid: uuidv4() }));
 
-            if(drivers.drivers.length>0){
-              this.driversData = drivers.drivers;
+            if(driverInformationList.length > 0){
+              this.driversData = driverInformationList;
               
-              this.addDriverDataValidation(drivers.drivers.length)
+              this.addDriverDataValidation(driverInformationList.length)
             }else{
               this.addDriverData();
             }
@@ -1013,7 +910,7 @@ export default {
             // this.addForm();
              this.addDriverData();
           }
-        } else if (data.status === "ERROR") {
+        } else if (res.status === "ERROR") {
            
         }
       } catch (err) {
@@ -1048,34 +945,18 @@ export default {
         
       } 
       try {
-        let data = await API.post("company/save", {
-          key: "drivers",
-          val: {    
-          drivers:this.driversData.map(d => {
-            let driver = { ...d };
-            delete driver._uuid;
-            return driver;
-          }),
-          },
+        const data = {
+          driverInformationList: this.driversData,
           user_id: localStorage.getItem("userId"),
           uuid: this.final_uuid
-        });
+        };
+        let res = await API.post("company/save", { data });
 
-        if (data.status === "OK") {
+        if (res.status === "OK") {
           this.goNextForm();
-        } else if (data.status === "ERROR") {
-          this.error = data.messages[0] || data.data;
+        } else if (res.status === "ERROR") {
+          this.error = res.messages[0] || res.data;
         }
-        axios
-          .post(
-            "http://3.13.68.92/luckytrucker_admin/api/CompanyController/postUserIdByUuid?uuid=" +
-              this.final_uuid +
-              "&user_id=" +
-              localStorage.getItem("userId")
-          )
-          .then(res => {
-            
-          });
       } catch (err) {
         console.error(err);
         this.error = err.message;

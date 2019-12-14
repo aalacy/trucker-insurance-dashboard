@@ -33,61 +33,20 @@
             </div>
           </div>
 
-          <!-- <div class="row"> -->
-          <!-- <div class="col-12"> -->
-          <!-- <div class="form-group"> -->
-          <!-- <select
-                  v-model="formData.businessClassification"
-                  :class="{ 'has-error': formErrors.businessClassification }"
-                  class="lt-input"
-                  required
-                  @change="validateField('businessClassification')"
-                  @focus="onFocus('businessClassification')"
-                  @blur="onBlur"
-                >
-
-                  <option disabled value="">Business Classification*</option>
-                  <option
-                    v-for="item in businessClassifications"
-                    :key="item"
-                    :value="item"
-                  >
-                    {{ item }}
-                  </option>
-          </select>-->
-          <!-- <input
-                  v-model="formData.businessClassification"
-                  :class="{ 'has-error': formErrors.businessClassification }"
-                  type="text"
-                  class="lt-input"
-                  placeholder="Business Classification# (Optional)"
-                  @focus="onFocus('businessClassification')"
-                  @blur="onBlur"
-                />
-                <div
-                  v-if="formErrors.businessClassification"
-                  class="text-danger"
-                >
-                  {{ formErrors.businessClassification }}
-                </div>
-              </div>
-            </div>
-          </div>-->
-
           <div class="row">
             <div class="col-9">
               <div class="form-group">
                 <input
-                  v-model="formData.MC"
-                  :class="{ 'has-error': formErrors.MC }"
+                  v-model="formData.mcNumber"
+                  :class="{ 'has-error': formErrors.mcNumber }"
                   type="text"
                   class="lt-input"
                   placeholder="MC# (Optional)"
-                  @focus="onFocus('MC')"
+                  @focus="onFocus('mcNumber')"
                   @blur="onBlur"
                 >
 
-                <div v-if="formErrors.MC" class="text-danger">{{ formErrors.MC }}</div>
+                <div v-if="formErrors.mcNumber" class="text-danger">{{ formErrors.mcNumber }}</div>
               </div>
             </div>
           </div>
@@ -205,7 +164,7 @@ export default {
       formData: {
         businessStructure: "",
         // businessClassification: '',
-        MC: "",
+        mcNumber: "",
         businessType: ""
       },
       rules: {
@@ -219,7 +178,7 @@ export default {
         businessType:
           "It’s very important to make the correct selection here. Before purchasing a policy, confirm that business type is accurate",
         // businessClassification:"Please add Business Classfication here",
-        MC: "Please add MC number"
+        mcNumber: "Please add MC number"
       },
       businessStructures: [
         "Sole Proprietorship",
@@ -258,48 +217,10 @@ export default {
   mounted() {
     if (localStorage.getItem("token")) {
       this.save = false;
-      axios
-        .get(
-          "http://3.13.68.92/luckytrucker_admin/api/CompanyController/getuuidbyuserid?user_id=" +
-            localStorage.getItem("userId")
-        )
-        .then(coins => {
-          this.userData = coins.data.uuid;
-
-        });
-      setTimeout(() => {
-        this.$store.dispatch("loadData", this.userData).then(res => {
-          let len = this.$store.state.getData.data;
-          for (let i = 0; i <= len.length; i++) {
-            if (this.$store.state.getData.data[i].key == "businessStructure") {
-              let a = this.$store.state.getData.data[i];
-              let b = JSON.parse(a.val);
-              
-              this.formData.businessStructure = b.businessStructure;
-              this.formData.businessType = b.businessType;
-              this.formData.MC = b.MC;
-            }
-          }
-        });
-      }, 1000);
+      
     } else {
       this.save = true;
       
-      setTimeout(() => {
-        this.$store.dispatch("loadData", this.uuid).then(res => {
-          let len = this.$store.state.getData.data;
-          for (let i = 0; i <= len.length; i++) {
-            if (this.$store.state.getData.data[i].key == "businessStructure") {
-              let a = this.$store.state.getData.data[i];
-              let b = JSON.parse(a.val);
-              
-              this.formData.businessStructure = b.businessStructure;
-              this.formData.businessType = b.businessType;
-              this.formData.MC = b.MC;
-            }
-          }
-        });
-      }, 1000);
     }
   },
   computed: {
@@ -407,18 +328,18 @@ export default {
       this.error = null;
 
       try {
-        let data = await API.get("company/current");
+        let res = await API.get("company/current");
 
-        if (data.status === "OK") {
-          let { businessStructure } = data.data;
-          this.uuid = data.data.b;
-          if (businessStructure) {
-            this.formData = {
-              ...this.formData,
-              ...businessStructure
-            };
-          }
-        } else if (data.status === "ERROR") {
+        if (res.status === "OK") {
+          let { company: { businessStructure, businessType, mcNumber } } = res.data;
+          this.uuid = res.data.uuid;
+          this.formData = {
+            ...this.formData,
+            businessStructure,
+            businessType,
+            mcNumber
+          };
+        } else if (res.status === "ERROR") {
           // this.$router.replace({ name: 'Home' });
         }
       } catch (err) {
@@ -445,17 +366,21 @@ export default {
       }
       try {
 
-        let data = await API.post("company/save", {
-          key: "businessStructure",
-          val: this.formData,
+        const { businessType, mcNumber, businessStructure } = this.formData;
+        const data = {
+          businessType,
+          mcNumber,
+          businessStructure,
           user_id: localStorage.getItem("userId"),
           uuid: this.final_uuid
-        });
+        };
 
-        if (data.status === "OK") {
+        let res = await API.post("company/save", {data});
+
+        if (res.status === "OK") {
           this.goNextForm();
-        } else if (data.status === "ERROR") {
-          this.error = data.messages[0] || data.data;
+        } else if (res.status === "ERROR") {
+          this.error = res.messages[0] || res.data;
         }
         axios
           .post(

@@ -5,35 +5,6 @@
         <div class="card-body">
           <h4 class="card-title form-sub-title">Vehicle(s) & Trailer(s)</h4>
 
-          <!-- <hr>
-          <div class="row align-items-center mb-3">
-            <div class="col font-weight-bold">Add another vehicle or trailer</div>
-          </div>
-          <div class="row">
-            <div class="d-flex align-itens-between col">
-              <select @change="onChange($event)" class="lt-input">
-                <option value>Vehicle or Trailer</option>
-                <option v-for="item in type" :key="item" :value="item">{{ item }}</option>
-              </select>
-              <div v-if="vehicle">
-                <button
-                  type="button"
-                  class="lt-button px-3 btn-bg-white"
-                  @click="addVehicleData"
-                  title="Add Vehcile"
-                >+</button>
-              </div>
-              <div v-else-if="trailer">
-                <button
-                  type="button"
-                  class="lt-button px-3 btn-bg-white"
-                  @click="addTrailerData"
-                  title="Add Trailer"
-                >+</button>
-              </div>
-            </div>
-          </div> -->
-
           <template>
             <div
               class="driver-form-item container-fluid mob-2"
@@ -44,8 +15,6 @@
                 <div class="col">
                   <h2 class="h5">Vehicle #{{ index + 1 }}</h2>
                 </div>
- <!-- v-show="index > 0" -->
-          
                 <button
                  
                   type="button"
@@ -825,40 +794,10 @@ export default {
   },
 
   mounted() {
-     if (localStorage.getItem("token")) {
+    if (localStorage.getItem("token")) {
       this.save = false;
-        axios
-        .get(
-          "http://3.13.68.92/luckytrucker_admin/api/CompanyController/getuuidbyuserid?user_id=" +
-            localStorage.getItem("userId")
-        )
-        .then(coins => {
-          this.userData = coins.data.uuid;
-        });
-
-      setTimeout(() => {
-        this.$store.dispatch("loadData", this.userData).then(() => {
-          let len = this.$store.state.getData.data;
-          for (let i = 0; i < len.length; i++) {
-            if (this.$store.state.getData.data[i].key == "vehiclesTrailers") {
-              let a = this.$store.state.getData.data[i];
-              let b = JSON.parse(a.val);
-             
-              if(b.trailer.length>0){
-                this.trailersData = b.trailer; 
-                this.addTrailersDataValidations(b.trailer.length);
-              }
-              if(b.vehicle.length>0){
-                this.vehiclesData = b.vehicle;
-                this.addVehicleDataValidations(b.vehicle.length);
-              }
-            }
-          }
-        }
-      )},1000)
+        
     } else {
-      //  let b = JSON.parse(a.val)
-
       this.save = true;
     }
     
@@ -927,8 +866,7 @@ export default {
     },
     validateTrailerField(fieldName,index){
        
-          if (this.trailersData[index][fieldName].trim() == '') {
-        
+      if (this.trailersData[index][fieldName].trim() == '') {
         this.validations.trailersData[index][fieldName].is_valid = false;
         this.validations.trailersData[index][fieldName].text = 'Please enter   ' + fieldName + '!';
       } else {
@@ -936,19 +874,12 @@ export default {
       }
     },
     validateFieldCustom(fieldName, index){
-      //
-      
-      
-       
         if (this.vehiclesData[index][fieldName].trim() == '') {
         this.validations.vehiclesData[index][fieldName].is_valid = false;
         this.validations.vehiclesData[index][fieldName].text = 'Please enter   ' + fieldName + '!';
       } else {
         this.validations.vehiclesData[index][fieldName].is_valid = true;
       }
-      
-
-      
     },
     changeCurrentValue(item, $event) {
       if (event.target.value.indexOf("$") == -1) {
@@ -966,10 +897,9 @@ export default {
       // this.vehiclesData[index].vehicleType = this.vehiclesData[index].vehicleType;
     },
     addVehicleDataValidations(counts) {
-      //
       let vehicleDataValidationsLength = this.sizeOfObject(this.validations.vehiclesData);
       for (let index = 0; index < counts; index++) {
-        this.$set(this.validations.vehiclesData,vehicleDataValidationsLength + index, {
+        this.$set(this.validations.vehiclesData, vehicleDataValidationsLength + index, {
           VIN: {
             is_valid: true,
             text: ""
@@ -1163,18 +1093,6 @@ export default {
             this.validations.vehiclesData[index].model.is_valid = true;
             this.validations.vehiclesData[index].model.text = "";
           }
-
-
-          // if ((this.vehiclesData[index].vehicleType.trim() == "") || (this.vehiclesData[index].vehicleImage.trim() == "")) {
-          //   validNewVehicleForm = false;
-          //   this.validations.vehiclesData[index].vehicleType.is_valid = false;
-          //   this.validations.vehiclesData[index].vehicleType.text =
-          //     "Please select Type of Vehicle!";
-          // } else {
-          //   this.validations.vehiclesData[index].vehicleType.is_valid = true;
-          //   this.validations.vehiclesData[index].vehicleType.text = "";
-          // }
-          
 
           if (this.vehiclesData[index].zipCode.trim() == "") {
             
@@ -1451,39 +1369,40 @@ export default {
       this.error = null;
 
       try {
-        let data = await API.get("company/current");
+        let res = await API.get("company/current");
        
-        this.uuid = data.data.b;
-        if (data.status === "OK") {
-          let { vehiclesTrailers } = data.data.a;
-          if (vehiclesTrailers) {
-            if (vehiclesTrailers.vehicle.length > 0) {
-              this.vehiclesData = vehiclesTrailers.vehicle.map(v => ({
+        this.uuid = res.data.uuid;
+        if (res.status === "OK") {
+          let { vehicleInformationList } = res.data.company;
+          if (vehicleInformationList) {
+            vehicleInformationList = JSON.parse(vehicleInformationList);
+            if (vehicleInformationList.vehicle.length > 0) {
+              this.vehiclesData = vehicleInformationList.vehicle.map(v => ({
                 ...v,
                 _uuid: uuidv4()
               }));
               this.addVehicleDataValidations(
-                data.data.a.vehiclesTrailers.vehicle.length
+                vehicleInformationList.vehicle.length
               );
             } else {
               // this.addVehicleData();
             }
 
-            if (vehiclesTrailers.trailer.length > 0) {
+            if (vehicleInformationList.trailer.length > 0) {
              
              
-              this.trailersData = vehiclesTrailers.trailer.map(t => ({
+              this.trailersData = vehicleInformationList.trailer.map(t => ({
                 ...t,
                 _uuid: uuidv4()
               }));
               this.addTrailersDataValidations(
-                data.data.a.vehiclesTrailers.trailer.length
+                vehicleInformationList.trailer.length
               );
             } else {
               // this.addTrailerData();
             }
           }
-        } else if (data.status === "ERROR") {
+        } else if (res.status === "ERROR") {
           // this.$router.replace({ name: 'Home' });
         }
       } catch (err) {
@@ -1530,40 +1449,24 @@ export default {
         this.final_uuid = this.uuid;
        
       }
-      // let vehicles = this.vehiclesData.map(v=>{
-      //     let vehicle = {...v};
-      //     delete vehicle._uuid;
-      //     return vehicle;
-      // });
-      // let trialers = this.trailersData.map(t=>{
-      //   let trailer = {...t};
-      //   delete trailer._uuid;
-      //   return trailer;
-      // })
       try {
-       
-        let data = await API.post("company/save", {
-          key: "vehiclesTrailers",
-          val: { vehicle: this.vehiclesData, trailer: this.trailersData },
+        const vehicleInformationList = {
+          vehicle: this.vehiclesData,
+          trailer: this.trailersData
+        }
+
+        const data = {
+          vehicleInformationList: vehicleInformationList,
           user_id: localStorage.getItem("userId"),
           uuid: this.final_uuid
-        });
+        };
+        let res = await API.post("company/save", { data });
 
-        if (data.status === "OK") {
+        if (res.status === "OK") {
           this.goNextForm();
-        } else if (data.status === "ERROR") {
-          this.error = data.messages[0] || data.data;
+        } else if (res.status === "ERROR") {
+          this.error = res.messages[0] || res.data;
         }
-        axios
-          .post(
-            "http://3.13.68.92/luckytrucker_admin/api/CompanyController/postUserIdByUuid?uuid=" +
-              this.final_uuid +
-              "&user_id=" +
-              localStorage.getItem("userId")
-          )
-          .then(res => {
-           
-          });
       } catch (err) {
         console.error(err);
         this.error = err.message;

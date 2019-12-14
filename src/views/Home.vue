@@ -272,13 +272,15 @@ export default {
           keyword: this.keyword
         });
 
-        if (Array.isArray(data.data)) {
-          this.companies = data.data;
-          this.noData = !this.companies.length;
-          // console.log("companies",this.companies)
-        } else {
-          this.company = data.data;
-          this.noData = !Object.keys(this.company).length;
+        if (data.status == "OK") {
+          if (Array.isArray(data.data)) {
+            this.companies = data.data;
+            this.noData = !this.companies.length;
+            // console.log("companies",this.companies)
+          } else {
+            this.company = {};
+            this.noData = !Object.keys(this.company).length;
+          }
         }
       } catch (err) {
         this.error = err.message;
@@ -304,9 +306,6 @@ export default {
         localStorage.setItem("Phone", data.data.Phone);
         
         if (data.status === "OK") {
-          if(localStorage.getItem("token") && (localStorage.getItem("accountStatus") == "0")){
-            axios.get("/CompanyController/updateaccountinfostatus?user_id="+localStorage.getItem("userId")).then((res)=>console.log("home res",res))
-          }
           //logged in to status 0 to 
           if (this.msg) {
             this.$router.push({ name: "AccountInfoUploadDocuments" });

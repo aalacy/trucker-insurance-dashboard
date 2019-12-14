@@ -89,8 +89,8 @@
             <div class="col-12 col-md-6 col-lg-6 ">
               <div class="form-group">
                 <input
-                  v-model="formData.USDOT"
-                  :class="{ 'has-error': formErrors.USDOT }"
+                  v-model="formData.dotNumber"
+                  :class="{ 'has-error': formErrors.dotNumber }"
                   type="text"
                   class="lt-input"
                   placeholder="USDOT"
@@ -98,7 +98,7 @@
                   @blur="onBlur"
                 >
 
-                <div v-if="formErrors.USDOT" class="text-danger">{{ formErrors.USDOT }}</div>
+                <div v-if="formErrors.dotNumber" class="text-danger">{{ formErrors.dotNumber }}</div>
               </div>
             </div>
           </div>
@@ -106,8 +106,8 @@
             <div class="col-6">
               <div class="form-group">
                 <input
-                  v-model="formData.company"
-                  :class="{ 'has-error': formErrors.company }"
+                  v-model="formData.name"
+                  :class="{ 'has-error': formErrors.name }"
                   type="text"
                   class="lt-input"
                   placeholder="Company name"
@@ -115,7 +115,7 @@
                   @blur="onBlur"
                 >
 
-                <div v-if="formErrors.company" class="text-danger">{{ formErrors.company }}</div>
+                <div v-if="formErrors.name" class="text-danger">{{ formErrors.name }}</div>
               </div>
             </div>
           </div>
@@ -123,8 +123,8 @@
             <div class="col-12 col-md-6 col-lg-6 ">
               <div class="form-group">
                 <input
-                  v-model="formData.phone"
-                  :class="{ 'has-error': formErrors.phone }"
+                  v-model="formData.phoneNumber"
+                  :class="{ 'has-error': formErrors.phoneNumber }"
                   type="text"
                   class="lt-input"
                   placeholder="Phone no"
@@ -132,7 +132,7 @@
                   @blur="onBlur"
                 >
 
-                <div v-if="formErrors.phone" class="text-danger">{{ formErrors.phone }}</div>
+                <div v-if="formErrors.phoneNumber" class="text-danger">{{ formErrors.phoneNumber }}</div>
               </div>
             </div>
           </div>
@@ -311,53 +311,15 @@ export default {
     this.mobile = isMobile ? true : false;
     if (localStorage.getItem("token")) {
       this.save = false;
-      axios
-        .get(
-          "http://3.13.68.92/luckytrucker_admin/api/CompanyController/getuuidbyuserid?user_id=" +
-            localStorage.getItem("userId")
-        )
-        .then(coins => {
-          this.userData = coins.data.uuid;
-          localStorage.setItem("uuid",coins.data.uuid);
-          
-        });
-      setTimeout(() => {
-        this.$store.dispatch("loadData", this.userData).then(res => {
-          let len = this.$store.state.getData.data;
-          for (let k = 0; k <= len.length; k++) {
-            if (this.$store.state.getData.data[k].key == "personalInfo") {
-              let a = this.$store.state.getData.data[k];
-              let b = JSON.parse(a.val);
-              this.formData.address = b.address;
-              this.formData.city = b.city;
-              this.formData.zip = b.zip;
-              this.formData.USDOT = b.USDOT;
-              this.formData.company = b.company;
-              this.formData.phone = b.phone;
-              this.formData.state = b.state;
-              this.formData.address1 = b.address1;
-              this.formData.city1 = b.city1;
-              this.formData.zip1 = b.zip1;
-              this.formData.state1 = b.state1;
-            }
-          }
-        });
-
-        
-      }, 1000);
-      this.formData.USDOT = localStorage.getItem("usdot");
-      this.formData.company = localStorage.getItem("company");
-      this.formData.phone = localStorage.getItem("Phone");
-      let fullAddress = localStorage.getItem(["Mailing address"]);
-
+      this.formData.dotNumber = localStorage.getItem("usdot");
+      this.formData.name = localStorage.getItem("company");
+      this.formData.phoneNumber = localStorage.getItem("Phone");
       let MailingAddress = this.formatAddress(
         localStorage.getItem(["Mailing address"])
       );
-      console.log('MailingAddress', MailingAddress);
       let PhysicalAddress = this.formatAddress(
         localStorage.getItem(["Physical address"])
       );
-      console.log('PhysicalAddress', PhysicalAddress);
       this.formData.address = MailingAddress[3].trim().replace(",", "");
       this.formData.city = MailingAddress[1].trim().replace(",", "");
       this.formData.state = MailingAddress[2].trim().replace(",", "");
@@ -370,12 +332,9 @@ export default {
     } else {
       this.save = true;
       
-      this.formData.USDOT = localStorage.getItem("usdot");
-      this.formData.company = localStorage.getItem("company");
-      this.formData.phone = localStorage.getItem("Phone");
-      let fullAddress = localStorage.getItem(["Mailing address"]);
-      
-
+      this.formData.dotNumber = localStorage.getItem("usdot");
+      this.formData.name = localStorage.getItem("company");
+      this.formData.phoneNumber = localStorage.getItem("Phone");
 
       let MailingAddress = this.formatAddress(
         localStorage.getItem(["Mailing address"])
@@ -391,33 +350,6 @@ export default {
       this.formData.state1 = PhysicalAddress[1].trim().replace(",", "");
       this.formData.city1 = PhysicalAddress[2].trim().replace(",", "");
       this.formData.zip1 = PhysicalAddress[0].trim().replace(",", "");
-
-
-      setTimeout(() => {
-        this.$store
-          .dispatch("loadData", this.uuid)
-          .then(res => {
-            let len = this.$store.state.getData.data;
-            for (let i = 0; i <= len.length; i++) {
-              if (this.$store.state.getData.data[i].key == "personalInfo") {
-                let a = this.$store.state.getData.data[i];
-                let b = JSON.parse(a.val);
-                this.formData.address = b.address;
-                this.formData.city = b.city;
-                this.formData.zip = b.zip;
-                this.formData.USDOT = b.USDOT;
-                this.formData.company = b.company;
-                this.formData.phone = b.phone;
-                this.formData.state = b.state;
-                this.formData.address1 = b.address1;
-                this.formData.city1 = b.city1;
-                this.formData.zip1 = b.zip1;
-                this.formData.state1 = b.state1;
-              }
-            }
-          })
-          .catch(() => {});
-      }, 1000);
     }
     
   },
@@ -439,15 +371,13 @@ export default {
       // newQuote: false,
       userData: "",
       formData: {
-        // firstName: "",
-        // lastName: "",
         address: "",
         city: "",
         state: "",
         zip: "",
-        USDOT: "",
-        company: "",
-        phone: "",
+        dotNumber: "",
+        name: "",
+        phoneNumber: "",
         address1: "",
         city1: "",
         state1: "",
@@ -537,7 +467,7 @@ export default {
       if (!formIsValid) {
         return;
       }
-    var temp_uuid;
+      var temp_uuid;
       this.loading = true;
       this.error = null;
       if (localStorage.getItem("token")) {
@@ -600,17 +530,10 @@ export default {
       this.error = null;
       try {
         let data = await API.get("company/current");
-        this.uuid = data.data.b;
+        this.uuid = data.data.uuid;
   
         if (data.status === "OK") {
-          // localStorage.setItem("uuid",data.data.b)
-          let { personalInfo } = data.data;
-          if (personalInfo) {
-            this.formData = {
-              ...this.formData,
-              ...personalInfo
-            };
-          }
+          let { company } = data.data;
         } else if (data.status === "ERROR") {
           // this.$router.replace({ name: "Home" });
         }
@@ -619,8 +542,6 @@ export default {
         this.error = err.message;
       } finally {
         this.loading = false;
-
-        // }, 5000);
       }
     },
     formatAddress(fullAddress) {
@@ -629,12 +550,12 @@ export default {
       let cnt = 0,
         val = [],
         index = 0;
-      while (cnt != 4 && splitAddress.length > index) {
-        if (splitAddress[index].trim() != "") {
-          if (cnt < 2) {
-            val[cnt++] = splitAddress[index];
-          } else {
-            val[cnt] = "";
+        while (cnt != 4 && splitAddress.length > index) {
+          if (splitAddress[index].trim() != "") {
+            if (cnt < 2) {
+              val[cnt++] = splitAddress[index];
+            } else {
+              val[cnt] = "";
             do {
               val[cnt] = splitAddress[index] + " " + val[cnt];
             } while (
@@ -657,44 +578,41 @@ export default {
       this.loading = true;
       this.error = null;
       if(localStorage.getItem('token')){
-        
           this.final_uuid = this.userData;
-    
       }else{
         this.final_uuid = this.uuid;
-  
       }
       try {
-        let data = await API.post("company/save", {
-          key: "personalInfo",
-          val: this.formData,
+        const { name, dotNumber, phoneNumber } = this.formData;
+        let data = {
+          name,
+          dotNumber,
+          phoneNumber,
+          mailingAddress: {
+            address: this.formData.address,
+            city: this.formData.city,
+            state: this.formData.state,
+            zip: this.formData.zip,
+          },
+          garagingAddress: {
+            address: this.formData.address1,
+            city: this.formData.city1,
+            state: this.formData.state1,
+            zip: this.formData.zip1,
+          },
           user_id: localStorage.getItem("userId"),
           uuid: this.final_uuid
-        });
+        };
+        let res = await API.post("company/save", { data});
   
-        if (data.status === "OK") {
+        if (res.status === "OK") {
           this.goNextForm();
-        } else if (data.status === "ERROR") {
+        } else if (res.status === "ERROR") {
           
-          this.error = data.messages[0] || data.data;
+          this.error = res.messages[0] || res.data;
         }
 
-        // second API
-        // axios.post
-        axios
-          .post(
-            "http://3.13.68.92/luckytrucker_admin/api/CompanyController/postUserIdByUuid?uuid=" +
-              this.uuid +
-              "&user_id=" +
-              localStorage.getItem("userId")
-          )
-          .then(res => {
-      
-          });
-        // .catch(err => this.$swal("Opps!",err, "error"))
-        // .finally(() 
       } catch (err) {
-        // console.error(err);
         this.error = err.message;
       } finally {
         this.loading = false;

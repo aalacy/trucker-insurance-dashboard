@@ -335,21 +335,14 @@ export default {
       this.error = null;
 
       try {
-        let data = await API.get("company/current");
+        let res = await API.get("company/current");
   
-        if (data.status === "OK") {
-          let { cargoGroup: cargoGroupTab, cargoHauled } = data.data.a;
-          let { cargoGroup } = cargoGroupTab;
-          let groupData = data.data.a.cargoGroup;
-          this.prevCargoGroup = JSON.parse(groupData).cargoGroup;
-          this.uuid = data.data.b;
-          if (cargoHauled) {
-            this.formData = {
-              ...this.formData,
-              ...cargoHauled
-            };
-          }
-        } else if (data.status === "ERROR") {
+        if (res.status === "OK") {
+          let { company: { cargoGroup, cargoHauled } } = res.data;
+          this.prevCargoGroup = JSON.parse(cargoGroup);
+          this.formData.haulType = JSON.parse(cargoHauled) || {}; // 
+          this.uuid = res.data.uuid;
+        } else if (res.status === "ERROR") {
           // this.$router.replace({ name: "Home" });
         }
       } catch (err) {
@@ -377,17 +370,17 @@ export default {
   
       }
       try {
-        let data = await API.post("company/save", {
-          key: "cargoHauled",
-          val: this.formData,
+        const { haulType } = this.formData;
+        const data = {
+          cargoHauled: haulType,
           user_id: localStorage.getItem("userId"),
-          uuid:  this.final_uuid
-        });
-
-        if (data.status === "OK") {
+          uuid: this.final_uuid
+        };
+        let res = await API.post("company/save", { data });
+        if (res.status === "OK") {
           this.goNextForm();
-        } else if (data.status === "ERROR") {
-          this.error = data.messages[0] || data.data;
+        } else if (res.status === "ERROR") {
+          this.error = res.messages[0] || res.data;
         }
       } catch (err) {
         console.error(err);

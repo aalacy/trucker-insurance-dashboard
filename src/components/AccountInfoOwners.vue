@@ -20,7 +20,7 @@
               <option value="" disabled>Select Driver</option>
  
               <option
-                v-for="(item, index) in drivers.drivers"
+                v-for="(item, index) in drivers"
                 :key="index"
                 :value="index"
               >{{ item.firstName }} {{ item.lastName }}</option>
@@ -109,7 +109,7 @@
                           type="number"
                           class="lt-input"
                           :class="{ 'has-error': !validations.driversData[index].dobM.is_valid }"
-                          @change="validateFieldCustom('Month', index)"
+                          @change="validateFieldCustom('dobM', index)"
                           placeholder="MM"
                         />
                           <!-- required -->
@@ -129,7 +129,7 @@
                           type="number"
                           class="lt-input"
                           :class="{ 'has-error': !validations.driversData[index].dobD.is_valid }"
-                          @change="validateFieldCustom('Day', index)"
+                          @change="validateFieldCustom('dobD', index)"
                           placeholder="DD"
                         />
                           <!-- required -->
@@ -150,7 +150,7 @@
                           class="lt-input"
                           placeholder="YYYY"
                           :class="{ 'has-error': !validations.driversData[index].dobY.is_valid }"
-                          @change="validateFieldCustom('Year', index)"
+                          @change="validateFieldCustom('dobY', index)"
                         />
                           <!-- required -->
                           <!-- @focus="onFocus('dobY')"
@@ -394,32 +394,6 @@ export default {
   mounted() {
       if (localStorage.getItem("token")) {
       this.save = false;
-        axios
-        .get(
-          "http://3.13.68.92/luckytrucker_admin/api/CompanyController/getuuidbyuserid?user_id=" +
-            localStorage.getItem("userId")
-        )
-        .then(coins => {
-          this.userData = coins.data.uuid;
-        });
-
-      setTimeout(() => {
-        this.$store.dispatch("loadData", this.userData).then(() => {
-          let len = this.$store.state.getData.data;
-          
-          for (let i = 0; i < len.length; i++) {
-            if (this.$store.state.getData.data[i].key == "owners") {
-              let a = this.$store.state.getData.data[i];
-              let b = JSON.parse(a.val);
-              
-              if(b.owners.length>0){
-                this.driversData = b.owners; 
-                this.addDriverDataValidation(b.owners.length)
-              }
-            }
-          }
-        }
-      )},1000)
     } else {
       this.save = true;
     }
@@ -571,8 +545,6 @@ export default {
             this.validations.driversData[index].dobM.text = '';
           }
 
-
-
           if (this.driversData[index].dobD < 1 || this.driversData[index].dobD > 31)  {
             validNewDriverForm = false;
             this.validations.driversData[index].dobD.is_valid = false;
@@ -586,8 +558,6 @@ export default {
             this.validations.driversData[index].dobD.is_valid = true;
             this.validations.driversData[index].dobD.text = '';
           }
-
-          
           
           if(this.driversData[index].dobY.length<4){
               validNewDriverForm = false;
@@ -602,7 +572,6 @@ export default {
             this.validations.driversData[index].dobY.is_valid = true;
             this.validations.driversData[index].dobY.text = '';
           }
-
 
           if( this.driversData[index].address.trim() == '' ){
             validNewDriverForm = false;
@@ -630,7 +599,6 @@ export default {
             this.validations.driversData[index].state.is_valid = true;
             this.validations.driversData[index].state.text = '';
           }
-
 
           if(!this.driversData[index].zip.match(/(^\d{5}$)/)){
             validNewDriverForm = false;
@@ -742,11 +710,6 @@ export default {
     addForm() {
       // 
 
-      // var dropDown = document.getElementById("driverList");
-      // 
-      // dropDown.selectedIndex = 0;
-      // 
-      // 
       this.formData.owners.push({ _uuid: uuidv4() });
       this.error = null;
     },
@@ -755,21 +718,11 @@ export default {
     },
 
     onChange($event) {
-      
-      
       // if(this.drivers.drivers[$event.target.value] != undefined){
       this.driversData[0] = Object.assign({}, this.driversData[0], this.drivers.drivers[$event.target.value]);
       this.driversData[0].dobD = this.drivers.drivers[$event.target.value].dateOfBirth.split('/')[1];
       this.driversData[0].dobM = this.drivers.drivers[$event.target.value].dateOfBirth.split('/')[0];
       this.driversData[0].dobY = this.drivers.drivers[$event.target.value].dateOfBirth.split('/')[2];
-      // }
-      // else{
-      //   
-        
-      // this.formData.driverIsOwner= false;
-      //     this.driversData[0] = "";
-          
-      // }
       
     },
     updateHint(hint) {
@@ -786,80 +739,43 @@ export default {
       this.error = null;
 
       try {
-        let data = await API.get("company/current");
+        let res = await API.get("company/current");
 
-        if (data.status === "OK") {
-          let { drivers, owners: ownersTab } = data.data.a;
+        if (res.status === "OK") {
+          let { company: { driverInformationList, ownerInformationList } } = res.data;
           
-          // 
-          this.uuid = data.data.b;
-          if (drivers) {
-            this.drivers = drivers;
+          this.uuid = res.data.uuid;
+          if (driverInformationList) {
+            this.drivers = JSON.parse(driverInformationList);
           }
-          if (ownersTab) {
-            
-          let { owners } = ownersTab;
-            
-            
-
-            // this.formData = {
-            //   ...this.formData,
-            //   ...ownersTab,
-            //   owners: ownersTab.map(o => ({ ...o, _uuid: uuidv4() }))
-            // };
-
-            if(data.data.a.owners.owners.length > 0) {
-              this.driversData = data.data.a.owners.owners;
+          if (ownerInformationList) {
+            ownerInformationList = JSON.parse(ownerInformationList);
+            if(ownerInformationList.length > 0) {
+              this.driversData = ownerInformationList;
               
-              this.addDriverDataValidation(data.data.a.owners.owners.length)
+              this.addDriverDataValidation(ownerInformationList.length)
             } else {
               this.addDriverData();
             }
 
           } else {
-            // this.addForm();
             this.addDriverData();
           }
-        } else if (data.status === "ERROR") {
-          // this.$router.replace({ name: 'Home' });
-          
+        } else if (res.status === "ERROR") {
         }
       } catch (err) {
         console.error(err);
         this.error = err.message;
       } finally {
         this.loading = false;
-        // this.addDriverData();
-
       }
     },
-    // setDataFromForms() {
-    //   let owners = [];
-
-    //   if (this.$refs.ownerForm) {
-    //     this.$refs.ownerForm.forEach(formRef => {
-    //       let formData = formRef.getFormData();
-    //       owners.push(formData);
-    //     });
-    //   }
-
-    //   this.formData.owners = owners;
-    // },
+    
     async updateCompany() {
       
       if ( this.formData.driverIsOwner && this.formData.driverOwnerIndex === -1 ) {
         this.formData.driverIsOwner = false;
       }
-
-      // this.setDataFromForms();
-
-      // if (this.noOwners) {
-      //   return;
-      // }
-
-      // let allFormAreValid = this.$refs.ownerForm
-      //   ? this.$refs.ownerForm.every(formRef => formRef.validateForm())
-      //   : true;
 
       let allFormAreValid = this.validateNewDriverData();
       if (!allFormAreValid) {
@@ -880,40 +796,22 @@ export default {
         
       }
       try {
-        let data = await API.post("company/save", {
-          key: "owners",
-          val: {
-             owners:this.driversData.map(o => {
+        const data = {
+          ownerInformationList: this.driversData.map(o => {
               let owner = { ...o };
               delete owner._uuid;
               return owner;
-            // owners: this.formData.owners.map(o => {
-            //   let owner = { ...o };
-            //   delete owner._uuid;
-            //   return owner;
-            // })
-            // owners: this.driversData.map(o => {
-            //   let owner = { ...o };
-            //   delete owner._uuid;
-            //   return owner;
-            // })
-             })
-          },
+             }),
           user_id: localStorage.getItem("userId"),
           uuid: this.final_uuid
-        });
+        };
+        let res = await API.post("company/save", { data });
 
-        if (data.status === "OK") {
+        if (res.status === "OK") {
           this.goNextForm();
-        } else if (data.status === "ERROR") {
-          this.error = data.messages[0] || data.data;
+        } else if (res.status === "ERROR") {
+          this.error = res.messages[0] || res.data;
         }
-             axios.post(
-          "http://3.13.68.92/luckytrucker_admin/api/CompanyController/postUserIdByUuid?uuid="+this.final_uuid+"&user_id="+localStorage.getItem("userId")
-          )
-          .then(res => {
-            
-          })
       } catch (err) {
         console.error(err);
         this.error = err.message;

@@ -427,10 +427,10 @@ export default {
     },
     async loadCompany() {
       try {
-        let data = await API.get("company/current");
-        if (data.status === "OK") {
+        let res = await API.get("company/current");
+        if (res.status === "OK") {
           // let data = data.data;
-          this.uuid = data.data.b;
+          this.uuid = res.data.uuid;
         }
       } catch {}
     },
@@ -480,16 +480,6 @@ export default {
         } else if (data.status === "ERROR") {
           this.error = data.messages[0] || data.data;
         }
-        axios
-          .post(
-            "http://3.13.68.92/luckytrucker_admin/api/CompanyController/postUserIdByUuid?uuid=" +
-              this.uuid +
-              "&user_id=" +
-              localStorage.getItem("userId")
-          )
-          .then(res => {
-          
-          });
       } catch (err) {
         // this.showmodel = true;
 
@@ -502,7 +492,6 @@ export default {
     },
     setImage(event, fieldName) {
       
-      
       let { files } = event.target;
 
       let image = files[0] || null;
@@ -510,8 +499,6 @@ export default {
       this.formData[fieldName] = image;
     
       this.previewFile(image, fieldName);
-
-      // this.validateField(fieldName);
     },
 
     previewFile(file, fieldName) {
@@ -520,12 +507,9 @@ export default {
       //
       reader.onload = () => {
         this.preview[fieldName] = reader.result;
-        //
-        
       };
   
       if (file && !this.fnCall) {
-      
         //
         reader.readAsDataURL(file);
       } else {
@@ -536,27 +520,19 @@ export default {
         this.preview[fieldName] = file;
       } else {
         this.preview[fieldName] = null;
-      
       }
     },
     
     async uploadDocuments() {
-      // let formIsValid = this.validateForm();
-      // if (!formIsValid) {
-      //   return;
-      // }
-
       try {
         let data = await API.formData("company/upload", this.formData);
-     if(localStorage.getItem('token')){
-        
-          this.final_uuid = this.userData;
-        
-      }else{
-        this.final_uuid = this.uuid;
-      
-      }
-        //
+         if(localStorage.getItem('token')){
+            
+              this.final_uuid = this.userData;
+            
+          }else{
+            this.final_uuid = this.uuid;
+          }
 
         if (data.status === "OK") {
           this.goNextForm();
@@ -564,12 +540,7 @@ export default {
         } else if (data.status === "ERROR") {
           this.error = data.messages[0] || data.data;
         }
-        axios.post(
-          "http://3.13.68.92/luckytrucker_admin/api/CompanyController/postUserIdByUuid?uuid=" +
-           this.final_uuid +
-            "&user_id=" +
-            localStorage.getItem("userId")
-        );
+      
       } catch (err) {
         console.error(err);
         this.error = err.message;
@@ -584,7 +555,6 @@ export default {
 <style lang="scss" scoped>
 .upload-documents {
   .preview {
-    // height: 200px;
     padding-top: 10px;
     text-align: center;
 

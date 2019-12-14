@@ -227,17 +227,6 @@ export default {
       imageSign = "",
       dobD = "",
       dobY = "";
-    // this.$emit("update-progress", this.progress);
-    // if (this.driver.dateOfSign) {
-    //       [dobM, dobD, dobY] = this.driver.dateOfSign.split('/');
-    //     }
-    // this.formData = {
-    //   ...this.formData,
-    //   //   ...this.driver,
-    //   dobM,
-    //   dobD,
-    //   dobY
-    // };
     this.loadCompany();
   },
   mounted() {
@@ -255,64 +244,8 @@ export default {
 
     if (localStorage.getItem("token")) {
       this.save = false;
-      axios
-        .get(
-          "http://3.13.68.92/luckytrucker_admin/api/CompanyController/getuuidbyuserid?user_id=" +
-            localStorage.getItem("userId")
-        )
-        .then(coins => {
-          this.userData = coins.data.uuid;
-        });
-      setTimeout(() => {
-        this.$store.dispatch("loadData", this.userData).then(res => {
-          let len = this.$store.state.getData.data;
-          
-          
-          for (let i = 0; i <= len.length; i++) {
-            if (this.$store.state.getData.data[i].key == "imageSign") {
-              let a = this.$store.state.getData.data[i];
-              let b = JSON.parse(a.val);
-              var url = "";
-              this.getBase64Image(
-                "http://3.13.68.92:3000/company/" + b[0].filename,
-                base64image => {
-                  
-                  url = base64image;
-                  
-                  this.previewFile(url, "imageSign");
-                }
-              );
-            }
-          }
-        });
-      }, 1000);
     } else {
       this.save = true;
-      setTimeout(() => {
-        this.$store.dispatch("loadData", this.uuid).then(res => {
-          let len = this.$store.state.getData.data;
-    
-    
-          for (let i = 0; i <= len.length; i++) {
-            if (this.$store.state.getData.data[i].key == "imageSign") {
-              let a = this.$store.state.getData.data[i];
-              let b = JSON.parse(a.val);
-
-              var url = "";
-              this.previewFile(b[0].filename, "imageSign");
-              this.getBase64Image(
-                "http://3.13.68.92:3000/company/" + b[0].filename,
-                base64image => {
-                  
-                  url = base64image;
-                  
-                  this.previewFile(url, "imageSign");
-                }
-              );
-            }
-          }
-        });
-      }, 1000);
     }
   },
   methods: {
@@ -325,11 +258,15 @@ export default {
     saveSignature() {
 
       const { isEmpty, data } = this.$refs.signaturePad.saveSignature();
-    if(isEmpty){
-
-    }
-      var a = this.base64toBlob(data.split(",")[1], "jpeg");
-      this.formData.imageSign = a;
+      if(isEmpty){
+        return swal({
+          title: "Warning",
+          text: "Please sign a signature",
+          icon: "warning",
+        });
+      }
+      // var a = this.base64toBlob(data.split(",")[1], "jpeg");
+      this.formData.imageSign = data;
       this.updateCompany();
       
     },
@@ -371,10 +308,10 @@ export default {
     },
     async loadCompany() {
       try {
-        let data = await API.get("company/current");
-        if (data.status === "OK") {
+        let res = await API.get("company/current");
+        if (res.status === "OK") {
           // let data = data.data;
-          this.uuid = data.data.b;
+          this.uuid = res.data.uuid;
         }
       } catch {}
     },
@@ -454,31 +391,21 @@ export default {
   
       } else {
         this.final_uuid = this.uuid;
-  
       }
       
-      // this.saveSignature;
       try {
-        let data = await API.formData("company/upload", this.formData);
-  
-  
-        if (data.status === "OK") {
-          this.goNextForm;
-          
-          this.$router.push({ name: this.nextForm });
-        } else if (data.status === "ERROR") {
-          this.error = data.messages[0] || data.data;
+        const data = {
+          signSignature: this.formData,
+          user_id: localStorage.getItem("userId"),
+          uuid: this.final_uuid
+        };
+        let res = await API.post("company/save", { data });
+
+        if (res.status === "OK") {
+          this.goNextForm();
+        } else if (res.status === "ERROR") {
+          this.error = res.messages[0] || res.data;
         }
-        axios
-          .post(
-            "http://3.13.68.92/luckytrucker_admin/api/CompanyController/postUserIdByUuid?uuid=" +
-              this.uuid +
-              "&user_id=" +
-              localStorage.getItem("userId")
-          )
-          .then(res => {
-      
-          });
       } catch (err) {
         console.error(err);
         this.error = err.message;
