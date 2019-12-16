@@ -21,7 +21,7 @@
                 v-model="formData.password"
                 type="password"
                 class="lt-input border border-color"
-                placeholder="Old Password"
+                placeholder="Password"
               >
             </div>
             <div class="form-group">
@@ -29,7 +29,7 @@
                 v-model="formData.confirmpassword"
                 type="password"
                 class="lt-input border border-color"
-                placeholder="New Password"
+                placeholder="Confirm Password"
               >
             </div>
             <input type="hidden" v-model="formData.account_status">
@@ -68,7 +68,6 @@ export default {
       fullpage: true,
       showError: false,
       formData: {
-        email: "",
         password: "",
         confirmpassword: "",
         account_status: "",
@@ -107,12 +106,15 @@ export default {
         zIndex: 999
       });
       try {
+        if (this.formData.password != this.formData.confirmpassword) {
+          this.error = "Password does not match";
+          return this.$swal("Opps!", this.error, "error");
+        }
         this.loading = true;
         let data;
         try {
           data = await API.post("users/reset_password", {
-            oldPassword: this.formData.password,
-            newPassword: this.formData.confirmpassword,
+            password: this.formData.password,
             code: this.formData.code
            });
         } catch (err) {

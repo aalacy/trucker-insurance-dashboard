@@ -214,7 +214,7 @@ export default {
         email: this.reset_email
       });
       if (res.flag == "1") {
-        this.$swal("Done", res.data.msg, "success");
+        this.$swal("Done", `If you're already registered on our site then please check your ${this.reset_email} for further details.`, "success");
       } else {
         this.$swal("Opps!", res.data.msg, "error");
       }
