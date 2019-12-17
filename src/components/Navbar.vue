@@ -16,7 +16,7 @@
      
             <div>Need Help?</div>
             <div class="">Speak now with a licensed insurance agent</div>
-<a href="tel:16469330419" class="bt-call ">Click to Talk</a>         
+<a href="tel:15135062400" class="bt-call ">Click to Talk</a>         
    <div class=" justify-content-center">
 or call us 24/7?
             
@@ -26,7 +26,7 @@ or call us 24/7?
                   icon="phone-alt"
                   size="1x"
                   class=" color-fb d-flex  justify-content-center"
-                /> <a href="tel:16469330419">1-646-933-0419</a></div>
+                /> <a href="tel:15135062400">1-513-506-2400</a></div>
               </div>
            
           </div>

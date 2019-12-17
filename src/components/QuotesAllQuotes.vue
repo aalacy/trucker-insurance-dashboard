@@ -69,7 +69,7 @@
         <div v-else>
           <span>
             Your application is complete, we should have an update for you soon. If you have any further questions about this, feel to call us at
-            <a href="tel:16469330419" style="font-weight:bold; white-space:nowrap;">1-646-933-0419</a>
+            <a href="tel:15135062400" style="font-weight:bold; white-space:nowrap;">1-513-506-2400</a>
           </span>
         </div>
        

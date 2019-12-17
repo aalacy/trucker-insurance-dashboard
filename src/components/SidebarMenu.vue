@@ -85,7 +85,7 @@ or call us 24/7?
           >
             <a class="title link">{{ item.title }}</a>
           </router-link>
-
+          <span @click.capture="clicked">
           <router-link
             v-for="(subItem, subIndex) in item.subItems"
             :key="subIndex"
@@ -96,6 +96,7 @@ or call us 24/7?
           >
             <a class="link">{{ subItem.title }}</a>
           </router-link>
+           </span>
         </div>
       </transition-group>
     </div>
@@ -114,9 +115,10 @@ export default {
         console.log("isMobileSide",this.msg)
   },
   methods: {
-    //  toggleSlim() {
-    //   this.collapsed = !this.collapsed;
-    // },
+    clicked: function(e) {
+      console.log('prevented!')
+      e.preventDefault()
+    },
     showHelp() {
       if (this.showLabel) {
         this.showLabelLink = false;
