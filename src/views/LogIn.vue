@@ -245,8 +245,8 @@ export default {
     },
     async logout() {
       try {
-      if (this.facebook && this.facebook.FB) {
-        this.facebook.FB.logout();
+      if (window.FB) {
+        window.FB.logout();
       }
 
         let data = await API.post("users/logout");
@@ -317,7 +317,7 @@ export default {
       console.log('OH NOES', error)
     },
     async getUserData() {
-      const { api } = this.facebook.FB
+      const { api } = window.FB
       api('/me', { fields: 'id, email, name' }, async user => {
         console.log(user);
         let data = await API.post("users/login/social", {
