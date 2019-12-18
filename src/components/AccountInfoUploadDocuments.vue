@@ -185,14 +185,6 @@ export default {
   mounted() {
     if (localStorage.getItem("token")) {
       this.save = false;
-      axios
-        .get(
-          "http://3.13.68.92/luckytrucker_admin/api/CompanyController/getuuidbyuserid?user_id=" +
-            localStorage.getItem("userId")
-        )
-        .then(coins => {
-          this.userData = coins.data.uuid;
-        });
       setTimeout(() => {
         this.$store.dispatch("loadData", this.userData).then(() => {
           let len = this.$store.state.getData.data;

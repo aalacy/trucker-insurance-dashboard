@@ -270,13 +270,7 @@ export default {
       var temp_uuid;
       this.loading = true;
       this.error = null;
-      if (localStorage.getItem("token")) {
-        temp_uuid = this.userData;
-        
-      } else {
-        temp_uuid = this.uuid;
-        
-      }
+      temp_uuid = this.uuid;
 
       try {
         let data = await API.post("company/save", {
@@ -357,13 +351,7 @@ export default {
 
       this.loading = true;
       this.error = null;
-      if (localStorage.getItem("token")) {
-        this.final_uuid = this.userData;
-        
-      } else {
-        this.final_uuid = this.uuid;
-
-      }
+      this.final_uuid = this.uuid;
       try {
 
         const { businessType, mcNumber, businessStructure } = this.formData;
@@ -382,16 +370,7 @@ export default {
         } else if (res.status === "ERROR") {
           this.error = res.messages[0] || res.data;
         }
-        axios
-          .post(
-            "http://3.13.68.92/luckytrucker_admin/api/CompanyController/postUserIdByUuid?uuid=" +
-              this.final_uuid +
-              "&user_id=" +
-              localStorage.getItem("userId")
-          )
-          .then(res => {
-            
-          });
+       
       } catch (err) {
         
         this.error = err.message;

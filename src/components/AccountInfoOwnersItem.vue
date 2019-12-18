@@ -229,67 +229,6 @@ export default {
   },
   mounted() {
     
-
-    if (localStorage.getItem("token")) {
-      this.save = false;
-      axios
-        .get(
-          "http://3.13.68.92/luckytrucker_admin/api/CompanyController/getuuidbyuserid?user_id=" +
-            localStorage.getItem("userId")
-        )
-        .then(coins => {
-          this.userData = coins.data.uuid;
-        });
-      setTimeout(() => {
-        this.$store.dispatch("loadData", this.userData).then(() => {
-          let len = this.$store.state.getData.data;
-          for (let i = 0; i <= len.length; i++) {
-            if (this.$store.state.getData.data[i].key == "owners") {
-              let a = this.$store.state.getData.data[i];
-              
-              let b = JSON.parse(a.val).owners[0];
-              
-              this.formData.firstName = b.firstName;
-              this.formData.lastName = b.lastName;
-              [
-                this.formData.dobD,
-                this.formData.dobM,
-                this.formData.dobY
-              ] = b.dateOfBirth.split("/");
-              this.formData.address = b.address;
-              this.formData.state = b.state;
-              this.formData.city = b.city;
-              this.formData.zip = b.zip;
-            }
-          }
-        });
-      }, 1000);
-    } else {
-      setTimeout(() => {
-        this.$store.dispatch("loadData", this.uuid).then(() => {
-          let len = this.$store.state.getData.data;
-          for (let i = 0; i <= len.length; i++) {
-            if (this.$store.state.getData.data[i].key == "owners") {
-              let a = this.$store.state.getData.data[i];
-              
-              let b = JSON.parse(a.val).owners[0];
-              
-              this.formData.firstName = b.firstName;
-              this.formData.lastName = b.lastName;
-              [
-                this.formData.dobD,
-                this.formData.dobM,
-                this.formData.dobY
-              ] = b.dateOfBirth.split("/");
-              this.formData.address = b.address;
-              this.formData.state = b.state;
-              this.formData.city = b.city;
-              this.formData.zip = b.zip;
-            }
-          }
-        });
-      }, 1000);
-    }
   },
   data() {
     return {

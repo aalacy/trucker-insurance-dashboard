@@ -213,13 +213,7 @@ export default {
       if (!formIsValid) {
         return;
       }
-      if (localStorage.getItem("token")) {
-        temp_uuid = this.userData;
-       
-      } else {
-        temp_uuid = this.uuid;
-       
-      }
+       temp_uuid = this.uuid;
 
       this.loading = true;
       this.error = null;
@@ -286,13 +280,7 @@ export default {
 
       this.loading = true;
       this.error = null;
-      if (localStorage.getItem("token")) {
-        this.final_uuid = this.userData;
-       
-      } else {
-        this.final_uuid = this.uuid;
-       
-      }
+       this.final_uuid = this.uuid;
       try {
         const { cargoGroup } = this.formData;
         const data = {

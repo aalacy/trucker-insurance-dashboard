@@ -103,25 +103,6 @@ export default {
       
       
       let data = await API.post("company/pdf",{email:this.email,uuid:this.uuid});
-      
-      axios
-        .post(
-          "http://3.13.68.92/luckytrucker_admin/api/CompanyController/sendmailcompanypdf?email_id=" +
-            this.email +
-            "&uuid=" +
-            this.uuid
-        )
-        .then(res => {
-          this.apires = res.data;
-          if (this.apires.flag === "1") {
-            this.$swal("Done", this.apires.msg, "success");
-            this.showmodel = false;
-            setTimeout(()=>{this.email=""},500)
-          } else {
-            this.showmodel = true;
-            this.$swal("Opps!", this.apires.msg, "error");
-          }
-        });
     },
     dosomething() {
       if (this.showmodel) {
@@ -132,44 +113,13 @@ export default {
     },
 
     download() {
-      if (localStorage.getItem("token")) {
-        axios
-          .get(
-            "http://3.13.68.92/luckytrucker_admin/api/CompanyController/getcountofcompanybyuserid?user_id=" +
-              localStorage.getItem("userId")
-          )
-          .then(res => {
-            
-            // this.count = res.data.count;
-            if (res.data.count >= 10) {
-              window.open(`${process.env.VUE_APP_BACKEND_URL}/company/pdf`);
-            } else {
-              swal("Sorry", "You need to complete 10 steps process first", {
-                icon: "warning"
-              });
-            }
-          });
+      if (res.data.count >= 10) {
+        window.open(`${process.env.VUE_APP_BACKEND_URL}/company/pdf`);
       } else {
-        this.$router.push({ name: "LogIn", query: {next: this.$router.history.current.name == 'login' ?  '' : this.$router.history.current.name} });
-        // this.showmodel = true;
-        // window.open(`${process.env.VUE_APP_BACKEND_URL}/company/pdf`);
-        //   swal({
-        //   title: "To Continue,",
-        //   text: "You need to login first",
-        //   icon: "warning",
-        //   buttons: ["No", "Yes"]
-        // }).then(willDelete => {
-          
-        //   if (willDelete) {
-        //     this.$router.push({ name: "LogIn", query: {next: this.$router.history.current.name == 'login' ?  '' : this.$router.history.current.name} });
-        //     localStorage.setItem("accountStatus","1")
-        //   } else {
-        //     this.$router.push({ name: "AccountInfoThankYou" });
-        //   }
-        // });
+        swal("Sorry", "You need to complete 10 steps process first", {
+          icon: "warning"
+        });
       }
-      // window.open(`${process.env.VUE_APP_BACKEND_URL}/company/pdf`);
-      // window.open(`localhost:3000/api/company/pdf`);
     },
     async loadCompany() {
       this.loading = true;

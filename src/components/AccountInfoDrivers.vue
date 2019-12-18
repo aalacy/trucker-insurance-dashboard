@@ -822,13 +822,7 @@ export default {
       this.loading = true;
       this.error = null;
 
-      if (localStorage.getItem("token")) {
-        temp_uuid = this.userData;
-        
-      } else {
-        temp_uuid = this.uuid;
-        
-      }
+      this.final_uuid = this.uuid;
       try {
         let data = await API.post("company/save", {
           key: "drivers",
@@ -937,13 +931,7 @@ export default {
 
       this.loading = true;
       this.error = null;
-      if (localStorage.getItem("token")) {
-        this.final_uuid = this.userData;
-        
-      } else {
-        this.final_uuid = this.uuid;
-        
-      } 
+      this.final_uuid = this.uuid;
       try {
         const data = {
           driverInformationList: this.driversData,

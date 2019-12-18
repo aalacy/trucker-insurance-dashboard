@@ -1328,13 +1328,7 @@ export default {
     }
 
       var temp_uuid;
-      if (localStorage.getItem("token")) {
-        temp_uuid = this.userData;
-       
-      } else {
-        temp_uuid = this.uuid;
-       
-      }
+      temp_uuid = this.uuid;
       this.loading = true;
       this.error = null;
 

@@ -215,13 +215,7 @@ export default {
     var temp_uuid;
       this.loading = true;
       this.error = null;
-  if (localStorage.getItem("token")) {
-        temp_uuid = this.userData;
-        
-      } else {
-        temp_uuid = this.uuid;
-        
-      }
+      temp_uuid = this.uuid;
       
       try {
         let data = await API.post("company/save", {
@@ -335,14 +329,7 @@ export default {
 
       this.loading = true;
       this.error = null;
-         if(localStorage.getItem('token')){
-        
-          this.final_uuid = this.userData;
-          
-      }else{
-        this.final_uuid = this.uuid;
-        
-      }
+      this.final_uuid = this.uuid;
       try {
         const { eldProvider } = this.formData;
         const data = {
