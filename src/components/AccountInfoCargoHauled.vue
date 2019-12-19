@@ -335,7 +335,7 @@ export default {
         if (res.status === "OK") {
           let { company: { cargoGroup, cargoHauled } } = res.data;
           this.prevCargoGroup = JSON.parse(cargoGroup);
-          this.formData.haulType = JSON.parse(cargoHauled) || {}; // 
+          this.formData.haulType = Object.keys(cargoHauled ).length === 0 && cargoHauled .constructor === Object ? {} : JSON.parse(cargoHauled); // 
           this.uuid = res.data.uuid;
         } else if (res.status === "ERROR") {
           // this.$router.replace({ name: "Home" });
