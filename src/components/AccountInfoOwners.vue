@@ -740,10 +740,17 @@ export default {
           
           this.uuid = res.data.uuid;
           if (driverInformationList) {
-            this.drivers = JSON.parse(driverInformationList);
+            if (!Array.isArray(driverInformationList)) {
+              this.drivers = JSON.parse(driverInformationList);
+            } else {
+              this.drivers = driverInformationList;
+            }
           }
           if (ownerInformationList) {
-            ownerInformationList = JSON.parse(ownerInformationList);
+            if (!Array.isArray(ownerInformationList)) {
+              ownerInformationList = JSON.parse(ownerInformationList);
+            }
+            
             if(ownerInformationList.length > 0) {
               this.driversData = ownerInformationList;
               
