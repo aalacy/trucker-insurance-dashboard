@@ -1,4 +1,4 @@
-<template>
+<!-- <template> -->
   <div class="cargo-group-form">
     <form @submit.prevent="updateCompany">
       <div class="card">
@@ -258,7 +258,11 @@ export default {
           this.uuid = res.data.uuid;
           let { company: { cargoGroup } } = res.data;
           if (cargoGroup) {
-            this.formData.cargoGroup = JSON.parse(cargoGroup);
+            if (!Array.isArray(cargoGroup)) {
+              this.formData.cargoGroup = JSON.parse(cargoGroup);
+            } else {
+              this.formData.cargoGroup = cargoGroup;
+            }
           }
           console.log(this.formData);
         } else if (res.status === "ERROR") {
