@@ -1,4 +1,4 @@
-<!-- <template> -->
+<template>
   <div class="cargo-group-form">
     <form @submit.prevent="updateCompany">
       <div class="card">
