@@ -202,7 +202,7 @@ export default new Router({
           path: 'upload-documents',
           name: 'AccountInfoUploadDocuments',
           component: () =>
-            import('./components/AccountInfoUploadDocuments.vue').default,
+            import('./components/AccountInfoUploadDocuments.vue'),
           props: {
             nextForm: 'AccountInfoPersonalInfo',
             progress: 0
@@ -211,7 +211,7 @@ export default new Router({
         {
           path: 'personal-info',
           name: 'AccountInfoPersonalInfo',
-          component: () => import('./components/AccountInfoPersonalInfo.vue').default,
+          component: () => import('./components/AccountInfoPersonalInfo.vue'),
           props: {
             prevForm:'AccountInfoUploadDocuments',
             nextForm: 'AccountInfoBusinessStructure',
@@ -222,7 +222,7 @@ export default new Router({
           path: 'business-structure',
           name: 'AccountInfoBusinessStructure',
           component: () =>
-            import('./components/AccountInfoBusinessStructure.vue').default,
+            import('./components/AccountInfoBusinessStructure.vue'),
           props: {
             prevForm: 'AccountInfoPersonalInfo',
             nextForm: 'AccountInfoCargoGroup',
@@ -232,7 +232,7 @@ export default new Router({
         {
           path: 'cargo-group',
           name: 'AccountInfoCargoGroup',
-          component: () => import('./components/AccountInfoCargoGroup.vue').default,
+          component: () => import('./components/AccountInfoCargoGroup.vue'),
           props: {
             prevForm: 'AccountInfoBusinessStructure',
             nextForm: 'AccountInfoCargoHauled',
@@ -242,7 +242,7 @@ export default new Router({
         {
           path: 'cargo-hauled',
           name: 'AccountInfoCargoHauled',
-          component: () => import('./components/AccountInfoCargoHauled.vue').default,
+          component: () => import('./components/AccountInfoCargoHauled.vue'),
           props: {
             prevForm: 'AccountInfoCargoGroup',
             nextForm: 'AccountInfoVehiclesAndTrailers',
@@ -253,7 +253,7 @@ export default new Router({
           path: 'vehicles-and-trailers',
           name: 'AccountInfoVehiclesAndTrailers',
           component: () =>
-            import('./components/AccountInfoVehiclesAndTrailers.vue').default,
+            import('./components/AccountInfoVehiclesAndTrailers.vue'),
           props: {
             prevForm: 'AccountInfoCargoHauled',
             nextForm: 'AccountInfoEldProvider',
@@ -263,7 +263,7 @@ export default new Router({
         {
           path: 'eld-provider',
           name: 'AccountInfoEldProvider',
-          component: () => import('./components/AccountInfoEldProvider.vue').default,
+          component: () => import('./components/AccountInfoEldProvider.vue'),
           props: {
             prevForm: 'AccountInfoVehiclesAndTrailers',
             nextForm: 'AccountInfoDrivers',
@@ -273,7 +273,7 @@ export default new Router({
         {
           path: 'drivers',
           name: 'AccountInfoDrivers',
-          component: () => import('./components/AccountInfoDrivers.vue').default,
+          component: () => import('./components/AccountInfoDrivers.vue'),
           props: {
             prevForm: 'AccountInfoEldProvider',
             nextForm: 'AccountInfoOwners',
@@ -283,7 +283,7 @@ export default new Router({
         {
           path: 'owners',
           name: 'AccountInfoOwners',
-          component: () => import('./components/AccountInfoOwners.vue').default,
+          component: () => import('./components/AccountInfoOwners.vue'),
           props: {
             prevForm: 'AccountInfoDrivers',
             nextForm: 'AccountInfoQuestions',
@@ -293,7 +293,7 @@ export default new Router({
         {
           path: 'questions',
           name: 'AccountInfoQuestions',
-          component: () => import('./components/AccountInfoQuestions.vue').default,
+          component: () => import('./components/AccountInfoQuestions.vue'),
           props: {
             prevForm: 'AccountInfoOwners',
             nextForm: 'AccountInfoDocumentUpload',
@@ -303,7 +303,7 @@ export default new Router({
         {
           path: 'document-upload',
           name: 'AccountInfoDocumentUpload',
-          component: () => import('./components/AccountInfoDocumentUpload.vue').default,
+          component: () => import('./components/AccountInfoDocumentUpload.vue'),
           props: {
             prevForm: 'AccountInfoQuestions',
             nextForm: 'AccountInfoSignComplete',
@@ -313,7 +313,7 @@ export default new Router({
         {
           path:'sign-complete',
           name:'AccountInfoSignComplete',
-          component:() => import('./components/AccountInfoSignComplete.vue').default,
+          component:() => import('./components/AccountInfoSignComplete.vue'),
           props:{
             prevForm: 'AccountInfoDocumentUpload',
             nextForm: 'AccountInfoThankYou',
@@ -323,7 +323,7 @@ export default new Router({
         {
           path: 'download',
           name: 'AccountInfoThankYou',
-          component: () => import('./components/AccountInfoThankYou.vue').default,
+          component: () => import('./components/AccountInfoThankYou.vue'),
           props: {
             progress: 100
           }
