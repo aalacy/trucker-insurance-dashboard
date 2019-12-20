@@ -230,7 +230,7 @@ export default {
         console.log("data", data);
         localStorage.setItem("userId", data.data.id);
 
-        localStorage.setItem("token", t);
+        localStorage.setItem("token", JSON.stringify(t));
         localStorage.setItem("showModal", false);
         this.$router.push({ name: location.search.split('=')[1] });
 

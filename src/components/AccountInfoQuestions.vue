@@ -228,14 +228,7 @@ export default {
     async updateCompany() {
       this.loading = true;
       this.error = null;
-          if(localStorage.getItem('token')){
-        
-          this.final_uuid = this.userData;
-         
-      }else{
-        this.final_uuid = this.uuid;
-       
-      }
+      this.final_uuid = this.uuid;
       try {
         const { comments } = this.formData;
         const data = {

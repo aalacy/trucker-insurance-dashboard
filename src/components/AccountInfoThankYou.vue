@@ -113,7 +113,7 @@ export default {
     },
 
     download() {
-      if (res.data.count >= 10) {
+      if (this.progress >= 10) {
         window.open(`${process.env.VUE_APP_BACKEND_URL}/company/pdf`);
       } else {
         swal("Sorry", "You need to complete 10 steps process first", {
@@ -126,9 +126,10 @@ export default {
       this.error = null;
 
       try {
-        let data = await API.get("company/current");
-        this.uuid = data.data.b;
-        if (data.status === "ERROR") {
+        let res = await API.get("company/current");
+        this.loading = false;
+        this.uuid = res.data.uuid;
+        if (res.status === "ERROR") {
           // this.$router.replace({ name: 'Home' });
         }
       } catch (err) {

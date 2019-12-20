@@ -340,15 +340,15 @@ export default {
         localStorage.getItem(["Mailing address"])
       );
       this.formData.address = MailingAddress[3].trim().replace(",", "");
-      this.formData.state = MailingAddress[1].trim().replace(",", "");
-      this.formData.city = MailingAddress[2].trim().replace(",", "");
+      this.formData.city = MailingAddress[1].trim().replace(",", "");
+      this.formData.state = MailingAddress[2].trim().replace(",", "");
       this.formData.zip = MailingAddress[0].trim().replace(",", "");
       let PhysicalAddress = this.formatAddress(
         localStorage.getItem(["Physical address"])
       );
       this.formData.address1 = PhysicalAddress[3].trim().replace(",", "");
-      this.formData.state1 = PhysicalAddress[1].trim().replace(",", "");
-      this.formData.city1 = PhysicalAddress[2].trim().replace(",", "");
+      this.formData.city1 = PhysicalAddress[1].trim().replace(",", "");
+      this.formData.state1 = PhysicalAddress[2].trim().replace(",", "");
       this.formData.zip1 = PhysicalAddress[0].trim().replace(",", "");
     }
     
@@ -573,6 +573,12 @@ export default {
       this.loading = true;
       this.error = null;
       this.final_uuid = this.uuid;
+      let emailAddress = "";
+      try {
+        emailAddress = JSON.parse('token').email;
+      } catch (e) {
+
+      }
       try {
         const { name, dotNumber, phoneNumber } = this.formData;
         let data = {
@@ -592,6 +598,7 @@ export default {
             zip: this.formData.zip1,
           },
           user_id: localStorage.getItem("userId"),
+          emailAddress,
           uuid: this.final_uuid
         };
         let res = await API.post("company/save", { data});
