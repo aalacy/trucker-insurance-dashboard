@@ -1369,7 +1369,7 @@ export default {
         if (res.status === "OK") {
           let { vehicleInformationList } = res.data.company;
           if (vehicleInformationList) {
-            if (!Array.isArray(vehicleInformationList)) {
+            if (vehicleInformationList.constructor !== Object) {
               vehicleInformationList = JSON.parse(vehicleInformationList);
             } else {
               vehicleInformationList = vehicleInformationList;

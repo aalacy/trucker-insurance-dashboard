@@ -575,7 +575,7 @@ export default {
       this.final_uuid = this.uuid;
       let emailAddress = "";
       try {
-        emailAddress = JSON.parse('token').email;
+        emailAddress = JSON.parse(localStorage.getItem('token')).email;
       } catch (e) {
 
       }
