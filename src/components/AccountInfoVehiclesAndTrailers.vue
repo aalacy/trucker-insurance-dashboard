@@ -1369,7 +1369,11 @@ export default {
         if (res.status === "OK") {
           let { vehicleInformationList } = res.data.company;
           if (vehicleInformationList) {
-            vehicleInformationList = JSON.parse(vehicleInformationList);
+            if (!Array.isArray(vehicleInformationList)) {
+              vehicleInformationList = JSON.parse(vehicleInformationList);
+            } else {
+              vehicleInformationList = vehicleInformationList;
+            }
             if (vehicleInformationList.vehicle.length > 0) {
               this.vehiclesData = vehicleInformationList.vehicle.map(v => ({
                 ...v,

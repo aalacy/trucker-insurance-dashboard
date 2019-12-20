@@ -890,7 +890,11 @@ export default {
           let { company: { driverInformationList } } = res.data;
           
           if (driverInformationList) {
-            driverInformationList = JSON.parse(driverInformationList);
+            if (!Array.isArray(driverInformationList)) {
+              driverInformationList = JSON.parse(driverInformationList);
+            } else {
+              driverInformationList = driverInformationList;
+            }
             this.drivers = driverInformationList.map(d => ({ ...d, _uuid: uuidv4() }));
 
             if(driverInformationList.length > 0){

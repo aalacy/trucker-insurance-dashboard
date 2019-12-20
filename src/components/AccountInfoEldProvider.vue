@@ -297,7 +297,11 @@ export default {
           let { company: { currentEldProvider } } = res.data;
           this.uuid = res.data.uuid;
           if (currentEldProvider) {
-            currentEldProvider = JSON.parse(currentEldProvider);
+             if (!Array.isArray(currentEldProvider)) {
+              currentEldProvider = JSON.parse(currentEldProvider);
+            } else {
+              currentEldProvider = currentEldProvider;
+            }
             this.formData.eldProvider = currentEldProvider;
             this.addUserProviders(currentEldProvider);
           }
