@@ -339,9 +339,9 @@ export default {
           } else {
             this.prevCargoGroup = cargoGroup;
           }
-          if (Object.keys(cargoHauled ).length === 0 && cargoHauled .constructor === Object) {
+          if (Object.keys(cargoHauled ).length === 0 && cargoHauled.constructor === Object) {
             this.formData.haulType =  {};
-          } else if (!Array.isArray(cargoHauled)){
+          } else if (cargoHauled.constructor !== Object){
             this.formData.haulType = JSON.parse(cargoHauled); // 
           } else {
             this.formData.haulType = cargoHauled;
