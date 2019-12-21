@@ -2,7 +2,8 @@
   <div class="pos-abs d-flex justify-content-end">
     <div class="row mr-2">
       <transition name="fade">
-        <div class v-if="show">
+        <!-- <div class v-if="show"> -->
+          <div>
           <div class="text-center">
             <img
               src="../assets/images/imga-truck.png"

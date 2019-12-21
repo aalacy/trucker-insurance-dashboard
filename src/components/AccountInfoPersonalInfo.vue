@@ -321,13 +321,13 @@ export default {
         localStorage.getItem(["Physical address"])
       );
       this.formData.address = MailingAddress[3].trim().replace(",", "");
-      this.formData.city = MailingAddress[1].trim().replace(",", "");
-      this.formData.state = MailingAddress[2].trim().replace(",", "");
+      this.formData.state = MailingAddress[1].trim().replace(",", "");
+      this.formData.city = MailingAddress[2].trim().replace(",", "");
       this.formData.zip = MailingAddress[0].trim().replace(",", "");
 
       this.formData.address1 = PhysicalAddress[3].trim().replace(",", "");
-      this.formData.city1 = PhysicalAddress[1].trim().replace(",", "");
-      this.formData.state1 = PhysicalAddress[2].trim().replace(",", "");
+      this.formData.state1 = PhysicalAddress[1].trim().replace(",", "");
+      this.formData.city1 = PhysicalAddress[2].trim().replace(",", "");
       this.formData.zip1 = PhysicalAddress[0].trim().replace(",", "");
     } else {
       this.save = true;
@@ -340,15 +340,15 @@ export default {
         localStorage.getItem(["Mailing address"])
       );
       this.formData.address = MailingAddress[3].trim().replace(",", "");
-      this.formData.city = MailingAddress[1].trim().replace(",", "");
-      this.formData.state = MailingAddress[2].trim().replace(",", "");
+      this.formData.state = MailingAddress[1].trim().replace(",", "");
+      this.formData.city = MailingAddress[2].trim().replace(",", "");
       this.formData.zip = MailingAddress[0].trim().replace(",", "");
       let PhysicalAddress = this.formatAddress(
         localStorage.getItem(["Physical address"])
       );
       this.formData.address1 = PhysicalAddress[3].trim().replace(",", "");
-      this.formData.city1 = PhysicalAddress[1].trim().replace(",", "");
-      this.formData.state1 = PhysicalAddress[2].trim().replace(",", "");
+      this.formData.state1 = PhysicalAddress[1].trim().replace(",", "");
+      this.formData.city1 = PhysicalAddress[2].trim().replace(",", "");
       this.formData.zip1 = PhysicalAddress[0].trim().replace(",", "");
     }
     
@@ -625,7 +625,6 @@ export default {
   color:#6f6f6f
 }
 .st-padding {
-  // color: black;
   padding-left: 10px;
   font-weight: bold;
 }

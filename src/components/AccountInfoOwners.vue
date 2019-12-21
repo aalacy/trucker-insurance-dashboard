@@ -713,10 +713,16 @@ export default {
 
     onChange($event) {
       // if(this.drivers.drivers[$event.target.value] != undefined){
-      this.driversData[0] = Object.assign({}, this.driversData[0], this.drivers.drivers[$event.target.value]);
-      this.driversData[0].dobD = this.drivers.drivers[$event.target.value].dateOfBirth.split('/')[1];
-      this.driversData[0].dobM = this.drivers.drivers[$event.target.value].dateOfBirth.split('/')[0];
-      this.driversData[0].dobY = this.drivers.drivers[$event.target.value].dateOfBirth.split('/')[2];
+      this.driversData[0] = Object.assign({}, this.driversData[0], this.drivers[$event.target.value]);
+      this.driversData[0].firstName = this.drivers[$event.target.value].firstName;
+      this.driversData[0].lastName = this.drivers[$event.target.value].lastName;
+      this.driversData[0].address = this.drivers[$event.target.value].address;
+      this.driversData[0].city = this.drivers[$event.target.value].city;
+      this.driversData[0].state = this.drivers[$event.target.value].state;
+      this.driversData[0].zip = this.drivers[$event.target.value].zip;
+      this.driversData[0].dobD = this.drivers[$event.target.value].dobD;
+      this.driversData[0].dobM = this.drivers[$event.target.value].dobM;
+      this.driversData[0].dobY = this.drivers[$event.target.value].dobY;
       
     },
     updateHint(hint) {
