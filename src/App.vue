@@ -159,47 +159,47 @@
                 </li>
             </ul>
         </div>
-          <div class="bottom-company">
-            <div class="px-3 py-1">&copy;2019 LuckyTruck, Inc.</div>
-            <div class="lists">
-              <div class="px-3 py-1">
-                <router-link
-                    @click.native="loginHide"
-                    :to="{ name: 'LogIn', query: {next: this.$router.history.current.name == 'LogIn' ?  this.$router.history.current.query.next : this.$router.history.current.name} }"
-                    class="text-white"
-                    active-class="font-weight-bold"
-                  >Login</router-link>
-              </div>
-              <div class="px-3 py-1">
-                <router-link
-                    @click.native="loginHide"
-                    :to="{ name: 'SignUp', query: {next: this.$router.history.current.name == 'SignUp' ?  this.$router.history.current.query.next : this.$router.history.current.name} }"
-                    class="text-white"
-                  >Signup</router-link>
-              </div>
-              <div class="px-3 py-1">
-                <a
+        <div class="bottom-company">
+          <div class="px-3 py-1">&copy;2019 LuckyTruck, Inc.</div>
+          <div class="lists">
+            <div class="px-3 py-1">
+              <router-link
+                  @click.native="loginHide"
+                  :to="{ name: 'LogIn', query: {next: this.$router.history.current.name == 'LogIn' ?  this.$router.history.current.query.next : this.$router.history.current.name} }"
                   class="text-white"
-                  href="https://luckytruck.co/backend/PRIVACY_POLICY_FOR_LuckyTruck.pdf"
-                  rel="noopener noreferrer"
-                  target="_blank"
-                >PRIVACY POLICY</a>
-              </div>
+                  active-class="font-weight-bold"
+                >Login</router-link>
+            </div>
+            <div class="px-3 py-1">
+              <router-link
+                  @click.native="loginHide"
+                  :to="{ name: 'SignUp', query: {next: this.$router.history.current.name == 'SignUp' ?  this.$router.history.current.query.next : this.$router.history.current.name} }"
+                  class="text-white"
+                >Signup</router-link>
+            </div>
+            <div class="px-3 py-1">
+              <a
+                class="text-white"
+                href="https://luckytruck.co/backend/PRIVACY_POLICY_FOR_LuckyTruck.pdf"
+                rel="noopener noreferrer"
+                target="_blank"
+              >PRIVACY POLICY</a>
+            </div>
 
-              <div class="px-3 py-1">
-                <a
-                  class="text-white"
-                  href="https://luckytruck.co/backend/TERMS_OF_SERVICE_FOR_LuckyTruck.co.pdf"
-                  rel="noopener noreferrer"
-                  target="_blank"
-                >TERMS OF USE</a>
-              </div>
+            <div class="px-3 py-1">
+              <a
+                class="text-white"
+                href="https://luckytruck.co/backend/TERMS_OF_SERVICE_FOR_LuckyTruck.co.pdf"
+                rel="noopener noreferrer"
+                target="_blank"
+              >TERMS OF USE</a>
             </div>
           </div>
         </div>
+        </div>
       </div>
       <div class="d-flex"></div>
-      <chat-boat/>
+      <!-- <chat-boat/> -->
     </footer>
    
   </div>
