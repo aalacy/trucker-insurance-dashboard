@@ -42,6 +42,24 @@ export default new Router({
       component: () => import('./views/SimpleEstimateWizard.vue')
     },
     {
+      path: '/new-accountInfo',
+      name: 'NewAccountInfo',
+      component:() => import('./views/MyAccount.vue'),
+      redirect: '/new-accountInfo/newpersonal-info',
+      children: [
+        {
+          path: 'newpersonal-info',
+          name: 'NewAccountInfoPersonalInfo',
+          component: () => import('./components/NewAccountInfoPersonalInfo.vue'),
+          props: {
+            prevForm:'AccountInfoUploadDocuments',
+            nextForm: 'AccountInfoBusinessStructure',
+            progress: 10
+          }
+        }
+      ]
+    },
+    {
         path: '/my-account',
         name:'MyAccount',
         component:() => import('./views/MyAccount.vue'),

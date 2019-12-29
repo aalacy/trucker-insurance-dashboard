@@ -137,7 +137,10 @@ export default {
       ],
 
       items: [
-        
+        {
+          title: "Account Info",
+          to: { name: "NewAccountInfo" },
+        },
         {
           title: "Quotes",
           to: { name: "Quotes" },
