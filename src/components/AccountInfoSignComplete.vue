@@ -96,7 +96,7 @@
                     height="180px"
                     ref="signaturePad"
                     id="signature"
-                    :options="{penColor:'#5e98f9',dotSize:'0.5'}"
+                    :options="{backgroundColor: '#ffffff', penColor:'#000',dotSize:'0.5'}"
                   />
                   <div class="m-2 d-flex">
                     <!-- <button

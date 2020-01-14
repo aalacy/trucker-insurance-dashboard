@@ -320,11 +320,13 @@ export default {
     },
     
     async updateCompany() {
-      let formIsValid = this.validateForm();
-      if (!formIsValid) {
-        return;
-      }
+      // let formIsValid = this.validateForm();
+      // if (!formIsValid) {
+      //   return;
+      // }
 
+      this.goNextForm();
+      return;
       this.loading = true;
       this.error = null;
       this.final_uuid = this.uuid;

@@ -124,7 +124,7 @@
       </div>
       <div class="container">
         <div class="d-flex flex-column flex-mob bottom-section">
-          <div class="footer-contacts">
+          <div class="footer-contacts d-flex justify-content-center text-center">
             <ul>
                 <li>
                     <a href="mailto:support@luckytruck.co">support@luckytruck.co</a>
@@ -160,7 +160,7 @@
             </ul>
         </div>
         <div class="bottom-company">
-          <div class="px-3 py-1">&copy;2019 LuckyTruck, Inc.</div>
+          <div class="px-3 py-1">&copy;2020 LuckyTruck, Inc.</div>
           <div class="lists">
             <div class="px-3 py-1">
               <router-link

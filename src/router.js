@@ -44,7 +44,7 @@ export default new Router({
     {
       path: '/new-accountInfo',
       name: 'NewAccountInfo',
-      component:() => import('./views/MyAccount.vue'),
+      component:() => import('./views/NewAccountInfo.vue'),
       redirect: '/new-accountInfo/newpersonal-info',
       children: [
         {
@@ -53,10 +53,102 @@ export default new Router({
           component: () => import('./components/NewAccountInfoPersonalInfo.vue'),
           props: {
             prevForm:'AccountInfoUploadDocuments',
-            nextForm: 'AccountInfoBusinessStructure',
+            nextForm: 'NewAccountInfoBusinessStructure',
             progress: 10
           }
-        }
+        },
+        {
+          path: 'newbusiness-structure',
+          name: 'NewAccountInfoBusinessStructure',
+          component: () =>
+            import('./components/NewAccountInfoBusinessStructure.vue'),
+          props: {
+            prevForm: 'NewAccountInfoPersonalInfo',
+            nextForm: 'NewAccountInfoCargoGroup',
+            progress: 20
+          }
+        },
+        {
+          path: 'newcargo-group',
+          name: 'NewAccountInfoCargoGroup',
+          component: () => import('./components/NewAccountInfoCargoGroup.vue'),
+          props: {
+            prevForm: 'NewAccountInfoBusinessStructure',
+            nextForm: 'NewAccountInfoCargoHauled',
+            progress: 30
+          }
+        },
+        {
+          path: 'newcargo-hauled',
+          name: 'NewAccountInfoCargoHauled',
+          component: () => import('./components/NewAccountInfoCargoHauled.vue'),
+          props: {
+            prevForm: 'NewAccountInfoCargoGroup',
+            nextForm: 'NewAccountInfoVehiclesAndTrailers',
+            progress: 40
+          }
+        },
+        {
+          path: 'newvehicles-and-trailers',
+          name: 'NewAccountInfoVehiclesAndTrailers',
+          component: () =>
+            import('./components/NewAccountInfoVehiclesAndTrailers.vue'),
+          props: {
+            prevForm: 'NewAccountInfoCargoHauled',
+            nextForm: 'NewAccountInfoEldProvider',
+            progress: 50
+          }
+        },
+        {
+          path: 'neweld-provider',
+          name: 'NewAccountInfoEldProvider',
+          component: () => import('./components/NewAccountInfoEldProvider.vue'),
+          props: {
+            prevForm: 'NewAccountInfoVehiclesAndTrailers',
+            nextForm: 'NewAccountInfoDrivers',
+            progress: 60
+          }
+        },
+        {
+          path: 'newdrivers',
+          name: 'NewAccountInfoDrivers',
+          component: () => import('./components/NewAccountInfoDrivers.vue'),
+          props: {
+            prevForm: 'NewAccountInfoEldProvider',
+            nextForm: 'NewAccountInfoOwners',
+            progress: 70
+          }
+        },
+        {
+          path: 'newowners',
+          name: 'NewAccountInfoOwners',
+          component: () => import('./components/NewAccountInfoOwners.vue'),
+          props: {
+            prevForm: 'NewAccountInfoDrivers',
+            nextForm: 'NewAccountInfoQuestions',
+            progress: 80
+          }
+        },
+        {
+          path: 'newquestions',
+          name: 'NewAccountInfoQuestions',
+          component: () => import('./components/NewAccountInfoQuestions.vue'),
+          props: {
+            prevForm: 'NewAccountInfoOwners',
+            nextForm: 'NewAccountInfoDocumentUpload',
+            progress: 85
+          }
+        },
+        {
+          path: 'newdocument-upload',
+          name: 'NewAccountInfoDocumentUpload',
+          component: () => import('./components/NewAccountInfoDocumentUpload.vue'),
+          props: {
+            prevForm: 'NewAccountInfoQuestions',
+            nextForm: 'NewAccountInfoThankYou',
+            progress: 90
+          }
+        },
       ]
     },
     {
