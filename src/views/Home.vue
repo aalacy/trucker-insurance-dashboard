@@ -6,32 +6,17 @@
           <form class="mar-10" @submit.prevent="getStarted">
             <div class="d-flex align-items-center index1">
                           
-              <div class="col-lg-12">
-                <div class="form-header position-relative">
-                  <input
-                    v-model.trim="keyword"
-                    type="text"
-                    class="footer-input my-footer header"
-                    placeholder="Search DOT or Name of Business"
-                  >
-                  <button
-                    type="submit"
-                    class="text-light bg-primary subscribe"
-                    :disabled="loading"
-                  >Get a Quote</button>
-                </div>
-              </div>
-              <b-input-group class="mt-3">
-                <b-form-input class="quote-input"></b-form-input>
+              <b-input-group class="col-lg-12">
+                <b-form-input v-model.trim="keyword" class="quote-input" placeholder="Search DOT or Name of Business"></b-form-input>
                 <b-input-group-append>
-                  <b-button variant="primary btn-get-quote">Get a Quote</b-button>
+                  <b-button :disabled="loading" type="submit" variant="primary btn-get-quote">Get a Quote</b-button>
                 </b-input-group-append>
               </b-input-group>
             </div>
           </form>
         </div>
 
-        <div v-if="true" class="col-12">
+        <div v-if="loading" class="col-12">
           <img
               src="../assets/images/loading/loading_truck_128.gif"
               class="d-block mx-auto rounded"
@@ -430,6 +415,21 @@ export default {
     background-color: white;
   }
 }
+
+input:focus {
+    outline: none;
+}
+
+.quote-input {
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+}
+
+.btn-get-quote {
+    border-bottom-right-radius: 20px; 
+    border-top-right-radius: 20px; 
+}
+
 .homeImage img{
     width:70% !important;
   }
