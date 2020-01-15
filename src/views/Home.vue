@@ -16,16 +16,22 @@
                   >
                   <button
                     type="submit"
-                    class="text-light bg-primary subscribe mobbtn"
+                    class="text-light bg-primary subscribe"
                     :disabled="loading"
                   >Get a Quote</button>
                 </div>
               </div>
+              <b-input-group class="mt-3">
+                <b-form-input class="quote-input"></b-form-input>
+                <b-input-group-append>
+                  <b-button variant="primary btn-get-quote">Get a Quote</b-button>
+                </b-input-group-append>
+              </b-input-group>
             </div>
           </form>
         </div>
 
-        <div v-if="loading" class="col-12">
+        <div v-if="true" class="col-12">
           <img
               src="../assets/images/loading/loading_truck_128.gif"
               class="d-block mx-auto rounded"
