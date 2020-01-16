@@ -6,7 +6,7 @@
           <form class="mar-10" @submit.prevent="getStarted">
             <div class="d-flex align-items-center index1">
                           
-              <b-input-group class="col-lg-12">
+              <b-input-group class="col-lg-12 justify-content-center">
                 <b-form-input v-model.trim="keyword" class="quote-input" placeholder="Search DOT or Name of Business"></b-form-input>
                 <b-input-group-append>
                   <b-button :disabled="loading" type="submit" variant="primary btn-get-quote">Get a Quote</b-button>
@@ -423,6 +423,7 @@ input:focus {
 .quote-input {
     border-top-left-radius: 20px;
     border-bottom-left-radius: 20px;
+    max-width: 500px;
 }
 
 .btn-get-quote {

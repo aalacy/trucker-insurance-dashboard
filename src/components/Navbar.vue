@@ -8,75 +8,62 @@
           class="mr-4 color-fb ques d-flex justify-content-center"
       />
       </button>
-    
-    <div class="containeraa" :class="{'show': showLabel}">
-      <transition-group name="fade" class="sidebar-menu text-center emergencya">
-        <div v-for="(item, indexa) in itemsa" :key="indexa" class="menu-item p-2   navigation-links">
-       
-     
+      <button type="button" class="btn ico-btn" @click="showNav">
+        <img src="../assets/images/hame.png" height="100" width="100" class="d-block mx-auto">
+      </button>
+      <div class="containeraa" :class="{'show': showLabel}">
+        <transition-group name="fade" class="sidebar-menu text-center emergencya">
+          <div v-for="(item, indexa) in itemsa" :key="indexa" class="menu-item p-2   navigation-links">
             <div>Need Help?</div>
             <div class="">Speak now with a licensed insurance agent</div>
 <a href="tel:15135062400" class="bt-call ">Click to Talk</a>         
    <div class=" justify-content-center">
 or call us 24/7?
-            
-             
-                
-                <div class="d-flex align-items-center  justify-content-center"><font-awesome-icon
-                  icon="phone-alt"
-                  size="1x"
-                  class=" color-fb d-flex  justify-content-center"
-                /> <a href="tel:15135062400">1-513-506-2400</a></div>
-              </div>
-           
+              <div class="d-flex align-items-center  justify-content-center"><font-awesome-icon
+                icon="phone-alt"
+                size="1x"
+                class=" color-fb d-flex  justify-content-center"
+              /> <a href="tel:15135062400">1-513-506-2400</a></div>
+            </div>
           </div>
-         
-      
-      </transition-group>
-    </div>
+        </transition-group>
+      </div>
     </div>
     <div class="pos-rel">
-    <div>
-    
-      
-      <button type="button" class="btn ico-btn" @click="showNav">
-        <img src="../assets/images/hame.png" height="100" width="100" class="d-block mx-auto">
-      </button>
-    </div>
-    <div class="containera " :class="{'show': showSidebar}">
-      <transition-group name="fade" class="sidebar-menu">
-        <div v-for="(item, index) in items" :key="index" class="menu-item navigation-links">
-          <router-link
-            :to="item.to"
-            tag="div"
-            class="title-wrapper"
-            :class="{
-          'has-sub-items': item.subItems,
-          active: $route.name.indexOf(item.to.name) === 0
-        }"
-          >
-            <a class="title link">{{ item.title }}</a>
+      <div class="containera " :class="{'show': showSidebar}">
+        <transition-group name="fade" class="sidebar-menu">
+          <div v-for="(item, index) in items" :key="index" class="menu-item navigation-links">
+            <router-link
+              :to="item.to"
+              tag="div"
+              class="title-wrapper"
+              :class="{
+            'has-sub-items': item.subItems,
+            active: $route.name.indexOf(item.to.name) === 0
+          }"
+            >
+              <img
+                :src="item.icon"
+                class=""
+                alt="Account info"
+              >
+              <a class="title link">{{ item.title }}</a>
 
-            <!-- <div
-            v-if="$route.name.indexOf(item.to.name) === 0"
-            class="triangle"
-            :class="{ 'has-sub-items': item.subItems }"
-            ></div>-->
-          </router-link>
+            </router-link>
 
-          <router-link
-            v-for="(subItem, subIndex) in item.subItems"
-            :key="subIndex"
-            :to="subItem.to"
-            tag="div"
-            exact
-            class="sub-item"
-          >
-            <a class="link">{{ subItem.title }}</a>
-          </router-link>
-        </div>
-      </transition-group>
-    </div>
+            <router-link
+              v-for="(subItem, subIndex) in item.subItems"
+              :key="subIndex"
+              :to="subItem.to"
+              tag="div"
+              exact
+              class="sub-item"
+            >
+              <a class="link">{{ subItem.title }}</a>
+            </router-link>
+          </div>
+        </transition-group>
+      </div>
     </div>
   </div>
 </template>
@@ -87,9 +74,6 @@ import { isMobile } from "mobile-device-detect";
 export default {
   name: "SidebarMenu",
   methods: {
-    //  toggleSlim() {
-    //   this.collapsed = !this.collapsed;
-    // },
     showHelp() {
       if (this.showLabel) {
         this.showLabelLink = false;
@@ -140,12 +124,16 @@ export default {
         {
           title: "Account Info",
           to: { name: "NewAccountInfo" },
+          icon: '/img/sidebar/account-info.png'
         },
         {
           title: "Quotes",
           to: { name: "Quotes" },
+          icon: '/img/sidebar/quotes.png',
           subItems: [
-            { title: "See All Quotes", to: { name: "QuotesAllQuotes" } },
+            { title: "See All Quotes", 
+              to: { name: "QuotesAllQuotes" }
+            },
             {
               title: "Request New Quote",
               to: { name: "QuotesRequestNewQuote" }
@@ -155,19 +143,22 @@ export default {
         {
           title: "Policies",
           to: { name: "Policies" },
+          icon: '/img/sidebar/policies.png',
           subItems: [
             { title: "Review Policies", to: { name: "PoliciesReview" } },
-            { title: "+ / - Drivers", to: { name: "PoliciesDrivers" } },
+            { title: "+ / - Drivers", to: { name: "PoliciesDrivers" }  },
             {
               title: "+ / - Vehicles & Trailers",
-              to: { name: "PoliciesVehiclesAndTrailers" }
+              to: { name: "PoliciesVehiclesAndTrailers" }, 
+              icon: '' 
             },
-            { title: "Other Coverages", to: { name: "PoliciesOtherCoverages" } }
+            { title: "Other Coverages", to: { name: "PoliciesOtherCoverages" }  }
           ]
         },
         {
           title: "Certificates",
           to: { name: "Certificates" },
+          icon: '/img/sidebar/certificates.png',
           subItems: [
             { title: "Past Certificates", to: { name: "CertificatesPast" } },
             {
@@ -179,6 +170,7 @@ export default {
         {
           title: "Billing",
           to: { name: "Billing" },
+          icon: '/img/sidebar/billing.png',
           subItems: [
             {
               title: "Payment Information",
@@ -195,6 +187,7 @@ export default {
         {
           title: "Resources",
           to: { name: "Resourses" },
+          icon: '/img/sidebar/resources.png',
           subItems: [
             { title: "ELD Providers", to: { name: "ResoursesEldProviders" } },
             {
@@ -266,11 +259,12 @@ export default {
   color: #fff;
 }
 .ico-btn {
- width: 40px;
-    padding: 10px;
-    position: absolute;
-    z-index: 1;
-    top: 9px;
+  width: 40px;
+  padding: 10px;
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  right: 20px;
 }
 .ico-btna {
   width: 37px;
@@ -331,6 +325,7 @@ export default {
         padding: 1rem 2rem;
         display: flex;
         // justify-content: center;
+        align-items: center;
 
         &.has-sub-items {
           padding-bottom: 0.5rem;
@@ -344,7 +339,7 @@ export default {
         .title {
           font-weight: 800;
           font-size: 1.1rem;
-           padding-left: 20px;
+          margin-left: 20px;
         }
 
         .triangle {
@@ -381,6 +376,7 @@ export default {
 
     .link {
       color: white;
+      margin-left: 30px;
     }
   }
 }
@@ -448,7 +444,7 @@ export default {
         .title {
           font-weight: 800;
           font-size: 1.1rem;
-         
+          margin-left: 20px;
         }
 
         .triangle {
