@@ -466,6 +466,7 @@ export default {
   @include begin-page;
   background: url("../assets/images/bg_home.png") center center no-repeat
     transparent;
+  background-size: cover;
 
   .login-form {
     @include begin-form;
