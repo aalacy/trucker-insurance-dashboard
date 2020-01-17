@@ -215,6 +215,8 @@ export default {
   },
 
   mounted() {
+    this.$emit("update-hint", "It's important to correctly list your business structure. It should be as reported on SAFER.");
+    
     if (localStorage.getItem("token")) {
       this.save = false;
       
@@ -302,7 +304,7 @@ export default {
       this.$emit("update-hint", this.hints[fieldName]);
     },
     onBlur() {
-      this.$emit("update-hint", "");
+      this.$emit("update-hint", "It's important to correctly list your business structure. It should be as reported on SAFER.");
     },
     goPrevForm() {
       this.$emit("go-to-form", this.prevForm);

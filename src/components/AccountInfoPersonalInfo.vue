@@ -308,6 +308,8 @@ export default {
     }
   },
   mounted() {
+    this.$emit("update-hint", "Please be sure that the mailing address is where you want to receive physical documents. The garage address is where you keep your truck.");
+    
     this.mobile = isMobile ? true : false;
     if (localStorage.getItem("token")) {
       this.save = false;
@@ -505,7 +507,7 @@ export default {
       this.$emit("update-hint", this.hints[fieldName]);
     },
     onBlur() {
-      this.$emit("update-hint", "");
+      this.$emit("update-hint", "Please be sure that the mailing address is where you want to receive physical documents. The garage address is where you keep your truck.");
     },
     goNextForm() {
       this.$emit("go-to-form", this.nextForm);

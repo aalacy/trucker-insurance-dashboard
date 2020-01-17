@@ -3,7 +3,12 @@
     <form @submit.prevent="updateCompany">
       <div class="card mb-5">
         <div class="card-body">
-          <h4 class="card-title form-sub-title">Drivers</h4>
+          <div class="d-flex">
+            <h4 class="card-title form-sub-title mr-3">Drivers</h4>
+            <label>
+              <input type="checkbox" v-on:change="changeData()"> Same as Mailing Address
+            </label>
+          </div>
 
           <hr>
 
@@ -451,6 +456,7 @@ export default {
       formData: {
         drivers: []
       },
+      mailingAddress: {},
       driversData: [],
       validations: {
         driversData: {},
@@ -485,6 +491,14 @@ export default {
     }
   },
   methods: {
+    changeData() {
+      if (this.driversData.length > 0 && this.mailingAddress) {
+        this.driversData[0].address = this.mailingAddress.address;
+        this.driversData[0].city = this.mailingAddress.city;
+        this.driversData[0].state = this.mailingAddress.state;
+        this.driversData[0].zip = this.mailingAddress.zip;
+      }
+    },
     validateFieldCustom(fieldName, index){
       if (this.driversData[index][fieldName].trim() == '') {
         this.validations.driversData[index][fieldName].is_valid = false;
@@ -887,8 +901,10 @@ export default {
         let res = await API.get("company/current");
         this.uuid = res.data.uuid;
         if (res.status === "OK") {
-          let { company: { driverInformationList } } = res.data;
+          let { company: { driverInformationList, mailingAddress } } = res.data;
           
+          this.mailingAddress = mailingAddress;
+
           if (driverInformationList) {
             if (!Array.isArray(driverInformationList)) {
               driverInformationList = JSON.parse(driverInformationList);

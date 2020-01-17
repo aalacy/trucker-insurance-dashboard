@@ -94,9 +94,9 @@
 
     <div class="container-fluid bg-blue pt-c-5 pb-5" id="img-text">
       <div class="row d-flex justify-content-center card-block">
-        <!-- <div class="col-sm-8 col-md-8"> -->
-          <!-- <div class="row homeImage"> -->
-            <div class="col-lg-3 col-md-6 col-sm-8 col-xs-12 card-item">
+        <div class="col-sm-8 col-md-8">
+          <div class="row homeImage">
+            <div class="col-lg-6 col-md-6 col-sm-8 col-xs-12 card-item">
               <div class="card mb-4  bg-white">
                 <div class="card-body">
                   <div class="d-flex justify-content-center flex-column">
@@ -117,7 +117,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-lg-3 col-md-6 col-sm-8 col-xs-12 card-item">
+            <div class="col-lg-6 col-md-6 col-sm-8 col-xs-12 card-item">
               <div class="card mb-4  bg-white">
                 <div class="card-body">
                   <div class="d-flex justify-content-center flex-column">
@@ -138,9 +138,9 @@
                 </div>
               </div>
             </div>
-          <!-- </div> -->
-          <!-- <div class="row homeImage"> -->
-            <div class="col-lg-3 col-md-6 col-sm-8 col-xs-12 card-item">
+          </div>
+          <div class="row homeImage">
+            <div class="col-lg-6 col-md-6 col-sm-8 col-xs-12 card-item">
               <div class="card mb-4  bg-white">
                 <div class="card-body">
                   <div class="d-flex justify-content-center flex-column">
@@ -162,7 +162,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-lg-3 col-md-6 col-sm-8 col-xs-12 card-item">
+            <div class="col-lg-6 col-md-6 col-sm-8 col-xs-12 card-item">
               <div class="card mb-4 bg-white">
                 <div class="card-body">
                   <div class="d-flex justify-content-center flex-column">
@@ -183,8 +183,8 @@
                 </div>
               </div>
             </div>
-          <!-- </div> -->
-        <!-- </div> -->
+          </div>
+        </div>
       </div>
     </div>
     <div class="modal" id="myModal">

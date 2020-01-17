@@ -176,16 +176,12 @@ export default {
           localStorage.setItem("userId",data.data.id);
           // console.log("register data", data.account_status);
           loader.hide();
-          this.$swal("", "You are successfully Registered!", "success")
+          this.$swal( "", "You are successfully Registered!", "success")
               .then((value) => {
-                this.$router.push({ name: location.search.split('=')[1] });
+                this.$router.push({ name: 'NewAccountInfo' });
               });
-          // if (data.data.account_status == "0") {
-          //         this.$router.push({ name: "Home" });
-          //       } else {
-          //         this.$router.push({ name: "AccountInfo" });
-          //       }
-                // this.$router.push({ name: "LogIn" });
+          document.querySelector('.swal-button--confirm').style.display = 'contents';
+          setTimeout(function(){ document.querySelector('.swal-button--confirm').click(); }, 3000);
         } else if (data.status === "error") {
           this.loading = false;
           loader.hide();

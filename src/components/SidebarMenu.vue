@@ -17,21 +17,15 @@
             <div>Need Help?</div>
             <div class="">Speak now with a licensed insurance agent</div>
             <a href="tel:15135062400" class="bt-call ">Click to Talk</a>
-            <div class=" justify-content-center">
-or call us 24/7?
-            
-             
-                
-                <div class="d-flex align-items-center  justify-content-center"><font-awesome-icon
-                  icon="phone-alt"
-                  size="1x"
-                  class=" color-fb d-flex  justify-content-center"
-                /> <a href="tel: 15135062400"> 1-513-506-2400</a></div>
-              </div>
-           
+            <!-- <div class=" justify-content-center">
+              or call us 24/7?
+              <div class="d-flex align-items-center  justify-content-center"><font-awesome-icon
+                icon="phone-alt"
+                size="1x"
+                class=" color-fb d-flex  justify-content-center"
+              /> <a href="tel: 15135062400"> 1-513-506-2400</a></div>
+            </div> -->
           </div>
-         
-      
       </transition-group>
     </div>
     </div>
@@ -402,7 +396,7 @@ export default {
   left: 0;
   width: 0px;
     
-    height: 207px;
+    height: 147px;
       background-color: #e3e3e3;
     
      /* border: solid #fff; */
