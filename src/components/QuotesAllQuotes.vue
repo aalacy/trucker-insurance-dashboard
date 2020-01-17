@@ -2,7 +2,7 @@
   <div class="quotes-all-quotes container-fluid">
     <div class="card mb-5">
       <div class="card-body">
-        <h4 class="card-title form-sub-title">Your Quote</h4>
+        <h4 class="card-title form-sub-title">All Quotes</h4>
 
         <div v-if="loading">Loading...</div>
         <div v-if="status">
@@ -13,34 +13,15 @@
 
             <div class="quote-info px-3">
               <div class="quote-title quote-title2">
-                <h4>ForAgentsOnly</h4>
+                {{item.title}}
               </div>
 
               <div class="quote-subtitle quote-subtitle2">
-                <span>Total Premium:</span>
-                {{total_premium}}
+                <span>{{item.subtitle}}</span>
               </div>
 
               <div class="quote-subtitle">
-                <span>&nbsp;&nbsp;&nbsp;&nbsp;-> Cargo Deductible:</span>
-                {{cargo_deductible}}
-              </div>
-
-              <div class="quote-subtitle">
-                <span>&nbsp;&nbsp;&nbsp;&nbsp;-> Cargo Limits:</span>
-                {{cargo_limits}}
-              </div>
-
-              <div class="quote-subtitle">
-                <span>&nbsp;&nbsp;&nbsp;&nbsp;-> General Liability:</span>
-                {{general_liability}}
-              </div>
-              <div class="quote-subtitle">
-                <span>&nbsp;&nbsp;&nbsp;&nbsp;-> View PDF:</span>
-
-                <a @click="openInNewWindow">
-                  <strong class="clr">{{filename}}</strong>
-                </a>
+                {{ item.price }}
               </div>
             </div>
           </div>
@@ -89,7 +70,7 @@ export default {
     return {
       accept: false,
       buttonHide: false,
-      status: false,
+      status: true,
       apires: [],
       auto_liability: "",
       aggregate: "",
@@ -102,10 +83,17 @@ export default {
       quotes: [
         {
           id: 1,
+          title: "Allied Insurance",
+          subtitle: "Carrier Coverage",
+          price: "Price",
+          img: "/img/sidebar/quote-1.png"
+        },
+        {
+          id: 2,
           title: "StateFarm",
           subtitle: "Carrier Coverage",
           price: "Price",
-          img: "https://picsum.photos/200"
+          img: "/img/sidebar/quote-2.png"
         }
       ],
       loading: false,
@@ -277,7 +265,7 @@ export default {
 
   .quote-info {
     .quote-title {
-      font-size: 1.3rem;
+      font-size: 1.5rem;
     }
 
     .quote-subtitle {

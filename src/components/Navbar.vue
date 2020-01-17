@@ -1,35 +1,9 @@
 <template>
   <div class="pat-abst">
-    <div class="">
-      <button type="button" class="btn ico-btna" @click="showHelp">
-         <font-awesome-icon
-          icon="question"
-          size="2x"
-          class="mr-4 color-fb ques d-flex justify-content-center"
-      />
-      </button>
-      <button type="button" class="btn ico-btn" @click="showNav">
+    <div class="pos-rel">
+       <button type="button" class="btn ico-btn" @click="showNav">
         <img src="../assets/images/hame.png" height="100" width="100" class="d-block mx-auto">
       </button>
-      <div class="containeraa" :class="{'show': showLabel}">
-        <transition-group name="fade" class="sidebar-menu text-center emergencya">
-          <div v-for="(item, indexa) in itemsa" :key="indexa" class="menu-item p-2   navigation-links">
-            <div>Need Help?</div>
-            <div class="">Speak now with a licensed insurance agent</div>
-<a href="tel:15135062400" class="bt-call ">Click to Talk</a>         
-   <div class=" justify-content-center">
-or call us 24/7?
-              <div class="d-flex align-items-center  justify-content-center"><font-awesome-icon
-                icon="phone-alt"
-                size="1x"
-                class=" color-fb d-flex  justify-content-center"
-              /> <a href="tel:15135062400">1-513-506-2400</a></div>
-            </div>
-          </div>
-        </transition-group>
-      </div>
-    </div>
-    <div class="pos-rel">
       <div class="containera " :class="{'show': showSidebar}">
         <transition-group name="fade" class="sidebar-menu">
           <div v-for="(item, index) in items" :key="index" class="menu-item navigation-links">
@@ -264,7 +238,7 @@ export default {
   position: absolute;
   z-index: 1;
   top: 0;
-  right: 20px;
+  lef: 0;
 }
 .ico-btna {
   width: 37px;
@@ -322,7 +296,7 @@ export default {
 
       .title-wrapper {
         position: relative;
-        padding: 1rem 2rem;
+        padding: 1rem 2rem 1rem 3rem;
         display: flex;
         // justify-content: center;
         align-items: center;
