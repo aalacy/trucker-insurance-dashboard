@@ -6,38 +6,38 @@
 
         <div v-if="loading">Loading...</div>
         <div v-if="status">
-          <div v-for="item in quotes" :key="item.id" class="mb-2 d-flex">
+          <div v-for="item in quotes" :key="item.id" class="block-divider d-flex">
             <div class="policy-image-wrapper px-1">
               <img :src="item.img" alt class="policy-image">
             </div>
 
-            <div class="policy-info px-3 pt-2">
-              <div class="policy-title">{{ item.title }}</div>
+            <div class="policy-info px-3">
+              <div class="block-title">{{ item.title }}</div>
 
               <!-- <div class="policy-subtitle">{{ item.policyType }}</div> -->
-
-              <div class="policy-subtitle">
-                Effective Date:
-                <strong>{{ item.effectiveDate }}</strong>
-              </div>
-              <div class="policy-subtitle">
-                Policy:
+              <div class="block-subtitle">
+                Policy Type:
                 <!-- <strong>{{ item.document }}</strong> -->
                 <a @click="openInNewWindow">
                   <strong class="clr">{{ item.document }}</strong>
                 </a>
               </div>
 
-              <div class="policy-subtitle">
+              <div class="block-subtitle">
+                Effective Date:
+                <strong>{{ item.effectiveDate }}</strong>
+              </div>
+
+              <div class="block-subtitle">
                 Mo/Yr Premium:
                 <strong>$ {{ item.premium }}</strong>
               </div>
 
-              <!-- <button
+               <button
                 type="button"
-                class="btn btn-sm btn-primary"
+                class="lt-button lt-button-main mt-3 mb-3"
                 @click="requestCertificate"
-              >Request a Certificate</button>-->
+              >Request a Certificate</button>
 
               <!-- <button
                 type="button"
@@ -46,19 +46,19 @@
               >Request Automated Certificate</button>
               </div>-->
 
-              <!-- <div class="d-flex small">
-              <div class="px-2">
-                <a href="#" @click.prevent>View Details</a>
-              </div>
+              <div class="d-flex small">
+                <div class="px-2">
+                  <a href="#" class="underline-link" @click.prevent>View Details</a>
+                </div>
 
-              <div class="px-2">
-                <a href="#" @click.prevent>View Change History</a>
+                <div class="px-2">
+                  <a href="#" class="underline-link" @click.prevent>View Change History</a>
+                </div>
               </div>
-              </div>-->
             </div>
           </div>
 
-          <div class="mt-3">
+         <!--  <div class="mt-3">
             <router-link
               :to="{ name: '' }"
               class="lt-button pad-10 mr-2 lt-button-main viewquote mb-1 white-space d-block text-center"
@@ -73,7 +73,7 @@
               active-class="font-weight-bold"
               @click.native="requestAutoCertificate"
             >Generate Automated Certificate</router-link>
-          </div>
+          </div> -->
           <div v-if="error" class="alert alert-danger" role="alert">{{ error }}</div>
         </div>
         <div v-else>
@@ -112,13 +112,23 @@ export default {
           title: "ForAgentsOnly",
           policyType: "Policy Type",
           img: "https://picsum.photos/200",
-          effectiveDate: "",
+          effectiveDate: "May 24, 2019",
+          premium: "",
+          document: "",
+          document_file: ""
+        },
+        {
+          id: 2,
+          title: "StateFarm",
+          policyType: "Policy Type",
+          img: "https://picsum.photos/200",
+          effectiveDate: "May 24, 2019",
           premium: "",
           document: "",
           document_file: ""
         }
       ],
-      status: false,
+      status: true,
       loading: false,
       error: null,
       policyId: ""
@@ -249,7 +259,7 @@ export default {
     
   },
   created() {
-    this.$emit("update-hint", " ");
+    this.$emit("update-hint", "Helpful hints about current section that will guide the user through the steps, and onto the next section of the form, coinciding with the input field that is active.");
   }
 };
 </script>
@@ -277,17 +287,18 @@ export default {
   }
 
   .policy-info {
-    .policy-title {
-      font-size: 1.3rem;
-    }
-
-    .policy-subtitle {
-      font-size: 0.8rem;
-    }
+    
     .clr {
       color: #007bff;
       cursor: pointer;
     }
+  }
+
+  .underline-link {
+    text-decoration: underline;
+    color: #494f59;
+    font-weight: 700;
+    font-size: 15px;
   }
 }
 </style>

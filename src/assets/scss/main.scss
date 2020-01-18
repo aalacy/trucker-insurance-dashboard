@@ -1,5 +1,12 @@
 @import "form-inputs";
 
+body {
+  background-color: $color_lightblue_2!important;
+  font-family: "Freight Sans" !important;
+  //line-height: 30px !important;
+  font-weight: 500;
+}
+
 * {
   color: $color_grey;
 }
@@ -71,10 +78,25 @@ img {
   height: auto;
 }
 
-body{
-  background-color: $color_lightblue_2!important;
-  font-family: 'proxima_novaregular' !important;
+.block-divider {
+  margin-bottom: 2rem;
+  padding-bottom: 2rem;
+  border-bottom: 2px solid #edf2f5;
 }
+
+.block-title {
+  font-size: 25px;
+  font-weight: 700;
+}
+
+.block-subtitle {
+  font-size: 20px;
+}
+
+.form-sub-title {
+  font-size: 30px;
+}
+
 .margin-50
 {
   margin: 50px 0px;

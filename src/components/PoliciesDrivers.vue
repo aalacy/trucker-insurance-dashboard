@@ -2,17 +2,15 @@
   <div class="policies-drivers container-fluid">
 
     <div class="card mb-5">
-                  
-
       <div class="card-body">
         <div class="d-flex">
-          <h4 class="card-title form-sub-title flex-grow-1">
-            Review Policies
+          <h4 class="card-title form-sub-title flex-grow-1 mb-4">
+            Drivers
           </h4>
 
-          <div>
-            Add a Driver
-            <button class="btn btn-sm btn-light border">+</button>
+          <div class="block-subtitle">
+            <strong class="mr-3">Add a Driver</strong>
+            <button class="btn btn-light border">+</button>
           </div>
         </div>
 
@@ -20,63 +18,72 @@
           Loading...
         </div>
 
-        <div v-for="item in drivers" :key="item.id" class="mb-2 d-flex">
+        <div v-for="item in drivers" :key="item.id" class="block-divider d-flex">
           <div class="policy-image-wrapper px-1">
             <img :src="item.img" alt="" class="policy-image" />
           </div>
 
-          <div class="policy-info px-3">
-            <div class="policy-title">
+          <div class="policy-info w-100 px-3">
+            <div class="block-title">
               {{ item.firstName }} {{ item.lastName }}
             </div>
 
-            <div class="policy-subtitle">
-              Policy Type:
-              <strong>{{ item.policyType }}</strong>
+            <div class="row mb-4">
+              <div class="col">
+                <div class="block-subtitle">
+                  Policy Type:
+                </div>
+
+                <div class="block-subtitle">
+                  Date of Birth:
+                </div>
+
+                <div class="block-subtitle">
+                  Mo/Yr Premium:
+                </div>
+
+                <div class="block-subtitle">
+                  License Number:
+                </div>
+
+                <div class="block-subtitle">
+                  State:
+                </div>
+
+                <div class="block-subtitle">
+                  Date Hired:
+                </div>
+
+                <div class="block-subtitle">
+                  Years of Experience:
+                </div>
+              </div>
+              <div class="col">
+                <div class="block-subtitle"><strong>{{ item.policyType }}</strong></div>
+                <div class="block-subtitle"><strong>{{ item.dob | date }}</strong></div>
+                <div class="block-subtitle"><strong>$ {{ item.premium | premium }}</strong></div>
+                <div class="block-subtitle"><strong>{{ item.licenseNumber }}</strong></div>
+                <div class="block-subtitle"><strong>{{ item.state }}</strong></div>
+                <div class="block-subtitle"><strong>{{ item.dateHired | date }}</strong></div>
+                <div class="block-subtitle"><strong>{{ item.yearsOfExperience }}</strong></div>
+              </div>
             </div>
 
-            <div class="policy-subtitle">
-              Date of Birth:
-              <strong>{{ item.dob | date }}</strong>
-            </div>
-
-            <div class="policy-subtitle">
-              Mo/Yr Premium:
-              <strong>$ {{ item.premium | premium }}</strong>
-            </div>
-
-            <div class="policy-subtitle">
-              License Number:
-              <strong>{{ item.licenseNumber }}</strong>
-            </div>
-
-            <div class="policy-subtitle">
-              State:
-              <strong>{{ item.state }}</strong>
-            </div>
-
-            <div class="policy-subtitle">
-              Date Hired:
-              <strong>{{ item.dateHired | date }}</strong>
-            </div>
-
-            <div class="policy-subtitle mb-4">
-              Years of Experience:
-              <strong>{{ item.yearsOfExperience }}</strong>
-            </div>
 
             <div>
-              <div class="small">
+              <div class="block-subtitle mb-1">
                 <strong>Remove this Driver</strong>
               </div>
 
               <textarea
+                class="col-10 mb-2"
+                style="height: 131px;"
                 v-model="item.reasonOfRemove"
                 placeholder="Reason..."
               ></textarea>
 
               <div>
-                <button type="button" class="btn btn-sm btn-primary">
+                <button type="button" class="lt-button lt-button-main">
                   Remove
                 </button>
               </div>
@@ -171,10 +178,13 @@ export default {
   .policy-info {
     .policy-title {
       font-size: 1.3rem;
+      color: #5e98f9;
+      font-weight: 700;
     }
 
     .policy-subtitle {
       font-size: 0.8rem;
+      line-height: 25px;
     }
   }
 }
