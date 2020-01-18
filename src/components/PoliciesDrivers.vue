@@ -151,7 +151,7 @@ export default {
     };
   },
   created() {
-    this.$emit('update-hint', ' ');
+    this.$emit('update-hint', 'Helpful hints about current section that will guide the user through the steps, and onto the next section of the form, coinciding with the input field that is active.');
   }
 };
 </script>
