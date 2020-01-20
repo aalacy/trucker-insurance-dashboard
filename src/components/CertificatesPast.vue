@@ -40,9 +40,9 @@
           <span>
             Your application is complete, we should have an update for you soon. If you have any further questions about this, feel to call us at
             <a
-              href="tel:16469330419"
+              href="tel:15135062400"
               style="font-weight:bold; white-space:nowrap;"
-            >1-646-933-0419</a>
+            >1-513-506-2400</a>
           </span>
         </div>
 
@@ -91,23 +91,7 @@ export default {
     }
   },
   mounted() {
-    // console.log("localStorage.getItem(quotation_id)",localStorage.getItem("quotation_id"));
 
-    // if (this.status) {
-      // axios
-      //   .get(
-      //     "http://3.13.68.92/luckytrucker_admin/api/CompanyController/getpolicycertificate?policy_id=" +
-      //       localStorage.getItem("policyId")
-      //   )
-      //   .then(res => {
-      //     console.log("res", res.data);
-      //     this.quotes[0].effectiveDate = res.data.effective_date;
-      //     this.quotes[0].premium = res.data.premium;
-      //     // this.quotes[0].document = res.data.certificate_file;
-      //     this.quotes[0].document_file = res.data.document_file;
-      //     // this.policyId = res.data.id;
-      //   });
-    // }
   },
   created() {
     this.$emit("update-hint", "Helpful hints about current section that will guide the user through the steps, and onto the next section of the form, coinciding with the input field that is active.");

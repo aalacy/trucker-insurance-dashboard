@@ -157,9 +157,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-// div {
-//   outline: 1px solid red;
-// }
 .policies-drivers {
   .policy-image-wrapper {
     height: 100px;
