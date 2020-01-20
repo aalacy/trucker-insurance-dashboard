@@ -39,6 +39,7 @@ export default {
   name: "AccountInfoAccountProgress",
 
   updated() {
+    console.log('===== updated =======');
     if (localStorage.getItem("token") == null) {
       this.quote = true;
       this.localtoken = false;
@@ -65,7 +66,7 @@ export default {
 
   methods: {
     downloadPDF() {
-      if(this.status){
+      if(this.progress >= 100){
           window.open(`${process.env.VUE_APP_BACKEND_URL}/company/pdf`);
       }else{
            swal(
