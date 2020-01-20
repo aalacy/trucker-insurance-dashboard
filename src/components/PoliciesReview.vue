@@ -140,121 +140,121 @@ export default {
       window.open(this.quotes[0].document_file);
     },
     requestCertificate() {
-      axios
-        .post(
-          "http://3.13.68.92/luckytrucker_admin/api/CompanyController/requestforcertificate?policy_id=" +
-            this.policyId +
-            "&certificate_status=1"
-        )
-        .then(res => {
-          if (res.status == 200) {
-            //  this.$swal("Thank You!", "You will get our agent call in next 24 hours!", "success").then(()=>this.$route.push({name:"AccountInfo"}))
-            localStorage.setItem("policyId", this.policyId);
+      // axios
+      //   .post(
+      //     "http://3.13.68.92/luckytrucker_admin/api/CompanyController/requestforcertificate?policy_id=" +
+      //       this.policyId +
+      //       "&certificate_status=1"
+      //   )
+      //   .then(res => {
+      //     if (res.status == 200) {
+      //       //  this.$swal("Thank You!", "You will get our agent call in next 24 hours!", "success").then(()=>this.$route.push({name:"AccountInfo"}))
+      //       localStorage.setItem("policyId", this.policyId);
 
-            swal({
-              title: "Thank You!",
-              text: "Your request has been accepted",
-              icon: "success",
-              buttons: ["No", "Yes"]
-            }).then(willDelete => {
-              console.log("willbe", willDelete);
-              if (willDelete) {
-                this.$router.push({ name: "Certificates" });
-              } else {
-                // swal(
-                //   "Thank You!",
-                //   "Your changes has been accepted! You will get new Updated Quote",
-                //   {
-                //     icon: "success"
-                //   }
-                // );
-              }
-            });
-          } else if (res.status != 200)
-            this.$swal("Opps!", res.data.msg, "error");
-        })
-        .catch(err => this.$swal("Opps!", err, "error"))
-        .finally(() => console.log("hiiiiiiii"));
+      //       swal({
+      //         title: "Thank You!",
+      //         text: "Your request has been accepted",
+      //         icon: "success",
+      //         buttons: ["No", "Yes"]
+      //       }).then(willDelete => {
+      //         console.log("willbe", willDelete);
+      //         if (willDelete) {
+      //           this.$router.push({ name: "Certificates" });
+      //         } else {
+      //           // swal(
+      //           //   "Thank You!",
+      //           //   "Your changes has been accepted! You will get new Updated Quote",
+      //           //   {
+      //           //     icon: "success"
+      //           //   }
+      //           // );
+      //         }
+      //       });
+      //     } else if (res.status != 200)
+      //       this.$swal("Opps!", res.data.msg, "error");
+      //   })
+      //   .catch(err => this.$swal("Opps!", err, "error"))
+      //   .finally(() => console.log("hiiiiiiii"));
     },
     requestAutoCertificate() {
-      axios
-        .post(
-          "http://3.13.68.92/luckytrucker_admin/api/CompanyController/requestforcertificate?policy_id=" +
-            this.policyId +
-            "&certificate_status=2"
-        )
-        .then(res => {
-          if (res.status == 200) {
-            //  this.$swal("Thank You!", "You will get our agent call in next 24 hours!", "success").then(()=>this.$route.push({name:"AccountInfo"}))
-            localStorage.setItem("policyId", this.policyId);
-            setTimeout(() => {
-              axios
-                .get(
-                  "http://3.13.68.92/luckytrucker_admin/api/CompanyController/getpolicycertificate?policy_id=" +
-                    this.policyId
-                )
-                .then(res => {
-                  // console.log("res", res.data);
-                  console.log("res.data.document_file", res.data.document_file);
-                  window.open(res.data.certificate_file);
-                });
-            }, 700);
+      // axios
+      //   .post(
+      //     "http://3.13.68.92/luckytrucker_admin/api/CompanyController/requestforcertificate?policy_id=" +
+      //       this.policyId +
+      //       "&certificate_status=2"
+      //   )
+      //   .then(res => {
+      //     if (res.status == 200) {
+      //       //  this.$swal("Thank You!", "You will get our agent call in next 24 hours!", "success").then(()=>this.$route.push({name:"AccountInfo"}))
+      //       localStorage.setItem("policyId", this.policyId);
+      //       setTimeout(() => {
+      //         axios
+      //           .get(
+      //             "http://3.13.68.92/luckytrucker_admin/api/CompanyController/getpolicycertificate?policy_id=" +
+      //               this.policyId
+      //           )
+      //           .then(res => {
+      //             // console.log("res", res.data);
+      //             console.log("res.data.document_file", res.data.document_file);
+      //             window.open(res.data.certificate_file);
+      //           });
+      //       }, 700);
 
-            // swal({
-            //   title: "Thank You!",
-            //   text: "Your request has been accepted",
-            //   icon: "success",
-            //   buttons: ["No", "Yes"]
-            // }).then(willDelete => {
-            //   console.log("willbe", willDelete);
-            //   if (willDelete) {
-            //     this.$router.push({ name: "Certificates" });
-            //   } else {
-            //   }
-            // });
-          } else if (res.status != 200) {
-            // this.$swal("Opps!", res.data.msg, "error");
-          }
-        })
-        .catch(err => this.$swal("Opps!", err, "error"))
-        .finally(() => console.log("hiiiiiiii"));
+      //       // swal({
+      //       //   title: "Thank You!",
+      //       //   text: "Your request has been accepted",
+      //       //   icon: "success",
+      //       //   buttons: ["No", "Yes"]
+      //       // }).then(willDelete => {
+      //       //   console.log("willbe", willDelete);
+      //       //   if (willDelete) {
+      //       //     this.$router.push({ name: "Certificates" });
+      //       //   } else {
+      //       //   }
+      //       // });
+      //     } else if (res.status != 200) {
+      //       // this.$swal("Opps!", res.data.msg, "error");
+      //     }
+      //   })
+      //   .catch(err => this.$swal("Opps!", err, "error"))
+      //   .finally(() => console.log("hiiiiiiii"));
     }
   },
   mounted() {
     // console.log("localStorage.getItem(quotation_id)",localStorage.getItem("quotation_id"));
 
     // setTimeout(() => {
-      axios
-        .get(
-          "http://3.13.68.92/luckytrucker_admin/api/CompanyController/getcountofcompanybyuserid?user_id=" +
-            localStorage.getItem("userId")
-        )
-        .then(res => {
-          console.log("res", res.data.count);
-          // this.count = res.data.count;
-          if (res.data.count >= 10) {
-            this.status = true;
-          } else {
-            this.status = false;
-          }
-        });
+      // axios
+      //   .get(
+      //     "http://3.13.68.92/luckytrucker_admin/api/CompanyController/getcountofcompanybyuserid?user_id=" +
+      //       localStorage.getItem("userId")
+      //   )
+      //   .then(res => {
+      //     console.log("res", res.data.count);
+      //     // this.count = res.data.count;
+      //     if (res.data.count >= 10) {
+      //       this.status = true;
+      //     } else {
+      //       this.status = false;
+      //     }
+      //   });
     // }, 500);
 
 
   // if(this.status){
-    axios
-      .get(
-        "http://3.13.68.92/luckytrucker_admin/api/CompanyController/getpolicydocument?quotation_id=" +
-          localStorage.getItem("quotation_id")
-      )
-      .then(res => {
-        console.log("res", res.data);
-        this.quotes[0].effectiveDate = res.data.effective_date;
-        this.quotes[0].premium = res.data.premium;
-        this.quotes[0].document = res.data.document_file.split("/")[6];
-        this.quotes[0].document_file = res.data.document_file;
-        this.policyId = res.data.id;
-      });
+    // axios
+    //   .get(
+    //     "http://3.13.68.92/luckytrucker_admin/api/CompanyController/getpolicydocument?quotation_id=" +
+    //       localStorage.getItem("quotation_id")
+    //   )
+    //   .then(res => {
+    //     console.log("res", res.data);
+    //     this.quotes[0].effectiveDate = res.data.effective_date;
+    //     this.quotes[0].premium = res.data.premium;
+    //     this.quotes[0].document = res.data.document_file.split("/")[6];
+    //     this.quotes[0].document_file = res.data.document_file;
+    //     this.policyId = res.data.id;
+    //   });
   // }
     
   },

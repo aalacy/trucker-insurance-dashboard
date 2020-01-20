@@ -8,8 +8,6 @@
     <div v-if="count" class="d-flex">
       
       <div class="title d-flex justify-content-end" v-if="status">Status:  Completed!</div>
-      <div class="title d-flex justify-content-end" v-else>Status:  Started</div>
-
       <button
         type="submit"
         class="lt-button lt-button-main justify-content-end go-button btn-viewPDF"

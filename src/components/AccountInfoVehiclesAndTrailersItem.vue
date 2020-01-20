@@ -431,65 +431,8 @@ export default {
   mounted() {
     if (localStorage.getItem("token")) {
       this.save = false;
-      axios
-      .get(
-        "http://3.13.68.92/luckytrucker_admin/api/CompanyController/getuuidbyuserid?user_id=" +
-          localStorage.getItem("userId")
-      )
-      .then(coins => {
-        this.userData = coins.data.uuid;
-      });
-      setTimeout(()=>{
-          this.$store.dispatch("loadData",this.userData).then(() => {
-      let len = this.$store.state.getData.data;
-      console.log("len",len.length);
-      for(let j=0;j<len.length;j++){
-        if(this.$store.state.getData.data[j].key == "vehiclesTrailers"){
-          let a = this.$store.state.getData.data[j];
-          let b = JSON.parse(a.val)[0];
-          console.log("bbb", b);
-          console.log("this.vehicle", b.vehicleType);
-      this.formData.VIN = b.VIN;
-      this.formData.make = b.make;
-      this.formData.year = b.year;
-      this.formData.zipCode = b.zipCode;
-      this.formData.model = b.model;
-      this.formData.vehicleImage = b.vehicleImage;
-      this.formData.vehicleType = b.vehicleType;
-      this.formData.radiusOfTravel = b.radiusOfTravel;
-        }
-
-      }
-    });
-      },1000)
-      
     }else{
 
-    setTimeout(()=>{
-      this.$store.dispatch("loadData", this.uuid).then(() => {
-      let len = this.$store.state.getData.data;
-      console.log("len",len.length);
-      for(let j=0;j<len.length;j++){
-        if(this.$store.state.getData.data[j].key == "vehiclesTrailers"){
-          let a = this.$store.state.getData.data[j];
-          let b = JSON.parse(a.val)[0];
-          console.log("bbb", b);
-          console.log("this.vehicle", b.vehicleType);
-      this.formData.VIN = b.VIN;
-      this.formData.make = b.make;
-      this.formData.year = b.year;
-      this.formData.zipCode = b.zipCode;
-      this.formData.model = b.model;
-      this.formData.vehicleImage = b.vehicleImage;
-      this.formData.vehicleType = b.vehicleType;
-      this.formData.radiusOfTravel = b.radiusOfTravel;
-        }
-
-      }     
-      
-    });
-    
-    },1000)
     }
   },
   data() {

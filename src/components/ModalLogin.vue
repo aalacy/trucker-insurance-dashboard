@@ -165,21 +165,21 @@ export default {
     },
      async forgotPassword() {
        
-      axios
-        .post(
-          "http://3.13.68.92/luckytrucker_admin/api/CompanyController/forgotpassword?email_id=" +
-            this.reset_email
-        )
-        .then(res => {
-          console.log("res forgot password", res);
-          if (res.data.flag == "1") {
-            this.$swal("Done", res.data.msg, "success");
-            this.forgotPasswordShow = false;    
-          } else {
-            this.$swal("Opps!", res.data.msg, "error");
-            this.forgotPasswordShow = true;
-          }
-        });
+      // axios
+      //   .post(
+      //     "http://3.13.68.92/luckytrucker_admin/api/CompanyController/forgotpassword?email_id=" +
+      //       this.reset_email
+      //   )
+      //   .then(res => {
+      //     console.log("res forgot password", res);
+      //     if (res.data.flag == "1") {
+      //       this.$swal("Done", res.data.msg, "success");
+      //       this.forgotPasswordShow = false;    
+      //     } else {
+      //       this.$swal("Opps!", res.data.msg, "error");
+      //       this.forgotPasswordShow = true;
+      //     }
+      //   });
     },
     accountStatusUpdate(){
       localStorage.setItem("register_status","1");

@@ -1366,7 +1366,7 @@ export default {
         let res = await API.get("company/current");
        
         this.uuid = res.data.uuid;
-        if (res.status === "OK") {
+        if (res.status === "OK" && res.data.company) {
           let { vehicleInformationList } = res.data.company;
           if (vehicleInformationList) {
             if (vehicleInformationList.constructor !== Object) {
