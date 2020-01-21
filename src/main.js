@@ -13,6 +13,7 @@ import { faCaretLeft,faSpinner, faAlignLeft,faCaretRight,faPhoneAlt,faQuestion,f
 import {faFacebookSquare, faFacebookF,faGoogle, faTwitter, faLinkedinIn} from '@fortawesome/free-brands-svg-icons'
 import VueSwal from 'vue-swal'
 import VueSignaturePad from 'vue-signature-pad';
+import VueIntercom from 'vue-intercom';
 
 library.add(faCaretLeft,faSpinner, faAlignLeft,faCaretRight,faFacebookSquare, faFacebookF,faGoogle, faTwitter, faLinkedinIn, faPhoneAlt,faQuestion,faTimes)
 
@@ -22,6 +23,7 @@ Vue.use(Vuelidate);
 Vue.use(VueSwal);
 Vue.use(BootstrapVue);
 Vue.use(VueSignaturePad);
+Vue.use(VueIntercom, { appId: 'ct2qyf3u' });
 
 // Vue.component('font-awesome-icon', FontAwesomeIcon)
 

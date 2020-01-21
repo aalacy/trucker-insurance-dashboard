@@ -199,7 +199,6 @@
         </div>
       </div>
       <div class="d-flex"></div>
-      <!-- <chat-boat/> -->
     </footer>
    
   </div>
@@ -236,7 +235,6 @@ gtag("config", "UA-144855806-1");
 </script>
 
 <script>
-import ChatBoat from "./components/ChatBoat.vue";
 import { isMobile } from "mobile-device-detect";
 import { mapState,mutations } from "vuex";
 import { API } from "./api.js";
@@ -258,6 +256,12 @@ export default {
   },
   
   mounted() {
+    this.$intercom.boot({
+      user_id: this.userId,
+      name: this.name,
+      email: this.email,
+    });
+    this.$intercom.show();
   if(localStorage.getItem("token")){
      this.show=true;
    }else{
@@ -279,7 +283,6 @@ export default {
     };
   },
   components: {
-    "chat-boat": ChatBoat
   },
   methods: {
     loginHide()
