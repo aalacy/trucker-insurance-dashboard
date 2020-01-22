@@ -163,7 +163,6 @@
 <script>
 import { validateField, validateForm, required } from "../validators.js";
 import { API } from "../api.js";
-import ChatBoat from "./ChatBoat.vue";
 import ModalLogin from "./ModalLogin.vue";
 import { mapState, mutations } from "vuex";
 import { isMobile } from "mobile-device-detect";
@@ -174,7 +173,6 @@ export default {
   name: "NewAccountInfoPersonalInfo",
 
   components: {
-    "chat-boat": ChatBoat,
     modelLogin: ModalLogin,
     
   },
