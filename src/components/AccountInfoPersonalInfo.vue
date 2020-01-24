@@ -4,8 +4,8 @@
       <div class="card">
         <div class="card-body">
           <h4 class="card-title form-sub-title">Business Information</h4>
-          <div class="col-md-6 col-lg-12 py-3 row">
-              <h6 class="pt-2">Mailing Address</h6>
+          <div class="col-md-6 col-lg-12 row">
+              <h6 class="">Mailing Address</h6>
             </div>
           <div class="row">
             

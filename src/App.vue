@@ -261,7 +261,6 @@ export default {
       name: this.name,
       email: this.email,
     });
-    this.$intercom.show();
   if(localStorage.getItem("token")){
      this.show=true;
    }else{
@@ -412,21 +411,7 @@ export default {
 @import "~bootstrap/scss/bootstrap.scss";
 @import "./assets/scss/main.scss";
 
-@font-face {
-  font-family: 'proxima_novabold';
-  src: url('./assets/fonts/proxima_ssv/proxima_nova_bold-webfont.woff2') format('woff2'),
-       url('./assets/fonts/proxima_ssv/proxima_nova_bold-webfont.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
-}
-@font-face {
-  font-family: 'proxima_novaregular';
-  src: url('./assets/fonts/proxima_ssv/proximanova-regular-webfont.woff2') format('woff2'),
-       url('./assets/fonts/proxima_ssv/proximanova-regular-webfont.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
 
-}
 .text-right-a{
         /* color: black; */
     font-size: 16px;

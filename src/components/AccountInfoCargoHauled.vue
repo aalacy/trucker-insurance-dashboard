@@ -409,7 +409,7 @@ export default {
       min-height: 50px;
       font-size: 12px;
       word-break: break-word;
-
+      font-weight: 700 !important;
       &.selected {
         color: #5e98f9;
       }

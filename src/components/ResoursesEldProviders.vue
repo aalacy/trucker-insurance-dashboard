@@ -7,7 +7,7 @@
         <div v-if="loading">Loading...</div>
         <div v-if="status">
           <div v-for="item in providers" :key="item.id" class="d-flex block-divider">
-            <div class="image-wrapper px-1">
+            <div class="image-wrapper rounded">
               <img :src="item.img" alt class="image">
             </div>
 
@@ -91,7 +91,7 @@ export default {
     justify-content: center;
 
     .image {
-      border-radius: 15px;
+      padding: 20px;
     }
   }
 

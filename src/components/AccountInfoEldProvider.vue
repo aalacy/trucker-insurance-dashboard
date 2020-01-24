@@ -33,12 +33,12 @@
               <div
                 v-for="(item, index) in allProviders"
                 :key="index"
-                class="col-3 text-center pointer mb-2 p-1 "
+                class="col-3 text-center pointer mb-4 p-1 "
                 @click="selectProvider(item.value)"  :class="{ selected: eldProviderMap[item.value] }"
               >
               <div class="eld-provider">
-                <div class="p-1 provider-img-wrapper">
-                  <img v-if="item.image" :src="item.image" alt class="provider-img rounded">
+                <div class="provider-img-wrapper">
+                  <img v-if="item.image" :src="item.image" alt class="provider-img">
                   <!-- <div v-else class="p-1 provider-img-wrapper">
                   <img
                     src="../assets/images/bigroad.jpeg"
@@ -367,17 +367,22 @@ export default {
       height: 100px;
       width: 100px;
       margin: 0 auto;
+      background: #edf2f5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
 
-      // .provider-img {
-      //   max-width: 100%;
-      //   height: auto;
-      // }
+      .provider-img {
+        padding: 22px;
+      }
     }
 
     .name {
       display: flex;
       align-items: center;
       justify-content: center;
+      margin-top: 8px;
 
       border-radius: 5px;
       // min-height: 50px;

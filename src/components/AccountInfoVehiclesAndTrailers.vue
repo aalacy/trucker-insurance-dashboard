@@ -997,6 +997,7 @@ export default {
     },
     addVehicleData(data) {
      
+      debugger;
       if (data == undefined || data.VIN == undefined) {
         
         this.vehiclesData.push({
@@ -1417,6 +1418,7 @@ export default {
        
         return;
       }
+      console.log(this.vehiclesData);
       //
       if(this.vehiclesData){
         let allFormAreValid = this.validateNewVehicleData();

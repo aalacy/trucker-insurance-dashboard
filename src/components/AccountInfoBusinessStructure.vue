@@ -51,7 +51,7 @@
             </div>
           </div>
 
-          <h4 class="card-title form-sub-title">Business Type</h4>
+          <h4 class="card-title form-sub-title mb-3">Business Type</h4>
 
           <div class="row">
             <div class="col-12">

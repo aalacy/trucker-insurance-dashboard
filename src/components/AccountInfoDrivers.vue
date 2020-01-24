@@ -4,10 +4,12 @@
       <div class="card mb-5">
         <div class="card-body">
           <div class="d-flex">
-            <h4 class="card-title form-sub-title mr-3">Drivers</h4>
-            <label>
-              <input type="checkbox" v-on:change="changeData()"> Same as Mailing Address
-            </label>
+            <h4 class="card-title form-sub-title mb-4 mr-3">Drivers
+              <label class="label">
+                <input type="checkbox" v-on:change="changeData()"> Same as Mailing Address
+              </label>
+            </h4>
+            
           </div>
 
           <hr>
@@ -981,6 +983,12 @@ select {
   -webkit-appearance: none;
   background: url("../assets/images/arrow-dropdown.png") no-repeat 96% center;
   -moz-appearance: none;
+}
+
+.label {
+  font-weight: 500;
+  font-size: 15px;
+  margin-left: 0.5rem;
 }
 </style>
 
