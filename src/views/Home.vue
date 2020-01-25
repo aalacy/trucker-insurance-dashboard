@@ -86,8 +86,11 @@
     <div class="container-fluid back bg-white" id="lt-section">
       <div class="row d-flex pad-50 justify-content-center">
         <div class="col-sm-8 col-md-8 text-center">
-          <img alt="logo" src="/android-chrome-512x512.png" />
-          <p>Our team genuinely cares about your success and we do what we can to help you succeed by making trucking easier. </p>
+          <!-- <div class="logo-text text-center">LT</div> -->
+          <img alt="logo" src="/img/logo_txt.png" />
+
+          <p class="below-logo">Our team genuinely cares about your success and we do what we can to help you succeed by making trucking easier. </p>
+          <button class="btn btn-primary">Start Your Journey</button>
         </div>
       </div>
     </div>
@@ -414,6 +417,18 @@ export default {
     border-radius: 6px;
     background-color: white;
   }
+
+
+}
+
+.logo-text {
+  font-weight: bold;
+  font-size: 40px;
+  color: black;
+}
+
+p.below-logo {
+  margin-top: 35px !important;
 }
 
 input:focus {

@@ -28,7 +28,7 @@
                 <div v-if="msg">
                   <router-link
                     :to="{ name: 'AccountInfoUploadDocuments' }"
-                    class="lt-button lt-button-main viewquote"
+                    class="btn btn-primary viewquote"
                     active-class="font-weight-bold"
                     @click.native="savequote"
                   >View Quotes</router-link>
@@ -36,7 +36,7 @@
                 <div v-else>
                   <router-link
                     :to="{ name: 'AccountInfo' }"
-                    class="lt-button lt-button-main viewquote"
+                    class="btn btn-primary viewquote"
                     active-class="font-weight-bold"
                     @click.native="savequote"
                   >View Quotes</router-link>
@@ -48,7 +48,7 @@
                     :to="{ name: '' }"
                     @click.native="myacc"
                     active-class="font-weight-bold"
-                    class="lt-button lt-button-main viewquote"
+                    class="btn btn-primary viewquote"
                   >My Account</router-link>
                 </div>
                 <!-- <div v-else> -->
@@ -64,7 +64,7 @@
                 <router-link
                   @click.native="loginHide"
                   :to="{ name: 'LogIn', query: {next: this.$router.history.current.name == 'LogIn' ?  this.$router.history.current.query.next : this.$router.history.current.name} }"
-                  class="lt-button lt-button-main viewquote"
+                  class="btn btn-primary viewquote"
                   active-class="font-weight-bold"
                 >Login</router-link>
               </li>
@@ -73,7 +73,7 @@
               <li class="nav-item">
                 <router-link
                   :to="{ name:'' }"
-                  class="lt-button lt-button-main viewquote"
+                  class="btn btn-primary viewquote"
                   @click.native="logoutPopUp"
                   active-class="font-weight-bold"
                 >Logout</router-link>
@@ -84,7 +84,7 @@
                 <router-link
                   @click.native="loginHide"
                   :to="{ name: 'SignUp', query: {next: this.$router.history.current.name == 'SignUp' ?  this.$router.history.current.query.next : this.$router.history.current.name} }"
-                  class="lt-button lt-button-main viewquote"
+                  class="btn btn-primary viewquote"
                   active-class="font-weight-bold"
                 >Signup</router-link>
               </li>

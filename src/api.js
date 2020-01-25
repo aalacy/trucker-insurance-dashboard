@@ -44,7 +44,7 @@ class APIService {
       data,
       method,
       params,
-      withCredentials: true,
+      withCredentials: false,
       crossdomain: true,
       ...options
     };
