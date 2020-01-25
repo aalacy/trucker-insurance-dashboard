@@ -250,10 +250,26 @@ export default {
     };
   },
   methods: {
-    onStartJourney: {
-      $('html, body').animate({
-          scrollTop: $("#quoteInput").scrollTop
-      }, 2000);
+    onStartJourney() {
+      var options = {
+        container: 'body',
+        easing: 'ease-in',
+        offset: -60,
+        force: true,
+        cancelable: true,
+        onStart: function(element) {
+          // scrolling started
+        },
+        onDone: function(element) {
+          // scrolling is done
+        },
+        onCancel: function() {
+          // scrolling has been interrupted
+        },
+        x: false,
+        y: true
+      }
+      this.$scrollTo("#quoteInput", 1000, options);
     },
     async getStarted() {
       if (!this.keyword) {

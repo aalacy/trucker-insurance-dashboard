@@ -422,7 +422,7 @@ export default {
     /* z-index: 111; */
 
 }
-. {
+.viewquote{
   padding-bottom: 10px;
   white-space: nowrap;
   margin-left: 10px;

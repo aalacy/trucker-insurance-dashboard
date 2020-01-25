@@ -14,6 +14,7 @@ import {faFacebookSquare, faFacebookF,faGoogle, faTwitter, faLinkedinIn} from '@
 import VueSwal from 'vue-swal'
 import VueSignaturePad from 'vue-signature-pad';
 import VueIntercom from 'vue-intercom';
+import VueScrollTo from'vue-scrollto';
 
 library.add(faCaretLeft,faSpinner, faAlignLeft,faCaretRight,faFacebookSquare, faFacebookF,faGoogle, faTwitter, faLinkedinIn, faPhoneAlt,faQuestion,faTimes)
 
@@ -24,6 +25,7 @@ Vue.use(VueSwal);
 Vue.use(BootstrapVue);
 Vue.use(VueSignaturePad);
 Vue.use(VueIntercom, { appId: 'ct2qyf3u' });
+Vue.use(VueScrollTo);
 
 // Vue.component('font-awesome-icon', FontAwesomeIcon)
 
