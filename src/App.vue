@@ -28,7 +28,7 @@
                 <div v-if="msg">
                   <router-link
                     :to="{ name: 'AccountInfoUploadDocuments' }"
-                    class="btn btn-primary viewquote"
+                    class="btn btn-primary "
                     active-class="font-weight-bold"
                     @click.native="savequote"
                   >View Quotes</router-link>
@@ -36,7 +36,7 @@
                 <div v-else>
                   <router-link
                     :to="{ name: 'AccountInfo' }"
-                    class="btn btn-primary viewquote"
+                    class="btn btn-primary "
                     active-class="font-weight-bold"
                     @click.native="savequote"
                   >View Quotes</router-link>
@@ -48,7 +48,7 @@
                     :to="{ name: '' }"
                     @click.native="myacc"
                     active-class="font-weight-bold"
-                    class="btn btn-primary viewquote"
+                    class="btn btn-primary "
                   >My Account</router-link>
                 </div>
                 <!-- <div v-else> -->
@@ -64,7 +64,7 @@
                 <router-link
                   @click.native="loginHide"
                   :to="{ name: 'LogIn', query: {next: this.$router.history.current.name == 'LogIn' ?  this.$router.history.current.query.next : this.$router.history.current.name} }"
-                  class="btn btn-primary viewquote"
+                  class="btn btn-primary "
                   active-class="font-weight-bold"
                 >Login</router-link>
               </li>
@@ -73,7 +73,7 @@
               <li class="nav-item">
                 <router-link
                   :to="{ name:'' }"
-                  class="btn btn-primary viewquote"
+                  class="btn btn-primary "
                   @click.native="logoutPopUp"
                   active-class="font-weight-bold"
                 >Logout</router-link>
@@ -84,7 +84,7 @@
                 <router-link
                   @click.native="loginHide"
                   :to="{ name: 'SignUp', query: {next: this.$router.history.current.name == 'SignUp' ?  this.$router.history.current.query.next : this.$router.history.current.name} }"
-                  class="btn btn-primary viewquote"
+                  class="btn btn-primary "
                   active-class="font-weight-bold"
                 >Signup</router-link>
               </li>
@@ -298,7 +298,7 @@ export default {
       this.myacchide = false;
       this.show = true;
       this.$router.push({name:'QuotesAllQuotes'})
-      // localStorage.setItem("viewQuote",true)
+      // localStorage.setItem("",true)
      
       },
     async logout(){
@@ -311,7 +311,7 @@ export default {
      
         let data = await API.post("users/logout");
         localStorage.removeItem("token");
-        // localStorage.setItem("viewQuote", true);
+        // localStorage.setItem("", true);
         
         if (data.status === "ok") {
             
@@ -422,7 +422,7 @@ export default {
     /* z-index: 111; */
 
 }
-.viewquote {
+. {
   padding-bottom: 10px;
   white-space: nowrap;
   margin-left: 10px;

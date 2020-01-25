@@ -4,7 +4,7 @@
       <div class="container">
         <div>
           <form class="mar-10" @submit.prevent="getStarted">
-            <div class="d-flex align-items-center index1">
+            <div class="d-flex align-items-center index1" id="quoteInput">
                           
               <b-input-group class="col-lg-12 justify-content-center">
                 <b-form-input v-model.trim="keyword" class="quote-input" placeholder="Search DOT or Name of Business"></b-form-input>
@@ -90,7 +90,7 @@
           <img alt="logo" src="/img/logo_txt.png" />
 
           <p class="below-logo">Our team genuinely cares about your success and we do what we can to help you succeed by making trucking easier. </p>
-          <button class="btn btn-primary">Start Your Journey</button>
+          <button class="btn btn-primary" @click="onStartJourney()">Start Your Journey</button>
         </div>
       </div>
     </div>
@@ -250,6 +250,11 @@ export default {
     };
   },
   methods: {
+    onStartJourney: {
+      $('html, body').animate({
+          scrollTop: $("#quoteInput").scrollTop
+      }, 2000);
+    },
     async getStarted() {
       if (!this.keyword) {
         return;
