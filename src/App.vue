@@ -28,7 +28,7 @@
                 <div v-if="msg">
                   <router-link
                     :to="{ name: 'AccountInfoUploadDocuments' }"
-                    class="btn btn-primary mr-2"
+                    class="btn btn-primary lt-btn"
                     active-class="font-weight-bold"
                     @click.native="savequote"
                   >View Quotes</router-link>
@@ -36,7 +36,7 @@
                 <div v-else>
                   <router-link
                     :to="{ name: 'AccountInfo' }"
-                    class="btn btn-primary mr-2"
+                    class="btn btn-primary lt-btn"
                     active-class="font-weight-bold"
                     @click.native="savequote"
                   >View Quotes</router-link>
@@ -48,7 +48,7 @@
                     :to="{ name: '' }"
                     @click.native="myacc"
                     active-class="font-weight-bold"
-                    class="btn btn-primary mr-2"
+                    class="btn btn-primary lt-btn"
                   >My Account</router-link>
                 </div>
                 <!-- <div v-else> -->
@@ -64,7 +64,7 @@
                 <router-link
                   @click.native="loginHide"
                   :to="{ name: 'LogIn', query: {next: this.$router.history.current.name == 'LogIn' ?  this.$router.history.current.query.next : this.$router.history.current.name} }"
-                  class="btn btn-primary mr-2"
+                  class="btn btn-primary lt-btn"
                   active-class="font-weight-bold"
                 >Login</router-link>
               </li>
