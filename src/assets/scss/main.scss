@@ -116,12 +116,15 @@ img {
 
 .lt-input {
   font-size: 20px;
+  border-radius: 5px;
 }
 
 .lt-btn {
   min-width: 120px;
   margin-right: 0.5rem;
 }
+
+
 
 .card-block {
   .card-item {
@@ -713,8 +716,20 @@ img {
    }
 }
 
+.br-5 {
+  border-radius: 5px;
+}
+
 .bg-blue {
   background: #5E98F9;
+}
+
+.bg-grey {
+  background: #edf2f5;
+}
+
+.bg-dark-grey {
+  background: #e1e7f5;
 }
 
 #img-text h1{

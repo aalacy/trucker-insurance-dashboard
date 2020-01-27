@@ -3,13 +3,13 @@
     <div class="home-view d-flex align-items-center">
       <div class="container">
         <div>
-          <form class="mar-10" @submit.prevent="getStarted">
+          <form class="" @submit.prevent="getStarted">
             <div class="d-flex align-items-center index1" id="quoteInput">
                           
-              <b-input-group class="col-lg-12 justify-content-center">
-                <b-form-input v-model.trim="keyword" class="quote-input" placeholder="Search DOT or Name of Business"></b-form-input>
+              <b-input-group class="col-lg-12 col-xs-12 p-xs-0 justify-content-center">
+                <b-form-input v-model.trim="keyword" class="quote-input" :placeholder=placeholder></b-form-input>
                 <b-input-group-append>
-                  <b-button :disabled="loading" type="submit" variant="primary btn-get-quote">Get a Quote</b-button>
+                  <b-button :disabled="loading" type="submit" variant="primary btn-get-quote">{{ button_label }}</b-button>
                 </b-input-group-append>
               </b-input-group>
             </div>
@@ -95,100 +95,87 @@
       </div>
     </div>
 
-    <div class="container-fluid bg-blue pt-c-5 pb-5" id="img-text">
-      <div class="row d-flex justify-content-center card-block">
-        <div class="col-sm-8 col-md-8">
-          <div class="row homeImage">
-            <div class="col-lg-6 col-md-6 col-sm-8 col-xs-12 card-item">
-              <div class="card mb-4  bg-white">
-                <div class="card-body">
-                  <div class="d-flex justify-content-center flex-column">
-                    <div class="width-200 text-center">
-                      <h1>Insurance</h1>
-                      <p
-                        class="text-justify"
-                      >At LuckyTruck, we simplify your insurance management and have a competitive variety of options to find your company the right insurance carrier. We don’t charge extra fees now or ever.</p>
-                    </div>
+    <div class="container-fluid bg-grey pt-c-5 pb-5" id="img-text">
+      <div class="row justify-content-center">
+        <div class="col-lg-8 col-xs-12">
+
+          <div class="row justify-content-around homeImage">
+            <div class="col-lg-4 col-md-6 col-xs-12 card-item">
+                <div class="d-flex justify-content-center align-items-center flex-column">
+                  <div class="bg-dark-grey br-5 mb-4 w-100">
                     <img
                       src="../assets/images/insurance.jpg"
                       height="auto"
                       width="85%"
-                      class="d-block mx-auto rounded"
+                      class="d-block mx-auto p-4 rounded"
                       alt="Insurance"
                     >
                   </div>
-                </div>
+                  <h1 class="mb-3">Insurance</h1>
+                  <p
+                    class="text-center"
+                  >At LuckyTruck, we simplify your insurance management and have a competitive variety of options to find your company the right insurance carrier. We don’t charge extra fees now or ever.</p>
               </div>
             </div>
-            <div class="col-lg-6 col-md-6 col-sm-8 col-xs-12 card-item">
-              <div class="card mb-4  bg-white">
-                <div class="card-body">
-                  <div class="d-flex justify-content-center flex-column">
-                    <div class="width-200 text-center">
-                      <h1>Business Operations</h1>
-                      <p
-                          class="text-justify"
-                      >To help you manage the dynamic nature of running a trucking business, we make it easier for you to manage your drivers, vehicles, and loads, all in our portal.</p>
-                    </div>
-                    <img
-                      src="../assets/images/maint.jpg"
-                      height="auto"
-                      width="85%"
-                      class="d-block mx-auto rounded"
-                      alt="Insurance"
-                    > 
-                  </div>
+            <div class="col-lg-4 col-md-6 col-xs-12 card-item">
+              <div class="d-flex justify-content-center align-items-center flex-column">
+                <div class="bg-dark-grey br-5 mb-4 w-100">
+                  <img
+                    src="../assets/images/maint.jpg"
+                    height="auto"
+                    width="85%"
+                    class="d-block mx-auto rounded p-4"
+                    alt="Insurance"
+                  >
                 </div>
+                <h1>Maintainence</h1>
+                <p
+                  class="text-center"
+                >As you operate and have various maintenance needs, let us know and we’ll try to connect you to people who can manage your needs. We are still adding this service, but feel welcome to ask.</p>
               </div>
             </div>
+            
           </div>
-          <div class="row homeImage">
-            <div class="col-lg-6 col-md-6 col-sm-8 col-xs-12 card-item">
-              <div class="card mb-4  bg-white">
-                <div class="card-body">
-                  <div class="d-flex justify-content-center flex-column">
-                    <div class="width-200 text-center">
-                      <h1>
-                        Authority Management</h1>
-                      <p
-                        class="text-justify"
-                      >Many new trucking companies receive fines in the first 45 days because they didn’t have the right authority advisory. We have partners that can you help manage your authority.</p>
-                    </div>
-                    <img
-                      src="../assets/images/risk.jpg"
-                      height="auto"
-                      width="85%"
-                      class="d-block mx-auto rounded"
-                      alt="Insurance"
-                    >
-                  </div>
+          <div class="row justify-content-around homeImage">
+            <div class="col-lg-4 col-md-6 col-xs-12 card-item">
+              <div class="d-flex justify-content-center align-items-center flex-column">
+                <div class="bg-dark-grey br-5 mb-4 w-100">
+                  <img
+                    src="../assets/images/risk.jpg"
+                    height="auto"
+                    width="85%"
+                    class="d-block mx-auto rounded p-4"
+                    alt="Insurance"
+                  > 
                 </div>
+                  <h1>Business Operations</h1>
+                  <p
+                      class="text-center"
+                  >To help you manage the dynamic nature of running a trucking business, we make it easier for you to manage your drivers, vehicles, and loads, all in our portal.</p>
               </div>
             </div>
-            <div class="col-lg-6 col-md-6 col-sm-8 col-xs-12 card-item">
-              <div class="card mb-4 bg-white">
-                <div class="card-body">
-                  <div class="d-flex justify-content-center flex-column">
-                    <div class="width-200 text-center">
-                      <h1>Maintainence</h1>
-                      <p
-                          class="text-justify"
-                      >As you operate and have various maintenance needs, let us know and we’ll try to connect you to people who can manage your needs. We are still adding this service, but feel welcome to ask.</p>
-                    </div>
-                    <img
-                      src="../assets/images/fleet.png"
-                      height="auto"
-                      width="85%"
-                      class="d-block mx-auto rounded"
-                      alt="Insurance"
-                    >
-                  </div>
+            <div class="col-lg-3 col-md-6 col-xs-12 card-item">
+              <div class="d-flex justify-content-center align-items-center flex-column">
+                <div class="bg-dark-grey br-5 mb-4 w-100">
+                  <img
+                    src="../assets/images/fleet.png"
+                    height="auto"
+                    width="85%"
+                    class="d-block mx-auto rounded p-4"
+                    alt="Insurance"
+                  >
                 </div>
+                  <h1>
+                    Authority Management</h1>
+                  <p
+                    class="text-center"
+                  >Many new trucking companies receive fines in the first 45 days because they didn’t have the right authority advisory. We have partners that can you help manage your authority.</p>
               </div>
             </div>
+            
           </div>
         </div>
-      </div>
+    </div>
     </div>
     <div class="modal" id="myModal">
       <div class="modal-dialog">
@@ -235,6 +222,10 @@ export default {
         console.log("clean", data);
       })
       .catch(e => console.log("e"));
+    if (isMobile) {
+      this.placeholder = "DOT # or Company Name";
+      this.button_label = "Get";
+    }
   },
   data() {
     return {
@@ -246,7 +237,9 @@ export default {
       loading: false,
       error: null,
       localUsdot: "",
-      localcompany: ""
+      localcompany: "",
+      placeholder: "Search DOT or Name of Business",
+      button_label: "Get a Quote"
     };
   },
   methods: {

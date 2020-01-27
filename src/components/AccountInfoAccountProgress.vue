@@ -8,11 +8,11 @@
     <div v-if="count" class="d-flex">
       
       <div class="title d-flex justify-content-end" v-if="status">Status:  Completed!</div>
-      <button
+    <!--   <button
         type="submit"
         class="lt-button lt-button-main justify-content-end go-button btn-viewPDF"
         @click="downloadPDF"
-      >Download PDF</button>
+      >Download PDF</button> -->
     </div>
 <!-- </div> -->
     </div>
