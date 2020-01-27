@@ -154,7 +154,7 @@
                   >To help you manage the dynamic nature of running a trucking business, we make it easier for you to manage your drivers, vehicles, and loads, all in our portal.</p>
               </div>
             </div>
-            <div class="col-lg-3 col-md-6 col-xs-12 card-item">
+            <div class="col-lg-4 col-md-6 col-xs-12 card-item">
               <div class="d-flex justify-content-center align-items-center flex-column">
                 <div class="bg-dark-grey br-5 mb-4 w-100">
                   <img
