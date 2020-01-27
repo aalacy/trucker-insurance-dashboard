@@ -9,7 +9,7 @@
       />
       </button>
     
-    <div class="containeraa" :class="{'show': showLabel}">
+    <!-- <div class="containeraa" :class="{'show': showLabel}">
       <transition-group name="fade" class="sidebar-menu text-center emergencya">
         <div v-for="(item, indexa) in itemsa" :key="indexa" class="menu-item p-2   navigation-links">
        
@@ -17,17 +17,17 @@
             <div>Need Help?</div>
             <div class="">Speak now with a licensed insurance agent</div>
             <a href="tel:15135062400" class="bt-call ">Click to Talk</a>
-            <!-- <div class=" justify-content-center">
+            <div class=" justify-content-center">
               or call us 24/7?
               <div class="d-flex align-items-center  justify-content-center"><font-awesome-icon
                 icon="phone-alt"
                 size="1x"
                 class=" color-fb d-flex  justify-content-center"
               /> <a href="tel: 15135062400"> 1-513-506-2400</a></div>
-            </div> -->
+            </div>
           </div>
       </transition-group>
-    </div>
+    </div> -->
     </div>
     <div class="pos-rel">
     <div>
