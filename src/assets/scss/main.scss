@@ -124,7 +124,16 @@ img {
   margin-right: 0.5rem;
 }
 
+.home_logo_text {
+  font-family: "proxima_novabold";
+  font-weight: bolder;
+  font-size: 72px;
+  color: $color_blue;
+}
 
+.fontawesome path {
+  fill: white;
+}
 
 .card-block {
   .card-item {
@@ -543,7 +552,8 @@ img {
   .text-right-a{
     display: block;
   }
-  
+
+
  }
  @media screen and (max-width:575px)
 {
@@ -554,6 +564,11 @@ img {
   .mob-hide{
     display: none !important;
   }
+
+   .home_logo_text {
+    font-size: 65px;
+  }
+  
 }
 
  @media screen and (max-width:375px)

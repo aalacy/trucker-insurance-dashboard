@@ -9,7 +9,12 @@
               <b-input-group class="col-lg-12 col-xs-12 p-xs-0 justify-content-center">
                 <b-form-input v-model.trim="keyword" class="quote-input" :placeholder=placeholder></b-form-input>
                 <b-input-group-append>
-                  <b-button :disabled="loading" type="submit" variant="primary btn-get-quote">{{ button_label }}</b-button>
+                  <b-button :disabled="loading" v-if="msg" type="submit" variant="primary btn-get-quote">
+                    <font-awesome-icon class="fontawesome" icon="search"  />
+                  </b-button>
+                  <b-button :disabled="loading" v-if="!msg" type="submit" variant="primary btn-get-quote">
+                    Get a Quote
+                  </b-button>
                 </b-input-group-append>
               </b-input-group>
             </div>
@@ -86,10 +91,10 @@
     <div class="container-fluid back bg-white" id="lt-section">
       <div class="row d-flex pad-50 justify-content-center">
         <div class="col-sm-8 col-md-8 text-center">
-          <!-- <div class="logo-text text-center">LT</div> -->
-          <img alt="logo" src="/img/logo_txt.png" />
+          <div class="home_logo_text text-center">LT</div>
+          <!-- <img alt="logo" src="/img/logo_txt.png" /> -->
 
-          <p class="below-logo">Our team genuinely cares about your success and we do what we can to help you succeed by making trucking easier. </p>
+          <p class="below-logo mt-0">Our team genuinely cares about your success and we do what we can to help you succeed by making trucking easier. </p>
           <button class="btn btn-primary" @click="onStartJourney()">Start Your Journey</button>
         </div>
       </div>
@@ -97,17 +102,17 @@
 
     <div class="container-fluid bg-grey pt-c-5 pb-5" id="img-text">
       <div class="row justify-content-center">
-        <div class="col-lg-8 col-xs-12">
+        <div class="col-xl-8 col-lg-10 col-xs-8">
 
           <div class="row justify-content-around homeImage">
-            <div class="col-lg-4 col-md-6 col-xs-12 card-item">
+            <div class="col-lg-4 col-md-5 col-sm-6 col-xs-8 card-item">
                 <div class="d-flex justify-content-center align-items-center flex-column">
-                  <div class="bg-dark-grey br-5 mb-4 w-100">
+                  <div class="bg-dark-grey br-5 mb-4 w-100 p-4">
                     <img
-                      src="../assets/images/insurance.jpg"
+                      src="../assets/images/Insurance.png"
                       height="auto"
                       width="85%"
-                      class="d-block mx-auto p-4 rounded"
+                      class="d-block mx-auto rounded"
                       alt="Insurance"
                     >
                   </div>
@@ -117,14 +122,14 @@
                   >At LuckyTruck, we simplify your insurance management and have a competitive variety of options to find your company the right insurance carrier. We don’t charge extra fees now or ever.</p>
               </div>
             </div>
-            <div class="col-lg-4 col-md-6 col-xs-12 card-item">
+            <div class="col-lg-4 col-md-5 col-sm-6 col-xs-8 card-item">
               <div class="d-flex justify-content-center align-items-center flex-column">
-                <div class="bg-dark-grey br-5 mb-4 w-100">
+                <div class="bg-dark-grey br-5 mb-4 w-100 p-4">
                   <img
-                    src="../assets/images/maint.jpg"
+                    src="../assets/images/Maintenance.png"
                     height="auto"
                     width="85%"
-                    class="d-block mx-auto rounded p-4"
+                    class="d-block mx-auto rounded"
                     alt="Insurance"
                   >
                 </div>
@@ -137,14 +142,14 @@
             
           </div>
           <div class="row justify-content-around homeImage">
-            <div class="col-lg-4 col-md-6 col-xs-12 card-item">
+            <div class="col-lg-4 col-md-5 col-sm-6 col-xs-8 card-item">
               <div class="d-flex justify-content-center align-items-center flex-column">
-                <div class="bg-dark-grey br-5 mb-4 w-100">
+                <div class="bg-dark-grey br-5 mb-4 w-100 p-4">
                   <img
-                    src="../assets/images/risk.jpg"
+                    src="../assets/images/BusinessOperation.png"
                     height="auto"
                     width="85%"
-                    class="d-block mx-auto rounded p-4"
+                    class="d-block mx-auto rounded"
                     alt="Insurance"
                   > 
                 </div>
@@ -154,14 +159,14 @@
                   >To help you manage the dynamic nature of running a trucking business, we make it easier for you to manage your drivers, vehicles, and loads, all in our portal.</p>
               </div>
             </div>
-            <div class="col-lg-4 col-md-6 col-xs-12 card-item">
+            <div class="col-lg-4 col-md-5 col-sm-6 col-xs-8 card-item">
               <div class="d-flex justify-content-center align-items-center flex-column">
-                <div class="bg-dark-grey br-5 mb-4 w-100">
+                <div class="bg-dark-grey br-5 mb-4 w-100  p-4">
                   <img
-                    src="../assets/images/fleet.png"
+                    src="../assets/images/AuthorityManagement.png"
                     height="auto"
                     width="85%"
-                    class="d-block mx-auto rounded p-4"
+                    class="d-block mx-auto rounded"
                     alt="Insurance"
                   >
                 </div>
@@ -224,7 +229,6 @@ export default {
       .catch(e => console.log("e"));
     if (isMobile) {
       this.placeholder = "DOT # or Company Name";
-      this.button_label = "Get";
     }
   },
   data() {
@@ -239,7 +243,6 @@ export default {
       localUsdot: "",
       localcompany: "",
       placeholder: "Search DOT or Name of Business",
-      button_label: "Get a Quote"
     };
   },
   methods: {
@@ -439,10 +442,6 @@ export default {
   font-weight: bold;
   font-size: 40px;
   color: black;
-}
-
-p.below-logo {
-  margin-top: 35px !important;
 }
 
 input:focus {

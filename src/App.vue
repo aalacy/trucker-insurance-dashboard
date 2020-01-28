@@ -143,17 +143,17 @@
                 <li class="footer-social-networks">
                     <span>
                         <a href="#" target="_blank">
-                           <font-awesome-icon :icon="['fab', 'twitter']" />
+                           <font-awesome-icon class="fontawesome" :icon="['fab', 'twitter']" />
                         </a>
                     </span>
                     <span>
                         <a href="#" target="_blank">
-                             <font-awesome-icon :icon="['fab', 'linkedin-in']"  />
+                             <font-awesome-icon class="fontawesome" :icon="['fab', 'linkedin-in']"  />
                         </a>
                     </span>
                     <span>
                         <a href="#" target="_blank">
-                             <font-awesome-icon :icon="['fab', 'facebook-f']"  />
+                             <font-awesome-icon class="fontawesome" :icon="['fab', 'facebook-f']"  />
                         </a>
                     </span>
                 </li>
