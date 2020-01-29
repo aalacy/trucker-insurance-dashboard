@@ -35,8 +35,13 @@
           <div v-if="noData" class="col-12">No data for your request.</div>
 
           <template v-else-if="(companies.length || company) && !loading">
-            <div class="col-sm-12 header-note">
-              Please choose your company.
+            <div class="d-flex w-100 p-relative">
+              <div class="header-note mx-auto">
+                Please choose your company.
+              </div>
+              <div class="new-company">
+                <button class="btn btn-outline-dark font-weight-bold" @click="gotoPersonalInfo()">New Company? Click here</button>
+              </div>
             </div>
             <div class="table-responsive company-table" id="btna-main">
               <table class="table table-responsive-md table-striped table-bordered table-hover">
@@ -94,7 +99,7 @@
           <div class="home_logo_text text-center">LT</div>
           <!-- <img alt="logo" src="/img/logo_txt.png" /> -->
 
-          <p class="below-logo mt-0">Our team genuinely cares about your success and we do what we can to help you succeed by making trucking easier. </p>
+          <p class="below-logo mt-0">Our team can help you save money on your insurance. With an easy to use platform, we also help you run your company better so that you spend more time doing what you love. Login to see for yourself!</p>
           <button class="btn btn-primary" @click="onStartJourney()">Start Your Journey</button>
         </div>
       </div>
@@ -102,7 +107,7 @@
 
     <div class="container-fluid bg-grey pt-c-5 pb-5" id="img-text">
       <div class="row justify-content-center">
-        <div class="col-xl-8 col-lg-10 col-xs-8">
+        <div class="col-lg-10 col-xs-8">
 
           <div class="row justify-content-around homeImage">
             <div class="col-lg-4 col-md-5 col-sm-6 col-xs-8 card-item">
@@ -246,6 +251,14 @@ export default {
     };
   },
   methods: {
+    gotoPersonalInfo() {
+      localStorage.setItem("usdot", "");
+      localStorage.setItem("company", "");
+      localStorage.setItem("Phone", "");
+      localStorage.setItem(["Mailing address"], "{}");
+      localStorage.setItem(["Physical address"], "{}");
+      this.$router.push({ name: "AccountInfoPersonalInfo" });
+    },
     onStartJourney() {
       var options = {
         container: 'body',
@@ -284,13 +297,16 @@ export default {
         });
 
         if (data.status == "OK") {
-          if (Array.isArray(data.data)) {
-            this.companies = data.data;
-            this.noData = !this.companies.length;
-            // console.log("companies",this.companies)
+          if (data.type == "USDOT") {
+            this.createCompany(data.data['USDOT Number'], data.data['Legal Name']);
           } else {
-            this.company = {};
-            this.noData = !Object.keys(this.company).length;
+            if (Array.isArray(data.data)) {
+              this.companies = data.data;
+              this.noData = !this.companies.length;
+            } else {
+              this.company = {};
+              this.noData = !Object.keys(this.company).length;
+            }
           }
         }
       } catch (err) {
@@ -368,6 +384,26 @@ export default {
     border-top-right-radius: 20px;
     border-bottom-right-radius: 20px;
   }
+
+  .p-relative {
+    position: relative;
+  }
+
+  .new-company {
+    position: absolute;
+    top: 12px;
+    right: 24px;
+  }
+
+  @media screen and (max-width:768px) {
+    .new-company {
+      position: relative;
+      display: flex;
+      margin-top: 16px;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+  }
   .ee {
     img {
       display: block;
@@ -434,8 +470,6 @@ export default {
     border-radius: 6px;
     background-color: white;
   }
-
-
 }
 
 .logo-text {

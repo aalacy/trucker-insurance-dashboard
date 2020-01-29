@@ -4,9 +4,15 @@
       <div class="card-body">
         <h4 class="card-title form-sub-title">Review Policies</h4>
 
-        <div v-if="loading">Loading...</div>
+        <div v-if="loading" class="col-12">
+          <img
+              src="../assets/images/loading/loading_truck_128.gif"
+              class="d-block mx-auto rounded"
+              alt="Loading"
+            >
+        </div>
         <div v-if="status">
-          <div v-for="item in quotes" :key="item.id" class="block-divider d-flex">
+          <div v-for="item in policies" :key="item.id" class="block-divider d-flex">
             <div class="policy-image-wrapper px-1">
               <img :src="item.img" alt class="policy-image">
             </div>
@@ -17,10 +23,7 @@
               <!-- <div class="policy-subtitle">{{ item.policyType }}</div> -->
               <div class="block-subtitle">
                 Policy Type:
-                <!-- <strong>{{ item.document }}</strong> -->
-                <a @click="openInNewWindow">
-                  <strong class="clr">{{ item.document }}</strong>
-                </a>
+                <strong >{{ item.policyType }}</strong>
               </div>
 
               <div class="block-subtitle">
@@ -30,7 +33,7 @@
 
               <div class="block-subtitle">
                 Mo/Yr Premium:
-                <strong>$ {{ item.premium }}</strong>
+                <strong>{{ item.premium }}</strong>
               </div>
 
                <button
@@ -90,6 +93,7 @@
 <script>
 import moment from "moment";
 import axios from "axios";
+import { API } from "../api.js";
 import { setTimeout } from "timers";
 
 export default {
@@ -106,30 +110,11 @@ export default {
 
   data() {
     return {
-      quotes: [
-        {
-          id: 1,
-          title: "ForAgentsOnly",
-          policyType: "Policy Type",
-          img: "https://picsum.photos/200",
-          effectiveDate: "May 24, 2019",
-          premium: "",
-          document: "",
-          document_file: ""
-        },
-        {
-          id: 2,
-          title: "StateFarm",
-          policyType: "Policy Type",
-          img: "https://picsum.photos/200",
-          effectiveDate: "May 24, 2019",
-          premium: "",
-          document: "",
-          document_file: ""
-        }
+      policies: [
+        
       ],
       status: true,
-      loading: false,
+      loading: true,
       error: null,
       policyId: ""
     };
@@ -220,7 +205,7 @@ export default {
       //   .finally(() => console.log("hiiiiiiii"));
     }
   },
-  mounted() {
+  async mounted() {
     // console.log("localStorage.getItem(quotation_id)",localStorage.getItem("quotation_id"));
 
     // setTimeout(() => {
@@ -257,6 +242,25 @@ export default {
     //   });
   // }
     
+    let res = await API.post("company/accountinfo/policies", {
+      DOT_ID: '1236'
+    });
+    this.loading = false;
+    const { policies, status } = res;
+    if (status == 'ok') {
+      policies.map((policy, i) => {
+        this.policies.push({
+          id: i,
+          title: policy.accountName,
+          policyType: policy.policyType,
+          img: "https://picsum.photos/200",
+          effectiveDate: policy.effectiveDate,
+          premium: `$${policy.currentPremium ? policy.currentPremium : 0}`,
+          document: "",
+          document_file: ""
+        })
+      })
+    }
   },
   created() {
     this.$emit("update-hint", "Helpful hints about current section that will guide the user through the steps, and onto the next section of the form, coinciding with the input field that is active.");
