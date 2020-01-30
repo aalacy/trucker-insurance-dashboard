@@ -30,23 +30,22 @@
         </div>
         <div class="row mt-5 search-result">
 
-          <div v-if="error" class="col-12 alert alert-danger" role="alert">{{ error }}</div>
+          <div v-if="error" class="col-12 px-3 pt-2 pb-2" role="alert">{{ error }}</div>
 
           <div v-if="noData" class="col-12">No data for your request.</div>
 
           <template v-else-if="(companies.length || company) && !loading">
-            <div class="d-flex w-100 p-relative">
+            <div class="title-box">
+              <button class="btn btn-outline-dark new-company" @click="gotoPersonalInfo()">New Company? Click here</button>
               <div class="header-note mx-auto">
-                Please choose your company.
+                Select your company.
               </div>
-              <div class="new-company">
-                <button class="btn btn-outline-dark font-weight-bold" @click="gotoPersonalInfo()">New Company? Click here</button>
-              </div>
+              <div class="table-summary">List of Companies <span v-if="companies.length">{{companies.length}}</span></div>
             </div>
             <div class="table-responsive company-table" id="btna-main">
               <table class="table table-responsive-md table-striped table-bordered table-hover">
-                <caption >List of Companies <span v-if="companies.length">{{companies.length}}</span></caption>
-                <thead class="thead-dark">
+                
+                <thead class="">
                   <tr>
                     <th>Name</th>
                     <th>US DOT</th>
@@ -248,6 +247,7 @@ export default {
       localUsdot: "",
       localcompany: "",
       placeholder: "Search DOT or Name of Business",
+      isDotSearch: false,
     };
   },
   methods: {
@@ -297,20 +297,21 @@ export default {
         });
 
         if (data.status == "OK") {
-          if (data.type == "USDOT") {
-            this.createCompany(data.data['USDOT Number'], data.data['Legal Name']);
+          if (Array.isArray(data.data)) {
+            this.companies = data.data;
+            this.noData = !this.companies.length;
           } else {
-            if (Array.isArray(data.data)) {
-              this.companies = data.data;
-              this.noData = !this.companies.length;
-            } else {
-              this.company = {};
-              this.noData = !Object.keys(this.company).length;
-            }
+            this.company = {};
+            this.noData = !Object.keys(this.company).length;
           }
         }
       } catch (err) {
-        this.error = err.message;
+        console.log('dee', err);
+        if (data.type == "USDOT") {
+          this.error = "If your company is new, feel welcome to call us at 513-506-2400 and we can help set up your authority, otherwise check the number and search again."
+        } else {
+          this.error = err.message;
+        }
       } finally {
         this.loading = false;
       }
@@ -340,7 +341,12 @@ export default {
             this.$router.push({ name: "AccountInfoPersonalInfo" });
           }
         } else if (data.status === "ERROR") {
-          this.error = data.messages[0] || data.data;
+          if (this.isDotSearch) {
+          this.error = "If your company is new, feel welcome to call us at 513-506-2400 and we can help set up your authority, otherwise check the number and search again."
+          } else {
+            this.error = data.messages[0] || data.data;
+          }
+          
         }
       } catch (err) {
         console.error(err);
@@ -389,21 +395,65 @@ export default {
     position: relative;
   }
 
-  .new-company {
-    position: absolute;
-    top: 12px;
-    right: 24px;
+  .title-box {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    position: relative;
+    padding: 10px 20px;
+    flex-wrap: wrap;
   }
 
-  @media screen and (max-width:768px) {
+  .header-note {
+    text-align: center;
+    font-size: 30px;
+    font-weight: 600;
+    order: 2;
+  }
+
+  .new-company {
+    min-width: 250px;
+    max-height: 50px;
+    order: 1;
+  }
+
+  .table-summary {
+    order: 3;
+    font-size: 18px;
+  }
+
+  .company-table table th {
+    background: #3a5e9a;
+    color: white;
+    border: none;
+    position: sticky;
+    top: 0;
+  }
+
+  .company-table table th:first-child {
+    border-top-left-radius: 5px;
+  }
+
+  .company-table table th:last-child {
+    border-top-right-radius: 5px;
+  }
+
+  @media only screen and (max-width: 768px) {
+    .title-box {
+      flex-direction: column;
+    }
+
     .new-company {
-      position: relative;
-      display: flex;
-      margin-top: 16px;
-      margin-left: auto !important;
-      margin-right: auto !important;
+      order: 2;
+      margin-bottom: 10px;
+    }
+
+    .header-note {
+      order: 1;
+      margin-bottom: 10px;
     }
   }
+
   .ee {
     img {
       display: block;
@@ -448,22 +498,10 @@ export default {
     background-color: white;
   }
 
-  .header-note {
-    text-align: center;
-    padding: 0.75rem 0.75rem 0 0.75rem;
-    font-size: 24px;
-    font-weight: 600;
-  }
+
 
   #btna-main {
-    padding: 0.5rem;
-
-    
-    caption {
-      caption-side: top;
-      text-align: right;
-      // padding: 0 0.75rem 0 0;
-    }
+    padding: 0 0.5rem;
   }
   
   .search-result {
