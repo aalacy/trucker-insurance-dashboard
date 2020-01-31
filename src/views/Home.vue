@@ -30,7 +30,7 @@
         </div>
         <div class="row mt-5 search-result">
 
-          <div v-if="error" class="col-12 px-3 pt-2 pb-2" role="alert">{{ error }}</div>
+          <div v-if="error" class="col-12 px-3 pt-2 pb-2" role="alert"><span v-html="error"></span></div>
 
           <div v-if="noData" class="col-12">No data for your request.</div>
 
@@ -296,6 +296,8 @@ export default {
           keyword: this.keyword
         });
 
+        console.log(data)
+
         if (data.status == "OK") {
           if (Array.isArray(data.data)) {
             this.companies = data.data;
@@ -304,14 +306,11 @@ export default {
             this.company = {};
             this.noData = !Object.keys(this.company).length;
           }
+        } else {
+          this.error = data.message;
         }
       } catch (err) {
-        console.log('dee', err);
-        if (data.type == "USDOT") {
-          this.error = "If your company is new, feel welcome to call us at 513-506-2400 and we can help set up your authority, otherwise check the number and search again."
-        } else {
           this.error = err.message;
-        }
       } finally {
         this.loading = false;
       }
@@ -341,12 +340,7 @@ export default {
             this.$router.push({ name: "AccountInfoPersonalInfo" });
           }
         } else if (data.status === "ERROR") {
-          if (this.isDotSearch) {
-          this.error = "If your company is new, feel welcome to call us at 513-506-2400 and we can help set up your authority, otherwise check the number and search again."
-          } else {
-            this.error = data.messages[0] || data.data;
-          }
-          
+          this.error = data.messages[0] || data.data;
         }
       } catch (err) {
         console.error(err);
