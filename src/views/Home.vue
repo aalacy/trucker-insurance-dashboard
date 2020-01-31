@@ -36,7 +36,7 @@
 
           <template v-else-if="(companies.length || company) && !loading">
             <div class="title-box">
-              <button class="btn btn-outline-dark new-company" @click="gotoPersonalInfo()">New Company? Click here</button>
+              <button class="btn btn-primary new-company" @click="gotoPersonalInfo()">New Company? Click here</button>
               <div class="header-note mx-auto">
                 Select your company.
               </div>
@@ -406,7 +406,7 @@ export default {
   }
 
   .new-company {
-    min-width: 250px;
+    min-width: 200px;
     max-height: 50px;
     order: 1;
   }
