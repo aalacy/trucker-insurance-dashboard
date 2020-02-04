@@ -257,10 +257,9 @@ export default {
   width: 0px;
   max-height: 100%;
   // background-color: rgba($color: #81b121, $alpha: 0.8);
-  border: solid #fff;
-  border-width: 0 1px 0 0;
   transition: all 0.5s ease-in-out;
   overflow-y: auto;
+  padding-right: 20px;
 
   .control {
     display: flex;
@@ -314,6 +313,20 @@ export default {
           font-weight: 800;
           font-size: 1.1rem;
           margin-left: 20px;
+        }
+
+        &.active:after {
+          left: 100%;
+          display: block;
+          position: absolute;
+          top: 17px;
+          right: 0;
+          width: 0;
+          height: 0;
+          content: "";
+          border-style: solid;
+          border-width: 8px 0 8px 8px;
+          border-color: transparent transparent transparent #5e98f9;
         }
 
         .triangle {

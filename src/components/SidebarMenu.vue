@@ -8,30 +8,9 @@
           class="mr-4 color-fb ques d-flex justify-content-center"
       />
       </button>
-    
-    <!-- <div class="containeraa" :class="{'show': showLabel}">
-      <transition-group name="fade" class="sidebar-menu text-center emergencya">
-        <div v-for="(item, indexa) in itemsa" :key="indexa" class="menu-item p-2   navigation-links">
-       
-     
-            <div>Need Help?</div>
-            <div class="">Speak now with a licensed insurance agent</div>
-            <a href="tel:15135062400" class="bt-call ">Click to Talk</a>
-            <div class=" justify-content-center">
-              or call us 24/7?
-              <div class="d-flex align-items-center  justify-content-center"><font-awesome-icon
-                icon="phone-alt"
-                size="1x"
-                class=" color-fb d-flex  justify-content-center"
-              /> <a href="tel: 15135062400"> 1-513-506-2400</a></div>
-            </div>
-          </div>
-      </transition-group>
-    </div> -->
     </div>
     <div class="pos-rel">
     <div>
-    
       
       <button type="button" class="btn ico-btn" @click="showNav">
         <img src="../assets/images/hame.png" height="100" width="100" class="d-block mx-auto">
@@ -294,10 +273,11 @@ export default {
   width: 0px;
   max-height: 100%;
   // background-color: rgba($color: #81b121, $alpha: 0.8);
-  border: solid #fff;
-  border-width: 0 1px 0 0;
+  //border: solid #fff;
+  //border-width: 0 1px 0 0;
   transition: all 0.5s ease-in-out;
   overflow-y: auto;
+  padding-right: 20px;
 
   .control {
     display: flex;
@@ -344,6 +324,20 @@ export default {
         &.active {
           background-color: $color_blue;
          
+        }
+
+        &.active:after {
+          left: 100%;
+          content: '';
+          display: block;
+          position: absolute;
+          right: 0;
+          width: 0;
+          height: 0;
+          content: "";
+          border-style: solid;
+          border-width: 8px 0 8px 8px;
+          border-color: transparent transparent transparent #5e98f9;
         }
 
         .title {
