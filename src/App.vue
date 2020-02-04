@@ -198,7 +198,7 @@
         </div>
         </div>
       </div>
-      <div class="d-flex"></div>
+      <a class="footer-bbb" href="https://www.bbb.org/us/oh/cincinnati/profile/trucking/luckytruck-0292-90026519/#sealclick" target="_blank" rel="nofollow"><img src="https://seal-cincinnati.bbb.org/seals/gray-seal-200-42-whitetxt-bbb-90026519.png" style="border: 0;" alt="LuckyTruck BBB Business Review" /></a>
     </footer>
    
   </div>
@@ -411,6 +411,9 @@ export default {
 @import "~bootstrap/scss/bootstrap.scss";
 @import "./assets/scss/main.scss";
 
+footer {
+  position: relative;
+}
 
 .text-right-a{
         /* color: black; */
@@ -430,6 +433,25 @@ export default {
 }
 .v-facebook-login span {
   color: white !important;
+}
+
+.container {
+  position: relative;
+}
+
+.footer-bbb {
+  position: absolute;
+  bottom: 25px;
+  left: 20px;
+}
+
+@media only screen and (max-width: 425px) {
+  .footer-bbb {
+    margin-top: 20px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+  }
 }
 </style>
 
