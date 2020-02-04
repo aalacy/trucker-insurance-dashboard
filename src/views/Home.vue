@@ -24,7 +24,7 @@
         <div v-if="loading" class="col-12">
           <img
               src="../assets/images/loading/loading_truck_128.gif"
-              class="d-block mx-auto rounded"
+              class="d-block mx-auto rounded mt-4"
               alt="Loading"
             >
         </div>
