@@ -147,8 +147,8 @@
                         </a>
                     </span>
                     <span>
-                        <a href="#" target="_blank">
-                             <font-awesome-icon class="fontawesome" :icon="['fab', 'linkedin-in']"  />
+                        <a href="https://www.linkedin.com/company/luckytruck" target="_blank">
+                         <font-awesome-icon class="fontawesome" :icon="['fab', 'linkedin-in']"  />
                         </a>
                     </span>
                     <span>

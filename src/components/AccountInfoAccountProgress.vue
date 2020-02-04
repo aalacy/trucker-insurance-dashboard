@@ -137,7 +137,7 @@ export default {
   }
 
   .progress {
-    height: 0.4rem;
+    height: 0.2rem;
     background-color: #cbcbcb;
 
     .progress-bar {

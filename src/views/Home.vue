@@ -278,7 +278,7 @@ export default {
         x: false,
         y: true
       }
-      this.$scrollTo("#quoteInput", 1000, options);
+      this.$scrollTo("#quoteInput", 400, options);
     },
     async getStarted() {
       if (!this.keyword) {
