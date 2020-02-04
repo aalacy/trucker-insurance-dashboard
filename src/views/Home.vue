@@ -7,7 +7,7 @@
             <div class="d-flex align-items-center index1" id="quoteInput">
                           
               <b-input-group class="col-lg-12 col-xs-12 p-xs-0 justify-content-center">
-                <b-form-input v-model.trim="keyword" class="quote-input" :placeholder=placeholder></b-form-input>
+                <b-form-input v-model.trim="keyword" autocomplete="off" class="quote-input" :placeholder=placeholder></b-form-input>
                 <b-input-group-append>
                   <b-button :disabled="loading" v-if="msg" type="submit" variant="primary btn-get-quote">
                     <font-awesome-icon class="fontawesome" icon="search"  />
