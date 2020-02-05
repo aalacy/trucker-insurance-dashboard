@@ -177,48 +177,6 @@ export default {
     }
   },
   mounted() {
-    if (localStorage.getItem("token")) {
-      this.save = false;
-      setTimeout(()=>{
-            this.$store.dispatch("loadData", this.userData).then(() => {
-      let len = this.$store.state.getData.data;
-      for (let j = 0; j < len.length; j++) {
-        if (len && len[j].key == "cargoHauled") {
-          let a = this.$store.state.getData.data[j];
-          let b = JSON.parse(a.val).haulType;
-        }
-      }
-
-      // let c =[]
-      for (let i = 0; i < this.cargoGroups.length; i++) {
-        for (let j = 0; j < this.cargoGroups[i].cargoHauled.length; j++) {
-        }
-      }
-    });
-      },1000)
-    } else {
-      this.save = true;
-           setTimeout(()=>{
-            this.$store.dispatch("loadData", this.uuid).then(() => {
-      let len = this.$store.state.getData.data;
-      for (let j = 0; j < len.length; j++) {
-        if (this.$store.state.getData.data[j].key == "cargoHauled") {
-          let a = this.$store.state.getData.data[j];
-          let b = JSON.parse(a.val).haulType;
-    
-        }
-      }
-
-      // let c =[]
-      for (let i = 0; i < this.cargoGroups.length; i++) {
-        for (let j = 0; j < this.cargoGroups[i].cargoHauled.length; j++) {
-          
-        }
-      }
-    });
-      },1000)
-    }
-  
   },
   methods: {
     newQuoteReq() {

@@ -225,15 +225,19 @@ export default {
           loader.hide();
         }
         // console.log("data", data.data.Tokens[0].token);
-        this.$swal("Thank You!", data.message, "success");
+        this.$swal("Thank You!", data.message, "success")
+          .then((value) => {
+            this.$router.push({ name: 'NewAccountInfo' });
+          });
         let t = data.data;
         console.log("data", data);
         localStorage.setItem("userId", data.data.id);
 
         localStorage.setItem("token", JSON.stringify(t));
         localStorage.setItem("showModal", false);
-        this.$router.push({ name: location.search.split('=')[1] });
-
+        // this.$router.push({ name: location.search.split('=')[1] });
+        document.querySelector('.swal-button--confirm').style.display = 'contents';
+        setTimeout(function(){ document.querySelector('.swal-button--confirm').click(); }, 3000);
       } else if (data.status === "error") {
         this.loading = false;
         if (loader) {

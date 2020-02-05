@@ -30,7 +30,16 @@
         </div>
         <div class="row mt-5 search-result">
 
-          <div v-if="error" class="col-12 px-3 pt-2 pb-2" role="alert"><span v-html="error"></span></div>
+          <div v-if="error" class="col-12 px-3 pt-2 pb-2" role="alert">
+            <div class="title-box">
+              <button class="btn btn-primary new-company" @click="gotoPersonalInfo()">New Company? Click here</button>
+              <div class="header-note mx-auto">
+                Select your company.
+              </div>
+              <div class="table-summary">List of Companies 0</div>
+            </div>
+            <div v-html="error" style="padding: 10px 20px;"></div>
+          </div>
 
           <div v-if="noData" class="col-12">No data for your request.</div>
 
@@ -278,7 +287,7 @@ export default {
         x: false,
         y: true
       }
-      this.$scrollTo("#quoteInput", 400, options);
+      this.$scrollTo(".app-navbar", 400, options);
     },
     async getStarted() {
       if (!this.keyword) {

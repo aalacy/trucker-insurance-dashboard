@@ -183,156 +183,156 @@ export default {
     modelLogin: ModalLogin,
   },
   mounted() {
-    if (localStorage.getItem("token")) {
-      this.save = false;
-      setTimeout(() => {
-        this.$store.dispatch("loadData", this.userData).then(() => {
-          let len = this.$store.state.getData.data;
-          for (let i = 0; i <= len.length; i++) {
+    // if (localStorage.getItem("token")) {
+      // this.save = false;
+      // setTimeout(() => {
+      //   this.$store.dispatch("loadData", this.userData).then(() => {
+      //     let len = this.$store.state.getData.data;
+      //     for (let i = 0; i <= len.length; i++) {
           
-            if (this.$store.state.getData.data[i].key === "imageDOT") {
-              this.fnCall = true;
-              let a = this.$store.state.getData.data[i];
-              let b = JSON.parse(a.val);
-              var url = "";
-              this.previewFile(b[0].filename, "imageDOT");
-              this.getBase64Image(
-                "http://3.13.68.92:3000/company/" + b[0].filename,
-                base64image => {
+      //       if (this.$store.state.getData.data[i].key === "imageDOT") {
+      //         this.fnCall = true;
+      //         let a = this.$store.state.getData.data[i];
+      //         let b = JSON.parse(a.val);
+      //         var url = "";
+      //         this.previewFile(b[0].filename, "imageDOT");
+      //         this.getBase64Image(
+      //           "http://3.13.68.92:3000/company/" + b[0].filename,
+      //           base64image => {
                 
-                  url = base64image;
+      //             url = base64image;
                 
-                  this.previewFile(url, "imageDOT");
-                }
-              );
-            }
-            if (this.$store.state.getData.data[i].key === "imageRegistration") {
-              this.fnCall = true;
-              let a = this.$store.state.getData.data[i];
-              let b = JSON.parse(a.val);
-              var url = "";
-              this.previewFile(b[0].filename, "imageRegistration");
-              this.getBase64Image(
-                "http://3.13.68.92:3000/company/" + b[0].filename,
-                base64image => {
-                  //
-                  url = base64image;
-                  //
-                  this.previewFile(url, "imageRegistration");
-                }
-              );
-            }
-            if (this.$store.state.getData.data[i].key === "imageIdFront") {
-              this.fnCall = true;
-              let a = this.$store.state.getData.data[i];
-              let b = JSON.parse(a.val);
-              var url = "";
-              this.previewFile(b[0].filename, "imageIdFront");
-              this.getBase64Image(
-                "http://3.13.68.92:3000/company/" + b[0].filename,
-                base64image => {
-                  //
-                  url = base64image;
-                  //
-                  this.previewFile(url, "imageIdFront");
-                }
-              );
-            }
-            if (this.$store.state.getData.data[i].key === "imageIdBack") {
-              this.fnCall = true;
-              let a = this.$store.state.getData.data[i];
-              let b = JSON.parse(a.val);
-              var url = "";
-              this.previewFile(b[0].filename, "imageIdBack");
-              this.getBase64Image(
-                "http://3.13.68.92:3000/company/" + b[0].filename,
-                base64image => {
-                  //
-                  url = base64image;
-                  //
-                  this.previewFile(url, "imageIdBack");
-                }
-              );
-            }
-          }
-        });
-      }, 1000);
-    } else {
-      this.save = true;
-      setTimeout(() => {
-        this.$store.dispatch("loadData", this.uuid).then(() => {
-          // this.fnCall = true;
-          let len = this.$store.state.getData.data;
-          for (let i = 0; i <= len.length; i++) {
+      //             this.previewFile(url, "imageDOT");
+      //           }
+      //         );
+      //       }
+      //       if (this.$store.state.getData.data[i].key === "imageRegistration") {
+      //         this.fnCall = true;
+      //         let a = this.$store.state.getData.data[i];
+      //         let b = JSON.parse(a.val);
+      //         var url = "";
+      //         this.previewFile(b[0].filename, "imageRegistration");
+      //         this.getBase64Image(
+      //           "http://3.13.68.92:3000/company/" + b[0].filename,
+      //           base64image => {
+      //             //
+      //             url = base64image;
+      //             //
+      //             this.previewFile(url, "imageRegistration");
+      //           }
+      //         );
+      //       }
+      //       if (this.$store.state.getData.data[i].key === "imageIdFront") {
+      //         this.fnCall = true;
+      //         let a = this.$store.state.getData.data[i];
+      //         let b = JSON.parse(a.val);
+      //         var url = "";
+      //         this.previewFile(b[0].filename, "imageIdFront");
+      //         this.getBase64Image(
+      //           "http://3.13.68.92:3000/company/" + b[0].filename,
+      //           base64image => {
+      //             //
+      //             url = base64image;
+      //             //
+      //             this.previewFile(url, "imageIdFront");
+      //           }
+      //         );
+      //       }
+      //       if (this.$store.state.getData.data[i].key === "imageIdBack") {
+      //         this.fnCall = true;
+      //         let a = this.$store.state.getData.data[i];
+      //         let b = JSON.parse(a.val);
+      //         var url = "";
+      //         this.previewFile(b[0].filename, "imageIdBack");
+      //         this.getBase64Image(
+      //           "http://3.13.68.92:3000/company/" + b[0].filename,
+      //           base64image => {
+      //             //
+      //             url = base64image;
+      //             //
+      //             this.previewFile(url, "imageIdBack");
+      //           }
+      //         );
+      //       }
+      //     }
+      //   });
+      // }, 1000);
+    // } else {
+    //   this.save = true;
+    //   setTimeout(() => {
+    //     this.$store.dispatch("loadData", this.uuid).then(() => {
+    //       // this.fnCall = true;
+    //       let len = this.$store.state.getData.data;
+    //       for (let i = 0; i <= len.length; i++) {
           
-            if (this.$store.state.getData.data[i].key === "imageDOT") {
-              this.fnCall = true;
-              let a = this.$store.state.getData.data[i];
-              let b = JSON.parse(a.val);
-              var url = "";
-              this.previewFile(b[0].filename, "imageDOT");
-              this.getBase64Image(
-                "http://3.13.68.92:3000/company/" + b[0].filename,
-                base64image => {
-                  //
-                  url = base64image;
-                  //
-                  this.previewFile(url, "imageDOT");
-                }
-              );
-            }
-            if (this.$store.state.getData.data[i].key === "imageRegistration") {
-              this.fnCall = true;
-              let a = this.$store.state.getData.data[i];
-              let b = JSON.parse(a.val);
-              var url = "";
-              this.previewFile(b[0].filename, "imageRegistration");
-              this.getBase64Image(
-                "http://3.13.68.92:3000/company/" + b[0].filename,
-                base64image => {
-                  //
-                  url = base64image;
-                  //
-                  this.previewFile(url, "imageRegistration");
-                }
-              );
-            }
-            if (this.$store.state.getData.data[i].key === "imageIdFront") {
-              this.fnCall = true;
-              let a = this.$store.state.getData.data[i];
-              let b = JSON.parse(a.val);
-              var url = "";
-              this.previewFile(b[0].filename, "imageIdFront");
-              this.getBase64Image(
-                "http://3.13.68.92:3000/company/" + b[0].filename,
-                base64image => {
-                  //
-                  url = base64image;
-                  //
-                  this.previewFile(url, "imageIdFront");
-                }
-              );
-            }
-            if (this.$store.state.getData.data[i].key === "imageIdBack") {
-              this.fnCall = true;
-              let a = this.$store.state.getData.data[i];
-              let b = JSON.parse(a.val);
-              var url = "";
-              this.previewFile(b[0].filename, "imageIdBack");
-              this.getBase64Image(
-                "http://3.13.68.92:3000/company/" + b[0].filename,
-                base64image => {
-                  //
-                  url = base64image;
-                  //
-                  this.previewFile(url, "imageIdBack");
-                }
-              );
-            }
-          }
-        });
-      }, 1000);
-    }
+    //         if (this.$store.state.getData.data[i].key === "imageDOT") {
+    //           this.fnCall = true;
+    //           let a = this.$store.state.getData.data[i];
+    //           let b = JSON.parse(a.val);
+    //           var url = "";
+    //           this.previewFile(b[0].filename, "imageDOT");
+    //           this.getBase64Image(
+    //             "http://3.13.68.92:3000/company/" + b[0].filename,
+    //             base64image => {
+    //               //
+    //               url = base64image;
+    //               //
+    //               this.previewFile(url, "imageDOT");
+    //             }
+    //           );
+    //         }
+    //         if (this.$store.state.getData.data[i].key === "imageRegistration") {
+    //           this.fnCall = true;
+    //           let a = this.$store.state.getData.data[i];
+    //           let b = JSON.parse(a.val);
+    //           var url = "";
+    //           this.previewFile(b[0].filename, "imageRegistration");
+    //           this.getBase64Image(
+    //             "http://3.13.68.92:3000/company/" + b[0].filename,
+    //             base64image => {
+    //               //
+    //               url = base64image;
+    //               //
+    //               this.previewFile(url, "imageRegistration");
+    //             }
+    //           );
+    //         }
+    //         if (this.$store.state.getData.data[i].key === "imageIdFront") {
+    //           this.fnCall = true;
+    //           let a = this.$store.state.getData.data[i];
+    //           let b = JSON.parse(a.val);
+    //           var url = "";
+    //           this.previewFile(b[0].filename, "imageIdFront");
+    //           this.getBase64Image(
+    //             "http://3.13.68.92:3000/company/" + b[0].filename,
+    //             base64image => {
+    //               //
+    //               url = base64image;
+    //               //
+    //               this.previewFile(url, "imageIdFront");
+    //             }
+    //           );
+    //         }
+    //         if (this.$store.state.getData.data[i].key === "imageIdBack") {
+    //           this.fnCall = true;
+    //           let a = this.$store.state.getData.data[i];
+    //           let b = JSON.parse(a.val);
+    //           var url = "";
+    //           this.previewFile(b[0].filename, "imageIdBack");
+    //           this.getBase64Image(
+    //             "http://3.13.68.92:3000/company/" + b[0].filename,
+    //             base64image => {
+    //               //
+    //               url = base64image;
+    //               //
+    //               this.previewFile(url, "imageIdBack");
+    //             }
+    //           );
+    //         }
+    //       }
+    //     });
+    //   }, 1000);
+    // }
   
   },
   data() {
