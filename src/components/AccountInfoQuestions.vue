@@ -205,9 +205,9 @@ export default {
     async loadCompany() {
       this.loading = true;
       this.error = null;
-
+      this.uuid = localStorage.getItem('uuid');
       try {
-        let res = await API.get("company/current");
+        let res = await API.get("company/current?uuid=" + this.uuid);
 
         if (res.status === "OK") {
           let { company } = res.data;
@@ -239,6 +239,7 @@ export default {
         let res = await API.post("company/save", { data });
 
         if (res.status === "OK") {
+          localStorage.setItem('uuid', res.data);
           this.goNextForm();
         } else if (res.status === "ERROR") {
           this.error = res.messages[0] || res.data;

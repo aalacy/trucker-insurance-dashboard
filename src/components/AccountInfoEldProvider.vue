@@ -14,7 +14,7 @@
                   type="text"
                   placeholder="Other Provider"
                   required
-                  class="lt-input"
+                  class="form-control"
                 >
               </div>
 
@@ -22,7 +22,7 @@
                 <button
                   form="addProviderForm"
                   type="submit"
-                  class="px-3 lt-button lt-button-main get-data"
+                  class="px-3 btn btn-primary get-data"
                 >ADD</button>
               </div>
             </div>
@@ -289,9 +289,9 @@ export default {
     async loadCompany() {
       this.loading = true;
       this.error = null;
-
+      this.uuid = localStorage.getItem('uuid');
       try {
-        let res = await API.get("company/current");
+        let res = await API.get("company/current?uuid=" + this.uuid);
 
         if (res.status === "OK") {
           let { company: { currentEldProvider } } = res.data;
@@ -342,6 +342,7 @@ export default {
         let res = await API.post("company/save", { data });
 
         if (res.status === "OK") {
+          localStorage.setItem('uuid', res.data);
           this.goNextForm();
         } else if (res.status === "ERROR") {
           this.error = res.messages[0] || res.data;

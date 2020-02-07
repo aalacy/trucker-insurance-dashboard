@@ -309,6 +309,7 @@ export default {
     this.$emit("update-hint", "Please be sure that the mailing address is where you want to receive physical documents. The garage address is where you keep your truck.");
     
     this.mobile = isMobile ? true : false;
+    this.uuid = localStorage.getItem('uuid');
     if (localStorage.getItem("token")) {
       this.save = false;
       this.formData.dotNumber = localStorage.getItem("usdot");
@@ -351,8 +352,6 @@ export default {
       this.formData.city1 = PhysicalAddress[2].trim().replace(",", "");
       this.formData.zip1 = PhysicalAddress[0].trim().replace(",", "");
     }
-    
-    this.uuid = localStorage.getItem('uuid');
   },
   beforeMount() {
     // localStorage.setItem("uuid", null);
@@ -468,16 +467,14 @@ export default {
       if (!formIsValid) {
         return;
       }
-      var temp_uuid;
       this.loading = true;
       this.error = null;
-      temp_uuid = this.uuid;
       try {
         let data = await API.post("company/save", {
           key: "personalInfo",
           val: this.formData,
           user_id: localStorage.getItem("userId"),
-          uuid: temp_uuid
+          uuid: this.uuid
         });
   
         if (data.status === "OK") {
@@ -523,13 +520,14 @@ export default {
     async loadCompany() {
       this.loading = false;
       this.error = null;
+      this.uuid = localStorage.getItem('uuid');
       try {
-        let data = await API.get("company/current");
-        this.uuid = data.data.uuid;
+        let res = await API.get("company/current?uuid=" + this.uuid);
+        this.uuid = res.data.uuid;
   
-        if (data.status === "OK") {
-          let { company } = data.data;
-        } else if (data.status === "ERROR") {
+        if (res.status === "OK") {
+          let { company } = res.data;
+        } else if (res.status === "ERROR") {
           // this.$router.replace({ name: "Home" });
         }
       } catch (err) {
@@ -604,6 +602,7 @@ export default {
         let res = await API.post("company/save", { data});
   
         if (res.status === "OK") {
+          localStorage.setItem('uuid', res.data);
           this.goNextForm();
         } else if (res.status === "ERROR") {
           

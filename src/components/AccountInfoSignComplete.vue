@@ -11,7 +11,7 @@
               <div v-if="formErrors.dateOfSign" class="text-danger">{{ formErrors.dateOfSign }}</div>
             </div>
 
-            <div class="col-12 col-md-8">
+            <div class="col-12">
               <div class="row">
                 <div class="col">
                   <div class="form-group">
@@ -20,7 +20,7 @@
                       v-model="formData.dobD"
                       :class="{ 'has-error': formErrors.dobD }"
                       type="text"
-                      class="lt-input"
+                      class="form-control"
                       placeholder="DD"
                       required
                       @focus="onFocus('dobD')"
@@ -38,7 +38,7 @@
                       v-model="formData.dobM"
                       :class="{ 'has-error': formErrors.dobM }"
                       type="text"
-                      class="lt-input"
+                      class="form-control"
                       placeholder="MM"
                       required
                       @focus="onFocus('dobM')"
@@ -57,7 +57,7 @@
                       v-model="formData.dobY"
                       :class="{ 'has-error': formErrors.dobY }"
                       type="text"
-                      class="lt-input"
+                      class="form-control"
                       placeholder="YYYY"
                       required
                       @focus="onFocus('dobY')"
@@ -71,7 +71,7 @@
               </div>
             </div>
 
-            <div class="card-body">
+            <div class="col-12 mt-4">
               <div class="form-group">
                 <h5>
                   <label class="d-flex">Signature</label>
@@ -81,7 +81,7 @@
                   id="imageSign"
                   :class="{ 'has-error': formErrors.imageSign }"
                   type="file"
-                  class="lt-input"
+                  class="form-control"
                   hidden
                   @change="setImage($event, 'imageSign')"
                 >-->
@@ -98,7 +98,7 @@
                     id="signature"
                     :options="{backgroundColor: '#ffffff', penColor:'#000',dotSize:'0.5'}"
                   />
-                  <div class="m-2 d-flex">
+                  <div class="mt-3 d-flex">
                     <!-- <button
                       @click="saveSignature"
                       class="lt-button lt-button-main mr-2"
@@ -106,7 +106,7 @@
                     >Save</button> -->
                     <button
                       @click="clearSignature"
-                      class="lt-button"
+                      class="btn btn-outline-dark"
                       type="button"
                     >Clear</button>
                   </div>
@@ -307,13 +307,20 @@ export default {
       img.src = imgUrl;
     },
     async loadCompany() {
+      this.loading = true;
+      this.error = null;
+      this.uuid = localStorage.getItem('uuid');
       try {
-        let res = await API.get("company/current");
+        let res = await API.get("company/current?uuid=" + this.uuid);
         if (res.status === "OK") {
           // let data = data.data;
           this.uuid = res.data.uuid;
         }
-      } catch {}
+      } 
+      catch {}
+      finally {
+        this.loading = false;
+      }
     },
     newQuoteReq() {
       swal({
@@ -397,9 +404,10 @@ export default {
         let res = await API.post("company/save", { data });
 
         if (res.status === "OK") {
+          localStorage.setItem('uuid', res.data);
           this.goNextForm();
         } else if (res.status === "ERROR") {
-          this.error = res.messages[0] || res.data;
+          this.formErrors.imageSign = res.messages;
         }
       } catch (err) {
         console.error(err);

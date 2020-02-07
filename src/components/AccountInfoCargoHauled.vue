@@ -287,9 +287,9 @@ export default {
     async loadCompany() {
       this.loading = true;
       this.error = null;
-
+      this.uuid = localStorage.getItem('uuid');
       try {
-        let res = await API.get("company/current");
+        let res = await API.get("company/current?uuid=" + this.uuid);
   
         if (res.status === "OK") {
           let { company: { cargoGroup, cargoHauled } } = res.data;
@@ -325,16 +325,16 @@ export default {
 
       this.loading = true;
       this.error = null;
-      this.final_uuid = this.uuid;
       try {
         const { haulType } = this.formData;
         const data = {
           cargoHauled: haulType,
           user_id: localStorage.getItem("userId"),
-          uuid: this.final_uuid
+          uuid: this.uuid
         };
         let res = await API.post("company/save", { data });
         if (res.status === "OK") {
+          localStorage.setItem('uuid', res.data);
           this.goNextForm();
         } else if (res.status === "ERROR") {
           this.error = res.messages[0] || res.data;

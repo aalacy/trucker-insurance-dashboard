@@ -1,11 +1,5 @@
 <template>
   <div class="form-hint">
-    <div>
-      <div class="hint-icon mr-4">
-        <img src="../assets/images/icn_hint.png" />
-      </div>
-    </div>
-
     <div class="hint card w-100">
       <div class="hint-card-triangle"></div>
       <div class="card-body">
@@ -14,6 +8,11 @@
         <div class="">
         
         </div>
+      </div>
+    </div>
+    <div>
+      <div class="hint-icon mr-4">
+        <img src="../assets/images/icn_hint.png" />
       </div>
     </div>
   </div>
@@ -36,17 +35,30 @@ export default {
 
 .form-hint {
   display: flex;
+  flex-direction: column;
+
+  .hint {
+    margin-bottom: 20px;
+  }
 
   .hint-card-triangle {
     position: absolute;
-    top: 70px;
-    left: -21px;
+    //top: 70px;
+    //left: -21px;
     width: 0;
     height: 0;
     border-style: solid;
     border-width: 0px 0px 30px 30px;
     border-color: transparent transparent white transparent;
+    transform: rotate(45deg);
+    bottom: -15px;
+    left: 21px;
   }
+
+  .form-sub-title {
+    margin: 0 0 10px 0 !important;
+  }
+
   .hint-icon {
     width: 84px;
     display: flex;

@@ -15,8 +15,8 @@
             </div>
           </div>
 
-          <div v-if="formData.driverIsOwner" class="col-12 col-md-6">
-            <select v-model="formData.driverOwnerIndex" @change="onChange($event)" class="lt-input" id="driverList" >
+          <div v-if="formData.driverIsOwner" class="">
+            <select v-model="formData.driverOwnerIndex" @change="onChange($event)" class="form-control col-6" id="driverList" >
               <option value="" disabled>Select Driver</option>
  
               <option
@@ -30,7 +30,7 @@
           <hr>
 
           <template>
-            <div class="owner-form-item container-fluid mob-2" v-for="(singleDriver, index) in driversData" :key="index">
+            <div class="owner-form-item mob-2" v-for="(singleDriver, index) in driversData" :key="index">
               <div class="row">
                 <div class="col">
                   <h2 class="h5">Owner #{{ index + 1 }}</h2>
@@ -54,7 +54,7 @@
                     <input
                       v-model="driversData[index].firstName"
                       type="text"
-                      class="lt-input"
+                      class="form-control"
                       placeholder="First name"
                       :class="{ 'has-error': !validations.driversData[index].firstName.is_valid }"
                       @change="validateFieldCustom('firstName', index)"
@@ -74,7 +74,7 @@
                     <input
                       v-model="driversData[index].lastName"
                       type="text"
-                      class="lt-input"
+                      class="form-control"
                       placeholder="Last name"
                       :class="{ 'has-error': !validations.driversData[index].lastName.is_valid }"
                       @change="validateFieldCustom('lastName', index)"
@@ -107,7 +107,7 @@
                         <input
                           v-model="driversData[index].dobM"
                           type="number"
-                          class="lt-input"
+                          class="form-control"
                           :class="{ 'has-error': !validations.driversData[index].dobM.is_valid }"
                           @change="validateFieldCustom('dobM', index)"
                           placeholder="MM"
@@ -127,7 +127,7 @@
                         <input
                           v-model="driversData[index].dobD"
                           type="number"
-                          class="lt-input"
+                          class="form-control"
                           :class="{ 'has-error': !validations.driversData[index].dobD.is_valid }"
                           @change="validateFieldCustom('dobD', index)"
                           placeholder="DD"
@@ -147,7 +147,7 @@
                         <input
                           v-model="driversData[index].dobY"
                           type="number"
-                          class="lt-input"
+                          class="form-control"
                           placeholder="YYYY"
                           :class="{ 'has-error': !validations.driversData[index].dobY.is_valid }"
                           @change="validateFieldCustom('dobY', index)"
@@ -171,7 +171,7 @@
                     <input
                       v-model="driversData[index].address"
                       type="text"
-                      class="lt-input"
+                      class="form-control"
                       placeholder="Address"
                       :class="{ 'has-error': !validations.driversData[index].address.is_valid }"
                       @change="validateFieldCustom('address', index)"
@@ -190,7 +190,7 @@
                     <input
                       v-model="driversData[index].city"
                       type="text"
-                      class="lt-input"
+                      class="form-control"
                       placeholder="City"
                       :class="{ 'has-error': !validations.driversData[index].city.is_valid }"
                       @change="validateFieldCustom('city', index)"
@@ -211,7 +211,7 @@
                     <input
                       v-model="driversData[index].state"
                       type="text"
-                      class="lt-input"
+                      class="form-control"
                       placeholder="State"
                       :class="{ 'has-error': !validations.driversData[index].state.is_valid }"
                       @change="validateFieldCustom('state', index)"
@@ -230,7 +230,7 @@
                     <input
                       v-model="driversData[index].zip"
                       type="text"
-                      class="lt-input"
+                      class="form-control"
                       minlength="5"
                       placeholder="Zip"
                       :class="{ 'has-error': !validations.driversData[index].zip.is_valid }"
@@ -737,9 +737,9 @@ export default {
     async loadCompany() {
       this.loading = true;
       this.error = null;
-
+      this.uuid = localStorage.getItem('uuid');
       try {
-        let res = await API.get("company/current");
+        let res = await API.get("company/current?uuid=" + this.uuid);
 
         if (res.status === "OK") {
           let { company: { driverInformationList, ownerInformationList } } = res.data;
@@ -808,6 +808,7 @@ export default {
         let res = await API.post("company/save", { data });
 
         if (res.status === "OK") {
+          localStorage.setItem('uuid', res.data);
           this.goNextForm();
         } else if (res.status === "ERROR") {
           this.error = res.messages[0] || res.data;

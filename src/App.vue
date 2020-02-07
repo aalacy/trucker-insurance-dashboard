@@ -142,7 +142,7 @@
                 <!-- social networks -->
                 <li class="footer-social-networks">
                     <span>
-                        <a href="#" target="_blank">
+                        <a href="https://twitter.com/LuckyTruck3" target="_blank">
                            <font-awesome-icon class="fontawesome" :icon="['fab', 'twitter']" />
                         </a>
                     </span>
@@ -152,7 +152,7 @@
                         </a>
                     </span>
                     <span>
-                        <a href="#" target="_blank">
+                        <a href="https://www.facebook.com/LuckyTruck-104402324469770/" target="_blank">
                              <font-awesome-icon class="fontawesome" :icon="['fab', 'facebook-f']"  />
                         </a>
                     </span>

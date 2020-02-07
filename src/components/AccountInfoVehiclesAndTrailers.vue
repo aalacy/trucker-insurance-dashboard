@@ -7,357 +7,315 @@
 
           <template>
             <div
-              class="driver-form-item container-fluid mob-2"
+              class="driver-form-item mob-2"
               v-for="(singleVehicle, index) in vehiclesData"
               :key="'vehicle' + index"
             >
-              <div class="row">
+              <div class="d-flex justify-content-between">
                 <div class="col">
-                  <h2 class="h5">Vehicle #{{ index + 1 }}</h2>
+                  <div class="h5">Vehicle #{{ index + 1 }}</div>
                 </div>
                 <button
                  
                   type="button"
-                  class="lt-button mx-2 mb-3"
+                  class="lt-button mx-2"
                   @click="removeVehiclesData(index)"
                   title="Remove Vehicle"
                 >
-                  <h3>-</h3>
+                  <b>-</b>
                 </button>
               </div>
 
-              <div class="row">
-                <div class="col-8 col-lg-8">
-                  <div class="form-group">
-                    <input
-                      v-model="vehiclesData[index].VIN"
-                      type="text"
-                      class="lt-input"
-                      placeholder="Enter VIN number"
-                      :class="{ 'has-error': !validations.vehiclesData[index].VIN.is_valid }"
-                      @change="validateFieldCustom('VIN', index)"
-                    >
-                  </div>
+              <div class="form-group col-10">
+                <b-input-group>
+                  <b-form-input v-model.trim="vehiclesData[index].VIN" :class="{ 'has-error': !validations.vehiclesData[index].VIN.is_valid }" autocomplete="off" @change="validateFieldCustom('VIN', index)" placeholder="Enter VIN number"></b-form-input>
+                  <b-input-group-append>
+                    <b-button :disabled="loading" type="button" @click="getVinData('vehicle', index)" variant="primary">
+                      <font-awesome-icon class="fontawesome" icon="search"  />
+                    </b-button>
+                  </b-input-group-append>
+                </b-input-group>
                   <div
                     class="text-danger pb-2"
                     v-show="!validations.vehiclesData[index].VIN.is_valid"
                   >{{ validations.vehiclesData[index].VIN.text }}</div>
-                </div>
-                <div class="col-4 col-lg-4 pl-0">
-                  <button
-                    :disabled="loading"
-                    type="button"
-                    class="lt-button lt-button-main get-data"
-                    @click="getVinData('vehicle', index)"
-                  >{{ loading ? 'Loading...' : 'Get Data' }}</button>
-                </div>
-              </div>
-         <!-- {{vehiclesData[index].vehicleImage}}
-          {{vehiclesData[index].vehicleType}} -->
-              <div class="row">
-                <div class="col-5">
-                  <div class="form-group">
-                    <input
-                      v-model="vehiclesData[index].year"
-                      type="text"
-                      class="lt-input"
-                      placeholder="Year"
-                      :class="{ 'has-error': !validations.vehiclesData[index].year.is_valid }"
-                      @change="validateFieldCustom('year', index)"
-                    >
+              </div> 
 
-                    <div
-                      class="text-danger"
-                      v-show="!validations.vehiclesData[index].year.is_valid"
-                    >{{ validations.vehiclesData[index].year.text }}</div>
+              <div class="form-group col-5">
+                <input
+                  v-model="vehiclesData[index].year"
+                  type="text"
+                  class="form-control"
+                  placeholder="Year"
+                  :class="{ 'has-error': !validations.vehiclesData[index].year.is_valid }"
+                  @change="validateFieldCustom('year', index)"
+                >
+
+                <div
+                  class="text-danger"
+                  v-show="!validations.vehiclesData[index].year.is_valid"
+                >{{ validations.vehiclesData[index].year.text }}</div>
+              </div>
+
+              <div class="form-group col-5">
+                <input
+                  v-model="vehiclesData[index].make"
+                  type="text"
+                  class="form-control"
+                  placeholder="Make"
+                  :class="{ 'has-error': !validations.vehiclesData[index].make.is_valid }"
+                  @change="validateFieldCustom('make', index)"
+                >
+
+                <div
+                  class="text-danger"
+                  v-show="!validations.vehiclesData[index].make.is_valid"
+                >{{ validations.vehiclesData[index].make.text }}</div>
+              </div>
+
+              <div class="form-group col-5 mb-4">
+                <input
+                  v-model="vehiclesData[index].model"
+                  type="text"
+                  class="form-control"
+                  placeholder="Model"
+                  :class="{ 'has-error': !validations.vehiclesData[index].model.is_valid }"
+                  @change="validateFieldCustom('model', index)"
+                >
+
+                <div
+                  class="text-danger"
+                  v-show="!validations.vehiclesData[index].model.is_valid"
+                >{{ validations.vehiclesData[index].model.text }}</div>
+              </div>
+
+              <div class="form-group border-top col-10 pt-4">
+                  <!-- <div class="border-bottom p-1">
+                    <span>Select Vehicle Type</span>
                   </div>
-                </div>
-              </div>
-
-              <div class="row">
-                <div class="col-5">
-                  <div class="form-group">
-                    <input
-                      v-model="vehiclesData[index].make"
-                      type="text"
-                      class="lt-input"
-                      placeholder="Make"
-                      :class="{ 'has-error': !validations.vehiclesData[index].make.is_valid }"
-                      @change="validateFieldCustom('make', index)"
-                    >
-
-                    <div
-                      class="text-danger"
-                      v-show="!validations.vehiclesData[index].make.is_valid"
-                    >{{ validations.vehiclesData[index].make.text }}</div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="row">
-                <div class="col-5">
-                  <div class="form-group">
-                    <input
-                      v-model="vehiclesData[index].model"
-                      type="text"
-                      class="lt-input"
-                      placeholder="Model"
-                      :class="{ 'has-error': !validations.vehiclesData[index].model.is_valid }"
-                      @change="validateFieldCustom('model', index)"
-                    >
-
-                    <div
-                      class="text-danger"
-                      v-show="!validations.vehiclesData[index].model.is_valid"
-                    >{{ validations.vehiclesData[index].model.text }}</div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="row border-top">
-                <div class="col-10 pt-4">
-                  <div class="form-group">
-                    <div>
-                      <div class="border-bottom p-1">
-                        <span>Select Vehicle Type</span>
-                      </div>
-
-                      <div class="containera-hov d-inline">
-                        <label class="d-block">
-                          <input
-                            type="radio"
-                            @change="onSelectImage(index)"
-                            name="test"
-                            value="Tractor"
-                            v-model="vehiclesData[index].vehicleImage"
-                          >
-                          <img
-                            alt="Tractor"
-                            src="../assets/images/tracktor.png"
-                            style="width:100px;"
-                            class="d-inline mt-2 image mr-2"
-                          >
-
-                          <span>Tractor</span>
-                        </label>
-                      </div>
-                      <div class="containera-hov d-inline">
-                        <label class="d-block">
-                          <input
-                            type="radio"
-                            @change="onSelectImage(index)"
-                            name="test"
-                            value="Box Truck"
-                            checked
-                            v-model="vehiclesData[index].vehicleImage"
-                          >
-                          <img
-                            src="../assets/images/boxtruck.png"
-                            style="width:100px;"
-                            class="d-inline mt-2 image mr-2"
-                          >
-                          <span>Box Truck</span>
-                        </label>
-                      </div>
-
-                      <div class="containera-hov d-inline">
-                        <label class="d-block">
-                          <input
-                            type="radio"
-                            @change="onSelectImage(index)"
-                            name="test"
-                            value="Dump Truck"
-                            checked
-                            v-model="vehiclesData[index].vehicleImage"
-                          >
-                          <img
-                            src="../assets/images/dumptruck.png"
-                            alt
-                            style="width:100px;"
-                            class="d-inline mt-2 image mr-2"
-                          >
-                          <span>Dump Truck</span>
-                        </label>
-                      </div>
-                      <div class="containera-hov d-inline">
-                        <label class="d-block">
-                          <input
-                            type="radio"
-                            @change="onSelectImage(index)"
-                            name="test"
-                            value="Tow Trucks"
-                            checked
-                            v-model="vehiclesData[index].vehicleImage"
-                          >
-                          <img
-                            src="../assets/images/twotrucks.png"
-                            alt
-                            style="width:100px;"
-                            class="d-inline mt-2 image mr-2"
-                          >
-                          <span>Tow Trucks</span>
-                        </label>
-                      </div>
-                      <div class="containera-hov d-inline">
-                        <label class="d-block">
-                          <input
-                            type="radio"
-                            @change="onSelectImage(index)"
-                            name="test"
-                            value="Pickup Truck"
-                            checked
-                            v-model="vehiclesData[index].vehicleImage"
-                          >
-                          <img
-                            src="../assets/images/pickup_truck.png"
-                            alt
-                            style="width:100px;"
-                            class="d-inline mt-2 image mr-2"
-                          >
-                          <span>Pickup Truck</span>
-                        </label>
-                      </div>
-
-                      <div class="p-3">
-                        <!-- <span>Select Vehicle Type</span> -->
-                        <h5><span class=""><strong>OR</strong></span></h5>
-
-                      </div>
-                      <select
-                        v-model="vehiclesData[index].vehicleType"
-                        class="lt-input"
-                        @change="onSelectDropDown(index)"
+-->
+                 <!--  <div class="containera-hov d-inline">
+                    <label class="d-block">
+                      <input
+                        type="radio"
+                        @change="onSelectImage(index)"
+                        name="test"
+                        value="Tractor"
+                        v-model="vehiclesData[index].vehicleImage"
                       >
-                        <option value>Select Other Vehicle type</option>
-                        <option
-                          v-for="item in otherVehicleType"
-                          :key="item"
-                          :value="item"
-                        >{{ item }}</option>
-                      </select>
-                    </div>
-                    <div
-                      class="text-danger"
-                      v-show="!validations.vehiclesData[index].vehicleType.is_valid"
-                    >{{ validations.vehiclesData[index].vehicleType.text }}</div>
+                      <img
+                        alt="Tractor"
+                        src="../assets/images/tracktor.png"
+                        style="width:100px;"
+                        class="d-inline mt-2 image mr-2"
+                      >
+
+                      <span>Tractor</span>
+                    </label>
                   </div>
-                </div>
+                  <div class="containera-hov d-inline">
+                    <label class="d-block">
+                      <input
+                        type="radio"
+                        @change="onSelectImage(index)"
+                        name="test"
+                        value="Box Truck"
+                        checked
+                        v-model="vehiclesData[index].vehicleImage"
+                      >
+                      <img
+                        src="../assets/images/boxtruck.png"
+                        style="width:100px;"
+                        class="d-inline mt-2 image mr-2"
+                      >
+                      <span>Box Truck</span>
+                    </label>
+                  </div>
+
+                  <div class="containera-hov d-inline">
+                    <label class="d-block">
+                      <input
+                        type="radio"
+                        @change="onSelectImage(index)"
+                        name="test"
+                        value="Dump Truck"
+                        checked
+                        v-model="vehiclesData[index].vehicleImage"
+                      >
+                      <img
+                        src="../assets/images/dumptruck.png"
+                        alt
+                        style="width:100px;"
+                        class="d-inline mt-2 image mr-2"
+                      >
+                      <span>Dump Truck</span>
+                    </label>
+                  </div>
+                  <div class="containera-hov d-inline">
+                    <label class="d-block">
+                      <input
+                        type="radio"
+                        @change="onSelectImage(index)"
+                        name="test"
+                        value="Tow Trucks"
+                        checked
+                        v-model="vehiclesData[index].vehicleImage"
+                      >
+                      <img
+                        src="../assets/images/twotrucks.png"
+                        alt
+                        style="width:100px;"
+                        class="d-inline mt-2 image mr-2"
+                      >
+                      <span>Tow Trucks</span>
+                    </label>
+                  </div>
+                  <div class="containera-hov d-inline">
+                    <label class="d-block">
+                      <input
+                        type="radio"
+                        @change="onSelectImage(index)"
+                        name="test"
+                        value="Pickup Truck"
+                        checked
+                        v-model="vehiclesData[index].vehicleImage"
+                      >
+                      <img
+                        src="../assets/images/pickup_truck.png"
+                        alt
+                        style="width:100px;"
+                        class="d-inline mt-2 image mr-2"
+                      >
+                      <span>Pickup Truck</span>
+                    </label>
+                  </div>
+
+                  <div class="p-3">
+                    <span>Select Vehicle Type</span>
+                    <h5><span class=""><strong>OR</strong></span></h5>
+
+                  </div> -->
+                  <select
+                    v-model="vehiclesData[index].vehicleType"
+                    class="form-control"
+                    @change="onSelectDropDown(index)"
+                  >
+                    <option value>Select Vehicle type</option>
+                    <option
+                      v-for="item in otherVehicleType"
+                      :key="item"
+                      :value="item"
+                    >{{ item }}</option>
+                  </select>
+                <div
+                  class="text-danger"
+                  v-show="!validations.vehiclesData[index].vehicleType.is_valid"
+                >{{ validations.vehiclesData[index].vehicleType.text }}</div>
               </div>
-              <div class="row">
-                <div class="col-5">
+              
+              <div class="form-group col-5 mb-4">
+                <input
+                  v-model="vehiclesData[index].zipCode"
+                  type="text"
+                  class="form-control"
+                  minlength="5"
+                  placeholder="Garaging Zip"
+                  :class="{ 'has-error': !validations.vehiclesData[index].zipCode.is_valid }"
+                  @change="validateFieldCustom('zipCode', index)"
+                >
+
+                <div
+                  class="text-danger"
+                  v-show="!validations.vehiclesData[index].zipCode.is_valid"
+                >{{ validations.vehiclesData[index].zipCode.text }}</div>
+              </div>
+
+              <div class="col-12">
+                <div class="label mb-4 border-top pt-4"><b>Radius of Travel</b> (in miles)</div>
+                <div class="col-12">
                   <div class="form-group">
                     <input
-                      v-model="vehiclesData[index].zipCode"
-                      type="text"
-                      class="lt-input"
-                      minlength="5"
-                      placeholder="Garaging Zip"
-                      :class="{ 'has-error': !validations.vehiclesData[index].zipCode.is_valid }"
-                      @change="validateFieldCustom('zipCode', index)"
+                      v-model="vehiclesData[index].radiusOfTravelVehicle"
+                      type="range"
+                      min="0"
+                      :max="550"
+                      step="50"
+                      class="form-control-range"
+                      placeholder="Radius of Travel*"
                     >
-
-                    <div
-                      class="text-danger"
-                      v-show="!validations.vehiclesData[index].zipCode.is_valid"
-                    >{{ validations.vehiclesData[index].zipCode.text }}</div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="row border-top">
-                <div class="col pt-3">
-                  <div class="form-group">
-                    <div>
-                      <label class="d-block">
-                        <span class="label">Radius of Travel (in miles)</span>
-
-                        <input
-                          v-model="vehiclesData[index].radiusOfTravelVehicle"
-                          type="range"
-                          min="0"
-                          :max="550"
-                          step="50"
-                          class="form-control-range lt-input"
-                          placeholder="Radius of Travel*"
-                        >
-                      </label>
-                      
-                    </div>
                     <div class="text-center">
                       <strong>{{ vehiclesData[index].radiusOfTravelVehicle > 500 ? "500+":vehiclesData[index].radiusOfTravelVehicle }}</strong>
                     </div>
-
+                  </div>
+                  <div
+                    class="text-danger"
+                    v-show="!validations.vehiclesData[index].radiusOfTravelVehicle.is_valid"
+                  >{{ validations.vehiclesData[index].radiusOfTravelVehicle.text }}</div>
+                  <div class="row mb-3">
                     <div
-                      class="text-danger"
-                      v-show="!validations.vehiclesData[index].radiusOfTravelVehicle.is_valid"
-                    >{{ validations.vehiclesData[index].radiusOfTravelVehicle.text }}</div>
-                  </div> 
-                </div>
-              </div>
+                      class="col"
+                    >Are you looking for Comprehesive & Collision Coverage?</div>
 
-              <div class="row mb-3">
-                <div
-                  class="col font-weight-bold"
-                >Are you looking for Comprehesive & Collision Coverage?</div>
+                    <div class="col text-right">
+                      <div class="row">
+                        <div class="col-6">
+                          <button
+                            type="button"
+                            class="lt-button px-3"
+                            :class="{ 'lt-button-main': vehiclesData[index].coverage }"
+                            @click="vehiclesData[index].coverage = true"
+                          >Yes</button>
+                        </div>
 
-                <div class="col text-right">
-                  <div class="row">
-                    <div class="col-6">
-                      <button
-                        type="button"
-                        class="lt-button px-3"
-                        :class="{ 'lt-button-main': vehiclesData[index].coverage }"
-                        @click="vehiclesData[index].coverage = true"
-                      >Yes</button>
-                    </div>
-
-                    <div class="col-6">
-                      <button
-                        type="button"
-                        class="lt-button px-3"
-                        :class="{ 'lt-button-main': !vehiclesData[index].coverage }"
-                        @click="vehiclesData[index].coverage = false"
-                      >No</button>
+                        <div class="col-6">
+                          <button
+                            type="button"
+                            class="lt-button px-3"
+                            :class="{ 'lt-button-main': !vehiclesData[index].coverage }"
+                            @click="vehiclesData[index].coverage = false"
+                          >No</button>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                </div>
+                  <template v-if="vehiclesData[index].coverage">
+                    <div class="row mb-3">
+                      <div class="col">Current value of the vehicle/trailer</div>
+
+                      <div class="col text-right">
+                        <input
+                          :value="vehiclesData[index].currentValue"
+                          type="text"
+                          class="lt-input"
+                          placeholder="$"
+                          @change="changeCurrentValue(vehiclesData[index],$event)"
+                        >
+                        <!-- <div class="text-danger" v-show="!validations.vehiclesData[index].radiusOfTravel.is_valid">{{ validations.vehiclesData[index].radiusOfTravel.text }}</div>-->
+                      </div>
+                    </div>
+
+                    <div class="row mb-5">
+                      <div class="col">Deductible</div>
+
+                      <div class="col text-right">
+                        <select v-model="vehiclesData[index].deductible" class="lt-input" required>
+                          <option disabled value>Deductible*</option>
+                          <option
+                            v-for="item in deductibles"
+                            :key="item.value"
+                            :value="item.value"
+                          >{{ item.name }}</option>
+                        </select>
+
+                        <div
+                          class="text-danger"
+                          v-show="!validations.vehiclesData[index].deductible.is_valid"
+                        >{{ validations.vehiclesData[index].deductible.text }}</div>
+                      </div>
+                    </div>
+                  </template>
+                </div> 
               </div>
-              <template v-if="vehiclesData[index].coverage">
-                <div class="row mb-3">
-                  <div class="col font-weight-bold">Current value of the vehicle/trailer</div>
-
-                  <div class="col text-right">
-                    <input
-                      :value="vehiclesData[index].currentValue"
-                      type="text"
-                      class="lt-input"
-                      placeholder="$"
-                      @change="changeCurrentValue(vehiclesData[index],$event)"
-                    >
-                    <!-- <div class="text-danger" v-show="!validations.vehiclesData[index].radiusOfTravel.is_valid">{{ validations.vehiclesData[index].radiusOfTravel.text }}</div>-->
-                  </div>
-                </div>
-
-                <div class="row mb-3">
-                  <div class="col font-weight-bold">Deductible</div>
-
-                  <div class="col text-right">
-                    <select v-model="vehiclesData[index].deductible" class="lt-input" required>
-                      <option disabled value>Deductible*</option>
-                      <option
-                        v-for="item in deductibles"
-                        :key="item.value"
-                        :value="item.value"
-                      >{{ item.name }}</option>
-                    </select>
-
-                    <div
-                      class="text-danger"
-                      v-show="!validations.vehiclesData[index].deductible.is_valid"
-                    >{{ validations.vehiclesData[index].deductible.text }}</div>
-                  </div>
-                </div>
-              </template>
             </div>
           </template>
           <template>
@@ -400,12 +358,9 @@
                   >{{ validations.trailersData[index].VIN.text }}</div>
                 </div>
                 <div class="col-4 col-lg-4 pl-0">
-                  <button
-                    :disabled="loading"
-                    type="button"
-                    class="lt-button lt-button-main get-data"
-                    @click="getVinData('trailer', index)"
-                  >{{ loading ? 'Loading...' : 'Get Data' }}</button>
+                  <b-button :disabled="loading" type="button" @click="getVinData('trailer', index)" variant="primary">
+                    <font-awesome-icon class="fontawesome" icon="search"  />
+                  </b-button>
                 </div>
               </div>
 
@@ -620,20 +575,16 @@
           <div class="row align-items-center mb-3">
             <div class="col font-weight-bold">Add another vehicle or trailer</div>
           </div>
-          <div class="row">
+          <div class="row mb-4">
             <div class="d-flex align-itens-between col">
-              <select @change="onChange($event)" class="lt-input">
+              <select @change="onChange($event)" class="form-control">
                 <option value>Vehicle or Trailer</option>
                 <option v-for="item in type" :key="item" :value="item">{{ item }}</option>
               </select>
               </div>
-              <div
-                      class=" alert alert-danger d-flex col-12"
-                      v-if="noFormfilled"
-                    >Please add atleast one Vehicle/Trailer</div>
-                    
-            
-            
+              <div class=" alert alert-danger d-flex col-12"
+                v-if="noFormfilled"
+              >Please add atleast one Vehicle/Trailer</div>
           </div>
         </div>
 
@@ -894,7 +845,7 @@ export default {
     },
     onSelectDropDown(index) {
       this.vehiclesData[index].vehicleImage = false;
-      // this.vehiclesData[index].vehicleType = this.vehiclesData[index].vehicleType;
+      this.vehiclesData[index].vehicleType = this.otherVehicleType[index];
     },
     addVehicleDataValidations(counts) {
       let vehicleDataValidationsLength = this.sizeOfObject(this.validations.vehiclesData);
@@ -1362,9 +1313,9 @@ export default {
     async loadCompany() {
       this.loading = true;
       this.error = null;
-
+      this.uuid = localStorage.getItem('uuid');
       try {
-        let res = await API.get("company/current");
+        let res = await API.get("company/current?uuid=" + this.uuid);
        
         this.uuid = res.data.uuid;
         if (res.status === "OK" && res.data.company) {
@@ -1457,6 +1408,7 @@ export default {
         let res = await API.post("company/save", { data });
 
         if (res.status === "OK") {
+          localStorage.setItem('uuid', res.data);
           this.goNextForm();
         } else if (res.status === "ERROR") {
           this.error = res.messages[0] || res.data;
@@ -1479,9 +1431,16 @@ select{
   background: url('../assets/images/arrow-dropdown.png') no-repeat 96% center;
   -moz-appearance: none;
 }
-// div {
-//   outline: 1px solid red;
-// }
+
+.form-group {
+  margin-bottom: 0.5rem;
+}
+
+.driver-form-item {
+  margin-right: -15px;
+  margin-left: -15px;
+}
+
 .vehicles-and-trailers-form-item {
   .label {
     font-size: 1.2rem;

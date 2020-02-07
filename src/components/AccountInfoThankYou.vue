@@ -16,7 +16,7 @@
           <button
             :disabled="loading"
             type="submit"
-            class="lt-button lt-button-main btn-block"
+            class="btn btn-primary btn-block"
           >{{ loading ? 'Loading...' : 'Download PDF' }}</button>
         </form>
       </div>
@@ -114,7 +114,7 @@ export default {
 
     download() {
       if (this.progress >= 10) {
-        window.open(`${process.env.VUE_APP_BACKEND_URL}/company/pdf`);
+        window.open(`${process.env.VUE_APP_BACKEND_URL}/company/pdf?uuid=` + this.uuid);
       } else {
         swal("Sorry", "You need to complete 10 steps process first", {
           icon: "warning"
@@ -124,9 +124,9 @@ export default {
     async loadCompany() {
       this.loading = true;
       this.error = null;
-
+      this.uuid = localStorage.getItem('uuid');
       try {
-        let res = await API.get("company/current");
+        let res = await API.get("company/current?uuid=" + this.uuid);
         this.loading = false;
         this.uuid = res.data.uuid;
         if (res.status === "ERROR") {

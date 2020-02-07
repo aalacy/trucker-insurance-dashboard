@@ -11,7 +11,7 @@
                 <select
                   v-model="formData.businessStructure"
                   :class="{ 'has-error': formErrors.businessStructure }"
-                  class="lt-input"
+                  class="form-control"
                   @blur="onBlur"
                    @click="onFocus('businessStructure')"
                   required
@@ -40,7 +40,7 @@
                   v-model="formData.mcNumber"
                   :class="{ 'has-error': formErrors.mcNumber }"
                   type="text"
-                  class="lt-input"
+                  class="form-control"
                   placeholder="MC# (Optional)"
                   @focus="onFocus('mcNumber')"
                   @blur="onBlur"
@@ -59,7 +59,7 @@
                 <select
                   v-model="formData.businessType"
                   :class="{ 'has-error': formErrors.businessType }"
-                  class="lt-input"
+                  class="form-control"
                   required
                   @change="validateField('businessType')"
                   
@@ -217,6 +217,7 @@ export default {
   mounted() {
     this.$emit("update-hint", "It's important to correctly list your business structure. It should be as reported on SAFER.");
     
+    this.uuid = localStorage.getItem('uuid');
     if (localStorage.getItem("token")) {
       this.save = false;
       
@@ -322,13 +323,13 @@ export default {
     async loadCompany() {
       this.loading = true;
       this.error = null;
-
+      this.uuid = localStorage.getItem('uuid');
       try {
-        let res = await API.get("company/current");
+        let res = await API.get("company/current?uuid=" + this.uuid);
 
         if (res.status === "OK") {
-          let { company: { businessStructure, businessType, mcNumber } } = res.data;
-          this.uuid = res.data.uuid;
+          let { company: { businessStructure, businessType, mcNumber }, uuid } = res.data;
+          this.uuid = uuid;
           this.formData = {
             ...this.formData,
             businessStructure,
@@ -353,7 +354,6 @@ export default {
 
       this.loading = true;
       this.error = null;
-      this.final_uuid = this.uuid;
       try {
 
         const { businessType, mcNumber, businessStructure } = this.formData;
@@ -362,12 +362,13 @@ export default {
           mcNumber,
           businessStructure,
           user_id: localStorage.getItem("userId"),
-          uuid: this.final_uuid
+          uuid: this.uuid
         };
 
         let res = await API.post("company/save", {data});
 
         if (res.status === "OK") {
+          localStorage.setItem('uuid', res.data);
           this.goNextForm();
         } else if (res.status === "ERROR") {
           this.error = res.messages[0] || res.data;

@@ -17,7 +17,7 @@
           <template>
             
             <div
-              class="owner-form-item container-fluid mob-2"
+              class="owner-form-item mob-2"
               v-for="(singleDriver, index) in driversData"
               :key="index"
             >
@@ -44,13 +44,11 @@
                     <input
                       v-model="driversData[index].firstName"
                       type="text"
-                      class="lt-input"
+                      class="form-control"
                       placeholder="First name"
                       :class="{ 'has-error': !validations.driversData[index].firstName.is_valid }"
                       @change="validateFieldCustom('firstName', index)"
-                      
                     >
-
                     <div
                       class="text-danger"
                       v-show="!validations.driversData[index].firstName.is_valid"
@@ -62,11 +60,10 @@
                       <input
                       v-model="driversData[index].middleName"
                       type="text"
-                      class="lt-input"
+                      class="form-control"
                       maxlength="1"
                       placeholder="M."
                     >
-
                       <div
                         class="text-danger"
                         v-show="!validations.driversData[index].middleName.is_valid"
@@ -79,12 +76,11 @@
                       <input
                         v-model="driversData[index].lastName"
                         type="text"
-                        class="lt-input"
+                        class="form-control"
                         placeholder="Last name"
                         :class="{ 'has-error': !validations.driversData[index].lastName.is_valid }"
                         @change="validateFieldCustom('lastName', index)"
                       >
-
                       <div
                         class="text-danger"
                         v-show="!validations.driversData[index].lastName.is_valid"
@@ -102,11 +98,10 @@
                     <div class="row">
                       <div class="col">
                         <div class="form-group">
-                       
                           <input
                             v-model="driversData[index].dobM"
                             type="number"
-                            class="lt-input"
+                            class="form-control"
                             placeholder="MM"
                             :class="{ 'has-error': !validations.driversData[index].dobM.is_valid }"
                             @change="validateFieldCustom('dobM', index)"
@@ -129,7 +124,7 @@
                           <input
                             v-model="driversData[index].dobD"
                             type="number"
-                            class="lt-input"
+                            class="form-control"
                             placeholder="DD"
                             :class="{ 'has-error': !validations.driversData[index].dobD.is_valid }"
                             @change="validateFieldCustom('dobD', index)"
@@ -152,7 +147,7 @@
                           <input
                             v-model="driversData[index].dobY"
                             type="number"
-                            class="lt-input"
+                            class="form-control"
                             placeholder="YYYY"
                             :class="{ 'has-error': !validations.driversData[index].dobY.is_valid }"
                             @change="validateFieldCustom('dobY', index)"
@@ -175,7 +170,7 @@
                       <input
                         v-model="driversData[index].licenseNumber"
                         type="text"
-                        class="lt-input"
+                        class="form-control"
                         placeholder="License Number"
                         :class="{ 'has-error': !validations.driversData[index].licenseNumber.is_valid }"
                         @change="validateFieldCustom('licenseNumber', index)"
@@ -193,7 +188,7 @@
                       <input
                         v-model="driversData[index].CDL"
                         type="number"
-                        class="lt-input"
+                        class="form-control"
                         placeholder="Years of CDL Experience"
                       >
 
@@ -212,7 +207,7 @@
                       <input
                         v-model="driversData[index].address"
                         type="text"
-                        class="lt-input"
+                        class="form-control"
                         placeholder="Address"
                        :class="{ 'has-error': !validations.driversData[index].address.is_valid }"
                        @change="validateFieldCustom('address', index)"
@@ -234,7 +229,7 @@
                       <input
                         v-model="driversData[index].city"
                         type="text"
-                        class="lt-input"
+                        class="form-control"
                         placeholder="City"
                        :class="{ 'has-error': !validations.driversData[index].city.is_valid }"
                        @change="validateFieldCustom('city', index)"
@@ -258,7 +253,7 @@
                       <input
                         v-model="driversData[index].state"
                         type="text"
-                        class="lt-input"
+                        class="form-control"
                         placeholder="State"
                        :class="{ 'has-error': !validations.driversData[index].state.is_valid }"
                        @change="validateFieldCustom('state', index)"
@@ -280,7 +275,7 @@
                       <input
                         v-model="driversData[index].zip"
                         type="number"
-                        class="lt-input"
+                        class="form-control"
                         minlength="5"
                         placeholder="Zip"
                       :class="{ 'has-error': !validations.driversData[index].zip.is_valid }"
@@ -311,7 +306,7 @@
                         <input
                           v-model="driversData[index].dohM"
                           type="number"
-                          class="lt-input"
+                          class="form-control"
                           placeholder="MM"
                           :class="{ 'has-error': !validations.driversData[index].dohM.is_valid }"
                           @change="validateFieldCustom('dohM', index)"
@@ -328,7 +323,7 @@
                         <input
                           v-model="driversData[index].dohD"
                           type="number"
-                          class="lt-input"
+                          class="form-control"
                           placeholder="DD"
                            :class="{ 'has-error': !validations.driversData[index].dohD.is_valid }"
                           @change="validateFieldCustom('dohD', index)"
@@ -345,7 +340,7 @@
                         <input
                           v-model="driversData[index].dohY"
                           type="number"
-                          class="lt-input"
+                          class="form-control"
                           placeholder="YYYY"
                            :class="{ 'has-error': !validations.driversData[index].dohY.is_valid }"
                           @change="validateFieldCustom('dohY', index)"
@@ -898,14 +893,14 @@ export default {
     async loadCompany() {
       this.loading = true;
       this.error = null;
-
+      this.uuid = localStorage.getItem('uuid');
       try {
-        let res = await API.get("company/current");
+        let res = await API.get("company/current?uuid=" + this.uuid);
         this.uuid = res.data.uuid;
         if (res.status === "OK") {
           let { company: { driverInformationList, mailingAddress } } = res.data;
           
-          this.mailingAddress = mailingAddress;
+          this.mailingAddress = JSON.parse(mailingAddress);
 
           if (driverInformationList) {
             if (!Array.isArray(driverInformationList)) {
@@ -962,6 +957,7 @@ export default {
         let res = await API.post("company/save", { data });
 
         if (res.status === "OK") {
+          localStorage.setItem('uuid', res.data);
           this.goNextForm();
         } else if (res.status === "ERROR") {
           this.error = res.messages[0] || res.data;

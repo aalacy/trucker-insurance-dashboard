@@ -266,6 +266,7 @@ export default {
       localStorage.setItem("Phone", "");
       localStorage.setItem(["Mailing address"], "{}");
       localStorage.setItem(["Physical address"], "{}");
+      localStorage.setItem('uuid', '');
       this.$router.push({ name: "AccountInfoPersonalInfo" });
     },
     onStartJourney() {
@@ -336,7 +337,7 @@ export default {
         let data = await API.post("company/create", null, {
           usdot
         });
-        console.log("data", data);
+        localStorage.setItem('uuid', data.uuid);
         localStorage.setItem("Physical address", data.data["Physical Address"]);
         localStorage.setItem("Mailing address", data.data["Mailing Address"]);
         localStorage.setItem("Phone", data.data.Phone);
