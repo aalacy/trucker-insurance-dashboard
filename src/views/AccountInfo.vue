@@ -33,6 +33,7 @@
             @update-progress="updateProgress"
             @update-hint="updateHint"
             @go-to-form="goToForm"
+            @update-us-dot="updateUSDot"
           />
         </div>
 
@@ -74,6 +75,9 @@ export default {
     goToForm(routeName) {
       this.$router.push({ name: routeName });
       window.scrollTo(0, 0);
+    },
+    updateUSDot(value) {
+      this.US_DOT_or_company_name = value;
     }
   }
 };

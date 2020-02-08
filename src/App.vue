@@ -318,15 +318,13 @@ export default {
           this.quote = false;
           this.show=false;
           setTimeout(()=>{
-          
-          
-          this.myacchide = false;
-          // localStorage.removeItem("accBtn");
-          localStorage.removeItem("token");
-          localStorage.removeItem("userId")
-          // localStorage.removeItem("registredUserId");
-          localStorage.removeItem("redirect");
-              this.$router.push({ name: "Home" });
+            this.myacchide = false;
+            // localStorage.removeItem("accBtn");
+            localStorage.removeItem("token");
+            localStorage.removeItem("userId")
+            // localStorage.removeItem("registredUserId");
+            localStorage.removeItem("redirect");
+            this.$router.push({ name: "Home" });
           },500)
             
         }
@@ -355,14 +353,7 @@ export default {
         this.logout();    
           // this.$router.push({ name: "AccountInfoBusinessStructure" });
         } else {
-          
-          // swal(
-          //   "Thank You!",
-          //   "Your changes has been accepted! You will get new Updated Quote",
-          //   {
-          //     icon: "success"
-          //   }
-          // );
+
         }
       });
     },
@@ -385,9 +376,6 @@ export default {
       localStorage.setItem("company","");
       localStorage.setItem("usdot","");
     },
-    // accountBtn(){
-     
-    // }
   },
 
   computed: {
