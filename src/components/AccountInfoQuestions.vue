@@ -19,16 +19,17 @@
           <div v-if="error" class="alert alert-danger" role="alert">{{ error }}</div>
         </div>
         <div class="card-footer">
-          <div class="form-buttons next-wrapper">
+           <div class="form-buttons next-wrapper">
             <div class="col-6 p-0">
               <button
                 :disabled="loading"
                 type="button"
-                class="lt-button lt-button-default px-4 btn-block btn-border-radius-lb mob-2"
+                class="lt-button lt-button-default btn-block btn-border-radius-lb"
                 @click="goPrevForm"
               >
-                Prev
-                <div class="next-title text-center d-inline pl-3 mob-2">Owners</div>
+                <font-awesome-icon class="fontawesome ctrl-arrow-left" :icon="['fas', 'sort-down']" size="2x"/>
+                <span class="ctrl-label">Previous</span>
+                <div class="prev-title">Owners</div>
               </button>
             </div>
 
@@ -36,10 +37,11 @@
               <button
                 :disabled="loading"
                 type="submit"
-                class="lt-button lt-button-main px-4 mob-2 btn-block btn-border-radius-rb"
+                class="lt-button lt-button-main btn-block btn-border-radius-rb"
               >
-                {{ loading ? 'Loading...' : 'Next' }}
-                <div class="next-title text-center d-inline pl-3 mob-2 text-white">Document Upload</div>
+                 <span class="ctrl-label ml-3 text-white">{{ loading ? 'Loading...' : 'Next' }}</span>
+                <div class="prev-title next-title">Document Upload</div>
+                <font-awesome-icon class="fontawesome ctrl-arrow-right" :icon="['fas', 'sort-down']" size="2x"/>
               </button>
             </div>
           </div>

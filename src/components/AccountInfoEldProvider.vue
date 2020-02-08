@@ -7,25 +7,20 @@
           <h4 class="card-title form-sub-title">ELD Provider</h4>
 
           <form id="addProviderForm" class="mb-2" @submit.prevent="addProvider">
-            <div class="d-flex">
-              <div class="flex-grow-1 form-group">
-                <input
+            <b-input-group>
+              <input
                   v-model.trim="userProviderName"
                   type="text"
+                  class="lt-input"
                   placeholder="Other Provider"
                   required
-                  class="form-control"
                 >
-              </div>
-
-              <div class="px-2">
-                <button
-                  form="addProviderForm"
-                  type="submit"
-                  class="px-3 btn btn-primary get-data"
-                >ADD</button>
-              </div>
-            </div>
+              <b-input-group-append>
+                <b-button type="button" class="px-3 btn btn-primary get-data" @click="getVinData('vehicle', index)" variant="primary">
+                  ADD
+                </b-button>
+              </b-input-group-append>
+            </b-input-group>
           </form>
 
           <div class="container">
@@ -69,34 +64,35 @@
               <button
                 :disabled="loading"
                 type="button"
-                class="lt-button lt-button-default btn-block btn-border-radius-lb mob-2"
+                class="lt-button lt-button-default btn-block btn-border-radius-lb"
                 @click="goPrevForm"
               >
-                Prev
-                <div class="next-title text-center d-inline pl-3 mob-2">Vehicles & Trailers</div>
+                <font-awesome-icon class="fontawesome ctrl-arrow-left" :icon="['fas', 'sort-down']" size="2x"/>
+                <span class="ctrl-label">Previous</span>
+                <div class="prev-title">Vehicles & Trailers</div>
               </button>
             </div>
 
             <div class="col-6 p-0">
               <button
                 :disabled="loading"
-                form="eldProviderForm"
                 type="submit"
-                class="lt-button lt-button-main px-4 btn-block btn-border-radius-rb mob-2"
+                class="lt-button lt-button-main btn-block btn-border-radius-rb"
               >
-                {{ loading ? 'Loading...' : 'Next' }}
-                <div class="next-title text-center d-inline pl-3 text-white mob-2">Drivers</div>
+                 <span class="ctrl-label ml-3 text-white">{{ loading ? 'Loading...' : 'Next' }}</span>
+                <div class="prev-title next-title">Drivers</div>
+                <font-awesome-icon class="fontawesome ctrl-arrow-right" :icon="['fas', 'sort-down']" size="2x"/>
               </button>
             </div>
           </div>
         </div>
       </div>
-      <div class="d-flex justify-content-center m-4" @click="show" v-if="save">
+      <!-- <div class="d-flex justify-content-center m-4" @click="show" v-if="save">
         <span class="save-hover">Save & Continue</span>
       </div>
       <div class="d-flex justify-content-center m-4" @click="newQuoteReq" v-else>
         <span class="save-hover">Save Changes</span>
-      </div>
+      </div> -->
       <div v-if="showmodel">
         <modelLogin/>
       </div>

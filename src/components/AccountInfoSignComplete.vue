@@ -125,9 +125,9 @@
                 class="lt-button lt-button-default btn-block btn-border-radius-lb"
                 @click="goPrevForm"
               >
-                Prev
-                <div class="next-title text-center d-inline  pl-3 pad-0 mob-2">Upload Document</div>
-                <!-- <div class="next-title text-center d-inline  pl-3 pad-0 mob-2">Underwriting Q<span class="hide-que">ues</span>t<span class="hide-que">ions</span></div> -->
+                <font-awesome-icon class="fontawesome ctrl-arrow-left" :icon="['fas', 'sort-down']" size="2x"/>
+                <span class="ctrl-label">Previous</span>
+                <div class="prev-title">Upload Document</div>
               </button>
             </div>
 
@@ -135,10 +135,11 @@
               <button
                 :disabled="loading"
                 type="submit"
-                class="lt-button lt-button-main btn-block btn-border-radius-rb color-green"
+                class="lt-button lt-button-main btn-block btn-border-radius-rb"
               >
-                {{ loading ? 'Loading...' : 'Complete!' }}
-                <!-- <div class="next-title text-center d-inline pl-3 mob-2 text-white"></div> -->
+                 <span class="ctrl-label ml-3 text-white">{{ loading ? 'Loading...' : 'Next' }}</span>
+                <div class="prev-title next-title">Complete</div>
+                <font-awesome-icon class="fontawesome ctrl-arrow-right" :icon="['fas', 'sort-down']" size="2x"/>
               </button>
             </div>
           </div>

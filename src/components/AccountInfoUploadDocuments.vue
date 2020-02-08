@@ -131,7 +131,7 @@
             <button
               :disabled="loading"
               type="submit"
-              class="lt-button btn-md lt-button-main"
+              class="btn btn-primary"
             >Upload</button>
           </div>
           <div class="text-right m-1">
@@ -139,7 +139,7 @@
               :disabled="loading"
               type="button"
               @click="goNextForm"
-              class="lt-button btn-md lt-button-main"
+              class="btn btn-primary"
             >Skip</button>
           </div>
       </div>

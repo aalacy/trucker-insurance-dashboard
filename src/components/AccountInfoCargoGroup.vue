@@ -39,8 +39,9 @@
                 class="lt-button lt-button-default btn-block btn-border-radius-lb"
                 @click="goPrevForm"
               >
-                Prev
-                <div class="next-title text-center d-inline pl-3 mob-2">Business Structure</div>
+                <font-awesome-icon class="fontawesome ctrl-arrow-left" :icon="['fas', 'sort-down']" size="2x"/>
+                <span class="ctrl-label">Previous</span>
+                <div class="prev-title">Business Structure</div>
               </button>
             </div>
 
@@ -50,20 +51,21 @@
                 type="submit"
                 class="lt-button lt-button-main btn-block btn-border-radius-rb"
               >
-                {{ loading ? 'Loading...' : 'Next' }}
-                <div class="next-title text-center d-inline pl-3 text-white">Cargo Hauled</div>
+                 <span class="ctrl-label ml-3 text-white">{{ loading ? 'Loading...' : 'Next' }}</span>
+                <div class="prev-title next-title">Cargo Haulded</div>
+                <font-awesome-icon class="fontawesome ctrl-arrow-right" :icon="['fas', 'sort-down']" size="2x"/>
               </button>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="d-flex justify-content-center m-4" @click="show" v-if="save">
+      <!-- <div class="d-flex justify-content-center m-4" @click="show" v-if="save">
         <span class="save-hover">Save & Continue</span>
       </div>
       <div class="d-flex justify-content-center m-4" @click="newQuoteReq" v-else>
         <span class="save-hover">Save Changes</span>
-      </div>
+      </div> -->
       <div v-if="showmodel">
         <modalLogin/>
       </div>

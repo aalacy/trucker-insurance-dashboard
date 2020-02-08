@@ -1,12 +1,12 @@
 <template>
   <div id="app">
-    <nav class="app-navbar navbar navbar-expand-lg navbar-light bg-white py-0 px-4">
-      <router-link :to="{ name: 'Home' }" class="navbar-brand font-weight-bold lt-link" > 
+    <nav class="app-navbar navbar navbar-expand-lg navbar-light bg-white p-0">
+      <router-link :to="{ name: 'Home' }" class="navbar-brand font-weight-bold lt-link ml-4" > 
         <img src="./assets/images/logo.svg" alt="logo" height="46px" width="269px">
       </router-link>
-   <span class="text-right-a">For assistance, please call us at <a href="tel:15135062400 " style="color:#007bff; font-weight:bold; white-space:nowrap;">1-513-506-2400</a></span>
+      <span class="text-right-a">For assistance, please call us at <a href="tel:15135062400 " style="color:#007bff; font-weight:bold; white-space:nowrap;">1-513-506-2400</a></span>
       <button
-        class="navbar-toggler"
+        class="navbar-toggler mr-4"
         type="button"
         data-toggle="collapse"
         data-target="#navbarSupportedContent"
@@ -20,15 +20,14 @@
       <div id="navbarSupportedContent" class="ml-auto collapse navbar-collapse">
         <div class="mr-auto"></div>
 
-        <div class="d-flex align-items-center justify-content-end">
-         
+        <div class="d-flex align-items-center justify-content-end" >
           <ul class="navbar-nav">
             <li class="nav-item">
               <div v-if="show">
                 <div v-if="msg">
                   <router-link
                     :to="{ name: 'AccountInfoUploadDocuments' }"
-                    class="btn btn-primary lt-btn"
+                    v-bind:class="linkBtn"
                     active-class="font-weight-bold"
                     @click.native="savequote"
                   >View Quotes</router-link>
@@ -36,7 +35,7 @@
                 <div v-else>
                   <router-link
                     :to="{ name: 'AccountInfo' }"
-                    class="btn btn-primary lt-btn"
+                    v-bind:class="linkBtn"
                     active-class="font-weight-bold"
                     @click.native="savequote"
                   >View Quotes</router-link>
@@ -46,6 +45,7 @@
                 <div v-if="myacchide">
                   <router-link
                     :to="{ name: '' }"
+                    v-bind:class="linkBtn"
                     @click.native="myacc"
                     active-class="font-weight-bold"
                     class="btn btn-primary lt-btn"
@@ -64,7 +64,7 @@
                 <router-link
                   @click.native="loginHide"
                   :to="{ name: 'LogIn', query: {next: this.$router.history.current.name == 'LogIn' ?  this.$router.history.current.query.next : this.$router.history.current.name} }"
-                  class="btn btn-primary lt-btn"
+                  v-bind:class="linkBtn"
                   active-class="font-weight-bold"
                 >Login</router-link>
               </li>
@@ -73,7 +73,7 @@
               <li class="nav-item">
                 <router-link
                   :to="{ name:'' }"
-                  class="btn btn-primary mr-2"
+                  v-bind:class="linkBtn"
                   @click.native="logoutPopUp"
                   active-class="font-weight-bold"
                 >Logout</router-link>
@@ -91,7 +91,7 @@
             </div>
           </ul>
         </div>
-       
+
       </div>
       
     </nav>
@@ -110,15 +110,14 @@
               style="width: 100px; height: auto"
             >
             <h2 class="col-sm-12 col-lg-8 col-md-12 col-12 text-center text-white font-weight-bold mb-4">Subscribe to the Newsletter:</h2>
-            <div class="col-sm-12 col-lg-8 col-md-12 col-12 position-relative">
-              <input
-                id="inputEmail"
-                type="email"
-                class="footer-input my-footer"
-                placeholder="Enter Email Address"
-              >
-              <button type="submit" class="text-light bg-primary subscribea subscribe">Subscribe</button>
-            </div>
+            <b-input-group class="col-lg-12 col-xs-12 p-xs-0 justify-content-center">
+              <b-form-input id="inputEmail" type="email" autocomplete="off" class="news-input" placeholder="Enter Email Address"></b-form-input>
+              <b-input-group-append>
+                <b-button type="submit" variant="primary btn-news">
+                  Subscribe
+                </b-button>
+              </b-input-group-append>
+            </b-input-group>
           </div>
         </form>
       </div>
@@ -269,6 +268,7 @@ export default {
    }
     
     this.msg = isMobile ? true : false;
+    this.linkBtn = isMobile ? 'mobile-nav-btn' : 'btn btn-primary lt-btn'
   },
     
   data() {
@@ -279,6 +279,7 @@ export default {
       msg: false,
       show: false,
       extraquote:false,
+      linkBtn: ''
     };
   },
   components: {
@@ -401,6 +402,16 @@ export default {
 
 footer {
   position: relative;
+  .news-input {
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    max-width: 500px;
+  }
+
+  .btn-news {
+    border-bottom-right-radius: 20px; 
+    border-top-right-radius: 20px; 
+  }
 }
 
 .text-right-a{
@@ -427,11 +438,32 @@ footer {
   position: relative;
 }
 
+.navbar-nav {
+  width: 100%;
+  padding: 1rem 0;
+}
+
+.collapse {
+
+  .mobile-nav-btn{
+    text-transform: uppercase;
+    color: white;
+    opacity: .8;
+    font-weight: bold;
+    font-size: 16px;
+    background: transparent;
+    border: none;
+    padding: 0;
+  }
+}
+
 .footer-bbb {
   position: absolute;
   bottom: 25px;
   left: 20px;
 }
+
+
 
 @media only screen and (max-width: 425px) {
   .footer-bbb {

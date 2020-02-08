@@ -28,7 +28,7 @@
 
               <div class="form-group col-10">
                 <b-input-group>
-                  <b-form-input v-model.trim="vehiclesData[index].VIN" :class="{ 'has-error': !validations.vehiclesData[index].VIN.is_valid }" autocomplete="off" @change="validateFieldCustom('VIN', index)" placeholder="Enter VIN number"></b-form-input>
+                  <input v-model.trim="vehiclesData[index].VIN" class="lt-input" :class="{ 'has-error': !validations.vehiclesData[index].VIN.is_valid }" autocomplete="off" @change="validateFieldCustom('VIN', index)" placeholder="Enter VIN number"></input>
                   <b-input-group-append>
                     <b-button :disabled="loading" type="button" @click="getVinData('vehicle', index)" variant="primary">
                       <font-awesome-icon class="fontawesome" icon="search"  />
@@ -45,7 +45,7 @@
                 <input
                   v-model="vehiclesData[index].year"
                   type="text"
-                  class="form-control"
+                  class="lt-input"
                   placeholder="Year"
                   :class="{ 'has-error': !validations.vehiclesData[index].year.is_valid }"
                   @change="validateFieldCustom('year', index)"
@@ -61,7 +61,7 @@
                 <input
                   v-model="vehiclesData[index].make"
                   type="text"
-                  class="form-control"
+                  class="lt-input"
                   placeholder="Make"
                   :class="{ 'has-error': !validations.vehiclesData[index].make.is_valid }"
                   @change="validateFieldCustom('make', index)"
@@ -77,7 +77,7 @@
                 <input
                   v-model="vehiclesData[index].model"
                   type="text"
-                  class="form-control"
+                  class="lt-input"
                   placeholder="Model"
                   :class="{ 'has-error': !validations.vehiclesData[index].model.is_valid }"
                   @change="validateFieldCustom('model', index)"
@@ -197,7 +197,7 @@
                   </div> -->
                   <select
                     v-model="vehiclesData[index].vehicleType"
-                    class="form-control"
+                    class="lt-input"
                     @change="onSelectDropDown(index)"
                   >
                     <option value>Select Vehicle type</option>
@@ -217,7 +217,7 @@
                 <input
                   v-model="vehiclesData[index].zipCode"
                   type="text"
-                  class="form-control"
+                  class="lt-input"
                   minlength="5"
                   placeholder="Garaging Zip"
                   :class="{ 'has-error': !validations.vehiclesData[index].zipCode.is_valid }"
@@ -240,7 +240,7 @@
                       min="0"
                       :max="550"
                       step="50"
-                      class="form-control-range"
+                      class="lt-input"
                       placeholder="Radius of Travel*"
                     >
                     <div class="text-center">
@@ -485,7 +485,7 @@
                           min="0"
                           :max="550"
                           step="50"
-                          class="form-control-range lt-input"
+                          class="lt-input-range lt-input"
                           placeholder="Radius of Travel*"
                           @change="validateTrailerField('radiusOfTravelTrailer', index)"
                         >
@@ -577,7 +577,7 @@
           </div>
           <div class="row mb-4">
             <div class="d-flex align-itens-between col">
-              <select @change="onChange($event)" class="form-control">
+              <select @change="onChange($event)" class="lt-input">
                 <option value>Vehicle or Trailer</option>
                 <option v-for="item in type" :key="item" :value="item">{{ item }}</option>
               </select>
@@ -594,11 +594,12 @@
               <button
                 :disabled="loading"
                 type="button"
-                class="lt-button lt-button-default btn-block btn-border-radius-lb mob-2"
+                class="lt-button lt-button-default btn-block btn-border-radius-lb"
                 @click="goPrevForm"
               >
-                Prev
-                <div class="next-title text-center d-inline pl-3 mob-2">Cargo Hauled</div>
+                <font-awesome-icon class="fontawesome ctrl-arrow-left" :icon="['fas', 'sort-down']" size="2x"/>
+                <span class="ctrl-label">Previous</span>
+                <div class="prev-title">Cargo Hauled</div>
               </button>
             </div>
 
@@ -606,10 +607,11 @@
               <button
                 :disabled="loading"
                 type="submit"
-                class="lt-button lt-button-main btn-block btn-border-radius-rb mob-2"
+                class="lt-button lt-button-main btn-block btn-border-radius-rb"
               >
-                {{ loading ? 'Loading...' : 'Next' }}
-                <div class="next-title text-center d-inline pl-3 text-white mob-2">ELD Provider</div>
+                 <span class="ctrl-label ml-3 text-white">{{ loading ? 'Loading...' : 'Next' }}</span>
+                <div class="prev-title next-title">ELD Provider</div>
+                <font-awesome-icon class="fontawesome ctrl-arrow-right" :icon="['fas', 'sort-down']" size="2x"/>
               </button>
             </div>
           </div>
@@ -620,12 +622,6 @@
         </div>
       </div>
     </form>
-    <div class="d-flex justify-content-center m-4" @click="show" v-if="save">
-      <span class="save-hover">Save & Continue</span>
-    </div>
-    <div class="d-flex justify-content-center m-4" @click="newQuoteReq" v-else>
-      <span class="save-hover">Save Changes</span>
-    </div>
   </div>
 </template>
 
@@ -948,7 +944,6 @@ export default {
     },
     addVehicleData(data) {
      
-      debugger;
       if (data == undefined || data.VIN == undefined) {
         
         this.vehiclesData.push({

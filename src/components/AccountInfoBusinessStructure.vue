@@ -3,24 +3,20 @@
     <form @submit.prevent="updateCompany">
       <div class="card">
         <div class="card-body">
-          <h4 class="card-title form-sub-title">Business Structure</h4>
+          <h4 class="form-sub-title mt-2">Business Structure</h4>
 
           <div class="row">
-            <div class="col-12">
+            <div class="col-lg-7 col-md-12">
               <div class="form-group">
                 <select
                   v-model="formData.businessStructure"
                   :class="{ 'has-error': formErrors.businessStructure }"
-                  class="form-control"
+                  class="lt-input"
                   @blur="onBlur"
                    @click="onFocus('businessStructure')"
                   required
                   @change="validateField('businessStructure')"
-                  
-                  
                 >
-                <!-- @focus="onFocus('businessStructure')" -->
-                <!-- @blur="onBlur" -->
                   <option value>Business Structure*</option>
                   <option v-for="item in businessStructures" :key="item" :value="item">{{ item }}</option>
                 </select>
@@ -34,13 +30,13 @@
           </div>
 
           <div class="row">
-            <div class="col-9">
+            <div class="col-lg-7 col-md-12">
               <div class="form-group">
                 <input
                   v-model="formData.mcNumber"
                   :class="{ 'has-error': formErrors.mcNumber }"
                   type="text"
-                  class="form-control"
+                  class="lt-input"
                   placeholder="MC# (Optional)"
                   @focus="onFocus('mcNumber')"
                   @blur="onBlur"
@@ -51,15 +47,15 @@
             </div>
           </div>
 
-          <h4 class="card-title form-sub-title mb-3">Business Type</h4>
+          <h4 class="form-sub-title mt-3 mb-4">Business Type</h4>
 
-          <div class="row">
-            <div class="col-12">
+          <div class="row mb-3">
+            <div class="col-lg-7 col-md-12">
               <div class="form-group" @click="onFocus('businessType')">
                 <select
                   v-model="formData.businessType"
                   :class="{ 'has-error': formErrors.businessType }"
-                  class="form-control"
+                  class="lt-input"
                   required
                   @change="validateField('businessType')"
                   
@@ -89,8 +85,9 @@
                 class="lt-button lt-button-default btn-block btn-border-radius-lb"
                 @click="goPrevForm"
               >
-                Prev
-                <div class="next-title text-center d-inline pl-3">Business Info</div>
+                <font-awesome-icon class="fontawesome ctrl-arrow-left" :icon="['fas', 'sort-down']" size="2x"/>
+                <span class="ctrl-label">Previous</span>
+                <div class="prev-title">Personal Info</div>
               </button>
             </div>
 
@@ -100,20 +97,15 @@
                 type="submit"
                 class="lt-button lt-button-main btn-block btn-border-radius-rb"
               >
-                {{ loading ? 'Loading...' : 'Next' }}
-                <div class="next-title text-center d-inline pl-3 text-white">Cargo Group</div>
+                 <span class="ctrl-label ml-3 text-white">{{ loading ? 'Loading...' : 'Next' }}</span>
+                <div class="prev-title next-title">Cargo Group</div>
+                <font-awesome-icon class="fontawesome ctrl-arrow-right" :icon="['fas', 'sort-down']" size="2x"/>
               </button>
             </div>
           </div>
         </div>
       </div>
     </form>
-    <div class="d-flex justify-content-center m-4" @click="show" v-if="save">
-      <span class="save-hover">Save & Continue</span>
-    </div>
-    <div class="d-flex justify-content-center m-4" @click="newQuoteReq" v-else>
-      <span class="save-hover">Save Changes</span>
-    </div>
     <div class v-if="showmodel">
       <modelLogin/>
     </div>

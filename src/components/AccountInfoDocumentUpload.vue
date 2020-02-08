@@ -3,8 +3,8 @@
     <form @submit.prevent="updateCompany">
       <div class="card mb-5">
         <div class="card-body">
-          <h4 class="card-title form-sub-title">Document Upload</h4>
-          <div class="m-1 pb-2">
+          <h4 class="form-sub-title">Document Upload</h4>
+          <div class="p-1 mb-3">
             <span>Although these uploads are not mandatory, they help to provide you more options and a faster service, if completed, as many carriers require such data. Please upload all of the relevant documents that you can</span>
           </div>
           <div class="row set-mob">
@@ -194,8 +194,9 @@
                 class="lt-button lt-button-default btn-block btn-border-radius-lb"
                 @click="goPrevForm"
               >
-                Prev
-                <div class="next-title text-center d-inline pl-3  mob-2">Additional Comments</div>
+                <font-awesome-icon class="fontawesome ctrl-arrow-left" :icon="['fas', 'sort-down']" size="2x"/>
+                <span class="ctrl-label">Previous</span>
+                <div class="prev-title">Additional Comments</div>
               </button>
             </div>
 
@@ -204,10 +205,10 @@
                 :disabled="loading"
                 type="submit"
                 class="lt-button lt-button-main btn-block btn-border-radius-rb"
-                
               >
-                {{ loading ? 'Loading...' : 'Next' }}
-                <div class="next-title text-center d-inline pl-3 mob-2 text-white">Sign & Complete</div>
+                 <span class="ctrl-label ml-3 text-white">{{ loading ? 'Loading...' : 'Next' }}</span>
+                <div class="prev-title next-title">Sign & Complete</div>
+                <font-awesome-icon class="fontawesome ctrl-arrow-right" :icon="['fas', 'sort-down']" size="2x"/>
               </button>
             </div>
           </div>

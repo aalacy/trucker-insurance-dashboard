@@ -133,16 +133,16 @@ export default {
   background-color: $color_lightblue_1;
 
   .title {
-    padding: 1rem ;
+    padding: .81rem;
     color: $color_darkblue;
   }
 
   .progress {
     height: 0.2rem;
-    background-color: #cbcbcb;
+    background-color: #393e46;
 
     .progress-bar {
-      background-color: #3fc082;
+      background-color: #3dc081;
     }
   }
 }

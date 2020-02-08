@@ -1,23 +1,13 @@
 <template>
-  <div class="pat-abst">
-    <div class="">
-      <button type="button" class="btn ico-btna" @click="showHelp">
-         <font-awesome-icon
-          icon="question"
-          size="2x"
-          class="mr-4 color-fb ques d-flex justify-content-center"
-      />
-      </button>
-    </div>
-    <div class="pos-rel">
-    <div>
-      
-      <button type="button" class="btn ico-btn" @click="showNav">
-        <img src="../assets/images/hame.png" height="100" width="100" class="d-block mx-auto">
-      </button>
-    </div>
-    <div class="containera" :class="{'show': showSidebar}" v-if="msg">
-      <transition-group name="fade" class="sidebar-menu">
+  <div class="pos-rel h-100">
+    <div class="containera">
+      <div class="sidebar-menu">
+        <div class="d-flex menu-item p-1">
+          <b class="pl-2">Pro Version</b>
+          <div class="ml-auto mr-2" @click="showNav">
+            <font-awesome-icon class="fontawesome" :icon="['fas', 'times']" />
+          </div>
+        </div>
         <div v-for="(item, index) in items" :key="index" class="menu-item navigation-links">
           <router-link
             :to="item.to"
@@ -42,38 +32,9 @@
             <a class="link">{{ subItem.title }}</a>
           </router-link>
         </div>
-      </transition-group>
+      </div>
     </div>
-     <div class="containera" :class="{'show': showSidebar}" v-else>
-      <transition-group name="fade" class="sidebar-menu">
-        <div v-for="(item, index) in itemMobile" :key="index" class="menu-item navigation-links">
-          <router-link
-            :to="item.to"
-            tag="div"
-            class="title-wrapper"
-            :class="{
-          'has-sub-items': item.subItems,
-          active: $route.name.indexOf(item.to.name) === 0
-        }"
-          >
-            <a class="title link">{{ item.title }}</a>
-          </router-link>
-          <span @click.capture="clicked">
-          <router-link
-            v-for="(subItem, subIndex) in item.subItems"
-            :key="subIndex"
-            :to="subItem.to"
-            tag="div"
-            exact
-            class="sub-item"
-          >
-            <a class="link">{{ subItem.title }}</a>
-          </router-link>
-           </span>
-        </div>
-      </transition-group>
-    </div>
-    </div>
+   
   </div>
 </template>
 
@@ -82,7 +43,7 @@ import { isMobile } from "mobile-device-detect";
 export default {
   name: "SidebarMenu",
   mounted(){
-          this.msg =  isMobile
+          this.msg = isMobile
         ? true
         : false
         console.log("isMobileSide",this.msg)
@@ -92,39 +53,13 @@ export default {
       console.log('prevented!')
       e.preventDefault()
     },
-    showHelp() {
-      if (this.showLabel) {
-        this.showLabelLink = false;
-        setTimeout(() => {
-          this.showLabel = false;
-        }, 500);
-      } else {
-        this.showLabel = true;
-        setTimeout(() => {
-          this.showLabelLink = true;
-        }, 500);
-      }
-    },
     showNav() {
-      if (this.showSidebar) {
-        this.showLink = false;
-        setTimeout(() => {
-          this.showSidebar = false;
-        }, 500);
-      } else {
-        this.showSidebar = true;
-        setTimeout(() => {
-          this.showLink = true;
-        }, 500);
-      }
+      this.$emit("showNav")
     }
   },
   data() {
     return {
       msg:false,
-      showSidebar: isMobile
-        ? false
-        : true,
       showLink: false,
       showLabel:  isMobile
         ? false
@@ -200,10 +135,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-// div {
-//   outline: 1px solid red;
-// }
-
 .emergencya {
   background-color: #e3e3e3;
   //  height: 200px;
@@ -243,19 +174,7 @@ export default {
 .ques path   {
     fill: #fff;
 }
-.ico-btn,
-.ico-btn span ,.ico-btna,
-.ico-btna span{
-  background-color: #5e98f9;
-  color: #fff;
-}
-.ico-btn {
- width: 40px;
-    padding: 10px;
-    position: absolute;
-    z-index: 1;
-    top: 9px;
-}
+
 .ico-btna {
   width: 37px;
   padding: 9px;
@@ -267,17 +186,12 @@ export default {
 }
 
 .containera {
-  // position: absolute;
-  top: 165px;
-  left: 0;
-  width: 0px;
   max-height: 100%;
-  // background-color: rgba($color: #81b121, $alpha: 0.8);
-  //border: solid #fff;
-  //border-width: 0 1px 0 0;
   transition: all 0.5s ease-in-out;
   overflow-y: auto;
   padding-right: 20px;
+  height: 100%;
+  direction: rtl;
 
   .control {
     display: flex;
@@ -297,7 +211,7 @@ export default {
     }
   }
   &.show {
-    width: 280px;
+    width: 250px;
     .control > i {
       color: #fff;
       transform: rotateZ(-180deg);
@@ -307,13 +221,18 @@ export default {
     }
   }
   .sidebar-menu {
+    height: 100%;
+
     .menu-item {
       background-color: #484f59;
       border-top: 2px solid #6d717a;
+      overflow-y: auto;
+      overflow-x: hidden;
+      direction:ltr;
 
       .title-wrapper {
         position: relative;
-        padding: 1rem 2rem;
+        padding: 0.5rem;
         display: flex;
         // justify-content: center;
 
@@ -332,6 +251,7 @@ export default {
           display: block;
           position: absolute;
           right: 0;
+          top: 13px;
           width: 0;
           height: 0;
           content: "";
@@ -363,8 +283,8 @@ export default {
       }
 
       .sub-item {
-        padding: 0.25rem 0.25rem 0.25rem 3.5rem;
-        font-size: 1rem;
+        padding: 0.25rem 0.25rem 0.25rem 1.75rem;
+        font-size: 18px;
 
         &.router-link-exact-active {
           .link {

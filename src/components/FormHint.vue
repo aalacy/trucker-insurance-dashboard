@@ -4,7 +4,7 @@
       <div class="hint-card-triangle"></div>
       <div class="card-body">
         <h5 class="title form-sub-title">Account Info</h5>
-        {{ hint }}
+        <div class="hint-centent">{{ hint }}</div>
         <div class="">
         
         </div>
@@ -59,12 +59,22 @@ export default {
     margin: 0 0 10px 0 !important;
   }
 
+  .hint-centent {
+    color: #2a497b;
+    font-size: 20px;
+    font-weight: 400;
+  }
+
   .hint-icon {
     width: 84px;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 1.2rem;
+  }
+
+  .card-body {
+    padding: 1.5rem !important;
   }
 }
 </style>

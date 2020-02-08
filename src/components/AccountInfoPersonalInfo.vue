@@ -136,7 +136,7 @@
               </div>
             </div>
           </div>
-          <div class="col-md-12 col-sm-6 col-lg-12">
+          <div class="col-12">
             <input type="checkbox" id="checkbox" class = "mt-1" v-model="checked" v-on:change="changeData()">
             <label for="checkbox" class="st-padding d-inline">Is Garaging address the same location?</label>
           </div>
@@ -226,49 +226,41 @@
         </div>
         <div class="card-footer">
           <div class="form-buttons next-wrapper">
-            <div v-if="mobile" class="col-6 p-0">
-            
+            <div class="col-6 p-0">
               <button
-                :disabled="loading"
+                :disabled="true"
                 type="button"
-                class="lt-button px-4 text-center lt-button-default btn-block btn-border-radius-lb  d-flex align-itmes-center justify-content-center h-100"
+                class="lt-button lt-button-default btn-block btn-border-radius-lb"
                 @click="goPrevForm"
               >
-                Prev
-                <div class="next-title  px-4 text-center d-inline pl-2 mob-2 button-icon color-bg">Upload Documents</div>
+                <font-awesome-icon class="fontawesome ctrl-arrow-left" :icon="['fas', 'sort-down']" size="2x"/>
+                <span class="ctrl-label">Previous</span>
+                <div class="prev-title"></div>
               </button>
-            
             </div>
-              <div v-else class="w-100">
-            <div class="lt-button px-4 text-center lt-button-default btn-block btn-border-radius-lb ">
-              <!-- <font-awesome-icon icon="caret-left" size="2x" class="m-1"></font-awesome-icon> -->
-              Previous
-              
-            </div>
-            </div>
+
             <div class="col-6 p-0">
-              
               <button
                 :disabled="loading"
                 type="submit"
-                class="lt-button lt-button-main btn-block btn-border-radius-rb p-1 button-icon d-flex align-itmes-center justify-content-center h-100"
+                class="lt-button lt-button-main btn-block btn-border-radius-rb"
               >
-              
-                <span class="arrow-button ">{{ loading ? 'Loading...' : 'Next' }}</span>Business Structure
-                <!-- <font-awesome-icon icon="caret-right" size="2x" class="m-1 fill-white"></font-awesome-icon> -->
+                 <span class="ctrl-label ml-3 text-white">{{ loading ? 'Loading...' : 'Next' }}</span>
+                <div class="prev-title next-title">Business Structure</div>
+                <font-awesome-icon class="fontawesome ctrl-arrow-right" :icon="['fas', 'sort-down']" size="2x"/>
               </button>
             </div>
           </div>
         </div>
       </div>
-
+<!-- 
       <div class="d-flex justify-content-center m-4" @click="show" v-if="save">
         <span class="save-hover">Save & Continue</span>
       </div>
       <div class="d-flex justify-content-center m-4" @click="newQuoteReq" v-else>
         <span class="save-hover">Save Changes</span>
       </div>
-
+ -->
       <div v-if="showmodel">
         <modelLogin/>
       </div>

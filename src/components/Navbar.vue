@@ -1,11 +1,14 @@
 <template>
   <div class="pat-abst">
     <div class="pos-rel">
-       <button type="button" class="btn ico-btn" @click="showNav">
-        <img src="../assets/images/hame.png" height="100" width="100" class="d-block mx-auto">
-      </button>
-      <div class="containera " :class="{'show': showSidebar}">
-        <transition-group name="fade" class="sidebar-menu">
+      <div class="containera">
+        <div name="fade" class="sidebar-menu">
+          <div class="menu-item sidebar-brand">
+            <div class="ml-auto mr-2" @click="showNav">
+              <font-awesome-icon class="fontawesome" :icon="['fas', 'times']" />
+            </div>
+            <b class="pl-2">Pro Version</b>
+          </div>
           <div v-for="(item, index) in items" :key="index" class="menu-item navigation-links">
             <router-link
               :to="item.to"
@@ -36,7 +39,7 @@
               <a class="link">{{ subItem.title }}</a>
             </router-link>
           </div>
-        </transition-group>
+        </div>
       </div>
     </div>
   </div>
@@ -48,40 +51,13 @@ import { isMobile } from "mobile-device-detect";
 export default {
   name: "SidebarMenu",
   methods: {
-    showHelp() {
-      if (this.showLabel) {
-        this.showLabelLink = false;
-        setTimeout(() => {
-          this.showLabel = false;
-        }, 500);
-      } else {
-        this.showLabel = true;
-        setTimeout(() => {
-          this.showLabelLink = true;
-        }, 500);
-      }
-    },
     showNav() {
-      if (this.showSidebar) {
-        this.showLink = false;
-        setTimeout(() => {
-          this.showSidebar = false;
-        }, 500);
-      } else {
-        this.showSidebar = true;
-        setTimeout(() => {
-          this.showLink = true;
-        }, 500);
-      }
+      this.$emit("showNav")
     }
   },
   
   data() {
     return {
-      // msg:false,
-      showSidebar: isMobile
-        ? false
-        : true,
       showLink: false,
       showLabel:  isMobile
         ? false
@@ -226,40 +202,13 @@ export default {
 .ques path   {
     fill: #fff;
 }
-.ico-btn,
-.ico-btn span ,.ico-btna,
-.ico-btna span{
-  background-color: #5e98f9;
-  color: #fff;
-}
-.ico-btn {
-  width: 40px;
-  padding: 10px;
-  position: absolute;
-  z-index: 1;
-  top: 0;
-  lef: 0;
-}
-.ico-btna {
-  width: 37px;
-  padding: 9px;
-  font-size: 11px;
-  color: #fff;
-  position: absolute;
-  left: 0px;
-  z-index: 1; 
-}
 
 .containera {
-  // position: absolute;
-  top: 165px;
-  left: 0;
-  width: 0px;
   max-height: 100%;
-  // background-color: rgba($color: #81b121, $alpha: 0.8);
   transition: all 0.5s ease-in-out;
   overflow-y: auto;
   padding-right: 20px;
+  direction: rtl;
 
   .control {
     display: flex;
@@ -289,6 +238,12 @@ export default {
     }
   }
   .sidebar-menu {
+    .sidebar-brand {
+      direction: rtl;
+      display: flex;
+      padding: .5rem;
+    }
+
     .menu-item {
       background-color: #484f59;
       border-top: 2px solid #6d717a;
@@ -297,8 +252,8 @@ export default {
         position: relative;
         padding: 1rem 2rem 1rem 3rem;
         display: flex;
-        // justify-content: center;
         align-items: center;
+         direction:ltr;
 
         &.has-sub-items {
           padding-bottom: 0.5rem;
