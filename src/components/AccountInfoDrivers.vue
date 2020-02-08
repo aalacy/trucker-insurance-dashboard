@@ -900,7 +900,7 @@ export default {
         if (res.status === "OK") {
           let { company: { driverInformationList, mailingAddress } } = res.data;
           
-          if (fullProfile.mailingAddress.constructor !== Object) {
+          if (mailingAddress.constructor !== Object) {
             this.mailingAddress = JSON.parse(mailingAddress);
           } else {
             this.mailingAddress = mailingAddress;
