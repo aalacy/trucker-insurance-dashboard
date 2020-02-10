@@ -35,10 +35,10 @@
                     </b-button>
                   </b-input-group-append>
                 </b-input-group>
-                  <div
-                    class="text-danger pb-2"
-                    v-show="!validations.vehiclesData[index].VIN.is_valid"
-                  >{{ validations.vehiclesData[index].VIN.text }}</div>
+                <div
+                  class="text-danger pb-2"
+                  v-show="!validations.vehiclesData[index].VIN.is_valid"
+                >{{ validations.vehiclesData[index].VIN.text }}</div>
               </div> 
 
               <div class="form-group col-5">
@@ -341,27 +341,16 @@
               </div>
 
               <div class="row">
-                <div class="col-8 col-lg-8">
-                  <div class="form-group">
-                    <input
-                      v-model="trailersData[index].VIN"
-                      type="text"
-                      class="lt-input"
-                      placeholder="Enter VIN number"
-                      :class="{ 'has-error': !validations.trailersData[index].VIN.is_valid }"
-                      @change="validateTrailerField('VIN', index)"
-                    >
-                  </div>
-                  <div
-                    class="text-danger"
-                    v-show="!validations.trailersData[index].VIN.is_valid"
-                  >{{ validations.trailersData[index].VIN.text }}</div>
-                </div>
-                <div class="col-4 col-lg-4 pl-0">
-                  <b-button :disabled="loading" type="button" @click="getVinData('trailer', index)" variant="primary">
-                    <font-awesome-icon class="fontawesome" icon="search"  />
-                  </b-button>
-                </div>
+                <div class="form-group col-10">
+                  <b-input-group>
+                    <input v-model.trim="trailersData[index].VIN" class="lt-input"  autocomplete="off" placeholder="Enter VIN number"></input>
+                    <b-input-group-append>
+                      <b-button :disabled="loading" type="button" @click="getVinData('trailer', index)" variant="primary">
+                        <font-awesome-icon class="fontawesome" icon="search"  />
+                      </b-button>
+                    </b-input-group-append>
+                  </b-input-group>
+                </div> 
               </div>
 
               <div class="row">

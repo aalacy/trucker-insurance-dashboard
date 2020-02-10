@@ -45,7 +45,7 @@
                       v-model="driversData[index].firstName"
                       type="text"
                       class="lt-input"
-                      placeholder="First name"
+                      placeholder="First Name"
                       :class="{ 'has-error': !validations.driversData[index].firstName.is_valid }"
                       @change="validateFieldCustom('firstName', index)"
                     >
@@ -77,7 +77,7 @@
                         v-model="driversData[index].lastName"
                         type="text"
                         class="lt-input"
-                        placeholder="Last name"
+                        placeholder="Last Name"
                         :class="{ 'has-error': !validations.driversData[index].lastName.is_valid }"
                         @change="validateFieldCustom('lastName', index)"
                       >
@@ -404,12 +404,12 @@
         </div>
       </div>
     
-      <div class="d-flex justify-content-center m-4" @click="show" v-if="save">
+    <!--   <div class="d-flex justify-content-center m-4" @click="show" v-if="save">
         <span class="save-hover">Save & Continue</span>
       </div>
       <div class="d-flex justify-content-center m-4" @click="newQuoteReq" v-else>
         <span class="save-hover">Save Changes</span>
-      </div>
+      </div> -->
       <div v-if="showmodel">
         <modelLogin/>
       </div>
@@ -490,6 +490,13 @@ export default {
     }
   },
   methods: {
+    capitalize(str) {
+      const newStr = str.split(' ').map(s => {
+        if (typeof s !== 'string') return ''
+        return s.charAt(0).toUpperCase() + s.slice(1).toLowerCase()
+      })
+      return newStr.join(' ');
+    },
     changeData() {
       if (this.driversData.length > 0 && this.mailingAddress) {
         this.driversData[0].address = this.mailingAddress.address;
@@ -784,7 +791,7 @@ export default {
             validNewDriverForm = false;
             this.validations.driversData[index].licenseNumber.is_valid = false;
             this.validations.driversData[index].licenseNumber.text =
-              "Please enter licenseNumber!";
+              "Please enter license Number!";
           } else {
             this.validations.driversData[index].licenseNumber.is_valid = true;
             this.validations.driversData[index].licenseNumber.text = "";

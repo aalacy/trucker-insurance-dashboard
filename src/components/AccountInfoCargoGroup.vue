@@ -3,7 +3,17 @@
     <form @submit.prevent="updateCompany">
       <div class="card">
         <div class="card-body">
-          <h4 class="card-title form-sub-title">Cargo Group</h4>
+          <h4 class=" form-sub-title">Cargo Group</h4>
+          <div class="mb-3">
+            <b-input-group>
+              <input v-model.trim="keyword" class="lt-input" autocomplete="off" @input="searchCargoGroup" placeholder="Search Cargo Group"></input>
+              <b-input-group-append>
+                <b-button :disabled="loading" type="button" @click="searchCargoGroup()" variant="primary">
+                  <font-awesome-icon class="fontawesome" icon="search"  />
+                </b-button>
+              </b-input-group-append>
+            </b-input-group>
+          </div>
           <div class="container">
             <div class="row cargo-group-page">
               <div
@@ -113,6 +123,7 @@ export default {
 
   data() {
     return {
+      keyword: "",
       final_uuid:"",
       uuid: "",
       showmodel: false,
@@ -157,6 +168,10 @@ export default {
   },
 
   methods: {
+    searchCargoGroup() {
+      console.log(this.keyword)
+      this.cargoGroups = this.cargoGroups.filter(group => group.value.includes(this.keyword))
+    },
     newQuoteReq() {
       swal({
         title: "Are you sure?",
@@ -266,10 +281,7 @@ export default {
               this.formData.cargoGroup = cargoGroup;
             }
           }
-          console.log(this.formData);
         } else if (res.status === "ERROR") {
-          // this.$router.replace({ name: 'Home' });
-         
         }
       } catch (err) {
        

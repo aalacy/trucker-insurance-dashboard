@@ -302,48 +302,25 @@ export default {
     
     this.mobile = isMobile ? true : false;
     this.uuid = localStorage.getItem('uuid');
-    if (localStorage.getItem("token")) {
-      this.save = false;
-      this.formData.dotNumber = localStorage.getItem("usdot");
-      this.formData.name = localStorage.getItem("company");
-      this.formData.phoneNumber = localStorage.getItem("Phone");
-      let MailingAddress = this.formatAddress(
-        localStorage.getItem(["Mailing address"])
-      );
-      let PhysicalAddress = this.formatAddress(
-        localStorage.getItem(["Physical address"])
-      );
-      this.formData.address = MailingAddress[3].trim().replace(",", "");
-      this.formData.state = MailingAddress[1].trim().replace(",", "");
-      this.formData.city = MailingAddress[2].trim().replace(",", "");
-      this.formData.zip = MailingAddress[0].trim().replace(",", "");
+    this.save = true;
+    this.formData.dotNumber = localStorage.getItem("usdot");
+    this.formData.name = localStorage.getItem("company");
+    this.formData.phoneNumber = localStorage.getItem("Phone");
 
-      this.formData.address1 = PhysicalAddress[3].trim().replace(",", "");
-      this.formData.state1 = PhysicalAddress[1].trim().replace(",", "");
-      this.formData.city1 = PhysicalAddress[2].trim().replace(",", "");
-      this.formData.zip1 = PhysicalAddress[0].trim().replace(",", "");
-    } else {
-      this.save = true;
-      
-      this.formData.dotNumber = localStorage.getItem("usdot");
-      this.formData.name = localStorage.getItem("company");
-      this.formData.phoneNumber = localStorage.getItem("Phone");
-
-      let MailingAddress = this.formatAddress(
-        localStorage.getItem(["Mailing address"])
-      );
-      this.formData.address = MailingAddress[3].trim().replace(",", "");
-      this.formData.state = MailingAddress[1].trim().replace(",", "");
-      this.formData.city = MailingAddress[2].trim().replace(",", "");
-      this.formData.zip = MailingAddress[0].trim().replace(",", "");
-      let PhysicalAddress = this.formatAddress(
-        localStorage.getItem(["Physical address"])
-      );
-      this.formData.address1 = PhysicalAddress[3].trim().replace(",", "");
-      this.formData.state1 = PhysicalAddress[1].trim().replace(",", "");
-      this.formData.city1 = PhysicalAddress[2].trim().replace(",", "");
-      this.formData.zip1 = PhysicalAddress[0].trim().replace(",", "");
-    }
+    let MailingAddress = this.formatAddress(
+      localStorage.getItem(["Mailing address"])
+    );
+    this.formData.address = MailingAddress[3].trim().replace(",", "");
+    this.formData.state = MailingAddress[1].trim().replace(",", "");
+    this.formData.city = MailingAddress[2].trim().replace(",", "");
+    this.formData.zip = MailingAddress[0].trim().replace(",", "");
+    let PhysicalAddress = this.formatAddress(
+      localStorage.getItem(["Physical address"])
+    );
+    this.formData.address1 = PhysicalAddress[3].trim().replace(",", "");
+    this.formData.state1 = PhysicalAddress[1].trim().replace(",", "");
+    this.formData.city1 = PhysicalAddress[2].trim().replace(",", "");
+    this.formData.zip1 = PhysicalAddress[0].trim().replace(",", "");
   },
   beforeMount() {
     // localStorage.setItem("uuid", null);
@@ -416,7 +393,6 @@ export default {
     // }
   },
   methods: {
-    
     changeData() {
       if (this.checked) {
         this.formData.address1 = this.formData.address;

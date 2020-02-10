@@ -19,7 +19,7 @@
           <div v-if="error" class="alert alert-danger" role="alert">{{ error }}</div>
         </div>
         <div class="card-footer">
-           <div class="form-buttons next-wrapper">
+          <div class="form-buttons next-wrapper">
             <div class="col-6 p-0">
               <button
                 :disabled="loading"
