@@ -11,9 +11,9 @@
               v-for="(singleVehicle, index) in vehiclesData"
               :key="'vehicle' + index"
             >
-              <div class="d-flex justify-content-between">
+              <div class="d-flex justify-content-between align-items-center">
                 <div class="col">
-                  <div class="h5">Vehicle #{{ index + 1 }}</div>
+                  <div class="h5 mb-0">Vehicle #{{ index + 1 }}</div>
                 </div>
                 <button
                  
@@ -26,7 +26,7 @@
                 </button>
               </div>
 
-              <div class="form-group col-10">
+              <div class="form-group col-lg-10 col-sm-12">
                 <b-input-group>
                   <input v-model.trim="vehiclesData[index].VIN" class="lt-input" :class="{ 'has-error': !validations.vehiclesData[index].VIN.is_valid }" autocomplete="off" @change="validateFieldCustom('VIN', index)" placeholder="Enter VIN number"></input>
                   <b-input-group-append>
@@ -41,7 +41,7 @@
                 >{{ validations.vehiclesData[index].VIN.text }}</div>
               </div> 
 
-              <div class="form-group col-5">
+              <div class="form-group col-lg-5 col-sm-8">
                 <input
                   v-model="vehiclesData[index].year"
                   type="text"
@@ -57,7 +57,7 @@
                 >{{ validations.vehiclesData[index].year.text }}</div>
               </div>
 
-              <div class="form-group col-5">
+              <div class="form-group col-lg-5 col-sm-8">
                 <input
                   v-model="vehiclesData[index].make"
                   type="text"
@@ -73,7 +73,7 @@
                 >{{ validations.vehiclesData[index].make.text }}</div>
               </div>
 
-              <div class="form-group col-5 mb-4">
+              <div class="form-group col-lg-5 col-sm-8 mb-4">
                 <input
                   v-model="vehiclesData[index].model"
                   type="text"
@@ -89,7 +89,7 @@
                 >{{ validations.vehiclesData[index].model.text }}</div>
               </div>
 
-              <div class="form-group border-top col-10 pt-4">
+              <div class="form-group border-top col-lg-10 col-sm-12 pt-4">
                   <!-- <div class="border-bottom p-1">
                     <span>Select Vehicle Type</span>
                   </div>
@@ -213,7 +213,7 @@
                 >{{ validations.vehiclesData[index].vehicleType.text }}</div>
               </div>
               
-              <div class="form-group col-5 mb-4">
+              <div class="form-group col-lg-5 col-md-6 col-sm-8 mb-4">
                 <input
                   v-model="vehiclesData[index].zipCode"
                   type="text"
@@ -253,36 +253,25 @@
                   >{{ validations.vehiclesData[index].radiusOfTravelVehicle.text }}</div>
                   <div class="row mb-3">
                     <div
-                      class="col"
+                      class="col-lg-6 col-sm-12"
                     >Are you looking for Comprehesive & Collision Coverage?</div>
 
-                    <div class="col text-right">
-                      <div class="row">
-                        <div class="col-6">
-                          <button
-                            type="button"
-                            class="lt-button px-3"
-                            :class="{ 'lt-button-main': vehiclesData[index].coverage }"
-                            @click="vehiclesData[index].coverage = true"
-                          >Yes</button>
-                        </div>
-
-                        <div class="col-6">
-                          <button
-                            type="button"
-                            class="lt-button px-3"
-                            :class="{ 'lt-button-main': !vehiclesData[index].coverage }"
-                            @click="vehiclesData[index].coverage = false"
-                          >No</button>
-                        </div>
-                      </div>
+                    <div class="col-lg-6 col-sm-12 mt-sm-1">
+                      <b-form-group>
+                        <b-form-radio-group
+                          v-model="vehiclesData[index].coverage"
+                          :options="options"
+                          button-variant="outline-primary"
+                          buttons
+                        ></b-form-radio-group>
+                      </b-form-group>
                     </div>
                   </div>
                   <template v-if="vehiclesData[index].coverage">
                     <div class="row mb-3">
-                      <div class="col">Current value of the vehicle/trailer</div>
+                      <div class="col-lg-6 col-sm-12">Current value of the vehicle or trailer</div>
 
-                      <div class="col text-right">
+                      <div class="col-lg-6 col-md-6 col-sm-12 text-right">
                         <input
                           :value="vehiclesData[index].currentValue"
                           type="text"
@@ -295,9 +284,9 @@
                     </div>
 
                     <div class="row mb-5">
-                      <div class="col">Deductible</div>
+                      <div class="col-lg-6 col-sm-12">Deductible</div>
 
-                      <div class="col text-right">
+                      <div class="col-lg-6 col-md-6 col-sm-12 text-right">
                         <select v-model="vehiclesData[index].deductible" class="lt-input" required>
                           <option disabled value>Deductible*</option>
                           <option
@@ -320,14 +309,12 @@
           </template>
           <template>
             <div
-              class="driver-form-item container-fluid mob-2"
+              class="driver-form-item mob-2"
               v-for="(singleTrailer, index) in trailersData"
               :key="'trailer' + index"
             >
-              <div class="row">
-                <div class="col">
-                  <h2 class="h5">Trailer #{{ index + 1 }}</h2>
-                </div>
+              <div class="d-flex justify-content-between align-items-center">
+                  <h2 class="h5 mb-0">Trailer #{{ index + 1 }}</h2>
                 <!-- v-show="index > 0" -->
                 <button
                   
@@ -340,8 +327,7 @@
                 </button>
               </div>
 
-              <div class="row">
-                <div class="form-group col-10">
+                <div class="form-group col-lg-10 col-sm-12">
                   <b-input-group>
                     <input v-model.trim="trailersData[index].VIN" class="lt-input"  autocomplete="off" placeholder="Enter VIN number"></input>
                     <b-input-group-append>
@@ -351,10 +337,8 @@
                     </b-input-group-append>
                   </b-input-group>
                 </div> 
-              </div>
 
-              <div class="row">
-                <div class="col-5">
+                <div class="col-lg-5 col-sm-12">
                   <div class="form-group">
                     <input
                       v-model="trailersData[index].year"
@@ -371,10 +355,8 @@
                     >{{ validations.trailersData[index].year.text }}</div>
                   </div>
                 </div>
-              </div>
 
-              <div class="row">
-                <div class="col-5">
+                <div class="col-lg-5 col-sm-12">
                   <div class="form-group">
                     <input
                       v-model="trailersData[index].make"
@@ -391,10 +373,8 @@
                     >{{ validations.trailersData[index].make.text }}</div>
                   </div>
                 </div>
-              </div>
 
-              <div class="row">
-                <div class="col-5">
+                <div class="col-lg-5 col-sm-12">
                   <div class="form-group">
                     <input
                       v-model="trailersData[index].model"
@@ -411,119 +391,86 @@
                     >{{ validations.trailersData[index].model.text }}</div>
                   </div>
                 </div>
-              </div>
 
-              <div class="row border-top">
-                <div class="col-10 pt-4">
-                  <div class="form-group">
-                    <div>
-                      <div class="border-bottom p-1">
-                        <span>Select Trailer Type</span>
-                      </div>
-
-                      <div class="p-3">
-                        <!-- <span>Select Trailer Type</span> -->
-                      </div>
-                      <select 
-                       v-model="trailersData[index].trailerType"
-                       class="lt-input" 
-                       @change="validateTrailerField('trailerType', index)" >
-                        <option value disabled>Select Trailer type</option>
-                        <option v-for="item in trailerTypes" :key="item" :value="item">{{ item }}</option>
-                      </select>
-                    </div>
-                    <div
-                      class="text-danger"
-                      v-show="!validations.trailersData[index].trailerType.is_valid"
-                    >{{ validations.trailersData[index].trailerType.text }}</div>
-                  </div>
+                <div class="form-group col-lg-10 col-sm-12 border-top pt-4">
+                  <select 
+                   v-model="trailersData[index].trailerType"
+                   class="lt-input" 
+                   @change="validateTrailerField('trailerType', index)" >
+                    <option value disabled>Select Trailer type</option>
+                    <option v-for="item in trailerTypes" :key="item" :value="item">{{ item }}</option>
+                  </select>
+                  <div
+                    class="text-danger"
+                    v-show="!validations.trailersData[index].trailerType.is_valid"
+                  >{{ validations.trailersData[index].trailerType.text }}</div>
                 </div>
-              </div>
 
-              <div class="row">
-                <div class="col-5">
-                  <div class="form-group">
-                    <input
-                      v-model="trailersData[index].zipCode"
-                      type="text"
-                      class="lt-input"
-                      minlength="5"
-                      placeholder="Garaging Zip"
-                      :class="{ 'has-error': !validations.trailersData[index].zipCode.is_valid }"
-                      @change="validateTrailerField('zipCode', index)"
-                    >
+                <div class="form-group col-lg-5 col-sm-8">
+                  <input
+                    v-model="trailersData[index].zipCode"
+                    type="text"
+                    class="lt-input"
+                    minlength="5"
+                    placeholder="Garaging Zip"
+                    :class="{ 'has-error': !validations.trailersData[index].zipCode.is_valid }"
+                    @change="validateTrailerField('zipCode', index)"
+                  >
 
-                    <div
-                      class="text-danger"
-                      v-show="!validations.trailersData[index].zipCode.is_valid"
-                    >{{ validations.trailersData[index].zipCode.text }}</div>
-                  </div>
+                  <div
+                    class="text-danger"
+                    v-show="!validations.trailersData[index].zipCode.is_valid"
+                  >{{ validations.trailersData[index].zipCode.text }}</div>
                 </div>
-              </div>
 
-              <div class="row border-top">
-                <div class="col pt-3">
-                  <div class="form-group">
-                    <div>
-                      <label class="d-block">
-                        <span class="label">Radius of Travel (in miles)</span>
+                <div class="col pt-3 form-group">
+                  <div>
+                    <label class="d-block">
+                      <span class="label">Radius of Travel (in miles)</span>
 
-                        <input
-                          v-model="trailersData[index].radiusOfTravelTrailer"
-                          type="range"
-                          min="0"
-                          :max="550"
-                          step="50"
-                          class="lt-input-range lt-input"
-                          placeholder="Radius of Travel*"
-                          @change="validateTrailerField('radiusOfTravelTrailer', index)"
-                        >
-                      </label>
-                    </div>
-                      <div class="text-center">
-                        <strong>{{ trailersData[index].radiusOfTravelTrailer > 500 ? "500+":trailersData[index].radiusOfTravelTrailer}}</strong>
-                    </div>
-                    <div
-                      class="text-danger"
-                      v-show="!validations.trailersData[index].radiusOfTravelTrailer.is_valid"
-                    >{{ validations.trailersData[index].radiusOfTravelTrailer.text }}</div>
+                      <input
+                        v-model="trailersData[index].radiusOfTravelTrailer"
+                        type="range"
+                        min="0"
+                        :max="550"
+                        step="50"
+                        class="lt-input-range lt-input"
+                        placeholder="Radius of Travel*"
+                        @change="validateTrailerField('radiusOfTravelTrailer', index)"
+                      >
+                    </label>
                   </div>
+                    <div class="text-center">
+                      <strong>{{ trailersData[index].radiusOfTravelTrailer > 500 ? "500+":trailersData[index].radiusOfTravelTrailer}}</strong>
+                  </div>
+                  <div
+                    class="text-danger"
+                    v-show="!validations.trailersData[index].radiusOfTravelTrailer.is_valid"
+                  >{{ validations.trailersData[index].radiusOfTravelTrailer.text }}</div>
                 </div>
-              </div>
 
-              <div class="row mb-3">
+              <div class="form-group">
                 <div
-                  class="col font-weight-bold"
+                  class="col-lg-6 col-sm-12 font-weight-bold"
                 >Are you looking for Comprehesive & Collision Coverage?</div>
 
-                <div class="col text-right">
-                  <div class="row">
-                    <div class="col-6">
-                      <button
-                        type="button"
-                        class="lt-button px-3"
-                        :class="{ 'lt-button-main': trailersData[index].coverage }"
-                        @click="trailersData[index].coverage = true"
-                      >Yes</button>
-                    </div>
-
-                    <div class="col-6">
-                      <button
-                        type="button"
-                        class="lt-button px-3"
-                        :class="{ 'lt-button-main': !trailersData[index].coverage }"
-                        @click="trailersData[index].coverage = false"
-                      >No</button>
-                    </div>
-                  </div>
+                <div class="col-lg-6 col-sm-12 mt-sm-1">
+                  <b-form-group>
+                    <b-form-radio-group
+                      v-model="trailersData[index].coverage"
+                      :options="options"
+                      button-variant="outline-primary"
+                      buttons
+                    ></b-form-radio-group>
+                  </b-form-group>
                 </div>
                 <!-- </div> -->
               </div>
               <template v-if="trailersData[index].coverage">
-                <div class="row mb-3">
-                  <div class="col font-weight-bold">Current value of the vehicle/trailer</div>
+                <div class="form-group mb-3">
+                  <div class="col-lg-6 col-sm-12 font-weight-bold">Current value of the vehicle or trailer</div>
 
-                  <div class="col text-right">
+                  <div class="col-lg-6 col-md-6 col-sm-12 text-right">
                     <input
                       :value="trailersData[index].currentValue"
                       type="text"
@@ -536,10 +483,10 @@
                   </div>
                 </div>
 
-                <div class="row mb-3">
-                  <div class="col font-weight-bold">Deductible</div>
+                <div class="form-group mb-3">
+                  <div class="col-lg-6 col-sm-12 font-weight-bold">Deductible</div>
 
-                  <div class="col text-right">
+                  <div class="col-lg-6 col-md-6 col-sm-12 text-right">
                     <select v-model="trailersData[index].deductible" class="lt-input" required>
                       <option disabled value>Deductible*</option>
                       <option
@@ -587,7 +534,7 @@
                 @click="goPrevForm"
               >
                 <font-awesome-icon class="fontawesome ctrl-arrow-left" :icon="['fas', 'sort-down']" size="2x"/>
-                <span class="ctrl-label">Previous</span>
+                <span class="ctrl-label">Prev</span>
                 <div class="prev-title">Cargo Hauled</div>
               </button>
             </div>
@@ -725,7 +672,11 @@ export default {
       error: null,
       vehicleOrTrailer: "",
       formErrors: [],
-      type: ["Vehicle", "Trailer"]
+      type: ["Vehicle", "Trailer"],
+      options: [
+        {text: "Yes", value: true},
+        {text: "No", value: false}
+      ]
     };
   },
 

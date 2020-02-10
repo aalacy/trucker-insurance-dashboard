@@ -776,7 +776,7 @@ export default {
           if(!this.driversData[index].zip.match(/(^\d{5}$)/)){
             validNewDriverForm = false;
             this.validations.driversData[index].zip.is_valid = false;
-            this.validations.driversData[index].zip.text = 'Please enter minimum 5 character!';
+            this.validations.driversData[index].zip.text = 'Invalid Zip Code';
           
           if (this.driversData[index].zip.trim() == "") {
             validNewDriverForm = false;
