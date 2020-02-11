@@ -133,7 +133,7 @@ export default {
   background-color: $color_lightblue_1;
 
   .title {
-    padding: .81rem;
+    padding: .55rem;
     color: $color_darkblue;
   }
 

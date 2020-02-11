@@ -19,14 +19,13 @@
               <div
                 v-for="(item, index) in cargoGroups"
                 :key="index"
-                class="col-3 text-center pointer mb-2 p-1 "
+                class="col-3 text-center pointer p-1 "
                 @click="selectCargoGroup(item.value)"
               :class="{ selected: cargoGroupMap[item.value] }">
               <div class="cargo-group">
-                <div class="p-1">
-                  <img :src="item.src" alt>
+                <div class="cargo-group-img-wrapper">
+                  <img :src="item.src" alt="group image">
                 </div>
-
                 <div
                   class="font-weight-bold name"
                   :class="{ selected: cargoGroupMap[item.value] }"
@@ -327,6 +326,20 @@ export default {
 <style lang="scss" scoped>
 .cargo-group-form {
   .cargo-group {
+    .cargo-group-img-wrapper {
+      width: 120px;
+      height: auto;
+      margin: 0 auto;
+      background: #edf2f5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+
+      img {
+        padding: 22px;
+      }
+    }
     .pad-none {
       padding-left: 0px;
       padding-right: 0px;

@@ -69,10 +69,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-// div {
-//   outline: 1px solid red;
-// }
-
 .d-none-block{
   display: none;
 }
@@ -119,21 +115,22 @@ export default {
         left: 0;
       }
     }
-    .sidebar {
-      padding: 0;
-      width: 300px;
-      min-width: 300px;
-      max-width: 300px;
-    }
 
     .forms {
       padding: 0;
-      margin: 0;
+      margin-left: 250px;
+      margin-right: 20px;
+
+      @media (max-width: 768px) {
+        margin-left: 0;
+        margin-right: 0;
+      }
 
       .hint-wrapper {
         padding-top: 7rem;
       }
     }
+
   }
 }
 </style>

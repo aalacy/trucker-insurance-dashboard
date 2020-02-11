@@ -30,8 +30,8 @@
                     }"
                 >
                 <div class="haul-type">
-                  <div class="p-1">
-                    <img :src="subItem.img" alt>
+                  <div class="haul-type-wrapper">
+                    <img :src="subItem.img" alt="haul type">
                   </div>
 
                   <div
@@ -359,6 +359,20 @@ export default {
 }
 .cargo-hauled-form {
   .haul-type {
+    .haul-type-wrapper {
+      width: 120px;
+      height: auto;
+      margin: 0 auto;
+      background: #edf2f5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+
+      img {
+        padding: 22px;
+      }
+    }
     .name {
       display: flex;
       align-items: center;

@@ -70,10 +70,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-// div {
-//   outline: 1px solid red;
-// }
-
 .d-none-block{
   display: none;
 }
@@ -122,6 +118,7 @@ export default {
 
       @media (max-width: 768px) {
         margin-left: 0;
+        margin-right: 0;
       }
 
       .hint-wrapper {

@@ -250,24 +250,19 @@ export default {
 
       .title-wrapper {
         position: relative;
-        padding: 1rem 2rem 1rem 3rem;
+        padding: 0.675rem 1rem 0.675rem 1rem;
         display: flex;
         align-items: center;
          direction:ltr;
 
-        &.has-sub-items {
-          padding-bottom: 0.5rem;
-        }
-
         &.active {
           background-color: $color_blue;
-         
         }
 
         .title {
           font-weight: 800;
           font-size: 1.1rem;
-          margin-left: 20px;
+          margin-left: 1rem;
         }
 
         &.active:after {
@@ -301,7 +296,7 @@ export default {
       }
 
       .sub-item {
-        padding: 0.25rem 0.25rem 0.25rem 3.5rem;
+        padding: 0.25rem 0.25rem 0.25rem 1.5rem;
         font-size: 1rem;
 
         &.router-link-exact-active {
@@ -322,107 +317,5 @@ export default {
     }
   }
 }
-.containeraa {
-  // position: absolute;
-  top: 165px;
-  left: 0;
-  width: 0px;
-    padding-top: 20px;
-    height: 207px;
-      background-color: #e3e3e3;
-    
-     /* border: solid #fff; */
-  border-width: 0 1px 0 0;
-  transition: all 0.5s ease-in-out;
-  overflow-y: auto;
-  position: relative;
-  top: 0px;
 
-  .control {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 50px;
-    margin-bottom: 10px;
-    position: absolute;
-    z-index: 1;
-    top: 0;
-    background-color: #5e98f9;
-    i {
-      font-size: 2rem;
-      cursor: pointer;
-      transition: all 0.5s ease-in-out;
-      color: #fff;
-    }
-  }
-  &.show {
-    width: 280px;
-    .control > i {
-      color: #fff;
-      transform: rotateZ(-180deg);
-    }
-    .navigation-icons {
-      color: #fff;
-    }
-  }
-  .sidebar-menu {
-    .menu-item {
-      
-
-      .title-wrapper {
-        position: relative;
-        padding: 1rem 2rem;
-        display: flex;
-        // justify-content: center;
-
-        &.has-sub-items {
-          padding-bottom: 0.5rem;
-        }
-
-        &.active {
-          background-color: $color_blue;
-        }
-
-        .title {
-          font-weight: 800;
-          font-size: 1.1rem;
-          margin-left: 20px;
-        }
-
-        .triangle {
-          position: absolute;
-          top: 20px;
-          right: -10px;
-          width: 0;
-          height: 0;
-          border-style: solid;
-          border-width: 10px 0 10px 10px;
-          border-color: transparent transparent transparent $color_blue;
-
-          &.has-sub-items {
-            top: 15px;
-          }
-        }
-      }
-
-      .sub-item {
-        padding: 0.25rem 0.25rem 0.25rem 3.5rem;
-        font-size: 1rem;
-
-        &.router-link-exact-active {
-          .link {
-            font-weight: 600;
-          }
-        }
-      }
-    }
-    #sidebar.active {
-      margin-left: -280px;
-    }
-
-    .link {
-      color: white;
-    }
-  }
-}
 </style>
