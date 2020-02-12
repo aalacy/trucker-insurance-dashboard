@@ -216,10 +216,6 @@
       display: flex;
       align-items: center;
       height: calc(1.5em + 1.55rem + 2px);
-      @media (max-width: 425px) {
-        margin: 0;
-        padding: 0;
-      }
     }
 
     .ctrl-arrow-left {
@@ -230,10 +226,6 @@
         opacity: 0.2;
       }
 
-      @media (max-width: 425px) {
-        margin-right: 0;
-        font-size: 1.5em;
-      }
     }
 
     .ctrl-arrow-right {
@@ -243,10 +235,6 @@
         fill: white;
       }
 
-      @media (max-width: 425px) {
-        margin-left: 0;
-        font-size: 1.5em;
-      }
     }
 
     .ctrl-label {
@@ -255,7 +243,6 @@
       font-weight: 700;
 
       @media (max-width: 425px) {
-        font-size: 20px;
       }
     }
 
@@ -263,12 +250,19 @@
       font-size: 15px;
       font-weight: 100;
       padding-left: 0.5rem;
+      
+      @media (max-width: 425px) {
+        display: none;
+      }
     }
 
     .next-title {
       color: white;
       opacity: 0.7;
       margin-right: auto;
+      @media (max-width: 425px) {
+        display: none;
+      }
     }
   }
 }
