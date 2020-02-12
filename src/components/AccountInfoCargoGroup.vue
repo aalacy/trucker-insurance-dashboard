@@ -129,7 +129,8 @@ export default {
       save: true,
       userData: "",
       formData: {
-        cargoGroup: []
+        cargoGroup: [],
+        cargoGroups: [],
       },
       selectedCargoGroup: [],
       rules: {
@@ -338,6 +339,7 @@ export default {
 
       img {
         padding: 22px;
+        border-radius: 8px;
       }
     }
     .pad-none {
