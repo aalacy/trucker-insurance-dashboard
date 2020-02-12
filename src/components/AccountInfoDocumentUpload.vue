@@ -8,7 +8,7 @@
             <span>Although these uploads are not mandatory, they help to provide you more options and a faster service, if completed, as many carriers require such data. Please upload all of the relevant documents that you can</span>
           </div>
           <div class="row set-mob">
-            <div class="form-group">
+            <div class="form-group col-sm-6 col-lg-3 col-md-4">
               <div class="image-upload">
                 <label for="lossRun">
                   <img src="../assets/images/upload.png">
@@ -29,7 +29,7 @@
               </div>
             </div>
 
-            <div class="form-group">
+            <div class="form-group col-sm-6 col-lg-3 col-md-4">
               <div class="image-upload">
                 <label for="ifta">
                   <img src="../assets/images/upload.png">
@@ -51,7 +51,7 @@
               </div>
             </div>
 
-            <div class="form-group">
+            <div class="form-group col-sm-6 col-lg-3 col-md-4">
               <div class="image-upload">
                 <label for="contracts">
                   <img src="../assets/images/upload.png">
@@ -73,7 +73,7 @@
               </div>
             </div>
 
-            <div class="form-group">
+            <div class="form-group col-sm-6 col-lg-3 col-md-4">
               <div class="image-upload">
                 <label for="declarations">
                   <img src="../assets/images/upload.png">
@@ -95,7 +95,7 @@
               </div>
             </div>
 
-            <div class="form-group">
+            <div class="form-group col-sm-6 col-lg-3 col-md-4">
               <div class="image-upload">
                 <label for="rentalLeaseAgreement">
                   <img src="../assets/images/upload.png">
@@ -121,7 +121,7 @@
               </div>
             </div>
 
-            <div class="form-group">
+            <div class="form-group col-sm-6 col-lg-3 col-md-4">
               <div class="image-upload">
                 <label for="previouslyCompletedApplications">
                   <img src="../assets/images/upload.png">
@@ -155,7 +155,7 @@
               </div>
             </div>
 
-            <div class="form-group">
+            <div class="form-group col-sm-6 col-lg-3 col-md-4">
               <div class="image-upload">
                 <label for="insuranceRequirements">
                   <img src="../assets/images/upload.png">
@@ -175,6 +175,32 @@
                   type="button"
                   class="btn btn-close1"
                   @click="removeDoc('insuranceRequirements')"
+                >
+                  <font-awesome-icon icon="times" />
+                </button>
+              </div>
+            </div>
+
+          <div class="form-group col-sm-6 col-lg-3 col-md-4">
+              <div class="image-upload">
+                <label for="others">
+                  <img src="../assets/images/upload.png">
+                </label>
+                <label for="others" class="label">Others</label>
+
+                <input
+                  id="others"
+                  type="file"
+                  :class="{ 'has-error': formErrors.others }"
+                  @change="onFileChange($event, 'others')"
+                >
+              </div>
+              <div v-if="preview.others.name" class="d-flex justify-content-start align-base">
+                <p class="preview-image">{{preview.others.name}}</p>
+                <button
+                  type="button"
+                  class="btn btn-close1"
+                  @click="removeDoc('others')"
                 >
                   <font-awesome-icon icon="times" />
                 </button>
@@ -266,6 +292,7 @@ export default {
         rentalLeaseAgreement: {name: "", content: ""},
         previouslyCompletedApplications: {name: "", content: ""},
         insuranceRequirements: {name: "", content: ""},
+        others: {name: "", content: ""},
       },
       preview: {
         lossRun: {name: "", content: ""},
@@ -274,7 +301,8 @@ export default {
         declarations: {name: "", content: ""},
         rentalLeaseAgreement: {name: "", content: ""},
         previouslyCompletedApplications: {name: "", content: ""},
-        insuranceRequirements: {name: "", content: ""}
+        insuranceRequirements: {name: "", content: ""},
+        others: {name: "", content: ""}
       },
       formErrors: {},
       loading: false,
@@ -354,6 +382,10 @@ export default {
         case "insuranceRequirements":
           this.formData.insuranceRequirements = {};
           this.preview.insuranceRequirements = {};
+          break;
+        case "others":
+          this.formData.others = {};
+          this.preview.others = {};
           break;
       }
     },
@@ -481,8 +513,6 @@ export default {
   margin-top: -6;
 }
 .set-mob .form-group {
-  flex: 0 0 20%;
-  max-width: 20%;
   text-align: center;
 }
 .image-upload > input {

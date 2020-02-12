@@ -1358,6 +1358,13 @@ export default {
   }
 };
 </script>
+<style lang="scss">
+	.btn-outline-primary.active {
+		span {
+			color: white !important;
+		}
+	}
+</style>
 
 <style lang="scss" scoped>
 select{

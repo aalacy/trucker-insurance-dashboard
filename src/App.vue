@@ -84,7 +84,7 @@
                 <router-link
                   @click.native="loginHide"
                   :to="{ name: 'SignUp', query: {next: this.$router.history.current.name == 'SignUp' ?  this.$router.history.current.query.next : this.$router.history.current.name} }"
-                  class="btn btn-primary mr-2"
+                  class="linkBtn"
                   active-class="font-weight-bold"
                 >Signup</router-link>
               </li>
@@ -159,6 +159,7 @@
             </ul>
         </div>
         <div class="bottom-company">
+          <div class="px-3 py-1">National Producer Number: 18975319</div>
           <div class="px-3 py-1">&copy;2020 LuckyTruck, Inc.</div>
           <div class="lists">
             <div class="px-3 py-1">

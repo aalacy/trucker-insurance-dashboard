@@ -310,17 +310,21 @@ export default {
     let MailingAddress = this.formatAddress(
       localStorage.getItem(["Mailing address"])
     );
-    this.formData.address = MailingAddress[3].trim().replace(",", "");
-    this.formData.state = MailingAddress[1].trim().replace(",", "");
-    this.formData.city = MailingAddress[2].trim().replace(",", "");
-    this.formData.zip = MailingAddress[0].trim().replace(",", "");
+    if (MailingAddress.length > 0) {
+      this.formData.address = MailingAddress[3].trim().replace(",", "");
+      this.formData.state = MailingAddress[1].trim().replace(",", "");
+      this.formData.city = MailingAddress[2].trim().replace(",", "");
+      this.formData.zip = MailingAddress[0].trim().split('-')[0].replace(",", "");
+    }
     let PhysicalAddress = this.formatAddress(
       localStorage.getItem(["Physical address"])
     );
-    this.formData.address1 = PhysicalAddress[3].trim().replace(",", "");
-    this.formData.state1 = PhysicalAddress[1].trim().replace(",", "");
-    this.formData.city1 = PhysicalAddress[2].trim().replace(",", "");
-    this.formData.zip1 = PhysicalAddress[0].trim().replace(",", "");
+    if (PhysicalAddress.length > 0) {
+      this.formData.address1 = PhysicalAddress[3].trim().replace(",", "");
+      this.formData.state1 = PhysicalAddress[1].trim().replace(",", "");
+      this.formData.city1 = PhysicalAddress[2].trim().replace(",", "");
+      this.formData.zip1 = PhysicalAddress[0].trim().replace(",", "");
+    }
   },
   beforeMount() {
     // localStorage.setItem("uuid", null);
