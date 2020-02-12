@@ -192,6 +192,8 @@ export default {
   padding-right: 20px;
   height: 100%;
   direction: rtl;
+  overflow-y: auto;
+  overflow-x: hidden;
 
   .control {
     display: flex;
@@ -226,8 +228,7 @@ export default {
     .menu-item {
       background-color: #484f59;
       border-top: 2px solid #6d717a;
-      overflow-y: auto;
-      overflow-x: hidden;
+     
       direction:ltr;
 
       .title-wrapper {
