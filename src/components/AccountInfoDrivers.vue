@@ -9,13 +9,9 @@
                 <input type="checkbox" v-on:change="changeData()"> Same as Mailing Address
               </label>
             </h4>
-            
           </div>
-
           <hr>
-
           <template>
-            
             <div
               class="owner-form-item mob-2"
               v-for="(singleDriver, index) in driversData"
@@ -55,7 +51,7 @@
                     >{{ validations.driversData[index].firstName.text }}</div>
                   </div>
                 </div>
-                  <div class="col-4 col-lg-2">
+                  <div class="col-6 col-lg-2">
                     <div class="form-group">
                       <input
                       v-model="driversData[index].middleName"
@@ -90,11 +86,11 @@
                 </div>
                 
                 <div class="row" id="text-date">
-                  <div class="col-12 col-md-6 pt-2">
-                    <div>Date of Birth</div>
+                  <div class="col-sm-12 col-md-5 pt-2">
+                    <b>Date of Birth</b>
                   </div>
 
-                  <div class="col-12 col-md-6" id="text-date">
+                  <div class="col-sm-12 col-md-7" id="text-date">
                     <div class="row">
                       <div class="col">
                         <div class="form-group">
@@ -141,7 +137,7 @@
                         </div>
                       </div>
                       <span class="mt-1">/</span>
-                      <div class="col">
+                      <div class="col-5">
                         <div class="form-group">
                           <!-- :class="{ 'has-error': formErrors.dobY }" -->
                           <input
@@ -165,7 +161,7 @@
                 </div>
 
                 <div class="row">
-                  <div class="col-6">
+                  <div class="col-12 col-lg-6">
                     <div class="form-group">
                       <input
                         v-model="driversData[index].licenseNumber"
@@ -183,7 +179,7 @@
                     </div>
                   </div>
 
-                  <div class="col-6">
+                  <div class="col-12 col-lg-6">
                     <div class="form-group">
                       <input
                         v-model="driversData[index].CDL"
@@ -295,11 +291,11 @@
               
               </div>
               <div class="row" id="text-date">
-                <div class="col-12 col-md-6 pt-2">
-                  <div>Date of Hire</div>
+                <div class="col-12 col-md-5 pt-2">
+                  <b>Date of Hire</b>
                 </div>
 
-                <div class="col-12 col-md-6">
+                <div class="col-12 col-md-7">
                   <div class="row">
                     <div class="col">
                       <div class="form-group">
@@ -335,7 +331,7 @@
                       </div>
                     </div>
                     <span class="mt-1">/</span>
-                    <div class="col">
+                    <div class="col-5">
                       <div class="form-group">
                         <input
                           v-model="driversData[index].dohY"
@@ -508,7 +504,11 @@ export default {
     validateFieldCustom(fieldName, index){
       if (this.driversData[index][fieldName].trim() == '') {
         this.validations.driversData[index][fieldName].is_valid = false;
-        this.validations.driversData[index][fieldName].text = 'Please enter   ' + fieldName + '!';
+        let text = fieldName;
+        if (fieldName == 'licenseNumber') {
+          text = 'license number';
+        }
+        this.validations.driversData[index][fieldName].text = 'Please enter   ' + text + '!';
       } else {
         this.validations.driversData[index][fieldName].is_valid = true;
       }

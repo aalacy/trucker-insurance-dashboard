@@ -47,7 +47,7 @@ export default {
     return {
       progress: Number(localStorage.getItem('accountInfoProgress')) || 0,
       hint: '',
-      showSidebar: true,
+      showSidebar: isMobile ? false : true,
     };
   },
   methods: {
@@ -122,7 +122,7 @@ export default {
       }
 
       .hint-wrapper {
-        padding-top: 7rem;
+        padding-top: 1rem;
       }
     }
   }
