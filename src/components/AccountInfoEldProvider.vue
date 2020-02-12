@@ -371,7 +371,8 @@ export default {
       border-radius: 8px;
 
       .provider-img {
-        padding: 22px;
+        padding: 17px;
+        border-radius: 8px;
       }
     }
 

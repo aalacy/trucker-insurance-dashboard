@@ -371,6 +371,7 @@ export default {
 
       img {
         padding: 22px;
+        border-radius: 8px;
       }
     }
     .name {
