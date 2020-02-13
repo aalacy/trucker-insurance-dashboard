@@ -15,6 +15,7 @@ import VueSwal from 'vue-swal'
 import VueSignaturePad from 'vue-signature-pad';
 import VueIntercom from 'vue-intercom';
 import VueScrollTo from'vue-scrollto';
+import * as VueGoogleMaps from 'vue2-google-maps'
 
 library.add(faCaretLeft, faSearch, faSpinner, faAlignLeft,faCaretRight,faFacebookSquare, faFacebookF,faGoogle, faTwitter, faLinkedinIn, faPhoneAlt,faQuestion,faTimes, faSortDown)
 
@@ -26,6 +27,19 @@ Vue.use(BootstrapVue);
 Vue.use(VueSignaturePad);
 Vue.use(VueIntercom, { appId: 'ct2qyf3u' });
 Vue.use(VueScrollTo);
+Vue.use(VueGoogleMaps, {
+  load: {
+    key: 'AIzaSyBqqBoxDMvOKWZNLWv0rJNXxSGoO153rx8',
+    libraries: 'places', // This is required if you use the Autocomplete plugin
+    // OR: libraries: 'places,drawing'
+    // OR: libraries: 'places,drawing,visualization'
+    // (as you require)
+
+    //// If you want to set the version, you can do so:
+    // v: '3.26',
+  },
+  installComponents: true
+})
 
 // Vue.component('font-awesome-icon', FontAwesomeIcon)
 

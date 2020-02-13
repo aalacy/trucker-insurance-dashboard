@@ -243,6 +243,17 @@ export default {
     if (isMobile) {
       this.placeholder = "DOT # or Company Name";
     }
+    function ipLookUp () {
+  fetch('https://get.geojs.io/v1/ip.json')
+  .then(response => response.json())
+  .then(function(res) {
+    console.log(res)
+  })
+  .catch(error => {
+    console.log(error)
+  });
+}
+ipLookUp()
   },
   data() {
     return {

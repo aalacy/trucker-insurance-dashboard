@@ -394,7 +394,6 @@ export default {
   },
   created() {
     this.$emit("update-progress", this.progress);
-    // this.uploadDocuments()
     this.loadCompany();
   },
   methods: {
@@ -518,14 +517,11 @@ export default {
     async uploadDocuments() {
       try {
         let data = await API.formData("company/upload", this.formData);
-         if(localStorage.getItem('token')){
-            
-              this.final_uuid = this.userData;
-            
-          }else{
-            this.final_uuid = this.uuid;
-          }
-
+        if(localStorage.getItem('token')){
+          this.final_uuid = this.userData;
+        }else{
+          this.final_uuid = this.uuid;
+        }
         if (data.status === "OK") {
           this.goNextForm();
           // this.$router.push({ name: this.nextForm });

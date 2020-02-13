@@ -136,6 +136,9 @@
               </div>
             </div>
           </div>
+          <GmapMap ref="mapRef" :center="center">
+          </GmapMap>
+
           <div class="col-12">
             <input type="checkbox" id="checkbox" class = "mt-1" v-model="checked" v-on:change="changeData()">
             <label for="checkbox" class="st-padding d-inline">Is Garaging address the same location?</label>
@@ -276,6 +279,7 @@ import { mapState, mutations } from "vuex";
 import { isMobile } from "mobile-device-detect";
 import axios from "axios";
 import { setTimeout } from "timers";
+import { gmapApi } from 'vue2-google-maps'
 
 export default {
   name: "AccountInfoPersonalInfo",
@@ -298,6 +302,9 @@ export default {
     }
   },
   mounted() {
+    this.$refs.mapRef.$mapPromise.then((map) => {
+      map.panTo({lat: 1.38, lng: 103.80})
+    });
     this.$emit("update-hint", "Please be sure that the mailing address is where you want to receive physical documents. The garage address is where you keep your truck.");
     
     this.mobile = isMobile ? true : false;
@@ -330,11 +337,13 @@ export default {
     // localStorage.setItem("uuid", null);
   },
   computed: {
-    ...mapState(["data"])
+    ...mapState(["data"]),
+   
   },
 
   data() {
     return {
+      center: {lat: 1.38, lng: 103.80},
       checked: true,
       showmodel: false,
       final_uuid:"",

@@ -21,6 +21,7 @@
     "bootstrap-vue": "^2.0.0-rc.25",
     "core-js": "^3.4.1",
     "dayjs": "^1.8.12",
+    "geolocator": "^2.1.5",
     "jquery": "^3.4.0",
     "mobile-detect": "^1.4.3",
     "mobile-device-detect": "^0.2.3",

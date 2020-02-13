@@ -1097,11 +1097,12 @@ export default {
         delete data.data.vehicleHistory;
 
         if (vehicleType == "vehicle") {
-          delete data.data.vehicleType;
+          // delete data.data.vehicleType;
 
           this.vehiclesData[index].make = data.data.make;
           this.vehiclesData[index].model = data.data.model;
           this.vehiclesData[index].year = data.data.year;
+          this.vehiclesData[index].vehicleType = data.data.vehicleType
         } else if (vehicleType == "trailer") {
           if (this.trailerTypes.indexOf(data.data.vehicleType) > -1) {
             data.data.trailerType = data.data.vehicleType;
