@@ -6,9 +6,9 @@
           <h4 class=" form-sub-title">Cargo Group</h4>
           <div class="mb-3">
             <b-input-group>
-              <input v-model.trim="keyword" class="lt-input" autocomplete="off" @input="searchCargoGroup" placeholder="Search Cargo Group"></input>
+              <input v-model.trim="keyword" class="lt-input" autocomplete="off"placeholder="Search Cargo Group"></input>
               <b-input-group-append>
-                <b-button :disabled="loading" type="button" @click="searchCargoGroup()" variant="primary">
+                <b-button :disabled="loading" type="button" variant="primary">
                   <font-awesome-icon class="fontawesome" icon="search"  />
                 </b-button>
               </b-input-group-append>
@@ -17,7 +17,7 @@
           <div class="container">
             <div class="row cargo-group-page">
               <div
-                v-for="(item, index) in cargoGroups"
+                v-for="(item, index) in filteredCargoGroups"
                 :key="index"
                 class="col-3 text-center pointer p-1 "
                 @click="selectCargoGroup(item.value)"
@@ -60,7 +60,7 @@
                 type="submit"
                 class="lt-button lt-button-main btn-block btn-border-radius-rb"
               >
-                 <span class="ctrl-label ml-3 text-white">{{ loading ? 'Loading...' : 'Next' }}</span>
+                 <span class="ctrl-label next-label ml-3 text-white">{{ loading ? 'Loading...' : 'Next' }}</span>
                 <div class="prev-title next-title">Cargo Haulded</div>
                 <font-awesome-icon class="fontawesome ctrl-arrow-right" :icon="['fas', 'sort-down']" size="2x"/>
               </button>
@@ -153,7 +153,10 @@ export default {
       //
       return map;
     },
-    ...mapState(["data"])
+    ...mapState(["data"]),
+    filteredCargoGroups() {
+      return this.cargoGroups.filter(group => group.value.toLowerCase().includes(this.keyword.toLowerCase()))
+    },
   },
   created() {
     this.$emit("update-progress", this.progress);
@@ -168,10 +171,6 @@ export default {
   },
 
   methods: {
-    searchCargoGroup() {
-      console.log(this.keyword)
-      this.cargoGroups = this.cargoGroups.filter(group => group.value.includes(this.keyword))
-    },
     newQuoteReq() {
       swal({
         title: "Are you sure?",

@@ -391,7 +391,7 @@
                 type="submit"
                 class="lt-button lt-button-main btn-block btn-border-radius-rb"
               >
-                 <span class="ctrl-label ml-3 text-white">{{ loading ? 'Loading...' : 'Next' }}</span>
+                 <span class="ctrl-label next-label ml-3 text-white">{{ loading ? 'Loading...' : 'Next' }}</span>
                 <div class="prev-title next-title">Owners</div>
                 <font-awesome-icon class="fontawesome ctrl-arrow-right" :icon="['fas', 'sort-down']" size="2x"/>
               </button>
@@ -909,10 +909,10 @@ export default {
         if (res.status === "OK") {
           let { company: { driverInformationList, mailingAddress } } = res.data;
           
-          if (mailingAddress.constructor !== Object) {
+          if (mailingAddress && mailingAddress.constructor !== Object) {
             this.mailingAddress = JSON.parse(mailingAddress);
           } else {
-            this.mailingAddress = mailingAddress;
+            this.mailingAddress = mailingAddress || {};
           }
 
           if (driverInformationList) {

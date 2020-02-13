@@ -534,7 +534,7 @@
                 @click="goPrevForm"
               >
                 <font-awesome-icon class="fontawesome ctrl-arrow-left" :icon="['fas', 'sort-down']" size="2x"/>
-                <span class="ctrl-label">Prev</span>
+                <span class="ctrl-label">Previous</span>
                 <div class="prev-title">Cargo Hauled</div>
               </button>
             </div>
@@ -545,7 +545,7 @@
                 type="submit"
                 class="lt-button lt-button-main btn-block btn-border-radius-rb"
               >
-                 <span class="ctrl-label ml-3 text-white">{{ loading ? 'Loading...' : 'Next' }}</span>
+                 <span class="ctrl-label next-label ml-3 text-white">{{ loading ? 'Loading...' : 'Next' }}</span>
                 <div class="prev-title next-title">ELD Provider</div>
                 <font-awesome-icon class="fontawesome ctrl-arrow-right" :icon="['fas', 'sort-down']" size="2x"/>
               </button>

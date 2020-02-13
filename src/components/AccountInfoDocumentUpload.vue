@@ -5,7 +5,7 @@
         <div class="card-body">
           <h4 class="form-sub-title">Document Upload</h4>
           <div class="p-1 mb-3">
-            <span>Although these uploads are not mandatory, they help to provide you more options and a faster service, if completed, as many carriers require such data. Please upload all of the relevant documents that you can</span>
+            <span>Uploading additional documents provides more options and speeds up the quoting process.</span>
           </div>
           <div class="row set-mob">
             <div class="form-group col-sm-6 col-lg-3 col-md-4">
@@ -232,7 +232,7 @@
                 type="submit"
                 class="lt-button lt-button-main btn-block btn-border-radius-rb"
               >
-                 <span class="ctrl-label ml-3 text-white">{{ loading ? 'Loading...' : 'Next' }}</span>
+                 <span class="ctrl-label next-label ml-3 text-white">{{ loading ? 'Loading...' : 'Next' }}</span>
                 <div class="prev-title next-title">Sign & Complete</div>
                 <font-awesome-icon class="fontawesome ctrl-arrow-right" :icon="['fas', 'sort-down']" size="2x"/>
               </button>
@@ -240,12 +240,12 @@
           </div>
         </div>
       </div>
-      <div class="d-flex justify-content-center m-4" @click="show" v-if="save">
+    <!--   <div class="d-flex justify-content-center m-4" @click="show" v-if="save">
         <span class="save-hover">Save & Continue</span>
       </div>
       <div class="d-flex justify-content-center m-4" @click="newQuoteReq" v-else>
         <span class="save-hover">Save Changes</span>
-      </div>
+      </div> -->
       <div v-if="showmodel">
         <modelLogin/>
       </div>

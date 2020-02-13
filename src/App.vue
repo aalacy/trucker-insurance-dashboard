@@ -48,7 +48,6 @@
                     v-bind:class="linkBtn"
                     @click.native="myacc"
                     active-class="font-weight-bold"
-                    class="btn btn-primary lt-btn"
                   >My Account</router-link>
                 </div>
                 <!-- <div v-else> -->

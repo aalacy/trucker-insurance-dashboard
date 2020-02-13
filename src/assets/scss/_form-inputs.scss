@@ -226,6 +226,9 @@
         opacity: 0.2;
       }
 
+      @media (max-width: 425px) {
+        margin-right: 0;
+      }
     }
 
     .ctrl-arrow-right {
@@ -235,6 +238,9 @@
         fill: white;
       }
 
+      @media (max-width: 425px) {
+        margin-left: 0;
+      }
     }
 
     .ctrl-label {
@@ -243,6 +249,14 @@
       font-weight: 700;
 
       @media (max-width: 425px) {
+        font-size: 21px;
+        margin-left: auto !important;
+      }
+    }
+
+    .next-label {
+      @media (max-width: 425px) {
+        margin-left: auto !important;
       }
     }
 

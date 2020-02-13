@@ -16,7 +16,7 @@
           </div>
 
           <div v-if="formData.driverIsOwner" class="">
-            <select v-model="formData.driverOwnerIndex" @change="onChange($event)" class="lt-input col-6" id="driverList" >
+            <select v-model="formData.driverOwnerIndex" @change="onChange($event)" class="lt-input col-sm-12 col-lg-6" id="driverList" >
               <option value="" disabled>Select Driver</option>
  
               <option
@@ -295,7 +295,7 @@
                 type="submit"
                 class="lt-button lt-button-main btn-block btn-border-radius-rb"
               >
-                 <span class="ctrl-label ml-3 text-white">{{ loading ? 'Loading...' : 'Next' }}</span>
+                 <span class="ctrl-label next-label ml-3 text-white">{{ loading ? 'Loading...' : 'Next' }}</span>
                 <div class="prev-title next-title">Additional Comments</div>
                 <font-awesome-icon class="fontawesome ctrl-arrow-right" :icon="['fas', 'sort-down']" size="2x"/>
               </button>
