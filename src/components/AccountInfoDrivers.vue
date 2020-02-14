@@ -3,12 +3,10 @@
     <form @submit.prevent="updateCompany">
       <div class="card mb-5">
         <div class="card-body">
-          <div class="d-flex">
-            <h4 class="card-title form-sub-title mb-4 mr-3">Drivers
-              <label class="label">
-                <input type="checkbox" v-on:change="changeData()"> Same as Mailing Address
-              </label>
+          <div class="d-flex justify-content-space align-items-center mb-4">
+            <h4 class="card-title form-sub-title mb-0 mr-3">Drivers
             </h4>
+            <b-form-checkbox v-on:change="changeData()">Same as Mailing Address</b-form-checkbox>
           </div>
           <hr>
           <template>
@@ -87,7 +85,7 @@
                 
                 <div class="row" id="text-date">
                   <div class="col-sm-12 col-md-5 pt-2">
-                    <b>Date of Birth</b>
+                    <b class="mr-3">Date of Birth</b>
                   </div>
 
                   <div class="col-sm-12 col-md-7" id="text-date">
@@ -273,7 +271,7 @@
                         type="number"
                         class="lt-input"
                         minlength="5"
-                        placeholder="Zip"
+                        placeholder="Zip Code"
                       :class="{ 'has-error': !validations.driversData[index].zip.is_valid }"
                       @change="validateFieldCustom('zip', index)"
                       >
@@ -292,7 +290,9 @@
               </div>
               <div class="row" id="text-date">
                 <div class="col-12 col-md-5 pt-2">
-                  <b>Date of Hire</b>
+                   <div class="d-flex">
+                      <b class="mr-3">Date of Hire</b> <b-form-checkbox v-model="operator" v-on:change="ownerOperator(index)">Owner Operator</b-form-checkbox>
+                    </div>
                 </div>
 
                 <div class="col-12 col-md-7">
@@ -463,6 +463,12 @@ export default {
           is_valid: true,
           text: ""
         }
+      },
+      operator: false,
+      doh: {
+        dohM: '',
+        dohD: '',
+        dohY: ''
       }
     };
   },
@@ -486,6 +492,13 @@ export default {
     }
   },
   methods: {
+    ownerOperator(index) {
+      if (!this.operator) {
+        this.driversData[index].dohD = this.doh.dohD;
+        this.driversData[index].dohM = this.doh.dohM;
+        this.driversData[index].dohY = this.doh.dohY;
+      }
+    },
     capitalize(str) {
       const newStr = str.split(' ').map(s => {
         if (typeof s !== 'string') return ''
@@ -907,13 +920,18 @@ export default {
         let res = await API.get("company/current?uuid=" + this.uuid);
         this.uuid = res.data.uuid;
         if (res.status === "OK") {
-          let { company: { driverInformationList, mailingAddress } } = res.data;
+          let { company: { driverInformationList, mailingAddress, businessStructureRaw } } = res.data;
           
           if (mailingAddress && mailingAddress.constructor !== Object) {
             this.mailingAddress = JSON.parse(mailingAddress);
           } else {
             this.mailingAddress = mailingAddress || {};
           }
+
+          const doh = businessStructureRaw['MCS-150 Form Date'].split('/');
+          this.doh.dohM = doh[0];
+          this.doh.dohD = doh[1];
+          this.doh.dohY = doh[2];
 
           if (driverInformationList) {
             if (!Array.isArray(driverInformationList)) {

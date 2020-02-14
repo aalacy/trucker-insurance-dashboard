@@ -36,7 +36,8 @@
               exact
               class="sub-item"
             >
-              <a class="link">{{ subItem.title }}</a>
+              <a class="link" v-if="subItem.direct" href="https://" taget="_blank">{{ subItem.title }}</a>
+              <a class="link" v-else="subItem.direct">{{ subItem.title }}</a>
             </router-link>
           </div>
         </div>
@@ -149,7 +150,8 @@ export default {
               to: { name: "ResoursesBuyNewTruckTrailer" }
             },
             { title: "Find a Driver", to: { name: "ResoursesFindDriver" } },
-            { title: "Freight Board", to: { name: "ResoursesFreightBoard" } }
+            { title: "Freight Board", to: { name: "ResoursesFreightBoard" } },
+            { title: "Digital Accountant", to: { name: "ResoursesDigitalAccountant" }, direct: true, link: "http://bench.co/partner/luckytruck" }
           ]
         }
       ]

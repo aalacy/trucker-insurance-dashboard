@@ -140,8 +140,7 @@
           </GmapMap>
 
           <div class="col-12">
-            <input type="checkbox" id="checkbox" class = "mt-1" v-model="checked" v-on:change="changeData()">
-            <label for="checkbox" class="st-padding d-inline">Is Garaging address the same location?</label>
+            <b-form-checkbox v-model="checked" v-on:change="changeData()">Is Garaging address the same location?</b-form-checkbox>
           </div>
           <div>
             <div class="row">
@@ -330,7 +329,7 @@ export default {
       this.formData.address1 = PhysicalAddress[3].trim().replace(",", "");
       this.formData.state1 = PhysicalAddress[1].trim().replace(",", "");
       this.formData.city1 = PhysicalAddress[2].trim().replace(",", "");
-      this.formData.zip1 = PhysicalAddress[0].trim().replace(",", "");
+      this.formData.zip1 = PhysicalAddress[0].trim().split('-')[0].replace(",", "");
     }
   },
   beforeMount() {
@@ -407,7 +406,7 @@ export default {
   },
   methods: {
     changeData() {
-      if (this.checked) {
+      if (!this.checked) {
         this.formData.address1 = this.formData.address;
         this.formData.city1 = this.formData.city;
         this.formData.state1 = this.formData.state;

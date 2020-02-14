@@ -17,7 +17,7 @@
             <div class="font-weight-bold ft-clr">{{ item.value }}</div>
 
             <div class="container">
-              <div class="row cargo-group-page">
+              <div class="row cargo-group-page mt-3">
                 <div
                   v-for="(subItem, subIndex) in item.cargoHauled"
                   :key="subIndex"

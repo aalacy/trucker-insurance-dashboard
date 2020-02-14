@@ -9,9 +9,7 @@
             <div class="pr-3">Are one of the drivers the owner?</div>
 
             <div class="flex-grow-1">
-              <label>
-                <input v-model="formData.driverIsOwner" type="checkbox"  v-on:change="changeData()"> Yes
-              </label>
+              <b-form-checkbox v-model="formData.driverIsOwner" v-on:change="changeData()">Yes</b-form-checkbox>
             </div>
           </div>
 
@@ -426,7 +424,7 @@ export default {
       return size;
     },
     changeData(){
-      if(!this.driverIsOwner){
+      if(this.driverIsOwner){
         
         this.driversData[0].firstName = "";
         this.driversData[0].lastName = "";

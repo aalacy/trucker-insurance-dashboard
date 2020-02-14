@@ -146,12 +146,12 @@
         </form>
       </div>
     </div>
-    <div class="d-flex justify-content-center m-4" @click="show" v-if="save">
+  <!--   <div class="d-flex justify-content-center m-4" @click="show" v-if="save">
       <span class="save-hover">Save & Continue</span>
     </div>
     <div class="d-flex justify-content-center m-4" @click="newQuoteReq" v-else>
       <span class="save-hover">Save Changes</span>
-    </div>
+    </div> -->
     <div class v-if="showmodel">
       <modelLogin/>
     </div>
@@ -450,16 +450,9 @@ export default {
     async show() {
       this.loading = true;
       this.error = null;
-      var temp_uuid;
-      if (localStorage.getItem("token")) {
-        temp_uuid = this.userData;
-      
-      } else {
-        temp_uuid = this.uuid;
-      
-      }
+      this.uuid = localStorage.getItem('uuid');
       try {
-        let data = await API.formData("company/upload", temp_uuid);
+        let data = await API.formData("company/upload", this.uuid);
         if (data.status === "OK") {
           if (!localStorage.getItem("token")) {
             if (this.showmodel) {

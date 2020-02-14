@@ -21,7 +21,7 @@
                   @change="onFileChange($event, 'lossRun')"
                 >
               </div>
-              <div v-if="preview.lossRun.name" class="d-flex justify-content-start align-base">
+              <div v-if="preview.lossRun.name" class="d-flex justify-content-around align-base">
                 <p class="preview-image">{{preview.lossRun.name}}</p>
                 <button type="button" class="btn btn-close1" @click="removeDoc('lossRun')">
                   <font-awesome-icon icon="times" />
@@ -43,7 +43,7 @@
                   @change="onFileChange($event, 'ifta')"
                 >
               </div>
-              <div v-if="preview.ifta.name" class="d-flex justify-content-start align-base">
+              <div v-if="preview.ifta.name" class="d-flex justify-content-around align-base">
                 <p class="preview-image">{{preview.ifta.name}}</p>
                 <button type="button" class="btn btn-close1" @click="removeDoc('ifta')">
                   <font-awesome-icon icon="times" />
@@ -65,7 +65,7 @@
                   @change="onFileChange($event, 'contracts')"
                 >
               </div>
-              <div v-if="preview.contracts.name" class="d-flex justify-content-start align-base">
+              <div v-if="preview.contracts.name" class="d-flex justify-content-around align-base">
                 <p class="preview-image">{{preview.contracts.name}}</p>
                 <button type="button" class="btn btn-close1" @click="removeDoc('contracts')">
                   <font-awesome-icon icon="times" />
@@ -87,7 +87,7 @@
                   @change="onFileChange($event, 'declarations')"
                 >
               </div>
-              <div v-if="preview.declarations.name" class="d-flex justify-content-start align-base">
+              <div v-if="preview.declarations.name" class="d-flex justify-content-around align-base">
                 <p class="preview-image">{{preview.declarations.name}}</p>
                 <button type="button" class="btn btn-close1" @click="removeDoc('declarations')">
                   <font-awesome-icon icon="times" />
@@ -109,7 +109,7 @@
                   @change="onFileChange($event, 'rentalLeaseAgreement')"
                 >
               </div>
-              <div v-if="preview.rentalLeaseAgreement.name" class="d-flex justify-content-start align-base">
+              <div v-if="preview.rentalLeaseAgreement.name" class="d-flex justify-content-around align-base">
                 <p class="preview-image">{{preview.rentalLeaseAgreement.name}}</p>
                 <button
                   type="button"
@@ -142,7 +142,7 @@
               </div>
               <div
                 v-if="preview.previouslyCompletedApplications.name"
-                class="d-flex justify-content-start align-base"
+                class="d-flex justify-content-around align-base"
               >
                 <p class="preview-image">{{preview.previouslyCompletedApplications.name}}</p>
                 <button
@@ -169,7 +169,7 @@
                   @change="onFileChange($event, 'insuranceRequirements')"
                 >
               </div>
-              <div v-if="preview.insuranceRequirements.name" class="d-flex justify-content-start align-base">
+              <div v-if="preview.insuranceRequirements.name" class="d-flex justify-content-around align-base">
                 <p class="preview-image">{{preview.insuranceRequirements.name}}</p>
                 <button
                   type="button"
@@ -183,24 +183,24 @@
 
           <div class="form-group col-sm-6 col-lg-3 col-md-4">
               <div class="image-upload">
-                <label for="others">
+                <label for="other">
                   <img src="../assets/images/upload.png">
                 </label>
-                <label for="others" class="label">Others</label>
+                <label for="other" class="label">Other</label>
 
                 <input
-                  id="others"
+                  id="other"
                   type="file"
-                  :class="{ 'has-error': formErrors.others }"
-                  @change="onFileChange($event, 'others')"
+                  :class="{ 'has-error': formErrors.other }"
+                  @change="onFileChange($event, 'other')"
                 >
               </div>
-              <div v-if="preview.others.name" class="d-flex justify-content-start align-base">
-                <p class="preview-image">{{preview.others.name}}</p>
+              <div v-if="preview.other.name" class="d-flex justify-content-around align-base">
+                <p class="preview-image">{{preview.other.name}}</p>
                 <button
                   type="button"
                   class="btn btn-close1"
-                  @click="removeDoc('others')"
+                  @click="removeDoc('other')"
                 >
                   <font-awesome-icon icon="times" />
                 </button>
@@ -292,7 +292,7 @@ export default {
         rentalLeaseAgreement: {name: "", content: ""},
         previouslyCompletedApplications: {name: "", content: ""},
         insuranceRequirements: {name: "", content: ""},
-        others: {name: "", content: ""},
+        other: {name: "", content: ""},
       },
       preview: {
         lossRun: {name: "", content: ""},
@@ -302,7 +302,7 @@ export default {
         rentalLeaseAgreement: {name: "", content: ""},
         previouslyCompletedApplications: {name: "", content: ""},
         insuranceRequirements: {name: "", content: ""},
-        others: {name: "", content: ""}
+        other: {name: "", content: ""}
       },
       formErrors: {},
       loading: false,
@@ -383,9 +383,9 @@ export default {
           this.formData.insuranceRequirements = {};
           this.preview.insuranceRequirements = {};
           break;
-        case "others":
-          this.formData.others = {};
-          this.preview.others = {};
+        case "other":
+          this.formData.other = {};
+          this.preview.other = {};
           break;
       }
     },
