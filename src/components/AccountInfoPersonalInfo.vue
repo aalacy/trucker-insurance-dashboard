@@ -84,8 +84,6 @@
                 <div v-if="formErrors.zip" class="text-danger">{{ formErrors.zip }}</div>
               </div>
             </div>
-          </div>
-          <div class="row">
             <div class="col-12 col-md-6 col-lg-6 ">
               <div class="form-group">
                 <input
@@ -103,7 +101,7 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-lg-6 col-sm-12">
+            <div class="col-12 col-md-6 col-lg-6">
               <div class="form-group">
                 <input
                   v-model="formData.name"
@@ -118,8 +116,6 @@
                 <div v-if="formErrors.name" class="text-danger">{{ formErrors.name }}</div>
               </div>
             </div>
-          </div>
-          <div class="row">
             <div class="col-12 col-md-6 col-lg-6">
               <div class="form-group">
                 <input
@@ -131,100 +127,125 @@
                   @focus="onFocus('Phone number')"
                   @blur="onBlur"
                 >
-
                 <div v-if="formErrors.phoneNumber" class="text-danger">{{ formErrors.phoneNumber }}</div>
               </div>
             </div>
           </div>
-          <GmapMap ref="mapRef" :center="center">
-          </GmapMap>
-
-          <div class="col-12">
-            <b-form-checkbox v-model="checked" v-on:change="changeData()">Is Garaging address the same location?</b-form-checkbox>
+          <div class="row">
+            <div class="col-lg-6 col-sm-12">
+              <GmapMap
+                v-if="markers.length > 0"
+                :center="markers[0].position"
+                :zoom="5"
+                map-type-id="terrain"
+                style="width: 100%; height: 300px"
+              >
+                <gmap-polyline v-if="paths.length > 0" :path="paths">
+                </gmap-polyline>
+                <gmap-info-window :options="infoOptions" :position="infoWindowPos" :opened="infoWinOpen" @closeclick="infoWinOpen=false">
+                </gmap-info-window>
+                <GmapMarker
+                  :key="index"
+                  v-for="(m, index) in markers"
+                  :position="m.position"
+                  :clickable="true"
+                  :draggable="true"
+                  @click="toggleInfoWindow(m,index)"
+                />
+                <div slot="visible">
+                  <div class="distance-label">
+                    <b>Distance</b>: {{distance}} km
+                  </div>
+                </div>
+              </GmapMap>
+            </div>
           </div>
-          <div>
-            <div class="row">
-              <div class="col-md-6 col-lg-12 py-3">
-                <h6 class="pt-2">Garaging Address</h6>
-              </div>
+          <div class="row mt-2">
+            <div class="col-12">
+              <b-form-checkbox v-model="checked" v-on:change="changeData()">Is Garaging address the same location?</b-form-checkbox>
             </div>
-            <div class="row">
-              <div class="col">
-                <div class="form-group">
-                  <input
-                    v-model="formData.address1"
-                    :class="{ 'has-error': formErrors.address1 }"
-                    type="text"
-                    class="lt-input"
-                    placeholder="Garaging Address*"
-                    required
-                    @change="validateField('address1')"
-                    @focus="onFocus('address1')"
-                    @blur="onBlur"
-                  >
-
-                  <div v-if="formErrors.address1" class="text-danger">{{ formErrors.address1 }}</div>
-                </div>
-              </div>
-            </div>
-
-            <div class="row">
-              <div class="col-12 col-md-6 col-lg-6 ">
-                <div class="form-group">
-                  <input
-                    v-model="formData.city1"
-                    :class="{ 'has-error': formErrors.city1 }"
-                    type="text"
-                    class="lt-input"
-                    placeholder="City*"
-                    required
-                    @change="validateField('city1')"
-                    @focus="onFocus('city1')"
-                    @blur="onBlur"
-                  >
-                  <div v-if="formErrors.city1" class="text-danger">{{ formErrors.city1 }}</div>
-                </div>
-              </div>
-
-              <div class="col-12 col-md-6 col-lg-6 ">
-                <div class="form-group">
-                  <input
-                    v-model="formData.state1"
-                    :class="{ 'has-error': formErrors.state1 }"
-                    type="text"
-                    class="lt-input"
-                    placeholder="State*"
-                    required
-                    @change="validateField('state1')"
-                    @focus="onFocus('state1')"
-                    @blur="onBlur"
-                  >
-                  <div v-if="formErrors.city1" class="text-danger">{{ formErrors.state1 }}</div>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-12 col-md-6 col-lg-6 ">
-                <div class="form-group">
-                  <input
-                    v-model="formData.zip1"
-                    :class="{ 'has-error': formErrors.zip1 }"
-                    type="text"
-                    class="lt-input"
-                    placeholder="Zip Code*"
-                    required
-                    minlength="5"
-                    @change="validateField('zip1')"
-                    @focus="onFocus('zip1')"
-                    @blur="onBlur"
-                  >
-
-                  <div v-if="formErrors.zip" class="text-danger">{{ formErrors.zip1 }}</div>
-                </div>
-              </div>
-            </div>
-            <div v-if="error" class="alert alert-danger" role="alert">{{ error }}</div>
           </div>
+          <div class="row">
+            <div class="col-md-6 col-lg-12 py-2">
+              <h6 class="pt-2">Garaging Address</h6>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <div class="form-group">
+                <input
+                  v-model="formData.address1"
+                  :class="{ 'has-error': formErrors.address1 }"
+                  type="text"
+                  class="lt-input"
+                  placeholder="Garaging Address*"
+                  required
+                  @change="validateField('address1')"
+                  @focus="onFocus('address1')"
+                  @blur="onBlur"
+                >
+
+                <div v-if="formErrors.address1" class="text-danger">{{ formErrors.address1 }}</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-12 col-md-6 col-lg-6 ">
+              <div class="form-group">
+                <input
+                  v-model="formData.city1"
+                  :class="{ 'has-error': formErrors.city1 }"
+                  type="text"
+                  class="lt-input"
+                  placeholder="City*"
+                  required
+                  @change="validateField('city1')"
+                  @focus="onFocus('city1')"
+                  @blur="onBlur"
+                >
+                <div v-if="formErrors.city1" class="text-danger">{{ formErrors.city1 }}</div>
+              </div>
+            </div>
+
+            <div class="col-12 col-md-6 col-lg-6 ">
+              <div class="form-group">
+                <input
+                  v-model="formData.state1"
+                  :class="{ 'has-error': formErrors.state1 }"
+                  type="text"
+                  class="lt-input"
+                  placeholder="State*"
+                  required
+                  @change="validateField('state1')"
+                  @focus="onFocus('state1')"
+                  @blur="onBlur"
+                >
+                <div v-if="formErrors.city1" class="text-danger">{{ formErrors.state1 }}</div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 col-md-6 col-lg-6 ">
+              <div class="form-group">
+                <input
+                  v-model="formData.zip1"
+                  :class="{ 'has-error': formErrors.zip1 }"
+                  type="text"
+                  class="lt-input"
+                  placeholder="Zip Code*"
+                  required
+                  minlength="5"
+                  @change="validateField('zip1')"
+                  @focus="onFocus('zip1')"
+                  @blur="onBlur"
+                >
+
+                <div v-if="formErrors.zip" class="text-danger">{{ formErrors.zip1 }}</div>
+              </div>
+            </div>
+          </div>
+          <div v-if="error" class="alert alert-danger" role="alert">{{ error }}</div>
         </div>
         <div class="card-footer">
           <div class="form-buttons next-wrapper">
@@ -300,10 +321,7 @@ export default {
       required: true
     }
   },
-  mounted() {
-    this.$refs.mapRef.$mapPromise.then((map) => {
-      map.panTo({lat: 1.38, lng: 103.80})
-    });
+  async mounted() {
     this.$emit("update-hint", "Please be sure that the mailing address is where you want to receive physical documents. The garage address is where you keep your truck.");
     
     this.mobile = isMobile ? true : false;
@@ -321,6 +339,8 @@ export default {
       this.formData.state = MailingAddress[1].trim().replace(",", "");
       this.formData.city = MailingAddress[2].trim().replace(",", "");
       this.formData.zip = MailingAddress[0].trim().split('-')[0].replace(",", "");
+
+      await this.getMapData(localStorage.getItem(["Mailing address"]), "Mailing Address");
     }
     let PhysicalAddress = this.formatAddress(
       localStorage.getItem(["Physical address"])
@@ -330,6 +350,12 @@ export default {
       this.formData.state1 = PhysicalAddress[1].trim().replace(",", "");
       this.formData.city1 = PhysicalAddress[2].trim().replace(",", "");
       this.formData.zip1 = PhysicalAddress[0].trim().split('-')[0].replace(",", "");
+
+      await this.getMapData(localStorage.getItem(["Physical address"]), "Physical Address");
+    }
+
+    if (this.markers.length > 1) {
+      this.calcCrow()
     }
   },
   beforeMount() {
@@ -342,7 +368,6 @@ export default {
 
   data() {
     return {
-      center: {lat: 1.38, lng: 103.80},
       checked: true,
       showmodel: false,
       final_uuid:"",
@@ -362,7 +387,9 @@ export default {
         address1: "",
         city1: "",
         state1: "",
-        zip1: ""
+        zip1: "",
+        lat: "",
+        lng: ""
       },
       rules: {
         // firstName: [required],
@@ -388,7 +415,22 @@ export default {
         zip1: "Please enter Zipcode of Garaging Address"
       },
       loading: false,
-      error: null
+      error: null,
+      markers: [],
+      infoWindowPos: null,
+      infoWinOpen: false,
+      currentMidx: null,
+
+      infoOptions: {
+        content: '',
+          //optional: offset infowindow so it visually sits nicely on top of our marker
+        pixelOffset: {
+          width: 0,
+          height: -35
+        }
+      },
+      paths: [],
+      distance: ""
     };
   },
   created() {
@@ -405,6 +447,68 @@ export default {
     // }
   },
   methods: {
+    calcCrow: function() {
+      const marker1 = this.markers[0].position;
+      const marker2 = this.markers[1].position
+      let lat1 = marker1.lat, lon1 = marker1.lng, 
+          lat2 = marker2.lat, lon2 = marker2.lng;
+      var Radius = 6371; // km
+      var dLat = this.toRad(lat2-lat1);
+      var dLon = this.toRad(lon2-lon1);
+      lat1 = this.toRad(lat1);
+      lat2 = this.toRad(lat2);
+
+      var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+        Math.sin(dLon/2) * Math.sin(dLon/2) * Math.cos(lat1) * Math.cos(lat2); 
+      var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+      this.distance = (Radius * c).toFixed(2); // km
+    },
+
+    // Converts numeric degrees to radians
+    toRad: function(Value) {
+      return Value * Math.PI / 180;
+    },
+    toggleInfoWindow: function(marker, idx) {
+      this.infoWindowPos = marker.position;
+      this.infoOptions.content = marker.infoText;
+
+      //check if its the same marker that was selected if yes toggle
+      if (this.currentMidx == idx) {
+        this.infoWinOpen = !this.infoWinOpen;
+      }
+      //if different marker set infowindow to open and reset current marker index
+      else {
+        this.infoWinOpen = true;
+        this.currentMidx = idx;
+
+      }
+    },
+    async getMapData(realAddress, infoText) {
+      let _addr = [];
+      const addr = realAddress.split(' ').forEach(item => {
+        if (item.trim() != "") {
+          _addr.push(item.trim());
+        }
+      });
+      
+      const data = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${_addr.join('+')}&key=AIzaSyBAsXZ3BoGXNuEAo72cRzpgn0ug1JFSTXE`)
+          .then(res => res.json()) 
+          .then(json => json);
+      if (data.results && data.results.length > 0) {
+        const geo = data.results[0].geometry.location;
+        this.markers.push({
+          position: {
+            lat: geo.lat,
+            lng: geo.lng,
+          },
+          infoText
+        })
+        this.paths.push({
+          lat: geo.lat,
+          lng: geo.lng,
+        })
+      }
+    },
     changeData() {
       if (!this.checked) {
         this.formData.address1 = this.formData.address;
@@ -447,6 +551,7 @@ export default {
       if (!formIsValid) {
         return;
       }
+
       this.loading = true;
       this.error = null;
       try {
@@ -600,11 +705,26 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.color-bg{
-  color:#6f6f6f
-}
-.st-padding {
-  padding-left: 10px;
-  font-weight: bold;
-}
+  .color-bg{
+    color:#6f6f6f
+  }
+
+  .st-padding {
+    padding-left: 10px;
+    font-weight: bold;
+  }
+
+  .distance-label {
+    bottom: 0; 
+    left: 0; 
+    padding: 0.25rem 1rem; 
+    background-color: #efefef; 
+    color: #5e98f9; 
+    position: absolute; 
+    z-index: 100;
+
+    b {
+      color: #5e98f9;
+    }
+  }
 </style>

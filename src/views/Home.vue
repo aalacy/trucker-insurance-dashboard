@@ -51,8 +51,8 @@
               </div>
               <div class="table-summary">List of Companies <span v-if="companies.length">{{companies.length}}</span></div>
             </div>
-            <div class="table-responsive company-table" id="btna-main">
-              <table class="table table-responsive-md table-striped table-bordered table-hover">
+            <div class="table-responsive-md company-table" id="btna-main">
+              <table class="table table-striped table-bordered table-hover">
                 
                 <thead class="">
                   <tr>
@@ -65,16 +65,13 @@
 
                 <tbody v-if="companies.length">
                   <tr v-for="(companyItem, index) in companies" :key="index">
-                    <td>{{ toUpper(companyItem.name)}} <br/> 
-                    <button
-                        class="lt-button   mt-1  mob-showa lt-button-main"
-                        @click="createCompany(companyItem.usdot,companyItem.name)"
-                      >Confirm</button></td>
+                    <td>{{ toUpper(companyItem.name)}}
+                    </td>
                     <td>{{ companyItem.usdot }}</td>
                     <td>{{ companyItem.location }}</td>
-                    <td class ="mob-hide">
+                    <td>
                       <button
-                        class="lt-button  mob-hide lt-button-main"
+                        class="lt-button  lt-button-main"
                         @click="createCompany(companyItem.usdot,companyItem.name)"
                       >Confirm</button>
                     </td>
@@ -244,13 +241,11 @@ export default {
       this.placeholder = "DOT # or Company Name";
     }
     
-    // get client IP
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(this.showPosition);
+      navigator.geolocation.watchPosition(this.showPosition);
     } else {
       x.innerHTML = "Geolocation is not supported by this browser.";
     }
-
   },
   data() {
     return {
@@ -265,12 +260,15 @@ export default {
       localcompany: "",
       placeholder: "Search DOT or Name of Business",
       isDotSearch: false,
-      myIp: ''
+      coords: {}
     };
   },
   methods: {
     showPosition(position) {
-      console.log(position)
+      this.coords = {
+        lat: 37.8072792,
+        lng: -122.4780652
+      };
     },
     gotoPersonalInfo() {
       localStorage.setItem("usdot", "");
@@ -307,6 +305,9 @@ export default {
         return;
       }
 
+      // get client coord
+     
+
       this.loading = true;
       this.error = null;
       this.companies = [];
@@ -315,10 +316,9 @@ export default {
 
       try {
         let data = await API.get("company/search", {
-          keyword: this.keyword
+          keyword: this.keyword,
+          coords: this.coords
         });
-
-        console.log(data)
 
         if (data.status == "OK") {
           if (Array.isArray(data.data)) {

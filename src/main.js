@@ -29,7 +29,7 @@ Vue.use(VueIntercom, { appId: 'ct2qyf3u' });
 Vue.use(VueScrollTo);
 Vue.use(VueGoogleMaps, {
   load: {
-    key: 'AIzaSyBqqBoxDMvOKWZNLWv0rJNXxSGoO153rx8',
+    key: 'AIzaSyBAsXZ3BoGXNuEAo72cRzpgn0ug1JFSTXE',
     libraries: 'places', // This is required if you use the Autocomplete plugin
     // OR: libraries: 'places,drawing'
     // OR: libraries: 'places,drawing,visualization'
