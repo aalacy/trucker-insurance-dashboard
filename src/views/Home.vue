@@ -230,7 +230,6 @@ export default {
   mounted() {
     localStorage.setItem("showModal",false);
     this.msg = isMobile ? true : false;
-    console.log("isMobile", this.msg);
     this.$store
       .dispatch("cleanData")
       .then(data => {
@@ -240,9 +239,9 @@ export default {
     if (isMobile) {
       this.placeholder = "DOT # or Company Name";
     }
-    
+
     if (navigator.geolocation) {
-      navigator.geolocation.watchPosition(this.showPosition);
+      navigator.geolocation.getCurrentPosition(this.showPosition);
     } else {
       x.innerHTML = "Geolocation is not supported by this browser.";
     }
@@ -265,9 +264,10 @@ export default {
   },
   methods: {
     showPosition(position) {
+      console.log('===', position)
       this.coords = {
-        lat: 37.8072792,
-        lng: -122.4780652
+        lat: position.coords.latitude,
+        lng: position.coords.longitude
       };
     },
     gotoPersonalInfo() {
@@ -306,7 +306,6 @@ export default {
       }
 
       // get client coord
-     
 
       this.loading = true;
       this.error = null;
@@ -553,6 +552,7 @@ input:focus {
   .company-table{
     max-height: 400px;
     overflow-y: scroll;
+    width: 100%;
   }
     //  .subscrib-A {
     //  width:100% !important;
