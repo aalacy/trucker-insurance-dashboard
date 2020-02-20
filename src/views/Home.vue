@@ -264,7 +264,6 @@ export default {
   },
   methods: {
     showPosition(position) {
-      console.log('===', position)
       this.coords = {
         lat: position.coords.latitude,
         lng: position.coords.longitude

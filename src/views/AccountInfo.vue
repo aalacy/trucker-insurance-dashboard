@@ -48,7 +48,7 @@ export default {
     return {
       progress: Number(localStorage.getItem('accountInfoProgress')) || 0,
       hint: '',
-      showSidebar: isMobile ? false : true,
+      showSidebar: window.innerWidth <= 768 ? false : true,
     };
   },
   methods: {

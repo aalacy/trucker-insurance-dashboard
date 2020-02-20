@@ -9,15 +9,55 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
-import { faCaretLeft,faSpinner, faAlignLeft,faCaretRight,faPhoneAlt,faQuestion,faTimes, faSearch, faSortDown } from '@fortawesome/free-solid-svg-icons'
-import {faFacebookSquare, faFacebookF,faGoogle, faTwitter, faLinkedinIn} from '@fortawesome/free-brands-svg-icons'
+import { 
+  faCaretLeft,
+  faSpinner, 
+  faAlignLeft,
+  faCaretRight,
+  faPhoneAlt,
+  faQuestion,
+  faTimes, 
+  faSearch, 
+  faSortDown, 
+  faEye,
+  faEnvelope,
+  faDownload,
+  faPen,
+  faFilePdf } from '@fortawesome/free-solid-svg-icons'
+import {
+  faFacebookSquare, 
+  faFacebookF,
+  faGoogle, 
+  faTwitter, 
+  faLinkedinIn
+} from '@fortawesome/free-brands-svg-icons'
 import VueSwal from 'vue-swal'
 import VueSignaturePad from 'vue-signature-pad';
 import VueIntercom from 'vue-intercom';
 import VueScrollTo from'vue-scrollto';
 import * as VueGoogleMaps from 'vue2-google-maps'
 
-library.add(faCaretLeft, faSearch, faSpinner, faAlignLeft,faCaretRight,faFacebookSquare, faFacebookF,faGoogle, faTwitter, faLinkedinIn, faPhoneAlt,faQuestion,faTimes, faSortDown)
+library.add(
+  faCaretLeft, 
+  faSearch, 
+  faSpinner, 
+  faAlignLeft,
+  faCaretRight,
+  faFacebookSquare, 
+  faFacebookF,
+  faGoogle, 
+  faTwitter, 
+  faLinkedinIn, 
+  faPhoneAlt,
+  faQuestion,
+  faTimes, 
+  faSortDown, 
+  faEye,
+  faEnvelope,
+  faDownload,
+  faPen,
+  faFilePdf
+)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 Vue.config.productionTip = false;

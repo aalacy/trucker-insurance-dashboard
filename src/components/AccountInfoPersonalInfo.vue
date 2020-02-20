@@ -154,7 +154,7 @@
                 />
                 <div slot="visible">
                   <div class="distance-label">
-                    <b>Distance</b>: {{distance}} km
+                    <b>Distance</b>: {{distance}} mile
                   </div>
                 </div>
               </GmapMap>
@@ -461,7 +461,7 @@ export default {
       var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
         Math.sin(dLon/2) * Math.sin(dLon/2) * Math.cos(lat1) * Math.cos(lat2); 
       var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
-      this.distance = (Radius * c).toFixed(2); // km
+      this.distance = (Radius * c * 0.62137).toFixed(2); // mile
     },
 
     // Converts numeric degrees to radians

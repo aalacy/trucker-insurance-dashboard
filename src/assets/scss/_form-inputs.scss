@@ -22,6 +22,15 @@
   }
 }
 
+.lift {
+    transition: box-shadow .25s ease,transform .25s ease;
+}
+
+.lift:focus, .lift:hover {
+    box-shadow: 0 1rem 2.5rem rgba(18,38,63,.1),0 .5rem 1rem -.75rem rgba(18,38,63,.1)!important;
+    transform: translate3d(0,-2px,0);
+}
+
 .lt-input {
   @include lt-form-input;
   border: 1px solid $color_grey;

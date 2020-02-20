@@ -267,8 +267,8 @@ export default {
      this.show=false;
    }
     
-    this.msg = isMobile ? true : false;
-    this.linkBtn = isMobile ? 'mobile-nav-btn' : 'btn btn-primary lt-btn'
+    this.msg = window.innerWidth <= 768 ? true : false;
+    this.linkBtn = window.innerWidth <= 768 ? 'mobile-nav-btn' : 'btn btn-primary lt-btn'
   },
     
   data() {
@@ -360,22 +360,21 @@ export default {
     },
 
     savequote() {
-      if (localStorage.getItem("token"))
+    if (localStorage.getItem("token"))
      {
         this.myacchide = true;
-      }
+    }
 
     else {
       this.myacchide =false;
     }
-  
       // localStorage.setItem("accBtn",false)
       this.show = false;
       localStorage.setItem("Phone","");
       localStorage.setItem("Physical address","");
       localStorage.setItem("Mailing address","");
       localStorage.setItem("company","");
-      localStorage.setItem("usdot","");
+      // localStorage.setItem("usdot","");
     },
   },
 

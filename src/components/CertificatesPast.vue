@@ -6,31 +6,45 @@
 
         <div v-if="loading">Loading...</div>
         <div v-if="status">
-          <div v-for="item in certs" :key="item.id" class="d-flex block-divider">
+          <div v-for="item in certs" :key="item.id" class="quote-wrapper block-divider">
             <div class="image-wrapper px-1">
               <img :src="item.img" alt class="image">
             </div>
 
-            <div class="pl-4">
-              <div class="block-title mb-2">{{ item.name }}</div>
-              <div class="action-block">
-                <div class="action-item">
-                  <a href="#">
-                    <img src="/img/sidebar/eye.png" alt="eye" class="action-image">
-                  </a>
-                  <div>View</div>
+            <div class="quote-content">
+              <div class="block-title mb-3">{{ item.name }}</div>
+              <div class="action-block row">
+                <div class="col">
+                  <div class="action-item">
+                    <a href="#" class="lift">
+                      <font-awesome-icon class="fontawesome" :icon="['fas', 'eye']" />
+                    </a>
+                    <div>View</div>
+                  </div>
                 </div>
-                <div class="action-item">
-                  <a href="#">
-                    <img src="/img/sidebar/mail.png" alt="mail" class="action-image">
-                  </a>
-                  <div>Email</div>
+                <div class="col">
+                  <div class="action-item">
+                    <a href="#" class="lift">
+                      <font-awesome-icon class="fontawesome" :icon="['fas', 'envelope']" />
+                    </a>
+                    <div>Email</div>
+                  </div>
                 </div>
-                <div class="action-item">
-                  <a href="#">
-                    <img src="/img/sidebar/download.png" alt="download" class="action-image">
-                  </a>
-                  <div>Download</div>
+                <div class="col">
+                  <div class="action-item">
+                    <a href="#" class="lift">
+                      <font-awesome-icon class="fontawesome" :icon="['fas', 'download']" />
+                    </a>
+                    <div>Download</div>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="action-item">
+                    <a href="#" class="lift">
+                      <font-awesome-icon class="fontawesome" :icon="['fas', 'pen']" />
+                    </a>
+                    <div>Edit</div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -103,6 +117,24 @@ export default {
 .cert-block {
   padding: 34px;
 
+  .quote-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+
+    @media (max-width: 425px) {
+      justify-content: center;
+    }
+  }
+
+  .quote-content {
+    margin-left: 1rem;
+
+    @media (max-width: 425px) {
+      margin-top: 0.5rem;
+      margin-left: 0;
+    }
+  }
+
   .image-wrapper {
     height: 100px;
     width: 100px;
@@ -127,25 +159,46 @@ export default {
 
   .block-title {
     font-weight: 500;
+
+     @media (max-width: 425px) {
+      text-align: center;
+    }
   }
 
   .action-block {
     display: flex;
-    justify-content: space-around;
+
+    @media (min-width: 425px) {
+      flex-wrap: nowrap;
+    }
 
     .action-item {
       display: flex;
       flex-direction: column;
       align-items: center;
-      margin-right: 2.5rem;
 
-      img {
+      a {
         margin-bottom: 0.25rem;
+        border-radius: 10px;
+        background: #edf2f5;
+        padding: 0.55rem 0.875rem;
       }
 
       div {
         font-weight: 700;
         font-size: 20px;
+
+        @media (max-width: 768px) {
+          display: none;
+        }
+      }
+
+      .fontawesome {
+        font-size: 1.5em;
+
+        path {
+          fill: #5e98f9e3;
+        }
       }
     }
   }

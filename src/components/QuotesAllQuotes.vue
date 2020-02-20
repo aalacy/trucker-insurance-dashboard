@@ -4,48 +4,86 @@
       <div class="card-body">
         <h4 class="card-title form-sub-title">All Quotes</h4>
 
-        <div v-if="loading">Loading...</div>
-        <div v-if="status">
-           <div v-for="item in quotes" :key="item.id" class="mb-4 d-flex align-items-start flex-wrap">
-            <div class="quote-image-wrapper px-1">
-              <img :src="item.img" alt class="quote-image">
-            </div>
-
-            <div class="quote-info px-3">
-              <div class="quote-title quote-title2">
-                {{item.title}}
-              </div>
-
-              <div class="quote-subtitle quote-subtitle2">
-                <span>{{item.subtitle}}</span>
-              </div>
-
-              <div class="quote-subtitle">
-                {{ item.price }}
-              </div>
-            </div>
-          </div>
-           <div v-if="buttonHide">
-          <div v-if="accept">
-            <router-link
-              :to="{ name: '' }"
-              class="lt-button pad-10 lt-button-main viewquote m-2"
-              active-class="font-weight-bold"
-              @click.native="savequote"
-            >Accept</router-link>
-            <router-link
-              :to="{ name: '' }"
-              class="lt-button pad-10 lt-button-main viewquote m-2"
-              active-class="font-weight-bold"
-              @click.native="request"
-            >Request a new quote</router-link>
-
-            <div v-if="error" class="alert alert-danger" role="alert">{{ error }}</div>
-          </div>
-          <div v-else>
-            <span>Quotation has been accepted.</span>
-          </div>
+        <div v-if="loading" class="col-12">
+          <img
+              src="../assets/images/loading/loading_truck_128.gif"
+              class="d-block mx-auto rounded"
+              alt="Loading"
+            >
         </div>
+        <div v-if="status">
+          <div v-for="item in quotes" :key="item.id" class="quote-wrapper block-divider">
+            <div class="image-wrapper px-1">
+              <img :src="item.img" alt class="image">
+            </div>
+
+            <div class="quote-content">
+              <div class="block-title mb-3">{{ item.title }}</div>
+              <div class="action-block row">
+                <div class="col">
+                  <div class="action-item">
+                    <a href="#" class="lift">
+                      <font-awesome-icon class="fontawesome" :icon="['fas', 'eye']" />
+                    </a>
+                    <div>View</div>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="action-item">
+                    <a href="#" class="lift">
+                      <font-awesome-icon class="fontawesome" :icon="['fas', 'envelope']" />
+                    </a>
+                    <div>Email</div>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="action-item">
+                    <a href="javascript:;" class="lift" @click="downloadPDF(item.pdf)">
+                      <font-awesome-icon class="fontawesome" :icon="['fas', 'download']" />
+                    </a>
+                    <div>Download</div>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="action-item">
+                    <a href="javascript:;" class="lift" @click="diaplayPDF(item.pdf)">
+                      <font-awesome-icon class="fontawesome" :icon="['fas', 'file-pdf']" />
+                    </a>
+                    <div>PDF</div>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="action-item">
+                    <a href="#" class="lift">
+                      <font-awesome-icon class="fontawesome" :icon="['fas', 'pen']" />
+                    </a>
+                    <div>Edit</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div v-if="buttonHide">
+            <div v-if="accept">
+              <router-link
+                :to="{ name: '' }"
+                class="lt-button pad-10 lt-button-main viewquote m-2"
+                active-class="font-weight-bold"
+                @click.native="savequote"
+              >Accept</router-link>
+              <router-link
+                :to="{ name: '' }"
+                class="lt-button pad-10 lt-button-main viewquote m-2"
+                active-class="font-weight-bold"
+                @click.native="request"
+              >Request a new quote</router-link>
+
+              <div v-if="error" class="alert alert-danger" role="alert">{{ error }}</div>
+            </div>
+            <div v-else>
+              <span>Quotation has been accepted.</span>
+            </div>
+          </div>
         </div>
         <div v-else>
           <span>
@@ -54,6 +92,10 @@
           </span>
         </div>
        
+      <b-modal id="modal-pdf" centered  size="xl" :title="curPDF.title" hide-footer>
+        <span v-html="curPDF.content">
+        </span>
+      </b-modal>
       </div>
     </div>
   </div>
@@ -62,6 +104,7 @@
 <script>
 import { mapState } from "vuex";
 import axios from "axios";
+import { API } from "../api.js";
 
 export default {
   name: "QuotesAllQuotes",
@@ -80,59 +123,48 @@ export default {
       total_premium: "",
       document_file: "",
       filename: "",
-      quotes: [
-        {
-          id: 1,
-          title: "Allied Insurance",
-          subtitle: "Carrier Coverage",
-          price: "Price",
-          img: "/img/sidebar/quote-1.png"
-        },
-        {
-          id: 2,
-          title: "StateFarm",
-          subtitle: "Carrier Coverage",
-          price: "Price",
-          img: "/img/sidebar/quote-2.png"
-        }
-      ],
+      quotes: [],
       loading: false,
-      error: null
+      error: null,
+      curPDF: {
+        title: "",
+        content: "",
+        base64: ""
+      }
     };
   },
 
   methods: {
-    openInNewWindow() {
+    downloadPDF (pdf) {
+      const downloadLink = document.createElement("a");
+
+      downloadLink.href = `data:application/pdf;base64, ${pdf.content}`;
+      downloadLink.download = pdf.name;
+      downloadLink.click();
+    },
+    diaplayPDF (pdf) {
+      let objbuilder = '';
+      objbuilder += (`<html><body><object width="100%" height="400px"      data="data:application/pdf;base64,`);
+      objbuilder += (pdf.content);
+      objbuilder += ('#toolbar=0" type="application/pdf" class="internal">');
+      objbuilder += ('<embed src="data:application/pdf;base64,');
+      objbuilder += (pdf.content);
+      objbuilder += ('" type="application/pdf" />');
+      objbuilder += ('</object></body></html>');
+      this.curPDF.content = objbuilder;
+      this.curPDF.base64 = `data:application/pdf;base64, ${pdf.content}`
+      this.curPDF.title = pdf.name;
+      this.$bvModal.show('modal-pdf')
+    },
+
+    openInNewWindow () {
       window.open(this.apires.file);
     },
-    savequote() {
+
+    savequote () {
       console.log("this.acc", this.accept);
-      // axios
-      //   .post(
-      //     "http://3.13.68.92/luckytrucker_admin/api/CompanyController/quotationapprove?quotation_id=" +
-      //       this.apires.id +
-      //       "&approve_status=1"
-      //   )
-      //   .then(res => {
-      //     console.log("ress", res);
-      //     if (res.data.flag == "1") {
-      //       console.log("this.acc2", this.accept);
-      //       this.accept = false;
-      //       this.$swal(
-      //         "Quotation Accepted!",
-      //         "You will get our agent call in next 24 hours!",
-      //         "success"
-      //       );
-      //     } else if ((res.data.flag = "0"))
-      //       this.$swal("Opps!", res.data.msg, "error");
-      //     this.accept = false;
-      //     console.log("this.acc1", this.accept);
-      //   })
-      //   .catch(err => this.$swal("Opps!", err, "error"))
-      //   .finally();
     },
-    request() {
-      let a = localStorage.getItem("userId");
+    request () {
       // axios
       //   .post(
       //     "http://3.13.68.92/luckytrucker_admin/api/CompanyController/quotationrequote?quotation_id=" +
@@ -171,72 +203,29 @@ export default {
   computed: {
     ...mapState(["policyData"])
   },
-  mounted() {
-    if (localStorage.getItem("token")) {
-      
-        // axios
-        //   .get(
-        //     "http://3.13.68.92/luckytrucker_admin/api/CompanyController/getcountofcompanybyuserid?user_id=" +
-        //       localStorage.getItem("userId")
-        //   )
-        //   .then(res => {
-        //     console.log("res", res.data.count);
-        //     // this.count = res.data.count;
-        //     if (res.data.count >= 10) {
-        //       this.status = true;
-        //       console.log("status",this.status);
-        //     } else {
-        //       this.status = false;
-        //     }
-        //   });
-      }
-      console.log("this.status",this.status);
+  async mounted() {
+    this.loading = true;
 
-      // if (this.status) {
-        let a = localStorage.getItem("userId");
-        console.log("a", a);
-        // axios
-        //   .get(
-        //     `http://3.13.68.92/luckytrucker_admin/api/CompanyController/getquotation?user_id=${a}`
-        //   )
-        //   .then(res => {
-        //     console.log("ressssssss", res);
-
-        //     this.apires = res.data[0];
-        //     if (res.data[0].file) {
-        //       this.buttonHide = true;
-        //     } else {
-        //       this.buttonHide = false;
-        //     }
-
-        //     localStorage.setItem("quotation_id", res.data[0].id);
-        //     console.log("apires", res.client_approval);
-        //     if (this.apires.client_approval == "0") {
-        //       this.accept = true;
-        //     } else {
-        //       this.accept = false;
-        //     }
-        //     this.aggregate = this.apires.aggregate;
-        //     this.total_premium = this.apires.total_premium;
-        //     this.cargo_deductible = this.apires.cargo_deductible;
-        //     this.cargo_limits = this.apires.cargo_limits;
-        //     this.general_liability = this.apires.general_liability;
-        //     this.document_file = this.apires.file;
-        //     this.filename = this.document_file.split("/")[6];
-        //     console.log(this.document_file.split("/")[6]);
-        //     if (this.apires.auto_liability == "1") {
-        //       this.auto_liability = "Yes";
-        //     } else {
-        //       this.auto_liability = "No";
-        //     }
-        //     console.log("apires", this.apires);
-        //   })
-        //   .catch(err => console.log("err", err))
-        //   .finally(() => console.log("hiiiiiiii"));
-      }
+    const usdot = localStorage.getItem('usdot');
+    let res = await API.post("company/accountinfo/quotes", {
+      DOT_ID: usdot
+    });
+    this.loading = false;
+    const { quoteList, status } = res;
+    if (status == 'ok') {
+      quoteList.forEach(quote => {
+        if (quote.uuid) {
+          this.quotes.push({
+            id: quote.uuid,
+            title: quote.accountName,
+            pdf: quote.quotePdf,
+            img: "https://picsum.photos/200",
+          })
+        }
+      })
     }
-  // }
-
+  }
+}
 </script>
 
 <style lang="scss" scoped>
@@ -248,40 +237,87 @@ export default {
 .quote-title2 {
   font-size: 20px;
 }
-.quotes-all-quotes {
-  .quote-image-wrapper {
-    height: 100px;
-    width: 100px;
-    min-width: 100px;
-    max-width: 100px;
-    display: flex;
-    align-items: center;
+
+.quote-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+
+  @media (max-width: 425px) {
     justify-content: center;
-
-    .quote-image {
-      border-radius: 15px;
-    }
-  }
-
-  .quote-info {
-    .quote-title {
-      font-size: 1.5rem;
-    }
-
-    .quote-subtitle {
-      font-size: 0.8rem;
-    }
-    .quote-subtitle2 {
-      font-size: 16px;
-    }
-
-    .quote-price {
-      font-weight: 200;
-    }
-  }
-  .clr {
-    color: #007bff;
-    cursor: pointer;
   }
 }
+
+.quote-content {
+  margin-left: 1rem;
+
+  @media (max-width: 425px) {
+    margin-top: 0.5rem;
+    margin-left: 0;
+  }
+}
+
+.image-wrapper {
+  height: 100px;
+  width: 100px;
+  min-width: 100px;
+  max-width: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .image {
+    border-radius: 15px;
+  }
+}
+
+.block-title {
+  font-weight: 500;
+
+   @media (max-width: 425px) {
+    text-align: center;
+  }
+}
+
+.action-block {
+  display: flex;
+
+  @media (min-width: 425px) {
+    flex-wrap: nowrap;
+  }
+
+  .action-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    a {
+      margin-bottom: 0.25rem;
+      border-radius: 10px;
+      background: #edf2f5;
+      padding: 0.55rem 0.875rem;
+
+      @media (max-width: 768px) {
+        margin-bottom: 0;
+      }
+    }
+
+    div {
+      font-weight: 700;
+      font-size: 20px;
+
+      @media (max-width: 768px) {
+        display: none;
+      }
+    }
+
+    .fontawesome {
+      font-size: 1.5em;
+
+      path {
+        fill: #5e98f9e3;
+      }
+    }
+  }
+}
+
 </style>
