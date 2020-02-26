@@ -208,7 +208,7 @@ export default {
 
     const usdot = localStorage.getItem('usdot');
     let res = await API.post("company/accountinfo/quotes", {
-      DOT_ID: usdot
+      dotId: usdot
     });
     this.loading = false;
     const { quoteList, status } = res;

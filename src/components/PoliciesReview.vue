@@ -241,9 +241,9 @@ export default {
     //     this.policyId = res.data.id;
     //   });
   // }
-    const usdot = localStorage.get('usdot');
+    const usdot = localStorage.getItem('usdot');
     let res = await API.post("company/accountinfo/policies", {
-      DOT_ID: usdot
+      dotId: usdot
     });
     this.loading = false;
     const { policies, status } = res;

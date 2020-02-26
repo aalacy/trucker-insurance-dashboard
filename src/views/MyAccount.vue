@@ -15,7 +15,7 @@
       </div>
 
       <div class="col row mob-hint forms">
-        <div class="col-xs-12 col-sm-12 col-lg-8   col-md-12 pt-5 pb-5">
+        <div class="col-xs-12 col-sm-12 col-lg-8   col-md-12 pt-5">
           <router-view
             @update-hint="updateHint"
           />
@@ -127,7 +127,7 @@ export default {
       }
 
       .hint-wrapper {
-        padding-top: 7rem;
+        padding-top: 3rem;
       }
     }
 
