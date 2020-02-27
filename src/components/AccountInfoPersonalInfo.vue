@@ -425,7 +425,7 @@ export default {
         await this.getMapData(MailingAddress, "Mailing Address");
       } catch(e){ console.log(e)}
       let PhysicalAddress = JSON.parse(_physicalAddress)
-      
+
       try {
         this.formData.address1 = PhysicalAddress.address;
         this.formData.state1 = PhysicalAddress.state;
@@ -538,8 +538,14 @@ export default {
         this.uuid = res.data.uuid;
   
         if (res.status === "OK") {
-          let { company: { mailingAddress, garagingAddress } } = res.data;
-          await this.parseAddress(mailingAddress, garagingAddress)
+          let { company } = res.data;
+          if (company) {
+            let { mailingAddress, garagingAddress, dotNumber, name, phoneNumber } = company;
+            this.formData.dotNumber = dotNumber
+            this.formData.name = name
+            this.formData.phoneNumber = phoneNumber
+            await this.parseAddress(mailingAddress, garagingAddress)
+          }
         } else if (res.status === "ERROR") {
           // this.$router.replace({ name: "Home" });
         }
@@ -616,8 +622,6 @@ export default {
   
         if (res.status === "OK") {
           localStorage.setItem('uuid', res.data);
-          localStorage.setItem('Mailing address', JSON.stringify(mailingAddress));
-          localStorage.setItem('Physical address', JSON.stringify(garagingAddress));
           this.goNextForm();
         } else if (res.status === "ERROR") {
           
