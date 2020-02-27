@@ -330,33 +330,6 @@ export default {
     this.formData.dotNumber = localStorage.getItem("usdot");
     this.formData.name = localStorage.getItem("company");
     this.formData.phoneNumber = localStorage.getItem("Phone");
-
-    let MailingAddress = this.formatAddress(
-      localStorage.getItem(["Mailing address"])
-    );
-    if (MailingAddress.length > 0) {
-      this.formData.address = MailingAddress[3].trim().replace(",", "");
-      this.formData.state = MailingAddress[1].trim().replace(",", "");
-      this.formData.city = MailingAddress[2].trim().replace(",", "");
-      this.formData.zip = MailingAddress[0].trim().split('-')[0].replace(",", "");
-
-      await this.getMapData(localStorage.getItem(["Mailing address"]), "Mailing Address");
-    }
-    let PhysicalAddress = this.formatAddress(
-      localStorage.getItem(["Physical address"])
-    );
-    if (PhysicalAddress.length > 0) {
-      this.formData.address1 = PhysicalAddress[3].trim().replace(",", "");
-      this.formData.state1 = PhysicalAddress[1].trim().replace(",", "");
-      this.formData.city1 = PhysicalAddress[2].trim().replace(",", "");
-      this.formData.zip1 = PhysicalAddress[0].trim().split('-')[0].replace(",", "");
-
-      await this.getMapData(localStorage.getItem(["Physical address"]), "Physical Address");
-    }
-
-    if (this.markers.length > 1) {
-      this.calcCrow()
-    }
   },
   beforeMount() {
     // localStorage.setItem("uuid", null);
@@ -435,18 +408,37 @@ export default {
   },
   created() {
     this.$emit("update-progress", this.progress);
-    // localStorage.setItem("uuid", null);
-
     this.loadCompany();
   },
   updated() {
-    // if (localStorage.getItem("showModal") == "true") {
-    //   this.showmodel = true;
-    // } else {
-    //   this.showmodel = false;
-    // }
+ 
   },
   methods: {
+    async parseAddress (_mailingAddress, _physicalAddress) {
+      try {
+        let MailingAddress = JSON.parse(_mailingAddress)
+        this.formData.address = MailingAddress.address
+        this.formData.state = MailingAddress.state
+        this.formData.city = MailingAddress.city
+        this.formData.zip = MailingAddress.zip.split('-')[0].replace(",", "");
+
+        await this.getMapData(MailingAddress, "Mailing Address");
+      } catch(e){ console.log(e)}
+      let PhysicalAddress = JSON.parse(_physicalAddress)
+      
+      try {
+        this.formData.address1 = PhysicalAddress.address;
+        this.formData.state1 = PhysicalAddress.state;
+        this.formData.city1 = PhysicalAddress.city;
+        this.formData.zip1 = PhysicalAddress.zip;
+
+        await this.getMapData(PhysicalAddress, "Physical Address");
+      } catch(e){ console.log(e)}
+
+      if (this.markers.length > 1) {
+        this.calcCrow()
+      }
+    },
     calcCrow: function() {
       const marker1 = this.markers[0].position;
       const marker2 = this.markers[1].position
@@ -483,15 +475,10 @@ export default {
 
       }
     },
-    async getMapData(realAddress, infoText) {
-      let _addr = [];
-      const addr = realAddress.split(' ').forEach(item => {
-        if (item.trim() != "") {
-          _addr.push(item.trim());
-        }
-      });
+    async getMapData(addr, infoText) {
+      let _addr = `${addr.address}+${addr.city},+${addr.state}+${addr.zip}`
       
-      const data = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${_addr.join('+')}&key=AIzaSyBAsXZ3BoGXNuEAo72cRzpgn0ug1JFSTXE`)
+      const data = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${_addr}&key=AIzaSyBAsXZ3BoGXNuEAo72cRzpgn0ug1JFSTXE`)
           .then(res => res.json()) 
           .then(json => json);
       if (data.results && data.results.length > 0) {
@@ -522,67 +509,7 @@ export default {
         this.formData.zip1 = "";
       }
     },
-    newQuoteReq() {
-      swal({
-        title: "Are you sure?",
-        text: "Do you want to continue editing?",
-        icon: "warning",
-        buttons: ["No", "Yes"]
-      }).then(willDelete => {
-  
-        this.show();
-        if (willDelete) {
-          
-          this.$router.push({ name: "AccountInfoPersonalInfo" });
-          
-        } else {
-          swal(
-            "Thank You!",
-            "Your changes has been accepted! You will get new Updated Quote",
-            {
-              icon: "success"
-            }
-          );
-        }
-      });
-    },
-    async show() {
-      let formIsValid = this.validateForm();
-      if (!formIsValid) {
-        return;
-      }
-
-      this.loading = true;
-      this.error = null;
-      try {
-        let data = await API.post("company/save", {
-          key: "personalInfo",
-          val: this.formData,
-          user_id: localStorage.getItem("userId"),
-          uuid: this.uuid
-        });
-  
-        if (data.status === "OK") {
-          if(!localStorage.getItem("token")){
-            if (this.showmodel) {
-            this.showmodel = false;
-          } else {
-            this.showmodel = true;
-           }
-          }
-          
-        } else if (data.status === "ERROR") {
-          // this.showmodel = true;
-          this.error = data.messages[0] || data.data;
-        }
-      } catch (err) {
-        console.error(err);
-        this.error = err.message;
-      } finally {
-        this.loading = false;
-      }
-    },
-
+    
     onFocus(fieldName) {
       this.$emit("update-hint", this.hints[fieldName]);
     },
@@ -611,7 +538,8 @@ export default {
         this.uuid = res.data.uuid;
   
         if (res.status === "OK") {
-          let { company } = res.data;
+          let { company: { mailingAddress, garagingAddress } } = res.data;
+          await this.parseAddress(mailingAddress, garagingAddress)
         } else if (res.status === "ERROR") {
           // this.$router.replace({ name: "Home" });
         }
@@ -688,6 +616,8 @@ export default {
   
         if (res.status === "OK") {
           localStorage.setItem('uuid', res.data);
+          localStorage.setItem('Mailing address', JSON.stringify(mailingAddress));
+          localStorage.setItem('Physical address', JSON.stringify(garagingAddress));
           this.goNextForm();
         } else if (res.status === "ERROR") {
           

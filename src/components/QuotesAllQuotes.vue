@@ -20,14 +20,14 @@
             <div class="quote-content">
               <div class="block-title mb-3">{{ item.title }}</div>
               <div class="action-block row">
-                <div class="col">
+               <!--  <div class="col">
                   <div class="action-item">
                     <a href="#" class="lift">
                       <font-awesome-icon class="fontawesome" :icon="['fas', 'eye']" />
                     </a>
                     <div>View</div>
                   </div>
-                </div>
+                </div> -->
                 <div class="col">
                   <div class="action-item">
                     <a href="#" class="lift">

@@ -83,7 +83,7 @@
                 <router-link
                   @click.native="loginHide"
                   :to="{ name: 'SignUp', query: {next: this.$router.history.current.name == 'SignUp' ?  this.$router.history.current.query.next : this.$router.history.current.name} }"
-                  class="linkBtn"
+                  v-bind:class="linkBtn"
                   active-class="font-weight-bold"
                 >Signup</router-link>
               </li>
@@ -370,10 +370,10 @@ export default {
     }
       // localStorage.setItem("accBtn",false)
       this.show = false;
-      localStorage.setItem("Phone","");
-      localStorage.setItem("Physical address","");
-      localStorage.setItem("Mailing address","");
-      localStorage.setItem("company","");
+      localStorage.setItem("Phone", null);
+      localStorage.setItem("Physical address", null);
+      localStorage.setItem("Mailing address", null);
+      localStorage.setItem("company", null);
       // localStorage.setItem("usdot","");
     },
   },
