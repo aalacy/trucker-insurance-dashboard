@@ -416,7 +416,10 @@ export default {
   methods: {
     async parseAddress (_mailingAddress, _physicalAddress) {
       try {
-        let MailingAddress = JSON.parse(_mailingAddress)
+        let MailingAddress = _mailingAddress
+        if (Object.keys(_mailingAddress).length === 0 && _mailingAddress.constructor !== Object) {
+          MailingAddress = JSON.parse(_mailingAddress)
+        }
         this.formData.address = MailingAddress.address
         this.formData.state = MailingAddress.state
         this.formData.city = MailingAddress.city
@@ -424,9 +427,12 @@ export default {
 
         await this.getMapData(MailingAddress, "Mailing Address");
       } catch(e){ console.log(e)}
-      let PhysicalAddress = JSON.parse(_physicalAddress)
 
       try {
+        let PhysicalAddress = _physicalAddress
+        if (Object.keys(_physicalAddress).length === 0 && _physicalAddress.constructor !== Object) {
+          PhysicalAddress = JSON.parse(_physicalAddress)
+        }
         this.formData.address1 = PhysicalAddress.address;
         this.formData.state1 = PhysicalAddress.state;
         this.formData.city1 = PhysicalAddress.city;
