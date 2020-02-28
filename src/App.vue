@@ -341,33 +341,28 @@ export default {
 },
 
     logoutPopUp() {
-        swal({
+      swal({
         title: "Are you sure?",
         text: "Do you want to logout?",
         icon: "warning",
         buttons: ["No", "Yes"]
       }).then(willDelete => {
-        
-      
-        // this.show();
         if (willDelete) {
-        this.logout();    
-          // this.$router.push({ name: "AccountInfoBusinessStructure" });
+          this.logout();    
         } else {
-
         }
       });
     },
 
     savequote() {
-    if (localStorage.getItem("token"))
-     {
-        this.myacchide = true;
-    }
+      if (localStorage.getItem("token"))
+      {
+          this.myacchide = true;
+      }
 
-    else {
-      this.myacchide =false;
-    }
+      else {
+        this.myacchide =false;
+      }
       // localStorage.setItem("accBtn",false)
       this.show = false;
       localStorage.setItem("Phone", null);

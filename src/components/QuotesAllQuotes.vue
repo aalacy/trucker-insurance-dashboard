@@ -12,7 +12,7 @@
             >
         </div>
         <div v-if="status">
-          <div v-for="item in quotes" :key="item.id" class="quote-wrapper block-divider">
+          <div v-for="item in quotes" :key="item.name" class="quote-wrapper block-divider">
             <div class="image-wrapper px-1">
               <img :src="item.img" alt class="image">
             </div>
@@ -212,17 +212,16 @@ export default {
     });
     this.loading = false;
     const { quoteList, status } = res;
-    if (status == 'ok') {
+    if (status == 'ok' && quoteList && quoteList.length > 0) {
       quoteList.forEach(quote => {
-        if (quote.uuid) {
-          this.quotes.push({
-            id: quote.uuid,
-            title: quote.accountName,
-            pdf: quote.quotePdf,
-            img: "https://picsum.photos/200",
-          })
-        }
+        this.quotes.push({
+          title: quote.name,
+          pdf: quote.quotePdf,
+          img: "https://picsum.photos/200",
+        })
       })
+    } else {
+      this.status = false
     }
   }
 }
