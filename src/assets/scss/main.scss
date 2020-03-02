@@ -796,3 +796,19 @@ img {
     }
   }
 }
+
+.company-table-header th {
+  background: #3a5e9a;
+  color: white;
+  border: none;
+  position: sticky;
+  top: 0;
+}
+
+.company-table-header th:first-child {
+  border-top-left-radius: 5px;
+}
+
+.company-table-header th:last-child{
+  border-top-right-radius: 5px;
+}

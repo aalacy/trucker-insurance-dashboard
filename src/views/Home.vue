@@ -51,47 +51,25 @@
               </div>
               <div class="table-summary">List of Companies <span v-if="companies.length">{{companies.length}}</span></div>
             </div>
-            <div class="table-responsive-md company-table" id="btna-main">
-              <table class="table table-striped table-bordered table-hover">
-                
-                <thead class="">
-                  <tr>
-                    <th>Name</th>
-                    <th>US DOT</th>
-                    <th>Location</th>
-                    <th></th>
-                  </tr>
-                </thead>
-
-                <tbody v-if="companies.length">
-                  <tr v-for="(companyItem, index) in companies" :key="index">
-                    <td>{{ toUpper(companyItem.name)}}
-                    </td>
-                    <td>{{ companyItem.usdot }}</td>
-                    <td>{{ companyItem.location }}</td>
-                    <td>
-                      <button
-                        class="lt-button  lt-button-main"
-                        @click="createCompany(companyItem.usdot,companyItem.name)"
-                      >Confirm</button>
-                    </td>
-                  </tr>
-                </tbody>
-
-                <tbody v-if="company">
-                  <tr>
-                    <td>{{ company['DBA Name'] }}</td>
-                    <td>{{ company['USDOT Number'] }}</td>
-                    <td>{{ company['Physical Address'] }}</td>
-                    <td class="pb-1">
-                      <button
-                        class="lt-button lt-button-main"
-                        @click="createCompany(company['USDOT Number'])"
-                      >Confirm</button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+            <div class="company-table m-3">
+              <b-table 
+                :items="items"
+                :fields="fields" 
+                sticky-header
+                striped
+                bordered
+                hover
+                no-border-collapse
+                stacked="sm"
+                thead-class="company-table-header"
+                thead-tr-class="company-table-header"
+              >
+                <template v-slot:cell(actions)="row">
+                  <button @click="createCompany(row.usdot, row.name)" class="btn-sm lt-button  lt-button-main">
+                    Confirm
+                  </button>
+                </template>
+              </b-table>
             </div>
           </template>
         </div>
@@ -259,8 +237,36 @@ export default {
       localcompany: "",
       placeholder: "Search DOT or Name of Business",
       isDotSearch: false,
-      coords: {}
+      coords: {},
+      fields: [ 
+        { key: 'name', label: 'Name' },
+        { key: 'usdot', label: 'US DOT' },
+        { key: 'location', label: 'Location' },
+        { key: 'actions', label: '' },
+      ],
     };
+  },
+  computed: {
+    items (){
+      let data = []
+      if (this.companies.length) {
+        this.companies.map(company => {
+          data.push({
+            name: company.name,
+            usdot: company.usdot,
+            location: company.location
+          })
+        })
+      } else if (this.company) {
+        data.push({
+          name: this.company['DBA Name'],
+          usdot: this.company['USDOT Number'],
+          location: this.company['Physical Address']
+        })
+      }
+
+      return data
+    },
   },
   methods: {
     showPosition(position) {
@@ -436,7 +442,7 @@ export default {
     font-size: 18px;
   }
 
-  .company-table table th {
+  .company-table-header {
     background: #3a5e9a;
     color: white;
     border: none;
@@ -552,6 +558,7 @@ input:focus {
     max-height: 400px;
     overflow-y: scroll;
     width: 100%;
+    border-radius: 5px
   }
     //  .subscrib-A {
     //  width:100% !important;

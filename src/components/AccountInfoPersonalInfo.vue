@@ -336,12 +336,18 @@ export default {
   },
   computed: {
     ...mapState(["data"]),
-   
+    checked: {
+      get () {
+        return (this.formData.address == this.formData.address1 && this.formData.city == this.formData.city1 && this.formData.state == this.formData.state1 && this.formData.zip == this.formData.zip1)
+      },
+      set (newValue) {
+        console.log(newValue)
+      }
+    },
   },
 
   data() {
     return {
-      checked: true,
       showmodel: false,
       final_uuid:"",
       save: true,
@@ -420,7 +426,7 @@ export default {
         if (Object.keys(_mailingAddress).length === 0 && _mailingAddress.constructor !== Object) {
           MailingAddress = JSON.parse(_mailingAddress)
         }
-        this.formData.address = MailingAddress.address
+        this.formData.address = MailingAddress.street
         this.formData.state = MailingAddress.state
         this.formData.city = MailingAddress.city
         this.formData.zip = MailingAddress.zip.split('-')[0].replace(",", "");
@@ -550,6 +556,7 @@ export default {
             this.formData.dotNumber = dotNumber
             this.formData.name = name
             this.formData.phoneNumber = phoneNumber
+            console.log(mailingAddress, garagingAddress)
             await this.parseAddress(mailingAddress, garagingAddress)
           }
         } else if (res.status === "ERROR") {
