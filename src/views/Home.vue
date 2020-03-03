@@ -66,7 +66,7 @@
                 tbody-tr-class="company-table-body"
               >
                 <template v-slot:cell(actions)="row" class="confirmContainer">
-                  <button @click="createCompany(row.usdot, row.name)" class="btn btn-primary ">
+                  <button @click="createCompany(row)" class="btn btn-primary btn-sm">
                     Confirm
                   </button>
                 </template>
@@ -342,9 +342,9 @@ export default {
         this.loading = false;
       }
     },
-    async createCompany(usdot, name) {
-      this.localUsdot = usdot;
-      this.localcompany = name;
+    async createCompany(row) {
+      this.localUsdot = row.item.usdot;
+      this.localcompany = row.item.name;
       localStorage.setItem("usdot", this.localUsdot);
       localStorage.setItem("redirect",0);
       localStorage.setItem("company", this.localcompany);
@@ -352,7 +352,7 @@ export default {
 
       try {
         let data = await API.post("company/create", null, {
-          usdot
+          usdot: this.localUsdot
         });
         localStorage.setItem('uuid', data.uuid);
         localStorage.setItem("Physical address", data.data["Physical Address"]);
