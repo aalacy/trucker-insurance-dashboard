@@ -63,8 +63,9 @@
                 stacked="sm"
                 thead-class="company-table-header"
                 thead-tr-class="company-table-header"
+                tbody-tr-class="company-table-body"
               >
-                <template v-slot:cell(actions)="row">
+                <template v-slot:cell(actions)="row" class="confirmContainer">
                   <button @click="createCompany(row.usdot, row.name)" class="btn-sm lt-button  lt-button-main">
                     Confirm
                   </button>
@@ -566,6 +567,7 @@ input:focus {
   width: 100%;
   border-radius: 5px
 }
+
 </style>
 
 <style lang="scss">
@@ -576,6 +578,16 @@ input:focus {
 
   .table td::before {
     width: 90px !important;
+  }
+
+  .table th, .table td {
+    padding: 0.45rem;
+  }
+
+  .table tr.company-table-body td:last-child div {
+    width: 100% !important;
+    display: flex !important;
+    justify-content: flex-end;
   }
 }
 </style>
