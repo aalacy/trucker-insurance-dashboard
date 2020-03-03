@@ -552,21 +552,24 @@ input:focus {
 }
 
 .homeImage img{
-    width:70% !important;
+  width:70% !important;
+}
+.company-table{
+  max-height: 400px;
+  overflow-y: scroll;
+  width: 100%;
+  border-radius: 5px
+}
+</style>
+
+<style lang="scss">
+@media (max-width: 575.98px) {
+  table {
+    overflow-x: hidden;
   }
-  .company-table{
-    max-height: 400px;
-    overflow-y: scroll;
-    width: 100%;
-    border-radius: 5px
+
+  .table td::before {
+    width: 80px !important;
   }
-    //  .subscrib-A {
-    //  width:100% !important;
-    //  border-radius: 20px;
-    // //  border-bottom-left-radius: 20px;
-    // //  border-top-left-radius: 20px;  
-    //  left:32% !important; 
-    //  bottom: -44px; 
-    //  top:40px
-    //  }
+}
 </style>
