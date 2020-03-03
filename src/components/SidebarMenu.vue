@@ -8,7 +8,7 @@
             <font-awesome-icon class="fontawesome" :icon="['fas', 'times']" />
           </div>
         </div>
-        <div v-for="(item, index) in items" :key="index" class="menu-item navigation-links">
+        <div v-for="(item, index) in items" :key="index" class="menu-item navigation-links" style="height: calc(100% - 34px);">
           <router-link
             :to="item.to"
             tag="div"
