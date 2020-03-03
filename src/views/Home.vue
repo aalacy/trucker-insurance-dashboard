@@ -402,11 +402,7 @@ export default {
   @media only screen and (max-width: 768px) {
     background: url("../assets/images/bg_home_medium.png") center center no-repeat
     transparent;
-  }
-
-  @media only screen and (max-width: 425px) {
-    background: url("../assets/images/bg_home_mobile.png") center center no-repeat
-    transparent;
+    background-size: cover;
   }
 
   .home-title {
@@ -579,7 +575,7 @@ input:focus {
   }
 
   .table td::before {
-    width: 80px !important;
+    width: 90px !important;
   }
 }
 </style>
