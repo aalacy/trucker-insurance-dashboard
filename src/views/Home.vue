@@ -66,7 +66,7 @@
                 tbody-tr-class="company-table-body"
               >
                 <template v-slot:cell(actions)="row" class="confirmContainer">
-                  <button @click="createCompany(row.usdot, row.name)" class="btn-sm lt-button  lt-button-main">
+                  <button @click="createCompany(row.usdot, row.name)" class="btn btn-primary ">
                     Confirm
                   </button>
                 </template>
