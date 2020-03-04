@@ -571,25 +571,19 @@ img {
   // }
   .mob-hide{
     display: none;
-    
   }
 }
 @media screen and (max-width:416px)
 {
-  #app .app-main {
-    padding: 95px 0 0 0;
-  }
   .quotes-all-quotes .quote-image-wrapper{
     margin: 0 auto;
     display: block;
   }
-  
 }
 
 @media screen and (max-width:375px)
 {
   .mob-2{
-    // padding-left: 5px !important;
     padding: 0px !important;
   }
 
@@ -603,16 +597,11 @@ img {
     z-index: 3 !important; 
     left: 0px;
     top: 17% !important; 
-   
   }
- 
- 
-
 }
 
 @media screen and (max-width:360px)
 {
-	
   .mob-2{
     // padding-left: 5px !important;
     padding: 0px !important;
@@ -621,14 +610,9 @@ img {
     z-index: 3 !important; 
     left: 0px;
     top: 21% !important; 
-   
   }
-
-  
-  
-
 }
-@media screen and (max-width:320px)
+@media screen and (max-width:355px)
 {
   #app .app-main {
     padding: 121px 0 0 0;
@@ -640,12 +624,10 @@ img {
     z-index: 3 !important; 
     left: 0px;
     top: 23% !important; 
-   
   }
 }
 .back{
   background-color: #e6e6e6;
-  
 }
 #lt-section h2{
   color: #5d97fa;
