@@ -400,11 +400,11 @@ export default {
     transparent;
   background-size: cover;
 
-  @media only screen and (max-width: 768px) {
-    background: url("../assets/images/bg_home_medium.png") center center no-repeat
-    transparent;
-    background-size: cover;
-  }
+//  @media only screen and (max-width: 768px) {
+//    background: url("../assets/images/bg_home_medium.png") center center no-repeat
+//    transparent;
+//    background-size: cover;
+//  }
 
   .home-title {
     color: white;
