@@ -4,7 +4,7 @@ import Router from 'vue-router';
 Vue.use(Router);
 
 
-export default new Router({
+const router = new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   scrollBehavior(to, from, savedPosition) {
@@ -316,6 +316,9 @@ export default new Router({
           props: {
             nextForm: 'AccountInfoPersonalInfo',
             progress: 0
+          },
+          meta: {
+            requiresAuth: true
           }
         },
         {
@@ -326,6 +329,9 @@ export default new Router({
             prevForm:'AccountInfoUploadDocuments',
             nextForm: 'AccountInfoBusinessStructure',
             progress: 10
+          },
+          meta: {
+            requiresAuth: true
           }
         },
         {
@@ -462,3 +468,20 @@ export default new Router({
     }
   ]
 });
+
+router.beforeEach((to, from, next) => {
+  if(to.matched.some(record =>  record.meta.requiresAuth)) {
+      if (localStorage.getItem('userId') == null || localStorage.getItem('userId') == 'null') {
+        next({
+            path: '/log-in?next=' + to.name,
+            params: { next: to.name }
+        })
+      } else {
+        next()
+      }
+  } else {
+      next()
+  }
+});
+
+export default router;

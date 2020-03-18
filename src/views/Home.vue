@@ -43,7 +43,7 @@
 
           <div v-if="noData" class="col-12">No data for your request.</div>
 
-          <template v-else-if="(companies.length || company) && !loading">
+          <template v-else-if="(companies.length || company) && !loading && !error">
             <div class="title-box">
               <button class="btn btn-primary new-company" @click="gotoPersonalInfo()">New Company? Click here</button>
               <div class="header-note mx-auto">
@@ -346,26 +346,29 @@ export default {
       this.localUsdot = row.item.usdot;
       this.localcompany = row.item.name;
       localStorage.setItem("usdot", this.localUsdot);
-      localStorage.setItem("redirect",0);
       localStorage.setItem("company", this.localcompany);
       this.loading = true;
 
+      const token = localStorage.getItem('token')
+      const userId = localStorage.getItem('userId')
+      if (token == null || token == 'null') {
+        this.$router.push({ name: "LogIn", query: { next: 'Home'} });
+        return
+      }
+
       try {
-        let data = await API.post("company/create", null, {
-          usdot: this.localUsdot
+        let data = await API.post("company/create", {
+          usdot: this.localUsdot,
+          userId
         });
         localStorage.setItem('uuid', data.uuid);
-        localStorage.setItem("Physical address", data.data["Physical Address"]);
-        localStorage.setItem("Mailing address", data.data["Mailing Address"]);
-        localStorage.setItem("Phone", data.data.Phone);
         
         if (data.status === "OK") {
-          //logged in to status 0 to 
-          if (this.msg) {
-            this.$router.push({ name: "AccountInfoUploadDocuments" });
-          } else {
+          // if (this.msg) {
+            // this.$router.push({ name: "AccountInfoUploadDocuments" });
+          // } else {
             this.$router.push({ name: "AccountInfoPersonalInfo" });
-          }
+          // }
         } else if (data.status === "ERROR") {
           this.error = data.messages[0] || data.data;
         }

@@ -184,20 +184,13 @@ export default {
     };
   },
   mounted(){
-    console.log('route', this.$router.history.current.query.next);
-    //  if( localStorage.getItem("accountStatus")== "1")
-    //   {
-    //     this.sendStatus = "1";
-    //   }
-    //   else{
-    //     this.sendStatus = "0"
-    //   }
   },
 
   methods: {
     accountStatusUpdate() {
       localStorage.setItem("register_status", "0");
     },
+
     dosomething() {
       if (this.showmodel) {
         this.showmodel = false;
@@ -205,9 +198,11 @@ export default {
         this.showmodel = true;
       }
     },
+
     model() {
       this.showmodel = true;
     },
+
     async forgotPassword() {
       const res = await API.post("users/forgot_password", {
         email: this.reset_email
@@ -218,24 +213,21 @@ export default {
         this.$swal("Opps!", res.data.msg, "error");
       }
     },
+
     proceedAfterLogin(data, loader) {
       if (data.status === "ok") {
         this.loading = false;
         if (loader) {
           loader.hide();
         }
-        // console.log("data", data.data.Tokens[0].token);
         this.$swal("Thank You!", data.message, "success")
           .then((value) => {
-            this.$router.push({ name: 'NewAccountInfo' });
+            this.$router.push({ name: this.$router.history.current.query.next || 'AccountInfoPersonalInfo' });
           });
         let t = data.data;
-        console.log("data", data);
-        localStorage.setItem("userId", data.data.id);
-
+        localStorage.setItem("userId", t.id);
         localStorage.setItem("token", JSON.stringify(t));
         localStorage.setItem("showModal", false);
-        // this.$router.push({ name: location.search.split('=')[1] });
         document.querySelector('.swal-button--confirm').style.display = 'contents';
         setTimeout(function(){ document.querySelector('.swal-button--confirm').click(); }, 3000);
       } else if (data.status === "error") {
@@ -323,7 +315,6 @@ export default {
     async getUserData() {
       const { api } = window.FB
       api('/me', { fields: 'id, email, name' }, async user => {
-        console.log(user);
         let data = await API.post("users/login/social", {
             email: user.email,
             id: user.id,

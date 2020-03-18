@@ -12,13 +12,13 @@
             >
         </div>
         <div v-if="status">
-          <div v-for="item in policies" :key="item.id" class="block-divider d-flex">
-            <div class="policy-image-wrapper px-1">
-              <img :src="item.img" alt class="policy-image">
+          <div v-for="item in policies" :key="item.policyId" class="block-divider policy-wrapper">
+            <div class="policy-image-wrapper px-1 mb-2">
+              <img src="https://picsum.photos/200" alt class="policy-image">
             </div>
 
             <div class="policy-info px-3">
-              <div class="block-title">{{ item.title }}</div>
+              <div class="block-title">{{ item.accountName }}</div>
 
               <!-- <div class="policy-subtitle">{{ item.policyType }}</div> -->
               <div class="block-subtitle">
@@ -33,43 +33,28 @@
 
               <div class="block-subtitle">
                 Current Premium:
-                <strong>{{ item.premium }}</strong>
+                <strong>${{ item.currentPremium }}</strong>
               </div>
 
                <button
                 type="button"
+                :disabled="loading"
                 class="lt-button lt-button-main mt-3 mb-3"
-                @click="requestCertificate"
+                @click="requestCertificate(item)"
               >Request a Certificate</button>
 
               <div class="d-flex small">
                 <div class="px-2">
-                  <a href="#" class="underline-link" @click.prevent>View Details</a>
+                  <a href="#" class="underline-link" @click.prevent="viewDetails" :disabled="loading">View Details</a>
                 </div>
 
                 <div class="px-2">
-                  <a href="#" class="underline-link" @click.prevent>View Change History</a>
+                  <a href="#" class="underline-link" @click.prevent="viewHistory" :disabled="loading">View Change History</a>
                 </div>
               </div>
             </div>
           </div>
 
-         <!--  <div class="mt-3">
-            <router-link
-              :to="{ name: '' }"
-              class="lt-button pad-10 mr-2 lt-button-main viewquote mb-1 white-space d-block text-center"
-              active-class="font-weight-bold"
-              @click.native="requestCertificate"
-            >Request Manual Certificate</router-link>
-            <span class="d-block text-center">OR</span>
-
-            <router-link
-              :to="{ name: '' }"
-              class="lt-button pad-10 lt-button-main viewquote mb-1 white-space d-block text-center"
-              active-class="font-weight-bold"
-              @click.native="requestAutoCertificate"
-            >Generate Automated Certificate</router-link>
-          </div> -->
           <div v-if="error" class="alert alert-danger" role="alert">{{ error }}</div>
         </div>
         <div v-else>
@@ -80,24 +65,25 @@
         </div>
       </div>
     </div>
-    <b-modal id="inputModal" title="Information">
+    <b-modal id="inputModal" title="Information" @ok="submitRequest">
       <form>
         <b-form-group
           id="name"
           label="Enter a name"
           label-for="input-name"
         >
-          <b-form-input id="input-name" v-model="name"  trim></b-form-input>
+          <b-form-input id="input-name" v-model="name"  trim required></b-form-input>
         </b-form-group>
         <b-form-group
           id="addr"
           label="Enter a address"
           label-for="input-addr"
         >
-          <b-form-input id="input-addr" v-model="address" trim></b-form-input>
+          <b-form-input id="input-addr" v-model="address" trim required></b-form-input>
         </b-form-group>
       </form>
     </b-modal>
+
   </div>
 </template>
 
@@ -111,30 +97,24 @@ import InputComponent from './InputComponent'
 export default {
   name: "PoliciesReview",
   filters: {
-    // date(date) {
-    //   return moment(date).format("MMM, DD, YYYY");
-    // },
-    // premium(num) {
-    //   // 12345.67 -> 12,345.67
-    //   return num.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,");
-    // }
+
   },
 
   data() {
     return {
       policies: [
-        
       ],
       status: true,
       loading: true,
       error: null,
-      policyId: "",
+      policy: "",
       name: '',
       address: '',
       nameValidState: false,
       addrValidState: false,
       invalidFeedback: 'Invalid',
-      validFeedback: 'Valid'
+      validFeedback: 'Valid',
+      path: ''
     };
   },
 
@@ -145,7 +125,8 @@ export default {
     openInNewWindow() {
       window.open(this.quotes[0].document_file);
     },
-    requestCertificate() {
+    requestCertificate(item) {
+      this.policy = item;
       swal({
         title: "",
         text: "Would you like anything on it?",
@@ -158,26 +139,44 @@ export default {
         }
       });
     },
+    async submitRequest () {
+      const uuid = localStorage.getItem('uuid');
+      const dotId = localStorage.getItem('usdot');
+      const userId = localStorage.getItem('userId');
+      this.loading = true;
+      let res = await API.post("company/coi", {
+        dotId,
+        name: this.name,
+        address: this.address,
+        uuid,
+        policy: JSON.stringify(this.policy),
+        userId
+      });
+      this.loading = false;
+      if (res.status == 'ok') {
+        this.path = res.path
+      }
+    },
+
+    viewDetails () {
+    },
+
+    viewHistory () {
+
+    }
   },
   async mounted() {
-    const usdot = localStorage.getItem('usdot');
+    const dotId = localStorage.getItem('usdot');
+    const userId = localStorage.getItem('userId');
     let res = await API.post("company/accountinfo/policies", {
-      dotId: usdot
+      dotId,
+      userId
     });
     this.loading = false;
     const { policies, status } = res;
     if (status == 'ok') {
       policies.map((policy, i) => {
-        this.policies.push({
-          id: i,
-          title: policy.accountName,
-          policyType: policy.policyType,
-          img: "https://picsum.photos/200",
-          effectiveDate: policy.effectiveDate,
-          premium: `$${policy.currentPremium ? policy.currentPremium : 0}`,
-          document: "",
-          document_file: ""
-        })
+        this.policies.push(policy)
       })
     } else {
       this.status = false
@@ -190,13 +189,19 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-// div {
-//   outline: 1px solid red;
-// }
 .white-space {
   white-space: nowrap;
 }
 .policies-review {
+  .policy-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+
+    @media (max-width: 425px) {
+      justify-content: center;
+    }
+  }
+
   .policy-image-wrapper {
     height: 100px;
     width: 100px;

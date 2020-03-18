@@ -46,7 +46,7 @@
                 </div>
                 <div class="col">
                   <div class="action-item">
-                    <a href="javascript:;" class="lift" @click="diaplayPDF(item.pdf)">
+                    <a href="javascript:;" class="lift" @click="displayPDF(item.pdf)">
                       <font-awesome-icon class="fontawesome" :icon="['fas', 'file-pdf']" />
                     </a>
                     <div>PDF</div>
@@ -91,11 +91,8 @@
             <a href="tel:15135062400" style="font-weight:bold; white-space:nowrap;">1-513-506-2400</a>
           </span>
         </div>
-       
-      <b-modal id="modal-pdf" centered  size="xl" :title="curPDF.title" hide-footer>
-        <span v-html="curPDF.content">
-        </span>
-      </b-modal>
+      
+        <PDFViewer :showModal="showModal" :pdf="pdf" @close-modal="closeModal" />
       </div>
     </div>
   </div>
@@ -108,6 +105,10 @@ import { API } from "../api.js";
 
 export default {
   name: "QuotesAllQuotes",
+
+  components: {
+    PDFViewer: () => import('./PDFViewer'),
+  },
 
   data() {
     return {
@@ -126,15 +127,15 @@ export default {
       quotes: [],
       loading: false,
       error: null,
-      curPDF: {
-        title: "",
-        content: "",
-        base64: ""
-      }
-    };
+      pdf: {},
+      showModal: false
+    }
   },
 
   methods: {
+    closeModal() {
+      this.showModal = false
+    },
     downloadPDF (pdf) {
       const downloadLink = document.createElement("a");
 
@@ -142,28 +143,11 @@ export default {
       downloadLink.download = pdf.name;
       downloadLink.click();
     },
-    diaplayPDF (pdf) {
-      let objbuilder = '';
-      objbuilder += (`<html><body><object width="100%" height="400px"      data="data:application/pdf;base64,`);
-      objbuilder += (pdf.content);
-      objbuilder += ('#toolbar=0" type="application/pdf" class="internal">');
-      objbuilder += ('<embed src="data:application/pdf;base64,');
-      objbuilder += (pdf.content);
-      objbuilder += ('" type="application/pdf" />');
-      objbuilder += ('</object></body></html>');
-      this.curPDF.content = objbuilder;
-      this.curPDF.base64 = `data:application/pdf;base64, ${pdf.content}`
-      this.curPDF.title = pdf.name;
-      this.$bvModal.show('modal-pdf')
+    displayPDF (pdf) {
+      this.pdf = pdf
+      this.showModal = true
     },
 
-    openInNewWindow () {
-      window.open(this.apires.file);
-    },
-
-    savequote () {
-      console.log("this.acc", this.accept);
-    },
     request () {
       // axios
       //   .post(
@@ -206,9 +190,11 @@ export default {
   async mounted() {
     this.loading = true;
 
-    const usdot = localStorage.getItem('usdot');
+    const dotId = localStorage.getItem('usdot');
+    const userId = localStorage.getItem('userId');
     let res = await API.post("company/accountinfo/quotes", {
-      dotId: usdot
+      dotId,
+      userId
     });
     this.loading = false;
     const { quoteList, status } = res;
@@ -239,9 +225,9 @@ export default {
 
 .quote-wrapper {
   display: flex;
-  flex-wrap: wrap;
 
   @media (max-width: 425px) {
+    flex-wrap: wrap;
     justify-content: center;
   }
 }

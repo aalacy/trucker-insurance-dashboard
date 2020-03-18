@@ -3,7 +3,7 @@
     <div class="container">
       <div class="row justify-content-center">
         <div class="col-12 col-sm-10 col-md-8 col-lg-5">
-          <form class="sign-up-form" @submit.prevent ref="formContainer">
+          <b-form class="sign-up-form" @submit.prevent="signup">
             <div class="form-title">
               <div class="title welcomefont">Welcome!</div>
               <div class="form-group">
@@ -17,12 +17,13 @@
             </div>
 
             <div class="form-group">
-              <input
+              <b-input
                 v-model="formData.firstName"
                 type="text"
                 class="lt-input border border-color"
                 placeholder="First Name"
-              >
+                required
+              />
             </div>
 
             <div class="form-group">
@@ -31,6 +32,24 @@
                 type="text"
                 class="lt-input border border-color"
                 placeholder="Last Name"
+                required
+              >
+            </div>
+            <div class="form-group">
+              <input
+                v-model="formData.dotId"
+                type="text"
+                class="lt-input border border-color"
+                placeholder="US DOT Number"
+              >
+            </div>
+            <div class="form-group">
+              <input
+                v-model="formData.companyName"
+                type="text"
+                class="lt-input border border-color"
+                placeholder="Company Name"
+                required
               >
             </div>
             <div class="form-group">
@@ -39,6 +58,7 @@
                 type="text"
                 class="lt-input border border-color"
                 placeholder="Email"
+                required
               >
             </div>
 
@@ -48,47 +68,35 @@
                 type="password"
                 class="lt-input border border-color"
                 placeholder="Password"
+                :state="validatePassword"
               >
             </div>
             <div class="form-group">
-              <input
+              <b-input
                 v-model="formData.confirmpassword"
                 type="password"
                 class="lt-input border border-color"
                 placeholder="Confirm Password"
-              >
+                :state="validatePassword"
+              ></b-input>
+              <b-form-invalid-feedback :state="validatePassword">
+                Password does not match.
+              </b-form-invalid-feedback>
             </div>
-            <input type="hidden" v-model="formData.account_status">
             <div class="row">
               <div class="d-flex col-lg-12 d-flex justify-content-center">
                 <button
                   type="submit"
                   class="lt-button lt-button-main go-button float-right"
-                  @click="signup"
                 >Get Started</button>
               </div>
             </div>
-            <!-- <div class=" border-top row align-items-stretch sign-in-with">
-              <div class="col mt-4 text-center">
-                <div class="border-top pt-2 pb-2">Sign in With</div>
-                <font-awesome-icon
-                  :icon="{ prefix: 'fab', iconName: 'facebook-square' }"
-                  size="2x"
-                  class="mr-4 color-fb"
-                />
-                <font-awesome-icon
-                  :icon="{ prefix: 'fab', iconName: 'google' }"
-                  size="2x"
-                  class="color-g"
-                />
-              </div>
-            </div>-->
             <div class="pt-4 save-hover">
             <router-link :to="{ name: 'LogIn' }">
                 <span>Already registered? Login</span>
               </router-link>
             </div>
-          </form>
+          </b-form>
         </div>
       </div>
     </div>
@@ -119,21 +127,22 @@ export default {
         email: "",
         password: "",
         confirmpassword: "",
-        account_status: "",
+        dotId: "",
+        companyName: "",
       }
     };
   },
 
-  mounted() {
-    if (localStorage.getItem("register_status") == "1") {
-      
-      this.formData.account_status = 1;
-      console.log("regi status",this.formData.account_status );
-    } else {
-      
-      this.formData.account_status = 0;
-      console.log("regi status with",this.formData.account_status );
+  computed: {
+    validatePassword() {
+      if (!this.formData.password || !this.formData.confirmpassword) {
+        return false
+      }
+      return this.formData.password == this.formData.confirmpassword
     }
+  },
+
+  mounted() {
   },
   methods: {
     onCancel() {
@@ -162,8 +171,8 @@ export default {
             email: this.formData.email,
             password: this.formData.password,
             passwordConfirm: this.formData.confirmpassword,
-            account_status :this.formData.account_status
-            
+            companyName: this.formData.companyName,
+            dotId :this.formData.dotId
           });
         } catch (err) {
           console.log(err);
@@ -171,14 +180,12 @@ export default {
 
         if (data.status === "ok") {
           this.loading = false;
-          console.log("data reg",data);
           localStorage.setItem("token", data.data.Tokens[0].token);
           localStorage.setItem("userId",data.data.id);
-          // console.log("register data", data.account_status);
           loader.hide();
           this.$swal( "", "You are successfully Registered!", "success")
               .then((value) => {
-                this.$router.push({ name: 'NewAccountInfo' });
+                this.$router.push({ name: this.$router.history.current.query.next || 'AccountInfoPersonalInfo' });
               });
           document.querySelector('.swal-button--confirm').style.display = 'contents';
           setTimeout(function(){ document.querySelector('.swal-button--confirm').click(); }, 3000);
@@ -238,5 +245,16 @@ input::-webkit-input-placeholder {
       padding-right: 2rem;
     }
   }
+}
+
+.form-control {
+  padding: 0.6rem 1rem;
+  font-size: 1.25rem;
+  font-weight: 500;
+  border-radius: 5px;
+  height: calc(1.5em + 1.25rem + 2px);
+  border: 1px solid #6f6f6f;
+  color: #6f6f6f;
+  background-color: #f8f8f8;
 }
 </style>

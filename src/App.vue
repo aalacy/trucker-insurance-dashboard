@@ -140,14 +140,14 @@
                 <!-- social networks -->
                 <li class="footer-social-networks">
                     <span>
-                        <a href="https://twitter.com/LuckyTruck3" target="_blank">
-                           <font-awesome-icon class="fontawesome" :icon="['fab', 'twitter']" />
-                        </a>
+                      <a href="https://twitter.com/LuckyTruck3" target="_blank">
+                         <font-awesome-icon class="fontawesome" :icon="['fab', 'twitter']" />
+                      </a>
                     </span>
                     <span>
-                        <a href="https://www.linkedin.com/company/luckytruck" target="_blank">
-                         <font-awesome-icon class="fontawesome" :icon="['fab', 'linkedin-in']"  />
-                        </a>
+                      <a href="https://www.linkedin.com/company/luckytruck" target="_blank">
+                       <font-awesome-icon class="fontawesome" :icon="['fab', 'linkedin-in']"  />
+                      </a>
                     </span>
                     <span>
                         <a href="https://www.facebook.com/LuckyTruck-104402324469770/" target="_blank">
@@ -324,7 +324,6 @@ export default {
             localStorage.removeItem("token");
             localStorage.removeItem("userId")
             // localStorage.removeItem("registredUserId");
-            localStorage.removeItem("redirect");
             this.$router.push({ name: "Home" });
           },500)
             
@@ -338,7 +337,7 @@ export default {
         // this.loading = false;
         // this.myacchide = false;
       }
-},
+  },
 
     logoutPopUp() {
       swal({

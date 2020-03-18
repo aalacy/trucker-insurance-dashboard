@@ -329,7 +329,6 @@ export default {
     this.save = true;
     this.formData.dotNumber = localStorage.getItem("usdot");
     this.formData.name = localStorage.getItem("company");
-    this.formData.phoneNumber = localStorage.getItem("Phone");
   },
   beforeMount() {
     // localStorage.setItem("uuid", null);
@@ -417,13 +416,13 @@ export default {
     this.loadCompany();
   },
   updated() {
- 
+  
   },
   methods: {
     async parseAddress (_mailingAddress, _physicalAddress) {
       try {
         let MailingAddress = _mailingAddress
-        if (Object.keys(_mailingAddress).length === 0 && _mailingAddress.constructor !== Object) {
+        if (_mailingAddress.constructor !== Object) {
           MailingAddress = JSON.parse(_mailingAddress)
         }
         this.formData.address = MailingAddress.street
@@ -484,7 +483,6 @@ export default {
       else {
         this.infoWinOpen = true;
         this.currentMidx = idx;
-
       }
     },
     async getMapData(addr, infoText) {
@@ -545,6 +543,10 @@ export default {
       this.loading = false;
       this.error = null;
       this.uuid = localStorage.getItem('uuid');
+      if (this.uuid == 'null' || this.uuid == null) {
+        this.uuid = this.$router.history.current.query.uuid
+        localStorage.setItem('uuid', this.uuid)
+      }
       try {
         let res = await API.get("company/current?uuid=" + this.uuid);
         this.uuid = res.data.uuid;
@@ -556,7 +558,6 @@ export default {
             this.formData.dotNumber = dotNumber
             this.formData.name = name
             this.formData.phoneNumber = phoneNumber
-            console.log(mailingAddress, garagingAddress)
             await this.parseAddress(mailingAddress, garagingAddress)
           }
         } else if (res.status === "ERROR") {
