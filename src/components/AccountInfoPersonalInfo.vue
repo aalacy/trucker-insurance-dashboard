@@ -558,6 +558,7 @@ export default {
             this.formData.dotNumber = dotNumber
             this.formData.name = name
             this.formData.phoneNumber = phoneNumber
+            this.$emit('update-us-dot', dotNumber)
             await this.parseAddress(mailingAddress, garagingAddress)
           }
         } else if (res.status === "ERROR") {

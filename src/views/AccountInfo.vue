@@ -3,7 +3,7 @@
   <div class="container-fluid account-info">
     <div class="row">
       <div class="col p-0">
-        <account-info-account-progress :progress="progress" />
+        <account-info-account-progress :progress="progress" :US_DOT_or_company_name="US_DOT_or_company_name" />
       </div>
     </div>
 
@@ -49,6 +49,7 @@ export default {
       progress: Number(localStorage.getItem('accountInfoProgress')) || 0,
       hint: '',
       showSidebar: window.innerWidth <= 768 ? false : true,
+      US_DOT_or_company_name: '',
     };
   },
   methods: {
@@ -65,6 +66,7 @@ export default {
     },
     updateUSDot(value) {
       this.US_DOT_or_company_name = value;
+      localStorage.setItem('usdot', value)
     },
     showNav() {
       this.showSidebar = !this.showSidebar;

@@ -4,7 +4,7 @@
       <span class="text-a-mob">For assistance, please call us at <a href="tel:15135062400" style="font-weight:bold;white-space:nowrap;">1-513-506-2400</a></span>
       <div class="d-flex align-items-center">
         <div class="title mb-0 flex-fill">Your Profile is {{ progress }}% complete.</div>
-        <div class="title mr-2" v-if="US_DOT_or_company_name">{{ US_DOT_or_company_name }}</div>
+        <div class="title mr-2" v-model="US_DOT_or_company_name">{{ US_DOT_or_company_name }}</div>
       </div>
     <div v-if="count" class="d-flex">
       
@@ -32,7 +32,6 @@ export default {
   name: "AccountInfoAccountProgress",
 
   updated() {
-    console.log('===== updated =======');
     if (localStorage.getItem("token") == null) {
       this.quote = true;
       this.localtoken = false;
@@ -40,15 +39,9 @@ export default {
       this.localtoken = true;
       this.quote = false;
     }
-    
   },
+
   mounted() {
-    const usdot = localStorage.getItem('usdot');
-    if (usdot) {
-      this.US_DOT_or_company_name = usdot
-    } else {
-      this.US_DOT_or_company_name = localStorage.getItem('company');
-    }
     if (localStorage.getItem("token")) {
       this.count = true;
      
@@ -75,10 +68,8 @@ export default {
             }
           );
       }
-      
     },
     login() {
-      
       // localStorage.setItem("accBtn", true);
       this.$router.push({ name: "LogIn" });
     },
@@ -92,6 +83,10 @@ export default {
     progress: {
       type: Number,
       required: true
+    },
+    US_DOT_or_company_name: {
+      type: String,
+      required: true
     }
   },
   data() {
@@ -101,7 +96,6 @@ export default {
       localtoken: false,
       myacchide: true,
       quote: false,
-      US_DOT_or_company_name: ''
     };
   }
 };
