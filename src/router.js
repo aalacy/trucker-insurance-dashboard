@@ -469,16 +469,34 @@ const router = new Router({
   ]
 });
 
+const getUrlVars = () => {
+    var vars = {};
+    var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+        vars[key] = value;
+    });
+    return vars;
+}
+
+const updateUUID = () => {
+  const params = getUrlVars()
+  if (params.uuid && params.uuid != undefined) {
+    localStorage.setItem('uuid', params.uuid)
+  }
+}
+
 router.beforeEach((to, from, next) => {
   if(to.matched.some(record =>  record.meta.requiresAuth)) {
-      if (localStorage.getItem('userId') == null || localStorage.getItem('userId') == 'null') {
-        next({
-            path: '/log-in?next=' + to.name,
-            params: { next: to.name }
-        })
-      } else {
-        next()
-      }
+    if (to.name == 'AccountInfoPersonalInfo') {
+      updateUUID()
+    }
+    if (localStorage.getItem('userId') == null || localStorage.getItem('userId') == 'null') {
+      next({
+          path: '/log-in?next=' + to.name,
+          params: { next: to.name }
+      })
+    } else {
+      next()
+    }
   } else {
       next()
   }
