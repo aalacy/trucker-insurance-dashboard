@@ -477,17 +477,20 @@ const getUrlVars = () => {
     return vars;
 }
 
-const updateUUID = () => {
+const updateUUIDAndDotId = () => {
   const params = getUrlVars()
   if (params.uuid && params.uuid != undefined) {
     localStorage.setItem('uuid', params.uuid)
+  }
+  if (params.dotId && params.dotId != undefined) {
+    localStorage.setItem('dotId', params.dotId)
   }
 }
 
 router.beforeEach((to, from, next) => {
   if(to.matched.some(record =>  record.meta.requiresAuth)) {
     if (to.name == 'AccountInfoPersonalInfo') {
-      updateUUID()
+      updateUUIDAndDotId()
     }
     if (localStorage.getItem('userId') == null || localStorage.getItem('userId') == 'null') {
       next({
