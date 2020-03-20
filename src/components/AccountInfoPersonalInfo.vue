@@ -329,6 +329,7 @@ export default {
     this.save = true;
     this.formData.dotNumber = localStorage.getItem("usdot");
     this.formData.name = localStorage.getItem("company");
+    this.$emit('update-us-dot', localStorage.getItem("usdot"))
   },
   beforeMount() {
     // localStorage.setItem("uuid", null);
@@ -337,7 +338,7 @@ export default {
     ...mapState(["data"]),
     checked: {
       get () {
-        return (this.formData.address == this.formData.address1 && this.formData.city == this.formData.city1 && this.formData.state == this.formData.state1 && this.formData.zip == this.formData.zip1)
+        return this.formData.address && this.formData.address == this.formData.address1 && this.formData.city == this.formData.city1 && this.formData.state == this.formData.state1 && this.formData.zip == this.formData.zip1
       },
       set (newValue) {
         console.log(newValue)
@@ -544,8 +545,10 @@ export default {
       this.error = null;
       this.uuid = localStorage.getItem('uuid');
       if (this.uuid == 'null' || this.uuid == null) {
-        this.uuid = this.$router.history.current.query.uuid
-        localStorage.setItem('uuid', this.uuid)
+        const _uuid = this.$router.history.current.query.uuid
+        if (_uuid) {
+          this.uuid = _uuid
+        }
       }
       try {
         let res = await API.get("company/current?uuid=" + this.uuid);

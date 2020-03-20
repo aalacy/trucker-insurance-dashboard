@@ -52,6 +52,9 @@ export default {
       US_DOT_or_company_name: '',
     };
   },
+  mounted () {
+    
+  },
   methods: {
     updateProgress(progress) {
       this.progress = progress;

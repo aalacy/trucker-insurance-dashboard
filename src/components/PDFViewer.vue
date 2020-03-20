@@ -1,5 +1,5 @@
 <template>
- 	<b-modal v-model="show" id="modal-pdf" centered  size="xl" :title="curPDF.title" hide-footer>
+ 	<b-modal v-model="show" id="modal-pdf" centered  size="xl" :title="title" hide-footer>
         <span v-html="curPDF.content">
         </span>
   	</b-modal>
@@ -18,7 +18,25 @@ export default {
       showModal: {
       	type: Boolean,
       	default: false
+      },
+      title: {
+      	type: String,
+      	default: 'COI.pdf'
       }
+    },
+
+    watch: {
+    	showModal (newProps, oldProps) {
+    		if (newProps != oldProps) {
+	    		this.show = newProps
+    		}
+    	},
+
+    	show () {
+    		if (!this.show) {
+	    		this.$emit('close-modal', false)
+    		}
+    	}
     },
 
     data () {
@@ -32,28 +50,18 @@ export default {
 	    }
 	},
 
-	watch: {
-		showModal(newProps, oldProps) {
-			if (newProps != oldProps) {
-				this.show = newProps
-			}
-		}, 
-
-		show(newProps, oldProps) {
-			if (!newProps) {
-				this.$emit('close-modal')
-			}
-		}
-	},
-
     mounted() {
+ 	},
+
+ 	updated () {
+ 		console.log('updated')
     	this.diaplayPDF(this.pdf)
  	},
 
  	methods: {
 	    diaplayPDF (pdf) {
 	      let objbuilder = '';
-	      objbuilder += (`<html><body><object width="100%" height="400px"      data="data:application/pdf;base64,`);
+	      objbuilder += (`<html><body><object width="100%" height="400px" data="data:application/pdf;base64,`);
 	      objbuilder += (pdf.content);
 	      objbuilder += ('#toolbar=0" type="application/pdf" class="internal">');
 	      objbuilder += ('<embed src="data:application/pdf;base64,');

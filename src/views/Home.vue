@@ -346,7 +346,6 @@ export default {
       this.localUsdot = row.item.usdot;
       this.localcompany = row.item.name;
       localStorage.setItem("usdot", this.localUsdot);
-      localStorage.setItem("company", this.localcompany);
       this.loading = true;
 
       const token = localStorage.getItem('token')
@@ -527,8 +526,6 @@ export default {
   .white-bg {
     background-color: white;
   }
-
-
 
   #btna-main {
     padding: 0 0.5rem;

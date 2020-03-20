@@ -50,7 +50,7 @@ export default {
       }else{
         this.status = false;
       }
-    }else{
+    } else{
       this.count = false;
     }
   },

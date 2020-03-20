@@ -49,7 +49,7 @@
                 </div>
 
                 <div class="px-2">
-                  <a href="#" class="underline-link" @click.prevent="viewHistory" :disabled="loading">View Change History</a>
+                  <a href="#" class="underline-link" @click.prevent="viewHistory(item)" :disabled="loading">View Change History</a>
                 </div>
               </div>
             </div>
@@ -65,7 +65,7 @@
         </div>
       </div>
     </div>
-    <b-modal id="inputModal" title="Information" @ok="submitRequest">
+    <b-modal v-model="inputModal" title="Information" @ok="submitRequest">
       <form>
         <b-form-group
           id="name"
@@ -84,7 +84,31 @@
       </form>
     </b-modal>
 
+    <b-modal v-model="historyModal" size="lg" :title="historyTitle">
+      <div class="company-table m-3">
+        <b-table 
+          :items="endorsements"
+          :fields="fields" 
+          sticky-header
+          striped
+          bordered
+          hover
+          no-border-collapse
+          stacked="sm"
+          thead-class="company-table-header"
+          thead-tr-class="company-table-header"
+          tbody-tr-class="company-table-body"
+        >
+          <template v-slot:cell(endorsementAmount)="data">
+            {{data.value.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')}}
+          </template>
+        </b-table>
+      </div>
+    </b-modal>
+    
+    <PDFViewer :showModal="showPdfModal" :pdf="pdf" @close-modal="closeModal" />
   </div>
+
 </template>
 
 <script>
@@ -100,9 +124,19 @@ export default {
 
   },
 
+  components: {
+    PDFViewer: () => import('./PDFViewer'),
+  },
+
   data() {
     return {
-      policies: [
+      policies: [],
+      endorsements: [],
+      fields: [ 
+        { key: 'endorsementType', label: 'Type' },
+        { key: 'endorsementAmount', label: 'Amount ($)' },
+        { key: 'driverName', label: 'Driver' },
+        { key: 'vehicleName', label: 'Vehicle' },
       ],
       status: true,
       loading: true,
@@ -114,17 +148,35 @@ export default {
       addrValidState: false,
       invalidFeedback: 'Invalid',
       validFeedback: 'Valid',
-      path: ''
+      pdf: {},
+      showPdfModal: false,
+      inputModal: false,
+      historyModal: false,
+      userId: '',
+      dotId: '',
+      uuid: ''
     };
   },
 
+  computed: {
+    historyTitle () {
+      return 'Endorsements (' + this.endorsements.length +')'
+    },
+  },
+
   methods: {
+    closeModal () {
+      this.showPdfModal = false
+    },
+
     changeValue (value) {
       console.log(value)
     },
-    openInNewWindow() {
+
+    openInNewWindow () {
       window.open(this.quotes[0].document_file);
     },
+
     requestCertificate(item) {
       this.policy = item;
       swal({
@@ -134,16 +186,17 @@ export default {
         buttons: ["No", "Yes"]
       }).then(ok => {
         if (ok) {
-          this.$bvModal.show('inputModal')
+          this.inputModal = true
         } else {
         }
       });
     },
     async submitRequest () {
-      const uuid = localStorage.getItem('uuid');
-      const dotId = localStorage.getItem('usdot');
-      const userId = localStorage.getItem('userId');
-      this.loading = true;
+      await this.createCOI(this.dotId, this.uuid, this.userId)
+    },
+
+    async createCOI (dotId, uuid, userId) {
+      this.loading = true
       let res = await API.post("company/coi", {
         dotId,
         name: this.name,
@@ -154,23 +207,46 @@ export default {
       });
       this.loading = false;
       if (res.status == 'ok') {
-        this.path = res.path
+        this.pdf = res.pdf
+      } else {
+        console.log(res)
       }
     },
 
-    viewDetails () {
+    // empty COI pdf
+    async viewDetails () {
+      this.policy = {}
+      await this.createCOI("", "", this.userId)
+      if (this.pdf) {
+        this.showPdfModal = true
+      }
     },
 
-    viewHistory () {
-
+    // endorsement list
+    async viewHistory (item) {
+      this.loading = true
+      const userId = localStorage.getItem('userId');
+      let res = await API.post("company/accountinfo/policy/endorsements", {
+        policyId: 'a021k000003muT4AAI',
+        userId
+      });
+      this.loading = false;
+      const { endorsements, status } = res;
+      if (status == 'ok') {
+        this.endorsements = endorsements
+        this.historyModal = true
+      } else {
+        this.status = false
+      }
     }
   },
   async mounted() {
-    const dotId = localStorage.getItem('usdot');
-    const userId = localStorage.getItem('userId');
+    this.dotId = localStorage.getItem('usdot');
+    this.userId = localStorage.getItem('userId');
+    this.uuid = localStorage.getItem('uuid');
     let res = await API.post("company/accountinfo/policies", {
-      dotId,
-      userId
+      dotId: this.dotId,
+      userId: this.userId
     });
     this.loading = false;
     const { policies, status } = res;

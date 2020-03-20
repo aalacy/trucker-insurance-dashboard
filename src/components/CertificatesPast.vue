@@ -107,7 +107,7 @@ export default {
     };
   },
   methods: {
-    closeModal() {
+    closeModal () {
       this.showModal = false
     },
     downloadPDF (pdf) {
@@ -128,7 +128,7 @@ export default {
   async mounted() {
     const dotId = localStorage.getItem('usdot');
     const userId = localStorage.getItem('userId');
-    let res = await API.post("company/accountinfo/certs", {
+    let res = await API.post("company/accountinfo/pastcerts", {
       userId
     });
     this.loading = false;
