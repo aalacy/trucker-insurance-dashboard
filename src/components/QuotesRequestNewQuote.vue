@@ -13,14 +13,14 @@
         <div class="row">
           <div class="col">
             <router-link
-              :to="{ name: 'AccountInfoPersonalInfo' }"
+              :to="{ name: 'AccountInfoThankYou' }"
               class="btn btn-primary lt-btn"
               active-class="font-weight-bold"
             >Information Is Same</router-link>
           </div>
           <div class="col">
             <router-link
-              :to="{ name: 'AccountInfoThankYou' }"
+              :to="{ name: 'AccountInfoPersonalInfo' }"
               class="btn btn-secondary lt-btn"
               active-class="font-weight-bold"
             >Information Is Different</router-link>
@@ -45,7 +45,7 @@ export default {
     };
   },
   created() {
-    this.$emit('update-hint', ' ');
+    this.$emit('update-hint', "Please enter your certificate information here. If a certificate isn't generated right away, one from our team will manually generate it for you.");
   }
 };
 </script>

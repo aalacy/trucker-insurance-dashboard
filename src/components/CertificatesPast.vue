@@ -30,7 +30,7 @@
                 </div> -->
                 <div class="col">
                   <div class="action-item">
-                    <a href="#" class="lift">
+                    <a :href="mailto" class="lift">
                       <font-awesome-icon class="fontawesome" :icon="['fas', 'envelope']" />
                     </a>
                     <div>Email</div>
@@ -58,6 +58,14 @@
                       <font-awesome-icon class="fontawesome" :icon="['fas', 'pen']" />
                     </a>
                     <div>Edit</div>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="action-item">
+                    <a href="#" class="lift">
+                      <font-awesome-icon class="fontawesome" :icon="['fas', 'sync-alt']" />
+                    </a>
+                    <div>Refresh</div>
                   </div>
                 </div>
               </div>
@@ -100,6 +108,7 @@ export default {
       ],
       loading: true,
       error: null,
+      email: '',
       policyId: "",
       status: true,
       pdf: {},
@@ -126,6 +135,11 @@ export default {
     },
   },
   async mounted() {
+    let user = {}
+    try {
+      user = JSON.parse(localStorage.getItem('token'))
+    } catch (e) {}
+    this.email = user.email || ''
     const dotId = localStorage.getItem('usdot');
     const userId = localStorage.getItem('userId');
     let res = await API.post("company/accountinfo/pastcerts", {
@@ -140,8 +154,14 @@ export default {
     }
   },
   created() {
-    this.$emit("update-hint", "Helpful hints about current section that will guide the user through the steps, and onto the next section of the form, coinciding with the input field that is active.");
-  }
+    this.$emit("update-hint", "Use this section to manage your certificates. For more detailed certificates, please submit your request and someone from our team will manually create your certificate.");
+  },
+
+  computed: {
+    mailto () {
+      return `mailto:${this.email}?subject=Insurance%20Quote%20from%20LuckyTruck`
+    },
+  },
 };
 </script>
 

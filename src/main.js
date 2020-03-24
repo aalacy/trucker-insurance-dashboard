@@ -23,7 +23,9 @@ import {
   faEnvelope,
   faDownload,
   faPen,
-  faFilePdf } from '@fortawesome/free-solid-svg-icons'
+  faFilePdf,
+  faSyncAlt
+} from '@fortawesome/free-solid-svg-icons'
 import {
   faFacebookSquare, 
   faFacebookF,
@@ -56,7 +58,8 @@ library.add(
   faEnvelope,
   faDownload,
   faPen,
-  faFilePdf
+  faFilePdf,
+  faSyncAlt
 )
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)

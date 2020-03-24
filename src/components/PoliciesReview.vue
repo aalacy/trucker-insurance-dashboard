@@ -259,7 +259,7 @@ export default {
     }
   },
   created() {
-    this.$emit("update-hint", "Helpful hints about current section that will guide the user through the steps, and onto the next section of the form, coinciding with the input field that is active.");
+    this.$emit("update-hint", "Here are your current policies, to add vehicles and drivers, please see the side bar on the left. Please contact us with any questions or changes.");
   }
 };
 </script>

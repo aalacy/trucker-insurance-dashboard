@@ -30,7 +30,7 @@
                 </div> -->
                 <div class="col">
                   <div class="action-item">
-                    <a href="#" class="lift">
+                    <a :href="mailto" class="lift">
                       <font-awesome-icon class="fontawesome" :icon="['fas', 'envelope']" />
                     </a>
                     <div>Email</div>
@@ -130,6 +130,10 @@ export default {
       pdf: {},
       showModal: false
     }
+  },
+
+  created() {
+    this.$emit('update-hint', 'Here are all of your current quotes. If anything is missing, just send us a massage or call us.');
   },
 
   methods: {

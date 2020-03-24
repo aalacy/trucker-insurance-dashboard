@@ -124,7 +124,7 @@ export default {
 	};
   },
   created() {
-    this.$emit('update-hint', 'Helpful hints about current section that will guide the user through the steps,  onto the next section of the form, coinciding with the input field that is active.');
+    this.$emit('update-hint', "Please use this section to add additional coverage. While many coverages aren't required by the government, they provide important risk management for your company. Please learn more about different coverage options by discussing your company with someone from our team.");
   }
 };
 </script>

@@ -151,7 +151,7 @@ export default {
     };
   },
   created() {
-    this.$emit('update-hint', 'Helpful hints about current section that will guide the user through the steps, and onto the next section of the form, coinciding with the input field that is active.');
+    this.$emit('update-hint', 'Please be sure that all drivers currently operating under your authority are added to your current policy. Please use this section to add or subtract drivers.');
   }
 };
 </script>
