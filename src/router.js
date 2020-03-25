@@ -431,6 +431,9 @@ const router = new Router({
             prevForm: 'AccountInfoDocumentUpload',
             nextForm: 'AccountInfoThankYou',
             progress: 95
+          },
+          meta: {
+            requiresAuth: true
           }
         },
         {
@@ -439,9 +442,6 @@ const router = new Router({
           component: () => import('./components/AccountInfoThankYou.vue'),
           props: {
             progress: 100
-          },
-          meta: {
-            requiresAuth: true
           }
         },
         

@@ -400,7 +400,7 @@ export default {
         const data = {
           signSignature: this.formData,
           user_id: localStorage.getItem("userId"),
-          uuid: this.final_uuid
+          uuid: this.final_uuid,
         };
         let res = await API.post("company/save", { data });
 

@@ -362,6 +362,8 @@ export default {
       else {
         this.myacchide =false;
       }
+
+      this.show = false;
       localStorage.setItem("Phone", "");
       localStorage.setItem("company", "");
       // localStorage.setItem("usdot","");
