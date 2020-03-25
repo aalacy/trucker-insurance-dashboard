@@ -17,7 +17,7 @@
                 >
               <b-input-group-append>
                 <b-button type="button" class="px-3 btn btn-primary get-data" @click="getVinData('vehicle', index)" variant="primary">
-                  ADD
+                  <font-awesome-icon class="fontawesome" icon="plus" />
                 </b-button>
               </b-input-group-append>
             </b-input-group>

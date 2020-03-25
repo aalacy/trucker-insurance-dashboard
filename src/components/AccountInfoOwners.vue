@@ -13,7 +13,7 @@
             </div>
           </div>
 
-          <div v-if="formData.driverIsOwner" class="">
+          <div v-if="formData.driverIsOwner" class="mt-2">
             <select v-model="formData.driverOwnerIndex" @change="onChange($event)" class="lt-input col-sm-12 col-lg-6" id="driverList" >
               <option value="" disabled>Select Driver</option>
  
@@ -24,24 +24,22 @@
               >{{ item.firstName }} {{ item.lastName }}</option>
             </select>
           </div>
-
           <hr>
-
           <template>
-            <div class="owner-form-item mob-2" v-for="(singleDriver, index) in driversData" :key="index">
+            <div class="owner-form-item mob-2" v-for="(singleDriver, index) in ownerData" :key="index">
               <div class="row">
-                <div class="col">
-                  <h2 class="h5">Owner #{{ index + 1 }}</h2>
+                <div class="col mb-3">
+                  <h2 class="h4 font-weight-bold">Owner #{{ index + 1 }}</h2>
                 </div>
 
                 <button
                   v-show="index > 0"
                   type="button"
                   class="lt-button mx-2 mb-3"
-                  @click="removeDriverData(index)"
+                  @click="removeOwnerData(index)"
                   title="Remove Owner"
                 >
-                  <h3>-</h3>
+                  <font-awesome-icon class="fontawesome minus" icon="minus" />
                 </button>
               </div>
 
@@ -50,11 +48,11 @@
                   <div class="form-group">
                       <!-- :class="{ 'has-error': formErrors.firstName }" -->
                     <input
-                      v-model="driversData[index].firstName"
+                      v-model="ownerData[index].firstName"
                       type="text"
                       class="lt-input"
                       placeholder="First name"
-                      :class="{ 'has-error': !validations.driversData[index].firstName.is_valid }"
+                      :class="{ 'has-error': !validations.ownerData[index].firstName.is_valid }"
                       @change="validateFieldCustom('firstName', index)"
                     />
                       <!-- required -->
@@ -62,7 +60,7 @@
                       @blur="onBlur"
                       @change="validateField('firstName')" -->
                     
-                    <div class="text-danger" v-show="!validations.driversData[index].firstName.is_valid">{{ validations.driversData[index].firstName.text }}</div>
+                    <div class="text-danger" v-show="!validations.ownerData[index].firstName.is_valid">{{ validations.ownerData[index].firstName.text }}</div>
                   </div>
                 </div>
 
@@ -70,11 +68,11 @@
                   <div class="form-group">
                       <!-- :class="{ 'has-error': formErrors.lastName }" -->
                     <input
-                      v-model="driversData[index].lastName"
+                      v-model="ownerData[index].lastName"
                       type="text"
                       class="lt-input"
                       placeholder="Last name"
-                      :class="{ 'has-error': !validations.driversData[index].lastName.is_valid }"
+                      :class="{ 'has-error': !validations.ownerData[index].lastName.is_valid }"
                       @change="validateFieldCustom('lastName', index)"
                     />
                       <!-- required -->
@@ -82,7 +80,7 @@
                       @blur="onBlur"
                       @change="validateField('lastName')" -->
 
-                    <div class="text-danger" v-show="!validations.driversData[index].lastName.is_valid">{{ validations.driversData[index].lastName.text }}</div>
+                    <div class="text-danger" v-show="!validations.ownerData[index].lastName.is_valid">{{ validations.ownerData[index].lastName.text }}</div>
                   </div>
                 </div>
               </div>
@@ -103,10 +101,10 @@
                       <div class="form-group">
                           <!-- :class="{ 'has-error': formErrors.dobM }" -->
                         <input
-                          v-model="driversData[index].dobM"
+                          v-model="ownerData[index].dobM"
                           type="number"
                           class="lt-input"
-                          :class="{ 'has-error': !validations.driversData[index].dobM.is_valid }"
+                          :class="{ 'has-error': !validations.ownerData[index].dobM.is_valid }"
                           @change="validateFieldCustom('dobM', index)"
                           placeholder="MM"
                         />
@@ -115,7 +113,7 @@
                           @blur="onBlur"
                           @change="validateField('dobM')" -->
 
-                        <div class="text-danger" v-show="!validations.driversData[index].dobM.is_valid">{{ validations.driversData[index].dobM.text }}</div>
+                        <div class="text-danger" v-show="!validations.ownerData[index].dobM.is_valid">{{ validations.ownerData[index].dobM.text }}</div>
                       </div>
                     </div>
                     <span class="mt-1">/</span>
@@ -123,10 +121,10 @@
                       <div class="form-group">
                           <!-- :class="{ 'has-error': formErrors.dobD }" -->
                         <input
-                          v-model="driversData[index].dobD"
+                          v-model="ownerData[index].dobD"
                           type="number"
                           class="lt-input"
-                          :class="{ 'has-error': !validations.driversData[index].dobD.is_valid }"
+                          :class="{ 'has-error': !validations.ownerData[index].dobD.is_valid }"
                           @change="validateFieldCustom('dobD', index)"
                           placeholder="DD"
                         />
@@ -135,7 +133,7 @@
                           @blur="onBlur"
                           @change="validateField('dobD')" -->
 
-                        <div class="text-danger" v-show="!validations.driversData[index].dobD.is_valid">{{ validations.driversData[index].dobD.text }}</div>
+                        <div class="text-danger" v-show="!validations.ownerData[index].dobD.is_valid">{{ validations.ownerData[index].dobD.text }}</div>
                       </div>
                     </div>
                     <span class="mt-1">/</span>
@@ -143,11 +141,11 @@
                       <div class="form-group">
                           <!-- :class="{ 'has-error': formErrors.dobY }" -->
                         <input
-                          v-model="driversData[index].dobY"
+                          v-model="ownerData[index].dobY"
                           type="number"
                           class="lt-input"
                           placeholder="YYYY"
-                          :class="{ 'has-error': !validations.driversData[index].dobY.is_valid }"
+                          :class="{ 'has-error': !validations.ownerData[index].dobY.is_valid }"
                           @change="validateFieldCustom('dobY', index)"
                         />
                           <!-- required -->
@@ -155,7 +153,7 @@
                           @blur="onBlur"
                           @change="validateField('dobY')" -->
 
-                        <div class="text-danger" v-show="!validations.driversData[index].dobY.is_valid">{{ validations.driversData[index].dobY.text }}</div>
+                        <div class="text-danger" v-show="!validations.ownerData[index].dobY.is_valid">{{ validations.ownerData[index].dobY.text }}</div>
                       </div>
                     </div>
                   </div>
@@ -167,11 +165,11 @@
                   <div class="form-group">
                       <!-- :class="{ 'has-error': formErrors.address }" -->
                     <input
-                      v-model="driversData[index].address"
+                      v-model="ownerData[index].address"
                       type="text"
                       class="lt-input"
                       placeholder="Address"
-                      :class="{ 'has-error': !validations.driversData[index].address.is_valid }"
+                      :class="{ 'has-error': !validations.ownerData[index].address.is_valid }"
                       @change="validateFieldCustom('address', index)"
                     >
                       <!-- required -->
@@ -179,18 +177,18 @@
                       @blur="onBlur"
                       @change="validateField('address')" -->
 
-                    <div class="text-danger" v-show="!validations.driversData[index].address.is_valid">{{ validations.driversData[index].address.text }}</div>
+                    <div class="text-danger" v-show="!validations.ownerData[index].address.is_valid">{{ validations.ownerData[index].address.text }}</div>
                   </div>
                 </div>
                 <div class="col-6">
                   <div class="form-group">
                       <!-- :class="{ 'has-error': formErrors.city }" -->
                     <input
-                      v-model="driversData[index].city"
+                      v-model="ownerData[index].city"
                       type="text"
                       class="lt-input"
                       placeholder="City"
-                      :class="{ 'has-error': !validations.driversData[index].city.is_valid }"
+                      :class="{ 'has-error': !validations.ownerData[index].city.is_valid }"
                       @change="validateFieldCustom('city', index)"
                     >
                       <!-- required -->
@@ -198,7 +196,7 @@
                       @blur="onBlur"
                       @change="validateField('city')" -->
 
-                    <div class="text-danger" v-show="!validations.driversData[index].city.is_valid">{{ validations.driversData[index].city.text }}</div>
+                    <div class="text-danger" v-show="!validations.ownerData[index].city.is_valid">{{ validations.ownerData[index].city.text }}</div>
                   </div>
                 </div>
               </div>
@@ -207,11 +205,11 @@
                   <div class="form-group">
                       <!-- :class="{ 'has-error': formErrors.state }" -->
                     <input
-                      v-model="driversData[index].state"
+                      v-model="ownerData[index].state"
                       type="text"
                       class="lt-input"
                       placeholder="State"
-                      :class="{ 'has-error': !validations.driversData[index].state.is_valid }"
+                      :class="{ 'has-error': !validations.ownerData[index].state.is_valid }"
                       @change="validateFieldCustom('state', index)"
                     >
                       <!-- required -->
@@ -219,19 +217,19 @@
                       @blur="onBlur"
                       @change="validateField('state')" -->
 
-                    <div class="text-danger" v-show="!validations.driversData[index].state.is_valid">{{ validations.driversData[index].state.text }}</div>
+                    <div class="text-danger" v-show="!validations.ownerData[index].state.is_valid">{{ validations.ownerData[index].state.text }}</div>
                   </div>
                 </div>
                 <div class="col-6">
                   <div class="form-group">
                       <!-- :class="{ 'has-error': formErrors.zip }" -->
                     <input
-                      v-model="driversData[index].zip"
+                      v-model="ownerData[index].zip"
                       type="text"
                       class="lt-input"
                       minlength="5"
                       placeholder="Zip"
-                      :class="{ 'has-error': !validations.driversData[index].zip.is_valid }"
+                      :class="{ 'has-error': !validations.ownerData[index].zip.is_valid }"
                        @change="validateFieldCustom('zip', index)"
                     >
                       <!-- required -->
@@ -239,7 +237,7 @@
                       @blur="onBlur"
                       @change="validateField('zip')" -->
 
-                    <div class="text-danger" v-show="!validations.driversData[index].zip.is_valid">{{ validations.driversData[index].zip.text }}</div>
+                    <div class="text-danger" v-show="!validations.ownerData[index].zip.is_valid">{{ validations.ownerData[index].zip.text }}</div>
                   </div>
                 </div>
               </div>
@@ -262,10 +260,12 @@
           <hr>
 
           <div class="row align-items-center mb-3">
-            <div class="col font-weight-bold">Add another owner</div>
+            <div class="col h5 font-weight-bold">Add another owner</div>
 
             <div class="col-auto text-right">
-              <button type="button" class="lt-button px-3" @click="addDriverData" title="Add Owner">+</button>
+              <button type="button" class="lt-button px-3" @click="addDriverData" title="Add Owner">
+                <font-awesome-icon class="fontawesome minus" icon="plus" />
+              </button>
             </div>
           </div>
 
@@ -319,6 +319,7 @@ import uuidv4 from "uuid/v4";
 import { API } from "../api.js";
 import ModalLogin from "./ModalLogin.vue";
 import axios from "axios";
+import Vue from "vue";
 
 export default {
   name: "AccountInfoOwners",
@@ -355,12 +356,12 @@ export default {
         owners: []
       },
       drivers: [],
-      driversData: [],
+      ownerData: [],
       loading: false,
       error: null,
       selectedDriver: "",
       validations: {
-        driversData: {},
+        ownerData: {},
         oneDriver: {
           is_valid: true,
           text: ""
@@ -409,11 +410,11 @@ export default {
   },
   methods: {
     validateFieldCustom(fieldName, index){
-      if (this.driversData[index][fieldName].trim() == '') {
-        this.validations.driversData[index][fieldName].is_valid = false;
-        this.validations.driversData[index][fieldName].text = 'Please enter   ' + fieldName + '!';
+      if (this.ownerData[index][fieldName].trim() == '') {
+        this.validations.ownerData[index][fieldName].is_valid = false;
+        this.validations.ownerData[index][fieldName].text = 'Please enter   ' + fieldName + '!';
       } else {
-        this.validations.driversData[index][fieldName].is_valid = true;
+        this.validations.ownerData[index][fieldName].is_valid = true;
       }
     },
     sizeOfObject(obj) {
@@ -426,22 +427,22 @@ export default {
     changeData(){
       if(this.driverIsOwner){
         
-        this.driversData[0].firstName = "";
-        this.driversData[0].lastName = "";
-        this.driversData[0].dobM = "";
-        this.driversData[0].dobD = "";
-        this.driversData[0].dobY="";
-        this.driversData[0].address="";
-        this.driversData[0].city="";
-        this.driversData[0].state="";
-        this.driversData[0].zip=""
+        this.ownerData[0].firstName = "";
+        this.ownerData[0].lastName = "";
+        this.ownerData[0].dobM = "";
+        this.ownerData[0].dobD = "";
+        this.ownerData[0].dobY="";
+        this.ownerData[0].address="";
+        this.ownerData[0].city="";
+        this.ownerData[0].state="";
+        this.ownerData[0].zip=""
       }
     },
     addDriverDataValidation(count){
-      let driverDatavalidationsLength = this.sizeOfObject(this.validations.driversData);
+      let driverDatavalidationsLength = this.sizeOfObject(this.validations.ownerData);
       for (let index = 0; index < count; index++) {
 
-        this.$set(this.validations.driversData, driverDatavalidationsLength + index, {
+        this.$set(this.validations.ownerData, driverDatavalidationsLength + index, {
           firstName: {
             is_valid: true,
             text: ""
@@ -484,7 +485,7 @@ export default {
     addDriverData(data) {
       
       if  (data == undefined || data.firstName == undefined) {
-        this.driversData.push({
+        this.ownerData.push({
           firstName: "",
           lastName: "",
           dobM: "",
@@ -497,118 +498,130 @@ export default {
         });
         this.addDriverDataValidation(1);
       } else {
-        this.driversData.push(data);
+        this.ownerData.push(data);
       }
     },
-    removeDriverData( key ){
-      this.driversData.splice( key, 1 );
-      Vue.delete(this.validations.driversData,key)
-      // this.validations.driversData.splice( key, 1 );
+    removeOwnerData( key ){
+      this.$swal({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        buttons: true,
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then((willDelete) => {
+        if (willDelete) {
+          this.ownerData.splice( key, 1 );
+          Vue.delete(this.validations.ownerData,key)
+        }
+      })
     },
     validateNewDriverData() {
       let validNewDriverForm = true;
-      for( var index in this.driversData ) {
-        if (this.driversData.hasOwnProperty( index ) ) {
+      for( var index in this.ownerData ) {
+        if (this.ownerData.hasOwnProperty( index ) ) {
           
-          if( this.driversData[index].firstName.trim() == '' ){
+          if( this.ownerData[index].firstName.trim() == '' ){
             validNewDriverForm = false;
-            this.validations.driversData[index].firstName.is_valid = false;
-            this.validations.driversData[index].firstName.text = 'Please enter firstname!';
+            this.validations.ownerData[index].firstName.is_valid = false;
+            this.validations.ownerData[index].firstName.text = 'Please enter firstname!';
           }else{
-            this.validations.driversData[index].firstName.is_valid = true;
-            this.validations.driversData[index].firstName.text = '';
+            this.validations.ownerData[index].firstName.is_valid = true;
+            this.validations.ownerData[index].firstName.text = '';
           }
 
-          if( this.driversData[index].lastName.trim() == '' ){
+          if( this.ownerData[index].lastName.trim() == '' ){
             validNewDriverForm = false;
-            this.validations.driversData[index].lastName.is_valid = false;
-            this.validations.driversData[index].lastName.text = 'Please enter lastname!';
+            this.validations.ownerData[index].lastName.is_valid = false;
+            this.validations.ownerData[index].lastName.text = 'Please enter lastname!';
           }else{
-            this.validations.driversData[index].lastName.is_valid = true;
-            this.validations.driversData[index].lastName.text = '';
+            this.validations.ownerData[index].lastName.is_valid = true;
+            this.validations.ownerData[index].lastName.text = '';
           }
 
-          if (this.driversData[index].dobM < 1 || this.driversData[index].dobM > 12)  {
+          if (this.ownerData[index].dobM < 1 || this.ownerData[index].dobM > 12)  {
               validNewDriverForm = false;
-              this.validations.driversData[index].dobM.is_valid = false;
-              this.validations.driversData[index].dobM.text =
+              this.validations.ownerData[index].dobM.is_valid = false;
+              this.validations.ownerData[index].dobM.text =
               "Please enter valid month!";
-          if( this.driversData[index].dobM.trim() == '' ){
+          if( this.ownerData[index].dobM.trim() == '' ){
             validNewDriverForm = false;
-            this.validations.driversData[index].dobM.is_valid = false;
-            this.validations.driversData[index].dobM.text = 'Please enter month!';
+            this.validations.ownerData[index].dobM.is_valid = false;
+            this.validations.ownerData[index].dobM.text = 'Please enter month!';
           }}
           else{
-            this.validations.driversData[index].dobM.is_valid = true;
-            this.validations.driversData[index].dobM.text = '';
+            this.validations.ownerData[index].dobM.is_valid = true;
+            this.validations.ownerData[index].dobM.text = '';
           }
 
-          if (this.driversData[index].dobD < 1 || this.driversData[index].dobD > 31)  {
+          if (this.ownerData[index].dobD < 1 || this.ownerData[index].dobD > 31)  {
             validNewDriverForm = false;
-            this.validations.driversData[index].dobD.is_valid = false;
-            this.validations.driversData[index].dobD.text =
+            this.validations.ownerData[index].dobD.is_valid = false;
+            this.validations.ownerData[index].dobD.text =
               "Please enter valid date!";
-          if( this.driversData[index].dobD.trim() == '' ){
+          if( this.ownerData[index].dobD.trim() == '' ){
             validNewDriverForm = false;
-            this.validations.driversData[index].dobD.is_valid = false;
-            this.validations.driversData[index].dobD.text = 'Please enter date!';
+            this.validations.ownerData[index].dobD.is_valid = false;
+            this.validations.ownerData[index].dobD.text = 'Please enter date!';
           }}else{
-            this.validations.driversData[index].dobD.is_valid = true;
-            this.validations.driversData[index].dobD.text = '';
+            this.validations.ownerData[index].dobD.is_valid = true;
+            this.validations.ownerData[index].dobD.text = '';
           }
           
-          if(this.driversData[index].dobY.length<4){
+          if(this.ownerData[index].dobY.length<4){
               validNewDriverForm = false;
-            this.validations.driversData[index].dobY.is_valid = false;
-            this.validations.driversData[index].dobY.text =
+            this.validations.ownerData[index].dobY.is_valid = false;
+            this.validations.ownerData[index].dobY.text =
               "Please enter valid year!";
-          if( this.driversData[index].dobY.trim() == '' ){
+          if( this.ownerData[index].dobY.trim() == '' ){
             validNewDriverForm = false;
-            this.validations.driversData[index].dobY.is_valid = false;
-            this.validations.driversData[index].dobY.text = 'Please enter year!';
+            this.validations.ownerData[index].dobY.is_valid = false;
+            this.validations.ownerData[index].dobY.text = 'Please enter year!';
           }}else{
-            this.validations.driversData[index].dobY.is_valid = true;
-            this.validations.driversData[index].dobY.text = '';
+            this.validations.ownerData[index].dobY.is_valid = true;
+            this.validations.ownerData[index].dobY.text = '';
           }
 
-          if( this.driversData[index].address.trim() == '' ){
+          if( this.ownerData[index].address.trim() == '' ){
             validNewDriverForm = false;
-            this.validations.driversData[index].address.is_valid = false;
-            this.validations.driversData[index].address.text = 'Please enter an address!';
+            this.validations.ownerData[index].address.is_valid = false;
+            this.validations.ownerData[index].address.text = 'Please enter an address!';
           }else{
-            this.validations.driversData[index].address.is_valid = true;
-            this.validations.driversData[index].address.text = '';
+            this.validations.ownerData[index].address.is_valid = true;
+            this.validations.ownerData[index].address.text = '';
           }
 
-          if(this.driversData[index].city.trim() == '') {
+          if(this.ownerData[index].city.trim() == '') {
             validNewDriverForm = false;
-            this.validations.driversData[index].city.is_valid = false;
-            this.validations.driversData[index].city.text = 'Please enter city!';
+            this.validations.ownerData[index].city.is_valid = false;
+            this.validations.ownerData[index].city.text = 'Please enter city!';
           } else {
-            this.validations.driversData[index].city.is_valid = true;
-            this.validations.driversData[index].city.text = '';
+            this.validations.ownerData[index].city.is_valid = true;
+            this.validations.ownerData[index].city.text = '';
           }
 
-          if(this.driversData[index].state.trim() == '') {
+          if(this.ownerData[index].state.trim() == '') {
             validNewDriverForm = false;
-            this.validations.driversData[index].state.is_valid = false;
-            this.validations.driversData[index].state.text = 'Please enter state!';
+            this.validations.ownerData[index].state.is_valid = false;
+            this.validations.ownerData[index].state.text = 'Please enter state!';
           } else {
-            this.validations.driversData[index].state.is_valid = true;
-            this.validations.driversData[index].state.text = '';
+            this.validations.ownerData[index].state.is_valid = true;
+            this.validations.ownerData[index].state.text = '';
           }
 
-          if(!this.driversData[index].zip.match(/(^\d{5}$)/)){
+          if(!this.ownerData[index].zip.match(/(^\d{5}$)/)){
             validNewDriverForm = false;
-            this.validations.driversData[index].zip.is_valid = false;
-            this.validations.driversData[index].zip.text = 'Please enter minimum 5 character!';
-          if(this.driversData[index].zip.trim() == '' ) {
+            this.validations.ownerData[index].zip.is_valid = false;
+            this.validations.ownerData[index].zip.text = 'Please enter minimum 5 character!';
+          if(this.ownerData[index].zip.trim() == '' ) {
             validNewDriverForm = false;
-            this.validations.driversData[index].zip.is_valid = false;
-            this.validations.driversData[index].zip.text = 'Please enter zip!';
+            this.validations.ownerData[index].zip.is_valid = false;
+            this.validations.ownerData[index].zip.text = 'Please enter zip!';
           }} else {
-            this.validations.driversData[index].zip.is_valid = true;
-            this.validations.driversData[index].zip.text = '';
+            this.validations.ownerData[index].zip.is_valid = true;
+            this.validations.ownerData[index].zip.text = '';
           }
         }
       }
@@ -667,7 +680,7 @@ export default {
           key: "owners",
           
           val: {
-              owners:this.driversData.map(o => {
+              owners:this.ownerData.map(o => {
               let owner = { ...o };
               delete owner._uuid;
               return owner;
@@ -711,16 +724,16 @@ export default {
 
     onChange($event) {
       // if(this.drivers.drivers[$event.target.value] != undefined){
-      this.driversData[0] = Object.assign({}, this.driversData[0], this.drivers[$event.target.value]);
-      this.driversData[0].firstName = this.drivers[$event.target.value].firstName;
-      this.driversData[0].lastName = this.drivers[$event.target.value].lastName;
-      this.driversData[0].address = this.drivers[$event.target.value].address;
-      this.driversData[0].city = this.drivers[$event.target.value].city;
-      this.driversData[0].state = this.drivers[$event.target.value].state;
-      this.driversData[0].zip = this.drivers[$event.target.value].zip;
-      this.driversData[0].dobD = this.drivers[$event.target.value].dobD;
-      this.driversData[0].dobM = this.drivers[$event.target.value].dobM;
-      this.driversData[0].dobY = this.drivers[$event.target.value].dobY;
+      this.ownerData[0] = Object.assign({}, this.ownerData[0], this.drivers[$event.target.value]);
+      this.ownerData[0].firstName = this.drivers[$event.target.value].firstName;
+      this.ownerData[0].lastName = this.drivers[$event.target.value].lastName;
+      this.ownerData[0].address = this.drivers[$event.target.value].address;
+      this.ownerData[0].city = this.drivers[$event.target.value].city;
+      this.ownerData[0].state = this.drivers[$event.target.value].state;
+      this.ownerData[0].zip = this.drivers[$event.target.value].zip;
+      this.ownerData[0].dobD = this.drivers[$event.target.value].dobD;
+      this.ownerData[0].dobM = this.drivers[$event.target.value].dobM;
+      this.ownerData[0].dobY = this.drivers[$event.target.value].dobY;
       
     },
     updateHint(hint) {
@@ -756,7 +769,7 @@ export default {
             }
             
             if(ownerInformationList.length > 0) {
-              this.driversData = ownerInformationList;
+              this.ownerData = ownerInformationList;
               
               this.addDriverDataValidation(ownerInformationList.length)
             } else {
@@ -795,7 +808,7 @@ export default {
       this.final_uuid = this.uuid;
       try {
         const data = {
-          ownerInformationList: this.driversData.map(o => {
+          ownerInformationList: this.ownerData.map(o => {
               let owner = { ...o };
               delete owner._uuid;
               return owner;
@@ -822,12 +835,16 @@ export default {
 };
 </script>
 
-<style lang="css">
-select{
-  position: relative;
-  -webkit-appearance: none;
-  background: url('../assets/images/arrow-dropdown.png') no-repeat 96% center;
-  -moz-appearance: none;
-}
+<style lang="scss" scoped>
+  select{
+    position: relative;
+    -webkit-appearance: none;
+    background: url('../assets/images/arrow-dropdown.png') no-repeat 96% center;
+    -moz-appearance: none;
+  }
+
+  .fontawesome path {
+    fill: black;
+  }
 </style>
 

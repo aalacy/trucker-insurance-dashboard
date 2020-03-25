@@ -141,7 +141,7 @@
                 <li class="footer-social-networks">
                     <span>
                       <a href="https://twitter.com/LuckyTruck3" target="_blank">
-                         <font-awesome-icon class="fontawesome" :icon="['fab', 'twitter']" />
+                        <font-awesome-icon class="fontawesome" :icon="['fab', 'twitter']" />
                       </a>
                     </span>
                     <span>
@@ -362,12 +362,8 @@ export default {
       else {
         this.myacchide =false;
       }
-      // localStorage.setItem("accBtn",false)
-      this.show = false;
-      localStorage.setItem("Phone", null);
-      localStorage.setItem("Physical address", null);
-      localStorage.setItem("Mailing address", null);
-      localStorage.setItem("company", null);
+      localStorage.setItem("Phone", "");
+      localStorage.setItem("company", "");
       // localStorage.setItem("usdot","");
     },
   },

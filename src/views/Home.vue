@@ -10,7 +10,7 @@
                 <b-form-input v-model.trim="keyword" autocomplete="off" class="quote-input" :placeholder=placeholder></b-form-input>
                 <b-input-group-append>
                   <b-button :disabled="loading" v-if="msg" type="submit" variant="primary btn-get-quote">
-                    <font-awesome-icon class="fontawesome" icon="search"  />
+                    <font-awesome-icon class="fontawesome" icon="search" />
                   </b-button>
                   <b-button :disabled="loading" v-if="!msg" type="submit" variant="primary btn-get-quote">
                     Get a Quote
@@ -280,8 +280,6 @@ export default {
       localStorage.setItem("usdot", "");
       localStorage.setItem("company", "");
       localStorage.setItem("Phone", "");
-      localStorage.setItem(["Mailing address"], "{}");
-      localStorage.setItem(["Physical address"], "{}");
       localStorage.setItem('uuid', '');
       this.$router.push({ name: "AccountInfoPersonalInfo" });
     },

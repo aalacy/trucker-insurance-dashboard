@@ -316,9 +316,6 @@ const router = new Router({
           props: {
             nextForm: 'AccountInfoPersonalInfo',
             progress: 0
-          },
-          meta: {
-            requiresAuth: true
           }
         },
         {
@@ -329,9 +326,6 @@ const router = new Router({
             prevForm:'AccountInfoUploadDocuments',
             nextForm: 'AccountInfoBusinessStructure',
             progress: 10
-          },
-          meta: {
-            requiresAuth: true
           }
         },
         {
@@ -442,6 +436,9 @@ const router = new Router({
           component: () => import('./components/AccountInfoThankYou.vue'),
           props: {
             progress: 100
+          },
+          meta: {
+            requiresAuth: true
           }
         },
         
@@ -489,9 +486,9 @@ const updateUUIDAndDotId = () => {
 
 router.beforeEach((to, from, next) => {
   if(to.matched.some(record =>  record.meta.requiresAuth)) {
-    if (to.name == 'AccountInfoPersonalInfo') {
-      updateUUIDAndDotId()
-    }
+    // if (to.name == 'AccountInfoPersonalInfo') {
+    //   updateUUIDAndDotId()
+    // }
     if (localStorage.getItem('userId') == null || localStorage.getItem('userId') == 'null') {
       next({
           path: '/log-in?next=' + to.name,

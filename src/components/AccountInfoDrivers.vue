@@ -17,8 +17,8 @@
             >
             
               <div class="row">
-                <div class="col">
-                  <h2 class="h5">Driver #{{ index + 1 }}</h2>
+                <div class="col mb-3">
+                  <h2 class="h4 font-weight-bold">Driver #{{ index + 1 }}</h2>
                 </div>
 
                 <button
@@ -28,7 +28,7 @@
                   @click="removeDriverData(index)"
                   title="Remove Driver"
                 >
-                  <h3>-</h3>
+                  <font-awesome-icon class="fontawesome minus" icon="minus" />
                 </button>
               </div>
 
@@ -355,7 +355,7 @@
           </template>
 
           <div class="row align-items-center mb-3">
-            <div class="col font-weight-bold">Add another driver</div>
+            <div class="col font-weight-bold h5">Add another driver</div>
 
             <div class="col-auto text-right">
               <button
@@ -363,7 +363,9 @@
                 class="lt-button px-3"
                 @click="addDriverData"
                 title="Add Driver"
-              >+</button>
+              >
+                <font-awesome-icon class="fontawesome minus" icon="plus" />
+              </button>
             </div>
           </div>
 
@@ -400,12 +402,6 @@
         </div>
       </div>
     
-    <!--   <div class="d-flex justify-content-center m-4" @click="show" v-if="save">
-        <span class="save-hover">Save & Continue</span>
-      </div>
-      <div class="d-flex justify-content-center m-4" @click="newQuoteReq" v-else>
-        <span class="save-hover">Save Changes</span>
-      </div> -->
       <div v-if="showmodel">
         <modelLogin/>
       </div>
@@ -418,6 +414,7 @@ import uuidv4 from "uuid/v4";
 import { API } from "../api.js";
 import ModalLogin from "./ModalLogin.vue";
 import axios from "axios";
+import Vue from "vue";
 
 export default {
   name: "AccountInfoDrivers",
@@ -636,9 +633,21 @@ export default {
       
     },
     removeDriverData(key) {
-      this.driversData.splice(key, 1);
-      // this.validations.driversData.splice(key, 1);
-      Vue.delete(this.validations.driversData,key)
+      this.$swal({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        buttons: true,
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then((willDelete) => {
+        if (willDelete) {
+          this.driversData.splice(key, 1);
+          Vue.delete(this.validations.driversData,key)
+        }
+      })
     },
     validateNewDriverData() {
       let validNewDriverForm = true;
@@ -814,83 +823,6 @@ export default {
       }
       return validNewDriverForm;
     },
-    newQuoteReq() {
-      swal({
-        title: "Are you sure?",
-        text: "Do you want to continue editing?",
-        icon: "warning",
-        buttons: ["No", "Yes"]
-      }).then(willDelete => {
-        
-        this.show();
-        if (willDelete) {
-          this.$router.push({ name: "AccountInfoDrivers" });
-        } else {
-          swal(
-            "Thank You!",
-            "Your changes has been accepted! You will get new Updated Quote",
-            {
-              icon: "success"
-            }
-          );
-        }
-      });
-    },
-    async show() {
-      this.setDataFromForms();
-
-      let driverForms = this.$refs.driverForm;
-      if (!driverForms.length) {
-        return;
-      }
-
-      let allFormAreValid = driverForms.every(formRef =>
-        formRef.validateForm()
-      );
-
-      if (!allFormAreValid) {
-        return;
-      }
-      var temp_uuid;
-      this.loading = true;
-      this.error = null;
-
-      this.final_uuid = this.uuid;
-      try {
-        let data = await API.post("company/save", {
-          key: "drivers",
-          val: {
-          drivers:this.driversData.map(d => {
-            let driver = { ...d };
-            delete driver._uuid;
-            return driver;
-          }),
-          },
-          user_id: localStorage.getItem("userId"),
-          uuid: temp_uuid
-        });
-
-        if (data.status === "OK") {
-          if (!localStorage.getItem("token")) {
-            if (this.showmodel) {
-              this.showmodel = false;
-            } else {
-              this.showmodel = true;
-            }
-          }
-        } else if (data.status === "ERROR") {
-          this.showmodel = true;
-          this.error = data.messages[0] || data.data;
-        }
-      } catch (err) {
-        console.error(err);
-        // this.showmodel = true;
-        this.error = err.message;
-      } finally {
-        // this.showmodel = true;
-        this.loading = false;
-      }
-    },
     addForm() {
       this.drivers.push({ _uuid: uuidv4() });
       this.error = null;
@@ -928,10 +860,18 @@ export default {
             this.mailingAddress = mailingAddress || {};
           }
 
-          const doh = businessStructureRaw['MCS-150 Form Date'].split('/');
-          this.doh.dohM = doh[0];
-          this.doh.dohD = doh[1];
-          this.doh.dohY = doh[2];
+          let structure = {}
+          if (businessStructureRaw.constructor !== Object) {
+            structure = JSON.parse(businessStructureRaw)
+          }
+
+          let doh = structure['MCS-150 Form Date'];
+          if (doh) {
+            doh = doh.split('/')
+            this.doh.dohM = doh[0];
+            this.doh.dohD = doh[1];
+            this.doh.dohY = doh[2];
+          }
 
           if (driverInformationList) {
             if (!Array.isArray(driverInformationList)) {
@@ -1005,17 +945,21 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-select {
-  position: relative;
-  -webkit-appearance: none;
-  background: url("../assets/images/arrow-dropdown.png") no-repeat 96% center;
-  -moz-appearance: none;
-}
+  select {
+    position: relative;
+    -webkit-appearance: none;
+    background: url("../assets/images/arrow-dropdown.png") no-repeat 96% center;
+    -moz-appearance: none;
+  }
 
-.label {
-  font-weight: 500;
-  font-size: 15px;
-  margin-left: 0.5rem;
-}
+  .label {
+    font-weight: 500;
+    font-size: 15px;
+    margin-left: 0.5rem;
+  }
+
+  .fontawesome path {
+    fill: black;
+  }
 </style>
 

@@ -328,7 +328,6 @@ export default {
     this.uuid = localStorage.getItem('uuid');
     this.save = true;
     this.formData.dotNumber = localStorage.getItem("usdot");
-    this.formData.name = localStorage.getItem("company");
     this.$emit('update-us-dot', localStorage.getItem("usdot"))
   },
   beforeMount() {
@@ -426,7 +425,7 @@ export default {
         if (_mailingAddress.constructor !== Object) {
           MailingAddress = JSON.parse(_mailingAddress)
         }
-        this.formData.address = MailingAddress.street
+        this.formData.address = MailingAddress.address
         this.formData.state = MailingAddress.state
         this.formData.city = MailingAddress.city
         this.formData.zip = MailingAddress.zip.split('-')[0].replace(",", "");
@@ -436,7 +435,7 @@ export default {
 
       try {
         let PhysicalAddress = _physicalAddress
-        if (Object.keys(_physicalAddress).length === 0 && _physicalAddress.constructor !== Object) {
+        if (_physicalAddress.constructor !== Object) {
           PhysicalAddress = JSON.parse(_physicalAddress)
         }
         this.formData.address1 = PhysicalAddress.address;
@@ -544,12 +543,12 @@ export default {
       this.loading = false;
       this.error = null;
       this.uuid = localStorage.getItem('uuid');
-      if (this.uuid == 'null' || this.uuid == null) {
-        const _uuid = this.$router.history.current.query.uuid
-        if (_uuid) {
-          this.uuid = _uuid
-        }
-      }
+      // if (this.uuid == 'null' || this.uuid == null) {
+      //   const _uuid = this.$router.history.current.query.uuid
+      //   if (_uuid) {
+      //     this.uuid = _uuid
+      //   }
+      // }
       try {
         let res = await API.get("company/current?uuid=" + this.uuid);
         this.uuid = res.data.uuid;

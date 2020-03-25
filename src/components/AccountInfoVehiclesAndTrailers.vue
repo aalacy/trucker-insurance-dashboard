@@ -16,13 +16,12 @@
                   <div class="h5 mb-0">Vehicle #{{ index + 1 }}</div>
                 </div>
                 <button
-                 
                   type="button"
-                  class="lt-button mx-2"
+                  class="lt-button lift mx-2"
                   @click="removeVehiclesData(index)"
                   title="Remove Vehicle"
                 >
-                  <b>-</b>
+                  <font-awesome-icon class="fontawesome minus" icon="minus" />
                 </button>
               </div>
 
@@ -780,8 +779,8 @@ export default {
       // this.vehiclesData[index].vehicleImage = this.vehiclesData[index].vehicleImage;
     },
     onSelectDropDown(index) {
-      this.vehiclesData[index].vehicleImage = false;
-      this.vehiclesData[index].vehicleType = this.otherVehicleType[index];
+      // this.vehiclesData[index].vehicleImage = false;
+      // this.vehiclesData[index].vehicleType = this.otherVehicleType[index];
     },
     addVehicleDataValidations(counts) {
       let vehicleDataValidationsLength = this.sizeOfObject(this.validations.vehiclesData);
@@ -926,11 +925,21 @@ export default {
       }
     },
     removeVehiclesData(key) {
-     
-      this.vehiclesData.splice(key, 1);
-      // this.validations.vehiclesData.splice(key, 1);
-      Vue.delete(this.validations.vehiclesData,key)
-      //
+      this.$swal({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        buttons: true,
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then((willDelete) => {
+        if (willDelete) {
+          this.vehiclesData.splice(key, 1);
+          Vue.delete(this.validations.vehiclesData,key)
+        } 
+      });
     },
     removeTrailersData(key) {
       this.trailersData.splice(key, 1);
@@ -1460,5 +1469,9 @@ select{
 }
 .btn-bg-white{
   background: #fff;
+}
+
+.fontawesome.minus path {
+  fill: black;
 }
 </style>
