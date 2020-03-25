@@ -422,7 +422,7 @@ export default {
     async parseAddress (_mailingAddress, _physicalAddress) {
       try {
         let MailingAddress = _mailingAddress
-        if (_mailingAddress.constructor !== Object) {
+        if (_mailingAddress && _mailingAddress.constructor !== Object) {
           MailingAddress = JSON.parse(_mailingAddress)
         }
         this.formData.address = MailingAddress.address
@@ -435,7 +435,7 @@ export default {
 
       try {
         let PhysicalAddress = _physicalAddress
-        if (_physicalAddress.constructor !== Object) {
+        if (_physicalAddress && _physicalAddress.constructor !== Object) {
           PhysicalAddress = JSON.parse(_physicalAddress)
         }
         this.formData.address1 = PhysicalAddress.address;

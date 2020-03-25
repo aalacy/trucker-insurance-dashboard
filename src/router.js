@@ -166,7 +166,10 @@ const router = new Router({
             name: 'QuotesAllQuotes',
             component: () =>
               import(/* webpackChunkName: "QuotesAllQuotes" */
-              './components/QuotesAllQuotes.vue')
+              './components/QuotesAllQuotes.vue'),
+            meta: {
+              requiresAuth: true
+            }
           },
           {
             path: 'quotes/request-new-quote',
