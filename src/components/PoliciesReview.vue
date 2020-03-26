@@ -208,6 +208,7 @@ export default {
       this.loading = false;
       if (res.status == 'ok') {
         this.pdf = res.pdf
+        this.$swal("", "Successfully created COI!", "success")
       } else {
         console.log(res)
       }
