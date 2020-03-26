@@ -350,7 +350,7 @@
                   </div>
                 </div>
              
-            </div>
+              </div>
             </div>
           </template>
 
@@ -531,7 +531,7 @@ export default {
       return size;
     },
    
-     addDriverDataValidation(count){
+    addDriverDataValidation(count){
       let driverDatavalidationsLength = this.sizeOfObject(this.validations.driversData);
       for (let index = 0; index < count; index++) {
 
@@ -910,11 +910,8 @@ export default {
       // }
       let allFormAreValid = this.validateNewDriverData();
       if (!allFormAreValid) {
-        
         return;
-      } else {
-        
-      }
+      } 
 
       this.loading = true;
       this.error = null;

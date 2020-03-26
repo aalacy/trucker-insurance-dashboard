@@ -483,7 +483,7 @@ const updateUUIDAndDotId = () => {
     localStorage.setItem('uuid', params.uuid)
   }
   if (params.dotId && params.dotId != undefined) {
-    localStorage.setItem('dotId', params.dotId)
+    localStorage.setItem('usdot', params.dotId)
   }
 }
 

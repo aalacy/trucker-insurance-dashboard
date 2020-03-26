@@ -54,7 +54,7 @@
                 </div>
                 <div class="col">
                   <div class="action-item">
-                    <a href="#" class="lift">
+                    <a href="javascript:;" class="lift" @click="editQuote(item.id)">
                       <font-awesome-icon class="fontawesome" :icon="['fas', 'pen']" />
                     </a>
                     <div>Edit</div>
@@ -91,6 +91,21 @@
             <a href="tel:15135062400" style="font-weight:bold; white-space:nowrap;">1-513-506-2400</a>
           </span>
         </div>
+
+        <b-modal v-model="showEditModal" centered  size="md" title="Edit a quote" hide-footer>
+          <form class="p-3" @submit.prevent="_editQuote">
+            <textarea
+              class="col-10 mb-2"
+              style="min-height: 81px;"
+              v-model="description"
+              placeholder="Description..."
+            ></textarea>
+            <div class="mt-3 d-flex justify-content-end">
+              <b-button @click="showEditModal=false" class="mr-2">Cancel</b-button>
+              <b-button type="submit" variant="primary">Ok</b-button>
+            </div>
+          </form>
+        </b-modal>
       
         <PDFViewer :showModal="showModal" :pdf="pdf" @close-modal="closeModal" />
       </div>
@@ -128,7 +143,10 @@ export default {
       loading: false,
       error: null,
       pdf: {},
-      showModal: false
+      showModal: false,
+      showEditModal: false,
+      quoteId: '',
+      description: ''
     }
   },
 
@@ -137,6 +155,30 @@ export default {
   },
 
   methods: {
+    editQuote (id) {
+      this.quoteId = id
+      this.showEditModal = true
+    },
+
+    async _editQuote (id) {
+      this.showEditModal = false
+      this.loading = true
+      const userId = localStorage.getItem('userId');
+      let res = await API.post("company/accountinfo/quotes/edit", {
+        userId,
+        quoteId: this.quoteId,
+        description: this.description
+      });
+      this.loading = false;
+      const { status } = res;
+      if (status == 'ok') {
+        this.$swal("", "Successfully Updated!", "success")
+      } else {
+        this.status = false
+        this.error = res.message
+      }
+    },
+
     closeModal() {
       this.showModal = false
     },
@@ -153,43 +195,19 @@ export default {
     },
 
     request () {
-      // axios
-      //   .post(
-      //     "http://3.13.68.92/luckytrucker_admin/api/CompanyController/quotationrequote?quotation_id=" +
-      //       this.apires.id +
-      //       "&re_quote_status=1"
-      //   )
-      //   .then(res => {
-      //     if (res.status == 200) {
-      //       //  this.$swal("Thank You!", "You will get our agent call in next 24 hours!", "success").then(()=>this.$route.push({name:"AccountInfo"}))
-      //       swal({
-      //         title: "Are you sure?",
-      //         text: "Do you want to request for a new Quote?",
-      //         icon: "warning",
-      //         buttons: ["No", "Yes"]
-      //       }).then(willDelete => {
-      //         console.log("willbe", willDelete);
-      //         if (willDelete) {
-      //           this.$router.push({ name: "AccountInfo" });
-      //         } else {
-      //           // swal(
-      //           //   "Thank You!",
-      //           //   "Your changes has been accepted! You will get new Updated Quote",
-      //           //   {
-      //           //     icon: "success"
-      //           //   }
-      //           // );
-      //         }
-      //       });
-      //     } else if (res.status != 200)
-      //       this.$swal("Opps!", res.data.msg, "error");
-      //   })
-      //   .catch(err => this.$swal("Opps!", err, "error"))
-      //   .finally(() => console.log("hiiiiiiii"));
+      
     }
   },
   computed: {
-    ...mapState(["policyData"])
+    ...mapState(["policyData"]),
+    mailto () {
+      let token = localStorage.getItem("token")
+      try {
+        token = JSON.parse(token)
+      } catch (e) {}
+
+      return `mailto:${token.email}?subject=Insurance%20Quote%20from%20LuckyTruck`
+    }
   },
   async mounted() {
     this.loading = true;
@@ -205,6 +223,7 @@ export default {
     if (status == 'ok' && quoteList && quoteList.length > 0) {
       quoteList.forEach(quote => {
         this.quotes.push({
+          id: quote.id,
           title: quote.name,
           pdf: quote.quotePdf,
           img: "https://picsum.photos/200",

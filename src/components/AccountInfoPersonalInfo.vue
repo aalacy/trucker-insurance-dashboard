@@ -409,15 +409,12 @@ export default {
       },
       paths: [],
       distance: "",
-      isSFUser: false
     };
   },
   async created() {
     this.$emit("update-progress", this.progress);
     this.dotId = this.$router.history.current.query.dotId
-    localStorage.setItem("usdot", this.dotId);
-    this.isSFUser = this.dotId ? true : false
-    if (this.isSFUser) {
+    if (this.dotId) {
       this.createCompany()
     } else {
       this.loadCompany();
