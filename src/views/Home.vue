@@ -344,28 +344,24 @@ export default {
       this.localUsdot = row.item.usdot;
       this.localcompany = row.item.name;
       localStorage.setItem("usdot", this.localUsdot);
+      localStorage.setItem("company", this.localcompany);
       this.loading = true;
 
-      const token = localStorage.getItem('token')
-      const userId = localStorage.getItem('userId')
-      if (token == null || token == 'null') {
-        this.$router.push({ name: "LogIn", query: { next: 'Home'} });
-        return
-      }
+      // const token = localStorage.getItem('token')
+      // const userId = localStorage.getItem('userId')
+      // if (token == null || token == 'null') {
+      //   this.$router.push({ name: "LogIn", query: { next: 'Home'} });
+      //   return
+      // }
 
       try {
         let data = await API.post("company/create", {
           usdot: this.localUsdot,
-          userId
         });
         localStorage.setItem('uuid', data.uuid);
         
         if (data.status === "OK") {
-          // if (this.msg) {
-            // this.$router.push({ name: "AccountInfoUploadDocuments" });
-          // } else {
             this.$router.push({ name: "AccountInfoPersonalInfo" });
-          // }
         } else if (data.status === "ERROR") {
           this.error = data.messages[0] || data.data;
         }

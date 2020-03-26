@@ -81,12 +81,6 @@
           </div>
         </div>
       </div>
-     <!--  <div class="d-flex justify-content-center m-4" @click="show" v-if="save">
-        <span class="save-hover">Save & Continue</span>
-      </div>
-      <div class="d-flex justify-content-center m-4" @click="newQuoteReq" v-else>
-        <span class="save-hover">Save Changes</span>
-      </div> -->
       <div v-if="showmodel">
         <modelLogin/>
       </div>
@@ -180,73 +174,6 @@ export default {
   
   },
   methods: {
-    newQuoteReq() {
-      swal({
-        title: "Are you sure?",
-        text: "Do you want to continue editing?",
-        icon: "warning",
-        buttons: ["No", "Yes"]
-      }).then(willDelete => {
-  
-        this.show();
-        if (willDelete) {
-          
-          this.$router.push({ name: "AccountInfoCargoHauled" });
-        } else {
-          
-          swal(
-            "Thank You!",
-            "Your changes has been accepted! You will get new Updated Quote",
-            {
-              icon: "success"
-            }
-          );
-        }
-      });
-    },
-    async show() {
-      let formIsValid = this.validateForm();
-      if (!formIsValid) {
-        return;
-      }
-
-      this.loading = true;
-      this.error = null;
-      var temp_uuid;
-      temp_uuid = this.uuid;
-
-      try {
-        let data = await API.post("company/save", {
-          key: "cargoHauled",
-          val: this.formData,
-          user_id: localStorage.getItem("userId"),
-          uuid: temp_uuid
-        });
-        
-        
-        if (data.status === "OK") {
-          if(!localStorage.getItem("token")){
-              if (this.showmodel) {
-            this.showmodel = false;
-          } else {
-            this.showmodel = true;
-          }
-          }
-          
-        } else if (data.status === "ERROR") {
-          // this.showmodel = true;
-          this.error = data.messages[0] || data.data;
-    
-        }
-      } catch (err) {
-        console.error(err);
-        // this.showmodel = true;
-        this.error = err.message;
-      } finally {
-        // this.showmodel = true;
-        this.loading = false;
-      }
-    },
     selectHaulType(cargoGroupValue, haulTypeValue) {
       if (!this.formData.haulType[cargoGroupValue]) {
         this.$set(this.formData.haulType, cargoGroupValue, []);
@@ -329,7 +256,6 @@ export default {
         const { haulType } = this.formData;
         const data = {
           cargoHauled: haulType,
-          user_id: localStorage.getItem("userId"),
           uuid: this.uuid
         };
         let res = await API.post("company/save", { data });

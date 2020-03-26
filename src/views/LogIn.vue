@@ -281,10 +281,7 @@ export default {
         let data = await API.post("users/login", {
           email: this.formData.email,
           password: this.formData.password,
-          // accountStatus: this.sendStatus
         });
-        console.log("data", data);
-
         this.proceedAfterLogin(data, loader)
       } catch (err) {
         console.error("catch", err);

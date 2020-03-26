@@ -94,7 +94,7 @@ export default {
   },
   created() {
     this.$emit("update-progress", this.progress);
-    this.loadCompany();
+    // this.loadCompany();
   },
 
   methods: {
@@ -118,25 +118,14 @@ export default {
           icon: "warning"
         });
       }
-    },
-    async loadCompany() {
-      this.loading = true;
-      this.error = null;
-      this.uuid = localStorage.getItem('uuid');
-      try {
-        let res = await API.get("company/current?uuid=" + this.uuid);
-        this.loading = false;
-        this.uuid = res.data.uuid;
-        if (res.status === "ERROR") {
-          // this.$router.replace({ name: 'Home' });
-        }
-      } catch (err) {
-        console.error(err);
-        this.error = err.message;
-      } finally {
-        this.loading = false;
-      }
     }
+  },
+
+  mounted () {
+    const self = this
+    setTimeout(function(){ 
+      self.$router.push({ name: 'QuotesAllQuotes' });
+    }, 3000)
   }
 };
 </script>

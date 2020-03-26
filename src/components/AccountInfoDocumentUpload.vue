@@ -240,12 +240,6 @@
           </div>
         </div>
       </div>
-    <!--   <div class="d-flex justify-content-center m-4" @click="show" v-if="save">
-        <span class="save-hover">Save & Continue</span>
-      </div>
-      <div class="d-flex justify-content-center m-4" @click="newQuoteReq" v-else>
-        <span class="save-hover">Save Changes</span>
-      </div> -->
       <div v-if="showmodel">
         <modelLogin/>
       </div>
@@ -328,28 +322,6 @@ export default {
     }
   },
   methods: {
-    newQuoteReq() {
-      swal({
-        title: "Are you sure?",
-        text: "Do you want to continue editing?",
-        icon: "warning",
-        buttons: ["No", "Yes"]
-      }).then(willDelete => {
-        
-        this.show();
-        if (willDelete) {
-          this.$router.push({ name: "AccountInfoDocumentUpload" });
-        } else {
-          swal(
-            "Thank You!",
-            "Your changes has been accepted! You will get new Updated Quote",
-            {
-              icon: "success"
-            }
-          );
-        }
-      });
-    },
     removeDoc(fieldName) {
       
       switch (fieldName) {
@@ -387,40 +359,6 @@ export default {
           this.formData.other = {};
           this.preview.other = {};
           break;
-      }
-    },
-    async show() {
-      this.loading = true;
-      this.error = null;
-      var temp_uuid;
-      if (localStorage.getItem("token")) {
-        temp_uuid = this.userData;
-        
-      } else {
-        temp_uuid = this.uuid;
-        
-      }
-      try {
-        let data = await API.formData("company/upload", temp_uuid);
-        if (data.status === "OK") {
-          if (!localStorage.getItem("token")) {
-            if (this.showmodel) {
-              this.showmodel = false;
-            } else {
-              this.showmodel = true;
-            }
-          }
-        } else if (data.status === "ERROR") {
-          this.error = data.messages[0] || data.data;
-        }
-      } catch (err) {
-        // this.showmodel = true;
-
-        console.error(err);
-        this.error = err.message;
-      } finally {
-        // this.showmodel = true;
-        this.loading = false;
       }
     },
     goPrevForm() {
@@ -487,7 +425,6 @@ export default {
         });
         const data = {
           attachmentList,
-          user_id: localStorage.getItem("userId"),
           uuid: this.uuid
         };
         let res = await API.post("company/save", { data });

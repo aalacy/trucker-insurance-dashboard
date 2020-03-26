@@ -488,11 +488,11 @@ const updateUUIDAndDotId = () => {
 }
 
 router.beforeEach((to, from, next) => {
+  if (to.name == 'AccountInfoPersonalInfo') {
+    updateUUIDAndDotId()
+  }
   if(to.matched.some(record =>  record.meta.requiresAuth)) {
-    // if (to.name == 'AccountInfoPersonalInfo') {
-    //   updateUUIDAndDotId()
-    // }
-    if (localStorage.getItem('userId') == null || localStorage.getItem('userId') == 'null') {
+    if (localStorage.getItem('userId') == '' || localStorage.getItem('userId') == null || localStorage.getItem('userId') == 'null') {
       next({
           path: '/log-in?next=' + to.name,
           params: { next: to.name }

@@ -301,12 +301,12 @@
           </div>
         </div>
       </div>
-      <div class="d-flex justify-content-center m-4" @click="show" v-if="save">
+<!--       <div class="d-flex justify-content-center m-4" @click="show" v-if="save">
         <span class="save-hover">Save & Continue</span>
       </div>
       <div class="d-flex justify-content-center m-4" @click="newQuoteReq" v-else>
         <span class="save-hover">Save Changes</span>
-      </div>
+      </div> -->
       <div v-if="showmodel">
         <modelLogin/>
       </div>
@@ -627,91 +627,6 @@ export default {
       }
       return validNewDriverForm;
     },
-    newQuoteReq() {
-      swal({
-        title: "Are you sure?",
-        text: "Do you want to continue editing?",
-        icon: "warning",
-        buttons: ["No", "Yes"]
-      }).then(willDelete => {
-        this.show();
-        
-        if (willDelete) {
-
-          this.$router.push({ name: "AccountInfoOwners" });
-        } else {
-          swal(
-            "Thank You!",
-            "Your changes has been accepted! You will get new Updated Quote",
-            {
-              icon: "success"
-            }
-          );
-        }
-      });
-    },
-    async show() {
-      if (
-        this.formData.driverIsOwner &&
-        this.formData.driverOwnerIndex === -1
-      ) {
-        this.formData.driverIsOwner = false;
-      }
-
-      this.setDataFromForms();
-      var temp_uuid;
-      if (this.noOwners) {
-        return;
-      }
-
-      let allFormAreValid = this.$refs.ownerForm
-        ? this.$refs.ownerForm.every(formRef => formRef.validateForm())
-        : true;
-
-      if (!allFormAreValid) {
-        return;
-      }
-
-      this.loading = true;
-      this.error = null;
-      this.final_uuid = this.uuid;
-      try {
-        let data = await API.post("company/save", {
-          key: "owners",
-          
-          val: {
-              owners:this.ownerData.map(o => {
-              let owner = { ...o };
-              delete owner._uuid;
-              return owner;
-            })
-          },
-          user_id: localStorage.getItem("userId"),
-          uuid: temp_uuid
-        });
-
-        if (data.status === "OK") {
-          if(!localStorage.getItem("token")){
-            if (this.showmodel) {
-              this.showmodel = false;
-            } else {
-              this.showmodel = true;
-            }
-          }
-          
-        } else if (data.status === "ERROR") {
-          this.showmodel = true;
-          this.error = data.messages[0] || data.data;
-        }
-      } catch (err) {
-        console.error(err);
-        // this.showmodel = true;
-        this.error = err.message;
-      } finally {
-        // this.showmodel = true;
-        this.loading = false;
-      }
-    },
     addForm() {
       // 
 
@@ -813,7 +728,6 @@ export default {
               delete owner._uuid;
               return owner;
              }),
-          user_id: localStorage.getItem("userId"),
           uuid: this.final_uuid
         };
         let res = await API.post("company/save", { data });

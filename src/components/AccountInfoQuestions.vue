@@ -1,21 +1,16 @@
 <template>
   <div class="account-info-questions-form container-fluid mob-2">
-            
-
     <form @submit.prevent="updateCompany">
       <div class="card mb-5">
         <div class="card-body">
           <h4 class="card-title form-sub-title">Additional Comments</h4>
-
-             <div class="m-1 pb-2">
-         <span>If you have any additional comments or concerns regarding your quotation, please list them here. 
-</span>
-         </div>
-
-          <div>
-            <textarea v-model="formData.comments" class="answer"></textarea>
-          </div>
-
+            <div class="m-1 pb-2">
+              <span>If you have any additional comments or concerns regarding your quotation, please list them here. 
+              </span>
+            </div>
+            <div>
+              <textarea v-model="formData.comments" class="answer"></textarea>
+            </div>
           <div v-if="error" class="alert alert-danger" role="alert">{{ error }}</div>
         </div>
         <div class="card-footer">
@@ -46,13 +41,6 @@
             </div>
           </div>
         </div>
-      </div>
-
-      <div class="d-flex justify-content-center m-4" @click="show" v-if="save">
-        <span class="save-hover">Save & Continue</span>
-      </div>
-      <div class="d-flex justify-content-center m-4" @click="newQuoteReq" v-else>
-        <span class="save-hover">Save Changes</span>
       </div>
       <div v-if="showmodel">
         <modelLogin/>
@@ -132,72 +120,6 @@ export default {
     }
   },
   methods: {
-    newQuoteReq() {
-      swal({
-        title: "Are you sure?",
-        text: "Do you want to continue editing?",
-        icon: "warning",
-        buttons: ["No", "Yes"]
-      }).then(willDelete => {
-       
-        this.show();
-        if (willDelete) {
-          
-          this.$router.push({ name: "AccountInfoQuestions" });
-        } else {
-          swal(
-            "Thank You!",
-            "Your changes has been accepted! You will get new Updated Quote",
-            {
-              icon: "success"
-            }
-          );
-        }
-      });
-    },
-    async show() {
-      this.loading = true;
-      this.error = null;
-      var temp_uuid;
-       if (localStorage.getItem("token")) {
-        temp_uuid = this.userData;
-       
-      } else {
-        temp_uuid = this.uuid;
-       
-      }
-      
-      try {
-        let data = await API.post("company/save", {
-          key: "questions",
-          val: this.formData,
-          user_id: localStorage.getItem("userId"),
-          uuid: temp_uuid
-        });
-
-        if (data.status === "OK") {
-          if(!localStorage.getItem("token")){
-              if (this.showmodel) {
-            this.showmodel = false;
-          } else {
-            this.showmodel = true;
-          }
-          }
-          
-        } else if (data.status === "ERROR") {
-          // this.showmodel = true;
-          this.error = data.messages[0] || data.data;
-        }
-      } catch (err) {
-        // this.showmodel = true;
-
-        console.error(err);
-        this.error = err.message;
-      } finally {
-        // this.showmodel = true;
-        this.loading = false;
-      }
-    },
     goPrevForm() {
       this.$emit("go-to-form", this.prevForm);
     },
@@ -235,7 +157,6 @@ export default {
         const { comments } = this.formData;
         const data = {
           comments,
-          user_id: localStorage.getItem("userId"),
           uuid: this.final_uuid
         };
         let res = await API.post("company/save", { data });

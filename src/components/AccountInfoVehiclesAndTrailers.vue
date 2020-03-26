@@ -1143,28 +1143,6 @@ export default {
         this.addTrailerData();
       }
     },
-    newQuoteReq() {
-      swal({
-        title: "Are you sure?",
-        text: "Do you want to continue editing?",
-        icon: "warning",
-        buttons: ["No", "Yes"]
-      }).then(willDelete => {
-       
-        this.show();
-        if (willDelete) {
-          this.$router.push({ name: "AccountInfoVehiclesAndTrailers" });
-        } else {
-          swal(
-            "Thank You!",
-            "Your changes has been accepted! You will get new Updated Quote",
-            {
-              icon: "success"
-            }
-          );
-        }
-      });
-    },
     addForm() {
       if (this.vehicleOrTrailer == "Trailer") {
         // 
@@ -1197,63 +1175,6 @@ export default {
     },
     goNextForm() {
       this.$emit("go-to-form", this.nextForm);
-    },
-    async show() {
-
-      if((this.vehiclesData.length == 0) && (this.trailersData.length == 0)){
-       
-        this.noFormfilled = true;
-        return;
-      }
-     if(this.vehiclesData){
-        let allFormAreValid = this.validateNewVehicleData();
-      if (!allFormAreValid) {
-       
-        return;
-      } else {
-       
-      }
-      }
-      if(this.trailersData){
-        let allFormAreValid = this.validateNewTrailerData();
-      if (!allFormAreValid) {
-       
-        return;
-      } else {
-       
-      }
-    }
-
-      var temp_uuid;
-      temp_uuid = this.uuid;
-      this.loading = true;
-      this.error = null;
-
-      try {
-        let data = await API.post("company/save", {
-          key: "vehiclesTrailers",
-          val: { vehicle: this.vehiclesData, trailer: this.trailersData },
-          user_id: localStorage.getItem("userId"),
-          uuid: temp_uuid
-        });
-
-        if (data.status === "OK") {
-          if (!localStorage.getItem("token")) {
-            if (this.showmodel) {
-              this.showmodel = false;
-            } else {
-              this.showmodel = true;
-            }
-          }
-        } else if (data.status === "ERROR") {
-          this.error = data.messages[0] || data.data;
-        }
-      } catch (err) {
-        console.error(err);
-        this.error = err.message;
-      } finally {
-        this.loading = false;
-      }
     },
     async loadCompany() {
       this.loading = true;
@@ -1347,7 +1268,6 @@ export default {
 
         const data = {
           vehicleInformationList: vehicleInformationList,
-          user_id: localStorage.getItem("userId"),
           uuid: this.final_uuid
         };
         let res = await API.post("company/save", { data });

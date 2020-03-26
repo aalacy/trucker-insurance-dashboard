@@ -922,7 +922,6 @@ export default {
       try {
         const data = {
           driverInformationList: this.driversData,
-          user_id: localStorage.getItem("userId"),
           uuid: this.final_uuid
         };
         let res = await API.post("company/save", { data });

@@ -69,12 +69,6 @@
         </div>
       </div>
 
-      <!-- <div class="d-flex justify-content-center m-4" @click="show" v-if="save">
-        <span class="save-hover">Save & Continue</span>
-      </div>
-      <div class="d-flex justify-content-center m-4" @click="newQuoteReq" v-else>
-        <span class="save-hover">Save Changes</span>
-      </div> -->
       <div v-if="showmodel">
         <modalLogin/>
       </div>
@@ -171,30 +165,6 @@ export default {
   },
 
   methods: {
-    newQuoteReq() {
-      swal({
-        title: "Are you sure?",
-        text: "Do you want to continue editing?",
-        icon: "warning",
-        buttons: ["No", "Yes"]
-      }).then(willDelete => {
-       
-        this.show();
-        if (willDelete) {
-          
-          this.$router.push({ name: "AccountInfoCargoGroup" });
-        } else {
-          
-          swal(
-            "Thank You!",
-            "Your changes has been accepted! You will get new Updated Quote",
-            {
-              icon: "success"
-            }
-          );
-        }
-      });
-    },
     selectCargoGroup(cargoGroupValue) {
       if (this.cargoGroupMap[cargoGroupValue]) {
         this.formData.cargoGroup = this.formData.cargoGroup.filter(
@@ -223,46 +193,7 @@ export default {
       this.formErrors = {};
       return validateForm(this.formData, this.rules, this.formErrors);
     },
-    async show() {
-      let formIsValid = this.validateForm();
-      var temp_uuid;
-      if (!formIsValid) {
-        return;
-      }
-       temp_uuid = this.uuid;
-
-      this.loading = true;
-      this.error = null;
-      try {
-        const { cargoGroup } = this.formData;
-        const data = {
-          cargoGroup,
-          user_id: localStorage.getItem("userId"),
-          uuid: this.final_uuid
-        };
-        let res = await API.post("company/save", { data });
-        if (res.status === "OK") {
-          if(!localStorage.getItem("token")){
-            if (this.showmodel) {
-              this.showmodel = false;
-            } else {
-              this.showmodel = true;
-            }
-          }
-          
-        } else if (res.status === "ERROR") {
-          // this.showmodel = true;
-          this.error = res.messages[0] || res.data;
-        }
-      } catch (err) {
-        // this.showmodel = true;
-
-        this.error = err.message;
-      } finally {
-        // this.showmodel = true;
-        this.loading = false;
-      }
-    },
+  
     async loadCompany() {
       this.loading = true;
       this.error = null;
@@ -302,7 +233,6 @@ export default {
         const { cargoGroup } = this.formData;
         const data = {
           cargoGroup,
-          user_id: localStorage.getItem("userId"),
           uuid: this.final_uuid
         };
         let res = await API.post("company/save", { data });

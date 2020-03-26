@@ -13,12 +13,12 @@
         </div>
         <div v-if="status">
           <div v-for="(item, idx) in certs" :key="idx" class="quote-wrapper block-divider">
-            <div class="image-wrapper px-1">
+            <div :class="highlightOldCert(item)" class="image-wrapper px-1">
               <img src="https://picsum.photos/200" alt class="image">
             </div>
 
             <div class="quote-content">
-              <div class="block-title mb-3">{{ item.title }}</div>
+              <div :class="highlightOldCert(item)" class="block-title mb-3">{{ item.title }}</div>
               <div class="action-block row">
                 <!-- <div class="col">
                   <div class="action-item">
@@ -62,9 +62,9 @@
                 </div>
                 <div class="col">
                   <div class="action-item">
-                    <a href="#" class="lift">
+                    <button class="btn" :class="isOldCert(item) ? 'gray-opacity' : 'lift'" :disabled="isOldCert(item)">
                       <font-awesome-icon class="fontawesome" :icon="['fas', 'sync-alt']" />
-                    </a>
+                    </button>
                     <div>Refresh</div>
                   </div>
                 </div>
@@ -116,6 +116,23 @@ export default {
     };
   },
   methods: {
+    highlightOldCert (item) {
+      if (this.isOldCert(item)) {
+        return 'gray-opacity'
+      } else {
+        return ''
+      }
+    },
+
+    isOldCert (item) {
+      const date = moment(item.createDate).add(60, 'days')
+      if (!date.isAfter(moment())) {
+        return true
+      } else {
+        return false
+      }
+    },
+
     closeModal () {
       this.showModal = false
     },
@@ -168,6 +185,10 @@ export default {
 <style lang="scss" scoped>
 .cert-block {
   padding: 34px;
+
+  .gray-opacity {
+    opacity: 0.7;
+  }
 
   .quote-wrapper {
     display: flex;
@@ -229,7 +250,7 @@ export default {
       flex-direction: column;
       align-items: center;
 
-      a {
+      a, button {
         margin-bottom: 0.25rem;
         border-radius: 10px;
         background: #edf2f5;

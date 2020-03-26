@@ -234,65 +234,6 @@ export default {
   },
 
   methods: {
-    newQuoteReq() {
-      swal({
-        title: "Are you sure?",
-        text: "Do you want to continue editing?",
-        icon: "warning",
-        buttons: ["No", "Yes"]
-      }).then(willDelete => {
-        
-        this.show();
-        if (willDelete) {
-          this.$router.push({ name: "AccountInfoBusinessStructure" });
-        } else {
-          swal(
-            "Thank You!",
-            "Your changes has been accepted! You will get new Updated Quote",
-            {
-              icon: "success"
-            }
-          );
-        }
-      });
-    },
-
-    async show() {
-      let formIsValid = this.validateForm();
-      if (!formIsValid) {
-        return;
-      }
-      var temp_uuid;
-      this.loading = true;
-      this.error = null;
-      temp_uuid = this.uuid;
-
-      try {
-        let data = await API.post("company/save", {
-          key: "businessStructure",
-          val: this.formData,
-          user_id: localStorage.getItem("userId"),
-          uuid: temp_uuid
-        });
-        if (data.status === "OK") {
-          if(!localStorage.getItem("token")){
-            if (this.showmodel) {
-            this.showmodel = false;
-          } else {
-            this.showmodel = true;
-          }
-          }
-          
-        } else if (data.status === "ERROR") {
-          this.error = data.messages[0] || data.data;
-        }
-      } catch (err) {
-        console.error(err);
-        this.error = err.message;
-      } finally {
-        this.loading = false;
-      }
-    },
     onFocus(fieldName) {
       this.$emit("update-hint", this.hints[fieldName]);
     },
@@ -353,7 +294,6 @@ export default {
           businessType,
           mcNumber,
           businessStructure,
-          user_id: localStorage.getItem("userId"),
           uuid: this.uuid
         };
 

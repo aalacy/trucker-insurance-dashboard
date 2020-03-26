@@ -352,6 +352,7 @@ export default {
       save: true,
       mobile:false,
       uuid: "",
+      dotId: "",
       // newQuote: false,
       userData: "",
       formData: {
@@ -398,7 +399,6 @@ export default {
       infoWindowPos: null,
       infoWinOpen: false,
       currentMidx: null,
-
       infoOptions: {
         content: '',
           //optional: offset infowindow so it visually sits nicely on top of our marker
@@ -408,17 +408,45 @@ export default {
         }
       },
       paths: [],
-      distance: ""
+      distance: "",
+      isSFUser: false
     };
   },
-  created() {
+  async created() {
     this.$emit("update-progress", this.progress);
-    this.loadCompany();
+    this.dotId = this.$router.history.current.query.dotId
+    localStorage.setItem("usdot", this.dotId);
+    this.isSFUser = this.dotId ? true : false
+    if (this.isSFUser) {
+      this.createCompany()
+    } else {
+      this.loadCompany();
+    }
   },
   updated() {
   
   },
   methods: {
+    async createCompany(row) {
+      this.loading = true;
+      try {
+        let data = await API.post("company/create", {
+          usdot: this.dotId,
+        });
+        localStorage.setItem('uuid', data.uuid);
+        
+        if (data.status === "OK") {
+          await this.parseData(data.data)
+        } else if (data.status === "ERROR") {
+          this.error = data.messages[0] || data.data;
+        }
+      } catch (err) {
+        console.error(err);
+        this.error = err.message;
+      } finally {
+        this.loading = false;
+      }
+    },
     async parseAddress (_mailingAddress, _physicalAddress) {
       try {
         let MailingAddress = _mailingAddress
@@ -539,6 +567,18 @@ export default {
       this.formErrors = {};
       return validateForm(this.formData, this.rules, this.formErrors);
     },
+    async parseData (data) {
+      let { company } = data;
+      if (company) {
+        let { mailingAddress, garagingAddress, dotNumber, name, phoneNumber } = company;
+        this.formData.dotNumber = dotNumber
+        this.formData.name = name
+        this.formData.phoneNumber = phoneNumber
+        this.$emit('update-us-dot', dotNumber)
+        await this.parseAddress(mailingAddress, garagingAddress)
+      }
+    },
+
     async loadCompany() {
       this.loading = false;
       this.error = null;
@@ -554,15 +594,7 @@ export default {
         this.uuid = res.data.uuid;
   
         if (res.status === "OK") {
-          let { company } = res.data;
-          if (company) {
-            let { mailingAddress, garagingAddress, dotNumber, name, phoneNumber } = company;
-            this.formData.dotNumber = dotNumber
-            this.formData.name = name
-            this.formData.phoneNumber = phoneNumber
-            this.$emit('update-us-dot', dotNumber)
-            await this.parseAddress(mailingAddress, garagingAddress)
-          }
+          await this.parseData(res.data)
         } else if (res.status === "ERROR") {
           // this.$router.replace({ name: "Home" });
         }
@@ -631,7 +663,6 @@ export default {
             state: this.formData.state1,
             zip: this.formData.zip1,
           },
-          user_id: localStorage.getItem("userId"),
           emailAddress,
           uuid: this.final_uuid
         };
