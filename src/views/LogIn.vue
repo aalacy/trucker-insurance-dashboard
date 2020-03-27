@@ -44,36 +44,19 @@
               </div>
 
               <div class="text-right flex-grow-1 font-small">
-                <router-link :to="{ name: 'SignUp', query: {next: this.$router.history.current.name == 'SignUp' ?  this.$router.history.current.query.next : this.$router.history.current.name}  }" @click.native="accountStatusUpdate">
+                <router-link :to="{ name: 'SignUp', query: this.$router.history.current.query }" @click.native="accountStatusUpdate">
                 <span>New user? Sign up</span>
               </router-link>
               </div>
             </div>
-            <!-- <div class="row align-items-stretch sign-in-with">
-              <div class="col mt-4 text-center">
-                <div class="border-top pt-2 pb-2">Sign in With</div>
-                <font-awesome-icon
-                  :icon="{ prefix: 'fab', iconName: 'facebook-square' }"
-                  size="2x"
-                  class="mr-4 color-fb"
-                />
-                <font-awesome-icon
-                  :icon="{ prefix: 'fab', iconName: 'google' }"
-                  size="2x"
-                  class="color-g"
-                />
-              </div>
-            </div> -->
             <div class="text-center mt-3">
-              
               <button
-                  :disabled="loading"
-                  type="submit"
-                  @click="login"
-                  class="lt-button lt-button-main go-button"
-                >LOGIN</button>
+                :disabled="loading"
+                type="submit"
+                @click="login"
+                class="lt-button lt-button-main go-button"
+              >LOGIN</button>
             </div>
-
             <div class="d-flex justify-content-center mt-2">
               <v-facebook-login 
                 app-id="456259108336704"

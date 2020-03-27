@@ -45,7 +45,7 @@
 
               <div class="d-flex small">
                 <div class="px-2">
-                  <a href="#" class="underline-link" @click.prevent="viewDetails" :disabled="loading">View Details</a>
+                  <a href="#" class="underline-link" @click.prevent="viewDetails(item)" :disabled="loading">View Details</a>
                 </div>
 
                 <div class="px-2">
@@ -208,19 +208,19 @@ export default {
       this.loading = false;
       if (res.status == 'ok') {
         this.pdf = res.pdf
-        this.$swal("", "Successfully created COI!", "success")
+        // this.$swal("", "Successfully created COI!", "success")
+        if (this.pdf) {
+          this.showPdfModal = true
+        }
       } else {
-        console.log(res)
+        this.error = res.message
       }
     },
 
     // empty COI pdf
-    async viewDetails () {
-      this.policy = {}
+    async viewDetails (item) {
+      this.policy = item
       await this.createCOI("", "", this.userId)
-      if (this.pdf) {
-        this.showPdfModal = true
-      }
     },
 
     // endorsement list
@@ -228,7 +228,7 @@ export default {
       this.loading = true
       const userId = localStorage.getItem('userId');
       let res = await API.post("company/accountinfo/policy/endorsements", {
-        policyId: 'a021k000003muT4AAI',
+        policyId: item.policyId,
         userId
       });
       this.loading = false;

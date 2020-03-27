@@ -493,8 +493,12 @@ router.beforeEach((to, from, next) => {
   }
   if(to.matched.some(record =>  record.meta.requiresAuth)) {
     if (localStorage.getItem('userId') == '' || localStorage.getItem('userId') == null || localStorage.getItem('userId') == 'null') {
+      let query = `?next=${to.name}`
+      if (to.name == 'AccountInfoSignComplete') {
+        query += '&sf=true'
+      }
       next({
-          path: '/log-in?next=' + to.name,
+          path: '/log-in' + query,
           params: { next: to.name }
       })
     } else {

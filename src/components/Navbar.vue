@@ -1,45 +1,43 @@
 <template>
-  <div class="pat-abst">
-    <div class="pos-rel">
-      <div class="containera">
-        <div name="fade" class="sidebar-menu">
-          <div class="menu-item sidebar-brand">
-            <div class="ml-auto mr-2" @click="showNav">
-              <font-awesome-icon class="fontawesome" :icon="['fas', 'times']" />
-            </div>
-            <b class="pl-2">Pro Version</b>
+  <div class="controla">
+    <div class="containera">
+      <div name="fade" class="sidebar-menu">
+        <div class="menu-item sidebar-brand">
+          <div class="ml-auto mr-2" @click="showNav">
+            <font-awesome-icon class="fontawesome" :icon="['fas', 'times']" />
           </div>
-          <div v-for="(item, index) in items" :key="index" class="menu-item navigation-links">
-            <router-link
-              :to="item.to"
-              tag="div"
-              class="title-wrapper"
-              :class="{
-            'has-sub-items': item.subItems,
-            active: $route.name.indexOf(item.to.name) === 0
-          }"
+          <b class="pl-2">Pro Version</b>
+        </div>
+        <div v-for="(item, index) in items" :key="index" class="menu-item navigation-links">
+          <router-link
+            :to="item.to"
+            tag="div"
+            class="title-wrapper"
+            :class="{
+          'has-sub-items': item.subItems,
+          active: $route.name.indexOf(item.to.name) === 0
+        }"
+          >
+            <img
+              :src="item.icon"
+              class=""
+              alt="Account info"
             >
-              <img
-                :src="item.icon"
-                class=""
-                alt="Account info"
-              >
-              <a class="title link">{{ item.title }}</a>
+            <a class="title link">{{ item.title }}</a>
 
-            </router-link>
+          </router-link>
 
-            <router-link
-              v-for="(subItem, subIndex) in item.subItems"
-              :key="subIndex"
-              :to="subItem.to"
-              tag="div"
-              exact
-              class="sub-item"
-            >
-              <a class="link" v-if="subItem.direct" href="https://" taget="_blank">{{ subItem.title }}</a>
-              <a class="link" v-else="subItem.direct">{{ subItem.title }}</a>
-            </router-link>
-          </div>
+          <router-link
+            v-for="(subItem, subIndex) in item.subItems"
+            :key="subIndex"
+            :to="subItem.to"
+            tag="div"
+            exact
+            class="sub-item"
+          >
+            <a class="link" v-if="subItem.direct" href="https://" taget="_blank">{{ subItem.title }}</a>
+            <a class="link" v-else="subItem.direct">{{ subItem.title }}</a>
+          </router-link>
         </div>
       </div>
     </div>
@@ -161,10 +159,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-// div {
-//   outline: 1px solid red;
-// }
-
 .emergencya {
   background-color: #e3e3e3;
   //  height: 200px;
@@ -197,9 +191,10 @@ export default {
 }
 
 .controla {
-  position: absolute;
-  z-index: 1;
-  top: 1%;
+  height: 100%;
+  overflow-y: auto;
+  padding-right: 20px;
+  direction: rtl;
 }
 .ques path   {
     fill: #fff;
@@ -208,9 +203,7 @@ export default {
 .containera {
   max-height: 100%;
   transition: all 0.5s ease-in-out;
-  overflow-y: auto;
-  padding-right: 20px;
-  direction: rtl;
+ 
 
   .control {
     display: flex;

@@ -19,7 +19,6 @@
 
       <div id="navbarSupportedContent" class="ml-auto collapse navbar-collapse">
         <div class="mr-auto"></div>
-
         <div class="d-flex align-items-center justify-content-end" >
           <ul class="navbar-nav">
             <li class="nav-item">
@@ -50,19 +49,13 @@
                     active-class="font-weight-bold"
                   >My Account</router-link>
                 </div>
-                <!-- <div v-else> -->
-
-                <!-- </div> -->
               </div>
             </li>
-            <!-- <li class="nav-item">
-              <span class="mx-3"> </span>
-            </li> -->
             <div v-if="quote">
               <li class="nav-item">
                 <router-link
                   @click.native="loginHide"
-                  :to="{ name: 'LogIn', query: {next: this.$router.history.current.name == 'LogIn' ?  this.$router.history.current.query.next : this.$router.history.current.name} }"
+                  :to="{ name: 'LogIn', query: query() }"
                   v-bind:class="linkBtn"
                   active-class="font-weight-bold"
                 >Login</router-link>
@@ -82,7 +75,7 @@
               <li class="nav-item">
                 <router-link
                   @click.native="loginHide"
-                  :to="{ name: 'SignUp', query: {next: this.$router.history.current.name == 'SignUp' ?  this.$router.history.current.query.next : this.$router.history.current.name} }"
+                  :to="{ name: 'SignUp', query: query() }"
                   v-bind:class="linkBtn"
                   active-class="font-weight-bold"
                 >Signup</router-link>
@@ -90,11 +83,8 @@
             </div>
           </ul>
         </div>
-
       </div>
-      
     </nav>
-
     <main class="app-main">
       <router-view/>
     </main>
@@ -124,38 +114,36 @@
         <div class="d-flex flex-column flex-mob bottom-section">
           <div class="footer-contacts d-flex justify-content-center text-center">
             <ul>
-                <li>
-                    <a href="mailto:support@luckytruck.co">support@luckytruck.co</a>
-                </li>
-                <li>
-                    <a href="tel:15135062400">1-513-506-2400</a>
-                </li>
-                <li>
-                  8am-8pm ET
-                </li>
-                <li>
-                  LuckyTruck, Inc.
-                </li>
-
-                <!-- social networks -->
-                <li class="footer-social-networks">
-                    <span>
-                      <a href="https://twitter.com/LuckyTruck3" target="_blank">
-                        <font-awesome-icon class="fontawesome" :icon="['fab', 'twitter']" />
-                      </a>
-                    </span>
-                    <span>
-                      <a href="https://www.linkedin.com/company/luckytruck" target="_blank">
-                       <font-awesome-icon class="fontawesome" :icon="['fab', 'linkedin-in']"  />
-                      </a>
-                    </span>
-                    <span>
-                        <a href="https://www.facebook.com/LuckyTruck-104402324469770/" target="_blank">
-                             <font-awesome-icon class="fontawesome" :icon="['fab', 'facebook-f']"  />
-                        </a>
-                    </span>
-                </li>
-            </ul>
+              <li>
+                  <a href="mailto:support@luckytruck.co">support@luckytruck.co</a>
+              </li>
+              <li>
+                  <a href="tel:15135062400">1-513-506-2400</a>
+              </li>
+              <li>
+                8am-8pm ET
+              </li>
+              <li>
+                LuckyTruck, Inc.
+              </li>
+              <li class="footer-social-networks">
+                <span>
+                  <a href="https://twitter.com/LuckyTruck3" target="_blank">
+                    <font-awesome-icon class="fontawesome" :icon="['fab', 'twitter']" />
+                  </a>
+                </span>
+                <span>
+                  <a href="https://www.linkedin.com/company/luckytruck" target="_blank">
+                   <font-awesome-icon class="fontawesome" :icon="['fab', 'linkedin-in']"  />
+                  </a>
+                </span>
+                <span>
+                  <a href="https://www.facebook.com/LuckyTruck-104402324469770/" target="_blank">
+                       <font-awesome-icon class="fontawesome" :icon="['fab', 'facebook-f']"  />
+                  </a>
+                </span>
+              </li>
+          </ul>
         </div>
         <div class="bottom-company">
           <div class="px-3 py-1">National Producer Number: 18975319</div>
@@ -163,18 +151,18 @@
           <div class="lists">
             <div class="px-3 py-1">
               <router-link
-                  @click.native="loginHide"
-                  :to="{ name: 'LogIn', query: {next: this.$router.history.current.name == 'LogIn' ?  this.$router.history.current.query.next : this.$router.history.current.name} }"
-                  class="text-white"
-                  active-class="font-weight-bold"
-                >Login</router-link>
+                @click.native="loginHide"
+                :to="{ name: 'LogIn', query: query() }"
+                class="text-white"
+                active-class="font-weight-bold"
+              >Login</router-link>
             </div>
             <div class="px-3 py-1">
               <router-link
-                  @click.native="loginHide"
-                  :to="{ name: 'SignUp', query: {next: this.$router.history.current.name == 'SignUp' ?  this.$router.history.current.query.next : this.$router.history.current.name} }"
-                  class="text-white"
-                >Signup</router-link>
+                @click.native="loginHide"
+                :to="{ name: 'SignUp', query: query() }"
+                class="text-white"
+              >Signup</router-link>
             </div>
             <div class="px-3 py-1">
               <a
@@ -285,8 +273,14 @@ export default {
   components: {
   },
   methods: {
-    loginHide()
-    {
+    query () {
+      return {
+        next: this.$router.history.current.name == 'LogIn' || this.$router.history.current.name == 'SignUp' ? this.$router.history.current.query.next : this.$router.history.current.name,
+        sf: this.$router.history.current.query.sf
+      }
+    },
+
+    loginHide() {
       // setTimeout(()=>{
         this.show=false;
         
@@ -337,7 +331,7 @@ export default {
         // this.loading = false;
         // this.myacchide = false;
       }
-  },
+    },
 
     logoutPopUp() {
       swal({
@@ -382,7 +376,7 @@ export default {
         this.$route.path && this.$route.path.indexOf("/account-info") === 0;
         localStorage.setItem("isAccountInfo",isAccountInfo)
       return !isAccountInfo;
-    }
+    }, 
   }
 };
 </script>

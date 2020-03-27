@@ -23,7 +23,11 @@
                 class="lt-input border border-color"
                 placeholder="First Name"
                 required
+                :state="validateName(formData.firstName)"
               />
+              <b-form-invalid-feedback :state="validateName(formData.firstName)">
+                The minimum length is 3 characters.
+              </b-form-invalid-feedback>
             </div>
 
             <div class="form-group">
@@ -33,7 +37,11 @@
                 class="lt-input border border-color"
                 placeholder="Last Name"
                 required
+                :state="validateName(formData.lastName)"
               >
+              <b-form-invalid-feedback :state="validateName(formData.lastName)">
+                The minimum length is 3 characters.
+              </b-form-invalid-feedback>
             </div>
             <div class="form-group">
               <input
@@ -92,7 +100,7 @@
               </div>
             </div>
             <div class="pt-4 save-hover">
-            <router-link :to="{ name: 'LogIn' }">
+            <router-link :to="{ name: 'LogIn', query: this.$router.history.current.query }">
                 <span>Already registered? Login</span>
               </router-link>
             </div>
@@ -139,12 +147,23 @@ export default {
         return false
       }
       return this.formData.password == this.formData.confirmpassword
-    }
+    },
   },
 
   mounted() {
+    console.log(this.$router.history.current)
   },
   methods: {
+    required (value) {
+      if (!value) {
+        return false
+      } 
+      return true
+    },
+
+    validateName (value) {
+      return value.length > 3
+    },
     onCancel() {
       console.log("User cancelled the loader.");
     },
@@ -172,7 +191,8 @@ export default {
             password: this.formData.password,
             passwordConfirm: this.formData.confirmpassword,
             companyName: this.formData.companyName,
-            dotId :this.formData.dotId
+            dotId :this.formData.dotId,
+            sf: this.$router.history.current.query.sf // if the pre form is sign signature, skip sf account signup
           });
         } catch (err) {
           console.log(err);

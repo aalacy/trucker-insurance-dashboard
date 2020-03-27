@@ -1,14 +1,14 @@
 <template>
  	<b-modal v-model="show" id="modal-pdf" centered  size="xl" :title="title" hide-footer>
-        <span v-html="curPDF.content">
-        </span>
+      <span v-html="curPDF.content">
+      </span>
   	</b-modal>
 </template>
 
 <script>
 
 export default {
-  	name: "PDFViewer",
+	name: "PDFViewer",
 
 	props: {
       pdf: {
@@ -50,12 +50,11 @@ export default {
 	    }
 	},
 
-    mounted() {
+  mounted () {
  	},
 
  	updated () {
- 		console.log('updated')
-    	this.diaplayPDF(this.pdf)
+  	this.diaplayPDF(this.pdf)
  	},
 
  	methods: {

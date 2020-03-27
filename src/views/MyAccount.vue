@@ -31,6 +31,7 @@
 </template>
 
 <script>
+  import { isMobile } from "mobile-device-detect";
 import Navbar from '../components/Navbar.vue'
 export default {
   name: 'MyAccount',
@@ -45,7 +46,7 @@ export default {
     return {
       // progress: Number(localStorage.getItem('accountInfoProgress')) || 0,
       hint: '',
-      showSidebar: true,
+      showSidebar: window.innerWidth <= 768 ? false : true,
     };
   },
 
