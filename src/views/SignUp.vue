@@ -162,7 +162,7 @@ export default {
     },
 
     validateName (value) {
-      return value.length > 3
+      return value.length > 2
     },
     onCancel() {
       console.log("User cancelled the loader.");
