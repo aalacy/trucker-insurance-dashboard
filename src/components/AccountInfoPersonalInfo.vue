@@ -431,6 +431,7 @@ export default {
           usdot: this.dotId,
         });
         localStorage.setItem('uuid', data.uuid);
+        this.uuid = data.uuid;
         
         if (data.status === "OK") {
           await this.parseData(data.data)

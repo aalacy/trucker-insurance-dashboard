@@ -380,11 +380,13 @@ img {
   z-index: 0;
 }
 }
+
+.account-info .main-wrapper{
+  min-height: calc(100vh - 65px);
+}
 @media screen and (max-width:992px)
 {
-  .account-info .main-wrapper{
-    // padding-top: 30px;
-  }
+
   .text-right-a{
     display: block;
     position:  absolute;

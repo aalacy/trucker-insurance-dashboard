@@ -204,24 +204,6 @@ gtag("config", "UA-144855806-1");
 </script>
 
 <script>
-window.dataLayer = window.dataLayer || [];
-function gtag() {
-  dataLayer.push(arguments);
-}
-gtag("js", new Date());
-gtag("config", "UA-144855806-1");
-</script>
-
-<script>
-window.dataLayer = window.dataLayer || [];
-function gtag() {
-  dataLayer.push(arguments);
-}
-gtag("js", new Date());
-gtag("config", "UA-144855806-1");
-</script>
-
-<script>
 import { isMobile } from "mobile-device-detect";
 import { mapState,mutations } from "vuex";
 import { API } from "./api.js";
