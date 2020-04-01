@@ -99,7 +99,6 @@ export default {
 
   methods: {
     async getRegister() {
-      // window.open(`${process.env.VUE_APP_BACKEND_URL}/company/pdf`);
       let data = await API.post("company/pdf",{email:this.email,uuid:this.uuid});
     },
     dosomething() {

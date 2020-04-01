@@ -13,7 +13,7 @@
                   :class="{ 'has-error': formErrors.businessStructure }"
                   class="lt-input"
                   @blur="onBlur"
-                   @click="onFocus('businessStructure')"
+                  @click="onFocus('businessStructure')"
                   required
                   @change="validateField('businessStructure')"
                 >
@@ -199,7 +199,10 @@ export default {
         "Courier",
         "Expediter",
         "For-Hire Livery – Taxi, Black Car, Limousine, Sightseeing/Guided Tours",
-        "Not-For-Hire Livery – Social Services, Courtesy (Hotel) Shuttle, Religious Organization, Child/Adult Daycare"
+        "Not-For-Hire Livery – Social Services, Courtesy (Hotel) Shuttle, Religious Organization, Child/Adult Daycare",
+        "LLC",
+        "INC",
+        "LLP"
       ],
       loading: false,
       error: null
@@ -261,7 +264,7 @@ export default {
         let res = await API.get("company/current?uuid=" + this.uuid);
 
         if (res.status === "OK") {
-          let { company: { businessStructure, businessType, mcNumber }, uuid } = res.data;
+          let { company: { businessStructureRaw, businessStructure, businessType, mcNumber }, uuid } = res.data;
           this.uuid = uuid;
           this.formData = {
             ...this.formData,
@@ -269,6 +272,17 @@ export default {
             businessType,
             mcNumber
           };
+          if (!businessType) {
+            let _businessStuctureRaw = businessStructureRaw
+            if (_businessStuctureRaw && _businessStuctureRaw.constructor !== Object) {
+              _businessStuctureRaw = JSON.parse(businessStructureRaw)
+            }
+            const names = _businessStuctureRaw['Legal Name'].split(' ')
+            const _type = names[names.length -1]
+            if (['LLC', 'LLP', 'INC'].includes(_type)) {
+              this.formData.businessType = _type
+            }
+          }
         } else if (res.status === "ERROR") {
           // this.$router.replace({ name: 'Home' });
         }

@@ -110,6 +110,19 @@
                       type="button"
                     >Clear</button>
                   </div>
+                  <div v-if="!loggedIn" class="row mt-3">
+                    <div class="col">
+                      By creating your account, you agree to Embroker's <a href="https://luckytruck.co/backend/TERMS_OF_SERVICE_FOR_LuckyTruck.co.pdf" rel="noopener noreferrer" target="_blank">Terms and Conditions</a> and <a href="https://luckytruck.co/backend/PRIVACY_POLICY_FOR_LuckyTruck.pdf" rel="noopener noreferrer" target="_blank">Privacy Policy</a>
+                    </div>
+                    <div class="col-auto">
+                      <router-link
+                        @click.native="loginHide"
+                        :to="{ name: 'SignUp', query: {next: this.$router.history.current.name} }"
+                        class="btn btn-primary rounded-pill"
+                        active-class="font-weight-bold"
+                      >Create an Account</router-link>
+                    </div>
+                  </div>
                 </div>
                 <div v-if="formErrors.imageSign" class="text-danger">{{ formErrors.imageSign }}</div>
               </div>
@@ -213,7 +226,8 @@ export default {
       formErrors: {},
       hints: {},
       loading: false,
-      error: null
+      error: null,
+      loggedIn: false
     };
   },
   updated() {
@@ -231,7 +245,6 @@ export default {
     this.loadCompany();
   },
   mounted() {
-
     var currentDate = new Date();
     var currentDateWithFormat = new Date()
       .toJSON()
@@ -244,9 +257,9 @@ export default {
     ] = currentDateWithFormat.split("/");
 
     if (localStorage.getItem("token")) {
-      this.save = false;
+      this.loggedIn = true;
     } else {
-      this.save = true;
+      this.loggedIn = false;
     }
   },
   methods: {

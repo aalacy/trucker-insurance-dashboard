@@ -72,14 +72,21 @@
           label="Enter a name"
           label-for="input-name"
         >
-          <b-form-input id="input-name" v-model="name"  trim required></b-form-input>
+          <b-form-input id="input-name" v-model="name" @focus="onFocus('name')"  trim required></b-form-input>
         </b-form-group>
         <b-form-group
           id="addr"
-          label="Enter a address"
+          label="Enter an address"
           label-for="input-addr"
         >
-          <b-form-input id="input-addr" v-model="address" trim required></b-form-input>
+          <b-form-input id="input-addr" v-model="address" @focus="onFocus('address')" trim required></b-form-input>
+        </b-form-group>
+        <b-form-group
+          id="comments"
+          label="Comments"
+          label-for="input-comments"
+        >
+          <b-form-input id="input-comments" v-model="comments" @focus="onFocus('comments')" trim required></b-form-input>
         </b-form-group>
       </form>
     </b-modal>
@@ -144,6 +151,7 @@ export default {
       policy: "",
       name: '',
       address: '',
+      comments:'',
       nameValidState: false,
       addrValidState: false,
       invalidFeedback: 'Invalid',
@@ -169,8 +177,16 @@ export default {
       this.showPdfModal = false
     },
 
-    changeValue (value) {
-      console.log(value)
+    onFocus (value) {
+      switch (value) {
+        case 'comments':
+          this.$emit("update-hint", "Only enter information if you need more than just name and address on the COI and someone from our team will process shortly. Name and address COIs are typically generated automatically.")
+          break
+
+        default:
+          this.$emit("update-hint", "Here are your current policies, to add vehicles and drivers, please see the side bar on the left. Please contact us with any questions or changes.");
+          break
+      }
     },
 
     openInNewWindow () {
@@ -186,7 +202,7 @@ export default {
         buttons: ["No", "Yes"]
       }).then(ok => {
         if (ok) {
-          this.inputModal = true
+          this.showModal()
         } else {
         }
       });
@@ -197,6 +213,7 @@ export default {
 
     async createCOI (dotId, uuid, userId) {
       this.loading = true
+      this.error = ''
       let res = await API.post("company/coi", {
         dotId,
         name: this.name,
@@ -221,6 +238,11 @@ export default {
     async viewDetails (item) {
       this.policy = item
       await this.createCOI("", "", this.userId)
+    },
+
+    showModal () {
+      this.name = this.address = this.comments = ''
+      this.inputModal = true
     },
 
     // endorsement list

@@ -329,6 +329,7 @@ export default {
     this.save = true;
     this.formData.dotNumber = localStorage.getItem("usdot");
     this.$emit('update-us-dot', localStorage.getItem("usdot"))
+    this.$emit("update-progress", this.progress);
   },
   beforeMount() {
     // localStorage.setItem("uuid", null);
@@ -412,7 +413,7 @@ export default {
     };
   },
   async created() {
-    this.$emit("update-progress", this.progress);
+    
     this.dotId = this.$router.history.current.query.dotId
     if (this.dotId) {
       this.createCompany()

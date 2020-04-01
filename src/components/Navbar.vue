@@ -13,10 +13,7 @@
             :to="item.to"
             tag="div"
             class="title-wrapper"
-            :class="{
-          'has-sub-items': item.subItems,
-          active: $route.name.indexOf(item.to.name) === 0
-        }"
+            :class="{ 'has-sub-items': item.subItems}"
           >
             <img
               :src="item.icon"
@@ -72,7 +69,7 @@ export default {
       items: [
         {
           title: "Account Info",
-          to: { name: "NewAccountInfo" },
+          to: { name: "QuotesAccountInfo" },
           icon: '/img/sidebar/account-info.png'
         },
         {
@@ -250,7 +247,7 @@ export default {
         align-items: center;
          direction:ltr;
 
-        &.active {
+        &.router-link-active {
           background-color: $color_blue;
         }
 
@@ -260,7 +257,7 @@ export default {
           margin-left: 1rem;
         }
 
-        &.active:after {
+        &.router-link-active:after {
           left: 100%;
           display: block;
           position: absolute;

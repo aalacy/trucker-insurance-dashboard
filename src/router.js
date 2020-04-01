@@ -302,6 +302,13 @@ const router = new Router({
             component: () =>
               import(/* webpackChunkName: "ResoursesFreightBoard" */
               './components/ResoursesFreightBoard.vue')
+          },
+          {
+            path: 'accountinfo',
+            name: 'QuotesAccountInfo',
+            component: () =>
+              import(/* webpackChunkName: "ResoursesFreightBoard" */
+              './components/QuotesAccountInfo.vue')
           }
         ]
     },
@@ -429,8 +436,8 @@ const router = new Router({
           component:() => import('./components/AccountInfoSignComplete.vue'),
           props:{
             prevForm: 'AccountInfoDocumentUpload',
-            nextForm: 'AccountInfoThankYou',
-            progress: 95
+            nextForm: 'QuotesAccountInfo',
+            progress: 100
           },
           meta: {
             requiresAuth: true

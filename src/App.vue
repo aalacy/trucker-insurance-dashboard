@@ -43,7 +43,7 @@
               <div v-else>
                 <div v-if="myacchide">
                   <router-link
-                    :to="{ name: '' }"
+                    :to="{ name: 'QuotesAllQuotes' }"
                     v-bind:class="linkBtn"
                     @click.native="myacc"
                     active-class="font-weight-bold"
@@ -215,9 +215,7 @@ export default {
      {
         this.quote = false;
         this.myacchide = true;
-        // this.show = true;
-        // localStorage.removeItem("token");
-      }
+    }
     else {
       this.quote =true;
       this.myacchide = false;
@@ -263,21 +261,13 @@ export default {
     },
 
     loginHide() {
-      // setTimeout(()=>{
-        this.show=false;
-        
-      // },500)
-      
-      // this.quote = false;
+      this.show=false;
     },
     myacc(){
-      // localStorage.setItem("accBtn",true)
       this.myacchide = false;
       this.show = true;
       this.$router.push({name:'QuotesAllQuotes'})
-      // localStorage.setItem("",true)
-     
-      },
+    },
     async logout(){
       this.loading = true;
       this.error = null;

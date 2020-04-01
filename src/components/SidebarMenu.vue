@@ -77,10 +77,6 @@ export default {
           title: "Your Quote Progress",
           to: { name: "AccountInfo" },
           subItems: [
-            {
-              title: "Upload Documents",
-              to: { name: "AccountInfoUploadDocuments" }
-            },
             { title: "Business Information", to: { name: "AccountInfoPersonalInfo" } },
             {
               title: "Business Structure",
@@ -98,7 +94,6 @@ export default {
               to: { name: "AccountInfoDocumentUpload" }
             },
             {title:"Sign & Complete", to:{name:"AccountInfoSignComplete"}},
-            {title:"Download Quote",to:{name:"AccountInfoThankYou"}}
           ]
         },
       ],
@@ -124,7 +119,6 @@ export default {
               to: { name: "AccountInfoDocumentUpload" }
             },
             {title:"Sign & Complete", to:{name:"AccountInfoSignComplete"}},
-            {title:"Download PDF",to:{name:"AccountInfoThankYou"}}
           ]
         },
       
