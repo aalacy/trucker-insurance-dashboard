@@ -1,6 +1,8 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 
+import LayoutHome from '@/views/layout/LayoutHome';
+
 Vue.use(Router);
 
 
@@ -17,24 +19,31 @@ const router = new Router({
  
   routes: [
     {
-      path:'/',
-      name:'Home',
-      component:()=>import('./views/Home.vue')
-    },
-    {
-      path: '/sign-up',
-      name: 'SignUp',
-      component: () => import('./views/SignUp.vue')
-    },
-    {
-      path: '/log-in',
-      name: 'LogIn',
-      component: () => import('./views/LogIn.vue')
-    },
-    {
-      path: '/reset-password/:code',
-      name: 'Resetpassword',
-      component: () => import('./views/ResetPassword.vue')
+      path: '/',
+      name: 'LayoutHome',
+      component: LayoutHome,
+      children: [
+        {
+          path: '',
+          name: 'Home',
+          component:()=>import('./views/Home.vue')
+        },
+        {
+          path: 'sign-up',
+          name: 'SignUp',
+          component: () => import('./views/SignUp.vue')
+        },
+        {
+          path: 'log-in',
+          name: 'LogIn',
+          component: () => import('./views/LogIn.vue')
+        },
+        {
+          path: 'reset-password/:code',
+          name: 'Resetpassword',
+          component: () => import('./views/ResetPassword.vue')
+        }
+      ]
     },
     {
       path: '/simple-estimate-wizard',
@@ -154,7 +163,7 @@ const router = new Router({
     {
         path: '/my-account',
         name:'MyAccount',
-        component:() => import('./views/MyAccount.vue'),
+        component:() => import('./views/layout/LayoutPortal'),
         children:[
           {
             path: 'quotes',
@@ -315,8 +324,8 @@ const router = new Router({
     {
       path: '/account-info',
       name: 'AccountInfo',
+      component:() => import('./views/layout/Layout'),
       redirect: '/account-info/personal-info',
-      component: () => import('./views/AccountInfo.vue'),
       children: [
         {
           path: 'upload-documents',
@@ -451,7 +460,6 @@ const router = new Router({
             progress: 100
           }
         },
-        
       ]
     },
     {

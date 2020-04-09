@@ -8,6 +8,10 @@ import getData from "./modules/getData.js"
 import getPolicyData from "./modules/getPolicyData.js"
 // import getUserData from "./modules/getUserData.js"
 
+import layout from './layout';
+
+export const strict = false
+
 Vue.use(Vuex);
 Vue.use(VueAxios,axios)
 export default new Vuex.Store({
@@ -17,6 +21,7 @@ export default new Vuex.Store({
     eld,
     getData,
     getPolicyData,
+    layout,
     // getUserData
   },
   state: {},

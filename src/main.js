@@ -2,11 +2,12 @@ import Vue from 'vue';
 import Vuelidate from 'vuelidate';
 import 'bootstrap';
 import App from './App.vue';
-import BootstrapVue from 'bootstrap-vue'
+import { BootstrapVue, IconsPlugin  } from 'bootstrap-vue'
 import router from './router.js';
 import store from './store/index.js';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import Vue2TouchEvents from 'vue2-touch-events'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import { 
@@ -27,6 +28,7 @@ import {
   faSyncAlt,
   faMinus,
   faPlus,
+  faBars,
 } from '@fortawesome/free-solid-svg-icons'
 import {
   faFacebookSquare, 
@@ -64,6 +66,7 @@ library.add(
   faSyncAlt,
   faMinus,
   faPlus,
+  faBars,
 )
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
@@ -71,6 +74,7 @@ Vue.config.productionTip = false;
 Vue.use(Vuelidate);
 Vue.use(VueSwal);
 Vue.use(BootstrapVue);
+Vue.use(IconsPlugin )
 Vue.use(VueSignaturePad);
 Vue.use(VueIntercom, { appId: 'ct2qyf3u' });
 Vue.use(VueScrollTo);
@@ -87,6 +91,7 @@ Vue.use(VueGoogleMaps, {
   },
   installComponents: true
 })
+Vue.use(Vue2TouchEvents)
 
 // Vue.component('font-awesome-icon', FontAwesomeIcon)
 

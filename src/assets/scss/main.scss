@@ -100,6 +100,14 @@ img {
   height: auto;
 }
 
+.v-divider {
+  border-color: hsla(0,0%,100%,.12);
+  background-color: hsla(0,0%,71%,.2);
+  border-color: hsla(0,0%,71%,.1);
+  width: calc(100% - 30px);
+  margin-left: 15px;
+}
+
 .block-divider {
   margin-bottom: 2rem;
   padding-bottom: 2rem;
@@ -175,6 +183,11 @@ img {
       font-size: 1.1rem;
       text-decoration: none;
     }
+
+    .navbar-nav {
+      flex-direction: row;
+      margin-right: 1rem;
+    }
   }
 
   .app-main {
@@ -186,7 +199,7 @@ img {
     display: flex;
     align-items: center;
     background-color: #141733;
-    padding:5rem 0;
+    padding: 2rem 0 .25rem 0;
 
     &.lt-fixed {
       // position: fixed;
@@ -333,29 +346,7 @@ img {
     margin-bottom: 10px;
     text-align: center;
   }
-  .navbar-nav{
-    z-index: 1;
-    width: 30%;
-    background: #5e98f7;
-    margin-top: 0px;
-    font-size: 21px;
-  }
-  .navbar-nav li{
-    width: 100%;
-    text-align: center;
-    padding: 3px;
-    font-size: 14px;
-  
-  }
-  .navbar-nav li a.lt-button{
-   
-    border-radius: 0px;
-    padding: 0px;
-    margin-left: 0px;
-    
-  
-  
-  }
+
 
   #app .app-navbar .lt-link{
     color: #ffffff  !important; 
@@ -363,13 +354,7 @@ img {
   }
   
     
-  .navbar-nav li:nth-child(2){
-    display: none;
-  }
-  .navbar-nav li:nth-child(3){
-    border-top: 1px solid #ffffff;
-    }
-  
+
  
 .width-200{
   max-width: 100%;

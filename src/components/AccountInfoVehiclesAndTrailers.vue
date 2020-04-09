@@ -511,15 +511,28 @@
             <div class="col font-weight-bold">Add another vehicle or trailer</div>
           </div>
           <div class="row mb-4">
-            <div class="d-flex align-itens-between col">
-              <select @change="onChange($event)" class="lt-input">
+            <div class=" col">
+              <!-- <b-form-select v-model="selected" @change="onChange()"" :options="options"></b-form-select> -->
+            <!--   <select @click="onChange($event)" class="lt-input">
                 <option value>Vehicle or Trailer</option>
                 <option v-for="item in type" :key="item" :value="item">{{ item }}</option>
-              </select>
-              </div>
-              <div class=" alert alert-danger d-flex col-12"
-                v-if="noFormfilled"
-              >Please add atleast one Vehicle/Trailer</div>
+              </select> -->
+               <b-dropdown
+                block 
+                split
+                split-variant="outline-primary"
+                variant="primary"
+                text="Vehicle or Trailer"
+                class="m-2"
+                :size="dropdownSize"
+                menu-class="w-100"
+              >
+                <b-dropdown-item-button v-for="item in type" :key="item" @click="onChange(item)">{{item}}</b-dropdown-item-button>
+              </b-dropdown>
+            </div>
+            <div class=" alert alert-danger d-flex col-12"
+              v-if="noFormfilled"
+            >Please add atleast one Vehicle/Trailer</div>
           </div>
         </div>
 
@@ -559,8 +572,6 @@
     </form>
   </div>
 </template>
-
-
 
 <script>
 import {
@@ -623,7 +634,8 @@ export default {
         "PASSENGER CAR",
         "Sport Utility Vehicle",
         "Emergency Vehicle",
-        "Military Vehicle"
+        "Military Vehicle",
+        "Pickup or Tractor Truck"
       ],
       trailerTypes: [
         "Auto Hauler",
@@ -717,6 +729,10 @@ export default {
       set(index) {
         this.trailersData.radiusOfTravelTrailer = this.radiuses[index];
       }
+    },
+
+    dropdownSize () {
+      return  window.innerWidth <= 768 ? 'md' : 'lg'
     }
   },
   watch: {
@@ -1130,14 +1146,15 @@ export default {
         this.loading = false;
       }
     },
-    onChange($event) {
-     
-      if ($event.target.value == "Vehicle") {
+    onChange(item) {
+      if (item == 'Vehicle') {
+      // if ($event.target.value == "Vehicle") {
         this.vehicle = true;
        
         this.trailer = false;
         this.addVehicleData();
-      } else if ($event.target.value == "Trailer") {
+      // } else if ($event.target.value == "Trailer") {
+      } else if (item == 'Trailer') {
         this.vehicle = false;
         this.trailer = true;
         this.addTrailerData();

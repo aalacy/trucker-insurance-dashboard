@@ -10,7 +10,7 @@
                 <b-form-input v-model.trim="keyword" autocomplete="off" class="quote-input" :placeholder=placeholder></b-form-input>
                 <b-input-group-append>
                   <b-button :disabled="loading" v-if="msg" type="submit" variant="primary btn-get-quote">
-                    <font-awesome-icon class="fontawesome" icon="search" />
+                    <font-awesome-icon class="fontawesome" siz="3x" icon="search" />
                   </b-button>
                   <b-button :disabled="loading" v-if="!msg" type="submit" variant="primary btn-get-quote">
                     Get a Quote
@@ -270,6 +270,12 @@ export default {
     },
   },
   methods: {
+    query () {
+      return {
+        next: this.$router.history.current.name == 'LogIn' || this.$router.history.current.name == 'SignUp' ? this.$router.history.current.query.next : this.$router.history.current.name,
+        sf: this.$router.history.current.query.sf
+      }
+    },
     showPosition(position) {
       this.coords = {
         lat: position.coords.latitude,
@@ -346,13 +352,6 @@ export default {
       localStorage.setItem("usdot", this.localUsdot);
       localStorage.setItem("company", this.localcompany);
       this.loading = true;
-
-      // const token = localStorage.getItem('token')
-      // const userId = localStorage.getItem('userId')
-      // if (token == null || token == 'null') {
-      //   this.$router.push({ name: "LogIn", query: { next: 'Home'} });
-      //   return
-      // }
 
       try {
         let data = await API.post("company/create", {
