@@ -20,15 +20,26 @@
         <div class="flex-mob bottom-section mb-2">
           <div class="footer-contacts text-center">
             <div class="row">
-              <div class="col-auto">
+              <div class="col-12 col-md-4 mb-3">
                 <img
                   src="../../assets/images/loading/loading_truck_128.gif"
                   class="d-block mx-auto rounded mb-3"
                   alt="Loading"
                   style="width: 100px; height: auto"
                 >
+                <div class="footer-social-networks">
+                  <a href="https://twitter.com/LuckyTruck3" target="_blank">
+                    <font-awesome-icon class="fontawesome" :icon="['fab', 'twitter']" />
+                  </a>
+                  <a href="https://www.linkedin.com/company/luckytruck" target="_blank">
+                   <font-awesome-icon class="fontawesome" :icon="['fab', 'linkedin-in']"  />
+                  </a>
+                  <a href="https://www.facebook.com/LuckyTruck-104402324469770/" target="_blank">
+                       <font-awesome-icon class="fontawesome" :icon="['fab', 'facebook-f']"  />
+                  </a>
+                </div>
               </div>
-              <div class="col-12 col-sm-5 general-info mb-3">
+              <div class="col-12 col-md-4 general-info mb-1">
                 <ul>
                   <li>
                       <a href="mailto:support@luckytruck.co">support@luckytruck.co</a>
@@ -44,7 +55,7 @@
                   </li>
                 </ul>
               </div>
-              <div class="col-auto auth-links mb-3">
+              <div class="col-12 col-md-4 auth-links mb-3">
                 <div class="lists">
                     <router-link
                       @click.native="loginHide"
@@ -71,22 +82,11 @@
                     >TERMS OF USE</a>
                 </div>
               </div>
-              <div class="col-auto footer-social-networks mb-3">
-                <a href="https://twitter.com/LuckyTruck3" target="_blank">
-                  <font-awesome-icon class="fontawesome" :icon="['fab', 'twitter']" />
-                </a>
-                <a href="https://www.linkedin.com/company/luckytruck" target="_blank">
-                 <font-awesome-icon class="fontawesome" :icon="['fab', 'linkedin-in']"  />
-                </a>
-                <a href="https://www.facebook.com/LuckyTruck-104402324469770/" target="_blank">
-                     <font-awesome-icon class="fontawesome" :icon="['fab', 'facebook-f']"  />
-                </a>
-              </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="bottom-company">
+      <div class="bottom-company mb-3">
         <div class="px-3 py-1">National Producer Number: 18975319</div>
         <div class="px-3 py-1">&copy;2020 LuckyTruck, Inc.</div>
       </div>
@@ -139,8 +139,8 @@
     display: flex;
     justify-content: space-around;
     font-size: 1.15rem;
-    margin-left: auto;
-    min-width: 180px;
+    max-width: 180px;
+    margin: 0 auto;
 
     a svg path {
       fill: #e1e1e1;
@@ -165,11 +165,6 @@
 
     .general-info {
       order: 3;
-    }
-
-    .footer-social-networks {
-      margin-left: 0;
-      margin: 0 auto;
     }
   }
 </style>
