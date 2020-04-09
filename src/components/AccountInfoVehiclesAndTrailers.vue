@@ -735,6 +735,7 @@ export default {
       return  window.innerWidth <= 768 ? 'md' : 'lg'
     }
   },
+  
   watch: {
     "vehiclesData.coverage"(val) {
       if (!val) {
