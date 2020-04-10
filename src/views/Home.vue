@@ -122,7 +122,7 @@
                     alt="Insurance"
                   >
                 </div>
-                <h1>Maintainence</h1>
+                <h1>Maintenance</h1>
                 <p
                   class="text-center"
                 >As you operate and have various maintenance needs, let us know and we’ll try to connect you to people who can manage your needs. We are still adding this service, but feel welcome to ask.</p>

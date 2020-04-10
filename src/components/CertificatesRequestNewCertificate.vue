@@ -3,7 +3,7 @@
 	    <div class="card mb-5">
 	      	<div class="card-body cert-block">
 	      		<form class="custom_form" @submit.prevent="requestCertificate">
-			        <h4 class="card-title form-sub-title mb-4">Certificates</h4>
+			        <h4 class="card-title form-sub-title mb-4">Name of Certificate Holder</h4>
 		      		<div v-if="loading" class="col-12 mb-2">
 			          	<img
 			              src="../assets/images/loading/loading_truck_128.gif"
