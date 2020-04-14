@@ -99,10 +99,19 @@
 
     mounted () {
       this.msg = this.mobile = window.innerWidth <= 768 ? true : false;
+
+      this.checkAuth()
     },
 
     computed: {
-      ...mapState('layout', ['sidebarClose', 'sidebarStatic']),
+      ...mapState('layout', {
+        'sidebarClose': state => state.sidebarClose,
+        'sidebarStatic': state => state.sidebarStatic
+      }),
+
+      ...mapState('auth', {
+        'loggedIn': state => state.loggedIn
+      }),
 
       quotes () {
         const curPath = this.$router.history.current.path
@@ -127,16 +136,6 @@
         }
         return ''
       },
-
-      loggedIn () {
-        const token = localStorage.getItem('token')
-        const userId = localStorage.getItem('userId')
-        if (token && userId) {
-          return true
-        } else {
-          return false
-        }
-      }
     },
 
     updated() {
@@ -153,6 +152,18 @@
 
     methods: {
       ...mapActions('layout', ['toggleSidebar', 'switchSidebar', 'changeSidebarActive']),
+
+      ...mapActions('auth', ['setLoggedIn']),
+
+      checkAuth () {
+        const token = localStorage.getItem('token')
+        const userId = localStorage.getItem('userId')
+        if (token && userId) {
+          return this.setLoggedIn(true)
+        } else {
+          return this.setLoggedIn(false)
+        }
+      },
 
       switchSidebarMethod() {
         if (!this.sidebarClose) {
@@ -198,7 +209,7 @@
           let data = await API.post("users/logout");
           localStorage.removeItem("token");
           if (data.status === "ok") {
-              
+            this.setLoggedIn(false)
             this.quote = false;
             this.show=false;
             setTimeout(()=>{

@@ -7,7 +7,17 @@
             <div class="d-flex align-items-center index1" id="quoteInput">
                           
               <b-input-group class="col-lg-12 col-xs-12 p-xs-0 justify-content-center">
-                <b-form-input v-model.trim="keyword" autocomplete="off" class="quote-input" :placeholder=placeholder></b-form-input>
+                <b-form-input 
+                  id="keyword"
+                  v-model="keyword"
+                  type="number"
+                  autocomplete="off"
+                  class="quote-input"
+                  :placeholder=placeholder
+                  trim
+                  onkeydown="javascript: return event.keyCode == 69 ? false : true"
+                ></b-form-input>
+                
                 <b-input-group-append>
                   <b-button :disabled="loading" v-if="msg" type="submit" variant="primary btn-get-quote">
                     <font-awesome-icon class="fontawesome" siz="3x" icon="search" />
@@ -216,7 +226,7 @@ export default {
       })
       .catch(e => console.log("e"));
     if (isMobile) {
-      this.placeholder = "DOT # or Company Name";
+      this.placeholder = "DOT # or Leave blank";
     }
 
     if (navigator.geolocation) {
@@ -236,7 +246,7 @@ export default {
       error: null,
       localUsdot: "",
       localcompany: "",
-      placeholder: "Search DOT or Name of Business",
+      placeholder: "Search by DOT or Leave blank if you're a new Company",
       isDotSearch: false,
       coords: {},
       fields: [ 
@@ -267,6 +277,14 @@ export default {
       }
 
       return data
+    },
+
+    validateKeyword () {
+      console.log(this.keyword)
+      if(!isNaN(this.keyword)) {
+        return true
+      }
+      return false
     },
   },
   methods: {
@@ -312,7 +330,7 @@ export default {
     },
     async getStarted() {
       if (!this.keyword) {
-        return;
+        this.gotoPersonalInfo()
       }
 
       // get client coord

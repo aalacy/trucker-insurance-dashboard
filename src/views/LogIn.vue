@@ -126,15 +126,16 @@
 </template>
 
 <script>
-import { API } from "../api.js";
-import Vue from "vue";
-import axios from "axios";
-import { VFBLogin as VFacebookLogin, VFBLoginScope  } from 'vue-facebook-login-component'
-import GSignInButton from 'vue-google-signin-button'
-Vue.use(GSignInButton)
-import Loading from "vue-loading-overlay";
-import "vue-loading-overlay/dist/vue-loading.css";
-Vue.use(Loading);
+  import { mapState, mapActions } from 'vuex';
+  import { API } from "../api.js";
+  import axios from "axios";
+  import Vue from "vue";
+  import { VFBLogin as VFacebookLogin, VFBLoginScope  } from 'vue-facebook-login-component'
+  import GSignInButton from 'vue-google-signin-button'
+  Vue.use(GSignInButton)
+  import Loading from "vue-loading-overlay";
+  import "vue-loading-overlay/dist/vue-loading.css";
+  Vue.use(Loading);
 
 export default {
   name: "LogInView",
@@ -170,6 +171,8 @@ export default {
   },
 
   methods: {
+    ...mapActions('auth', ['setLoggedIn']),
+
     accountStatusUpdate() {
       localStorage.setItem("register_status", "0");
     },
@@ -199,6 +202,7 @@ export default {
 
     proceedAfterLogin(data, loader) {
       if (data.status === "ok") {
+        this.setLoggedIn(true)
         this.loading = false;
         if (loader) {
           loader.hide();
@@ -230,6 +234,7 @@ export default {
 
         let data = await API.post("users/logout");
         localStorage.removeItem("token");
+        this.setLoggedIn(false)
         setTimeout(()=>{
           
         this.myacchide = false;
@@ -265,6 +270,7 @@ export default {
           email: this.formData.email,
           password: this.formData.password,
         });
+
         this.proceedAfterLogin(data, loader)
       } catch (err) {
         console.error("catch", err);

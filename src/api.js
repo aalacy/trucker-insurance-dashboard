@@ -30,7 +30,6 @@ class APIService {
 
     for (let field in dataObj) {
       let value = dataObj[field];
-
       formData.set(field, value);
     }
 

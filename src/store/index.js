@@ -9,6 +9,7 @@ import getPolicyData from "./modules/getPolicyData.js"
 // import getUserData from "./modules/getUserData.js"
 
 import layout from './layout';
+import auth from './auth';
 
 export const strict = false
 
@@ -22,7 +23,7 @@ export default new Vuex.Store({
     getData,
     getPolicyData,
     layout,
-    // getUserData
+    auth,
   },
   state: {},
   mutations: {},
