@@ -118,7 +118,7 @@
                   <h1 class="mb-3">Insurance</h1>
                   <p
                     class="text-center"
-                  >At LuckyTruck, we simplify your insurance management and have a competitive variety of options to find your company the right insurance carrier. We don’t charge extra fees now or ever.</p>
+                  >At LuckyTruck, we simplify your insurance management and have a competitive variety of options to find your company the right insurance carrier.</p>
               </div>
             </div>
             <div class="col-lg-4 col-md-5 col-sm-6 col-xs-8 card-item">
