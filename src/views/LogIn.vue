@@ -214,7 +214,6 @@ export default {
         let t = data.data;
         localStorage.setItem("userId", t.id);
         localStorage.setItem("token", JSON.stringify(t));
-        localStorage.setItem("showModal", false);
         document.querySelector('.swal-button--confirm').style.display = 'contents';
         setTimeout(function(){ document.querySelector('.swal-button--confirm').click(); }, 3000);
       } else if (data.status === "error") {

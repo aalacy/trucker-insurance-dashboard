@@ -16,53 +16,51 @@
 
     <div class="d-flex align-items-center justify-content-end ml-auto" >
         <ul class="navbar-nav">
-          <li class="nav-item">
-            <div v-if="quotes">
-              <router-link
-                v-if="mobile"
-                :to="{ name: 'AccountInfoUploadDocuments' }"
-                v-bind:class="linkBtn"
-                active-class="font-weight-bold"
-              >View Quotes</router-link>
-              <router-link
-                v-else
-                :to="{ name: 'AccountInfo' }"
-                v-bind:class="linkBtn"
-                active-class="font-weight-bold"
-              >View Quotes</router-link>
-            </div>
+          <li class="nav-item" v-if="!loggedIn">
             <router-link
-              v-else
-              :to="{ name: 'QuotesAllQuotes' }"
+              :to="{ name: 'LogIn', query: query() }"
               v-bind:class="linkBtn"
               active-class="font-weight-bold"
-            >My Account</router-link>
+            >Login</router-link> <span class="sr-only">(Click to Login)</span>
           </li>
           <li>
-            <b-dropdown variant="primary" :size="profileSize" right>
+            <b-dropdown v-if="loggedIn" variant="primary" :size="profileSize" right>
               <template v-slot:button-content>
                 <b-icon icon="people-circle" style="fill: white;"></b-icon>
               </template>
-              <b-dropdown-item-button 
-                v-if="!loggedIn"
+              <b-dropdown-item-button
+                v-if="mobile"
               >
                 <router-link
-                  :to="{ name: 'LogIn', query: query() }"
-                  active-class="font-weight-bold"
-                >Login</router-link> <span class="sr-only">(Click to Login)</span>
+                :to="{ name: 'AccountInfoUploadDocuments' }"
+                active-class="font-weight-bold"
+                >View Quotes</router-link>
               </b-dropdown-item-button>
-              <b-dropdown-divider v-if="!loggedIn"></b-dropdown-divider>
-              <b-dropdown-item-button 
-                v-if="!loggedIn"
+              <b-dropdown-divider v-if="mobile"></b-dropdown-divider>
+              <b-dropdown-item-button
+                v-if="!mobile"
               >
                 <router-link
-                  :to="{ name: 'SignUp', query: query() }"
+                  :to="{ name: 'AccountInfo' }"
                   active-class="font-weight-bold"
-                >Signup</router-link> <span class="sr-only">(Click to Signup)</span>
+                >View Quotes</router-link>
               </b-dropdown-item-button>
-              <b-dropdown-item-button 
-                v-if="loggedIn"
-              >
+              <b-dropdown-divider></b-dropdown-divider>
+              <b-dropdown-item-button>
+                <router-link
+                  :to="{ name: 'QuotesAllQuotes' }"
+                  active-class="font-weight-bold"
+                >My Dashboard</router-link>
+              </b-dropdown-item-button>
+              <b-dropdown-divider></b-dropdown-divider>
+              <b-dropdown-item-button>
+                <router-link
+                  to=""
+                  active-class="font-weight-bold"
+                >My Blog</router-link>
+              </b-dropdown-item-button>
+              <b-dropdown-divider></b-dropdown-divider>
+              <b-dropdown-item-button>
                 <router-link
                   :to="{ name:'' }"
                   @click.native="logout"
@@ -204,6 +202,8 @@
         try {
           if (window.FB) {
             window.FB.logout();
+            localStorage.removeItem("token");
+            localStorage.removeItem("userId")
           }
        
           let data = await API.post("users/logout");
@@ -243,4 +243,5 @@
     color: #5e98f9;
     margin-left: 1rem;
   }
+
 </style>

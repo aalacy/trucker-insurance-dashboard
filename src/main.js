@@ -71,13 +71,13 @@ library.add(
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 Vue.config.productionTip = false;
-Vue.use(Vuelidate);
 Vue.use(VueSwal);
 Vue.use(BootstrapVue);
 Vue.use(IconsPlugin )
 Vue.use(VueSignaturePad);
 Vue.use(VueIntercom, { appId: 'ct2qyf3u' });
 Vue.use(VueScrollTo);
+// Vue.use(Vuelidate);
 Vue.use(VueGoogleMaps, {
   load: {
     key: 'AIzaSyBAsXZ3BoGXNuEAo72cRzpgn0ug1JFSTXE',
