@@ -64,7 +64,8 @@ export default {
       // this.downloadPDF(oldPdf, "App.pdf")
       // this.loading = false
       window.open(`${process.env.VUE_APP_BACKEND_URL}/company/nico?uuid=` + this.uuid, "nico_window")
-      window.open(`${process.env.VUE_APP_BACKEND_URL}/company/pdf?uuid=` + this.uuid, "app_window")
+      setTimeout(() => window.open(`${process.env.VUE_APP_BACKEND_URL}/company/pdf?uuid=` + this.uuid, "app_window"), 1000);
+      
     }
   }
 };
