@@ -10,6 +10,8 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import Vue2TouchEvents from 'vue2-touch-events'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
+import VueFileAgent from 'vue-file-agent';
+import VueFileAgentStyles from 'vue-file-agent/dist/vue-file-agent.css';
 import { 
   faCaretLeft,
   faSpinner, 
@@ -92,6 +94,7 @@ Vue.use(VueGoogleMaps, {
   installComponents: true
 })
 Vue.use(Vue2TouchEvents)
+Vue.use(VueFileAgent);
 
 // Vue.component('font-awesome-icon', FontAwesomeIcon)
 

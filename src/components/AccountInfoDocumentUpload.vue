@@ -384,7 +384,6 @@ export default {
       if (file) {
         reader.readAsDataURL(file);
         tempObj.name = file.name;
-        // 
       } else {
         // 
         tempObj.name = "";

@@ -17,7 +17,7 @@
             :disabled="loading"
             type="submit"
             class="btn btn-primary btn-block"
-          >{{ loading ? 'Loading...' : 'Download PDF' }}</button>
+          >{{ loading ? 'Processing...' : 'Download PDF' }}</button>
         </form>
       </div>
     </div>
@@ -25,6 +25,7 @@
 </template>
 
 <script>
+  import { API } from "../api.js";
 export default {
   name: 'QuotesAccountInfo',
   data() {
@@ -42,8 +43,28 @@ export default {
   },
 
   methods: {
-    download() {
-      window.open(`${process.env.VUE_APP_BACKEND_URL}/company/pdf?uuid=` + this.uuid);
+    downloadPDF (data, name) {
+      const blob = new Blob([data], { type: "application/pdf;charset=utf-8;" })
+      var link = document.createElement("a");
+
+      var url = URL.createObjectURL(blob);
+      link.setAttribute("href", url);
+      link.setAttribute("download", name);
+      link.style.visibility = 'hidden';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    },
+
+    async download() {
+      // this.loading = true
+      // const nicoPdf = await API.get(`company/nico?uuid=` + this.uuid)
+      // this.downloadPDF(nicoPdf, "Nico.pdf")
+      // const oldPdf = await API.get(`company/pdf?uuid=` + this.uuid);
+      // this.downloadPDF(oldPdf, "App.pdf")
+      // this.loading = false
+      window.open(`${process.env.VUE_APP_BACKEND_URL}/company/nico?uuid=` + this.uuid, "nico_window")
+      window.open(`${process.env.VUE_APP_BACKEND_URL}/company/pdf?uuid=` + this.uuid, "app_window")
     }
   }
 };

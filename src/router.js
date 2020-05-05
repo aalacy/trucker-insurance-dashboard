@@ -42,7 +42,12 @@ const router = new Router({
           path: 'reset-password/:code',
           name: 'Resetpassword',
           component: () => import('./views/ResetPassword.vue')
-        }
+        },
+        {
+          path: 'contactus',
+          name: 'ContactUs',
+          component: () => import('./views/ContactUs.vue')
+        },
       ]
     },
     {

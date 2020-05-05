@@ -128,7 +128,6 @@
 <script>
   import { mapState, mapActions } from 'vuex';
   import { API } from "../api.js";
-  import axios from "axios";
   import Vue from "vue";
   import { VFBLogin as VFacebookLogin, VFBLoginScope  } from 'vue-facebook-login-component'
   import GSignInButton from 'vue-google-signin-button'

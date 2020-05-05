@@ -40,6 +40,8 @@
           :header="link.header"
           :index="link.header"
           :link="link.link"
+          :iconName="link.icon"
+          :mini="link.mini"
           :childrenLinks="link.childrenLinks"
           :key="link.header"
           @click.native="tapHeader(link.link)"
@@ -49,7 +51,14 @@
   </li>
   <li v-else>
     <router-link :to="index !== 'menu' && link">
-      {{header}} <sup v-if="label" :class="'text-' + labelColor" class="headerLabel">{{label}}</sup>
+      <img
+        v-if="iconName"
+        :src="iconName"
+        class="icon"
+        alt="Account info"
+      >
+      <span>{{header}} </span>
+      <sup v-if="label" :class="'text-' + labelColor" class="headerLabel">{{label}}</sup>
     </router-link>
   </li>
 </template>

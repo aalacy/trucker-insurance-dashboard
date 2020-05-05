@@ -55,16 +55,22 @@
               <b-dropdown-divider></b-dropdown-divider>
               <b-dropdown-item-button>
                 <router-link
-                  to=""
+                  :to="{ name: 'ContactUs'}"
                   active-class="font-weight-bold"
-                >My Blog</router-link>
+                >Contact Us</router-link>
+              </b-dropdown-item-button>
+              <b-dropdown-divider></b-dropdown-divider>
+              <b-dropdown-item-button>
+                <a
+                  target="_blank"
+                  href="https://blog.luckytruck.co"
+                >My Blog</a>
               </b-dropdown-item-button>
               <b-dropdown-divider></b-dropdown-divider>
               <b-dropdown-item-button>
                 <router-link
                   :to="{ name:'' }"
                   @click.native="logout"
-                  active-class="font-weight-bold"
                 >Logout</router-link> <span class="sr-only">(Click to Logout)</span>
               </b-dropdown-item-button>
             </b-dropdown>

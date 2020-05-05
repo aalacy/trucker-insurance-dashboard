@@ -45,68 +45,70 @@
 		      hint: '',
 		      US_DOT_or_company_name: '',
 		      items: [
-		        {
-		          header: "Your Quote Progress",
-		          link: { name: "AccountInfo" },
-		          isOpen: true,
-		          subItems: [
+		       //  {
+		       //    header: "Your Quote Progress",
+		       //    link: { name: "AccountInfo" },
+		       //    isOpen: true,
+		       //    icon: '/img/sidebar/Your-Quote-Progress.png'
+		      	// },
+		        //   subItems: [
 			        { 
 			          header: "Business Information",
 			          link: { name: "AccountInfoPersonalInfo" },
-			          mini: 'BI'
+			          icon: '/img/sidebar/Business-Information.png'
 			        },
 			        {
 			          header: "Business Structure",
 			          link: { name: "AccountInfoBusinessStructure" },
-			          mini: 'BS'
+			          icon: '/img/sidebar/Business-Structure.png'
 			        },
 			        { 
 			          header: "Cargo Group",
 			          link: { name: "AccountInfoCargoGroup" },
-			          mini: 'CG'
+			          icon: '/img/sidebar/Cargo-Group.png'
 			        },
 			        { 
 			          header: "Cargo Hauled",
 			          link: { name: "AccountInfoCargoHauled" },
-			          mini: 'CH'
+			          icon: '/img/sidebar/Cargo-Hauled.png'
 			        },
 			        { 
 			          header: "Vehicles & Trailers",
 			          link:{name:"AccountInfoVehiclesAndTrailers"},
-			          mini: 'VT'
+			          icon: '/img/sidebar/Vehicle-n-Trailer.png'
 			        },
 			        { 
 			          header: "ELD Provider",
 			          link: { name: "AccountInfoEldProvider" },
-			          mini: 'EP'
+			          icon: '/img/sidebar/ELD-Provider.png'
 			        },
 			        { 
 			          header: "Drivers",
 			          link: { name: "AccountInfoDrivers" },
-			          mini: 'DR'
+			          icon: '/img/sidebar/Drivers.png'
 			        },
 			        { 
 			          header: "Owner",
 			          link: { name: "AccountInfoOwners" },
-			          mini: 'OW'
+			          icon: '/img/sidebar/Owners.png'
 			        },
 			        { 
 			          header: "Comments", 
 			          link: { name: "AccountInfoQuestions" },
-			          mini: 'CO'
+			          icon: '/img/sidebar/Comments.png'
 			        },
 			        {
 			          header: "Document Upload",
 			          link: { name: "AccountInfoDocumentUpload" },
-			          mini: 'DU'
+			          icon: '/img/sidebar/Document Upload.png'
 			        },
 			        {
 			          header:"Sign & Complete",
 			          link:{name:"AccountInfoSignComplete"},
-			          mini: 'SC'
+			          icon: '/img/sidebar/Sign.png'
 			        },
-		          ]
-		      	}
+		       //    ]
+		      	// }
 		      ],
 		  	}
 		},
