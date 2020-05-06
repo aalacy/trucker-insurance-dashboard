@@ -636,7 +636,7 @@ input:focus {
         img {
           width: 65px;
           margin-top: 15px;
-          transition: all 1.1s;
+          transition: all .8s;
         }
       }
 
@@ -699,7 +699,7 @@ input:focus {
         transform: translateY(-50px);
       }
       img {
-        transform: rotate(-360deg);
+        transform: rotateY(-180deg);
       }
       .shadowOne {
         transform: translateY(-25px);
