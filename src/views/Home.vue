@@ -636,6 +636,7 @@ input:focus {
         img {
           width: 65px;
           margin-top: 15px;
+          transition: all 1.1s;
         }
       }
 
@@ -696,6 +697,9 @@ input:focus {
     &:hover {
       .service { 
         transform: translateY(-50px);
+      }
+      img {
+        transform: rotate(-360deg);
       }
       .shadowOne {
         transform: translateY(-25px);
