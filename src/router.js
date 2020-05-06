@@ -29,6 +29,26 @@ const router = new Router({
           component:()=>import('./views/Home.vue')
         },
         {
+          path: 'services/insurance',
+          name: 'Insurance',
+          component:()=>import('./views/services/Insurance.vue')
+        },
+        {
+          path: 'services/maintenance',
+          name: 'Maintenance',
+          component:()=>import('./views/services/Maintenance.vue')
+        },
+        {
+          path: 'services/operations',
+          name: 'Operations',
+          component:()=>import('./views/services/Operations.vue')
+        },
+        {
+          path: 'services/authority',
+          name: 'Authority',
+          component:()=>import('./views/services/AuthorityManagement.vue')
+        },
+        {
           path: 'sign-up',
           name: 'SignUp',
           component: () => import('./views/SignUp.vue')

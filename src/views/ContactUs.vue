@@ -109,6 +109,7 @@
           }
           res = await API.post('users/contactus', { contact: data })
           if (res.status == 'Ok') {
+            this.$swal( "", "Thank you for contacting us. We will get back to you within 12-24 hours.", "success")
           }
         } catch (e) {
           console.log(e)

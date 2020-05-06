@@ -99,88 +99,107 @@
       </div>
     </div>
 
-    <div class="container-fluid bg-grey pt-c-5 pb-5" id="img-text">
-      <div class="row justify-content-center">
-        <div class="col-lg-10 col-xs-8">
-
-          <div class="row justify-content-around homeImage">
-            <div class="col-lg-4 col-md-5 col-sm-6 col-xs-8 card-item">
-                <div class="d-flex justify-content-center align-items-center flex-column">
-                  <div class="bg-dark-grey br-5 mb-4 w-100 p-4">
-                    <img
-                      src="../assets/images/Insurance.png"
-                      height="auto"
-                      width="85%"
-                      class="d-block mx-auto rounded"
-                      alt="Insurance"
-                    >
-                  </div>
-                  <h1 class="mb-3">Insurance</h1>
-                  <p
-                    class="text-center"
-                  >At LuckyTruck, we simplify your insurance management and have a competitive variety of options to find your company the right insurance carrier.</p>
+    <div class="container-fluid service-section pb-5">
+      <div class="row justify-content-around">
+        <div class="col-lg-4 col-md-5 col-sm-6 col-xs-8">
+          <div class="service-main">
+            <div class="service">
+              <div class="service-logo">
+                <img
+                  src="/img/home/INSURED-TRUCK.png"
+                  height="auto"
+                  width="85%"
+                  alt="Insurance"
+                >
               </div>
+              <h4>Insurance</h4>
+              <p
+              >
+                At LuckyTruck, we simplify your insurance management and have a competitive variety of options to find your company the right insurance carrier.
+              </p>
+              <router-link
+                :to="{ name: 'Insurance' }"
+                class="btn btn-primary"
+                >View More</router-link>
             </div>
-            <div class="col-lg-4 col-md-5 col-sm-6 col-xs-8 card-item">
-              <div class="d-flex justify-content-center align-items-center flex-column">
-                <div class="bg-dark-grey br-5 mb-4 w-100 p-4">
-                  <img
-                    src="../assets/images/Maintenance.png"
-                    height="auto"
-                    width="85%"
-                    class="d-block mx-auto rounded"
-                    alt="Insurance"
-                  >
-                </div>
-                <h1>Maintenance</h1>
-                <p
-                  class="text-center"
-                >As you operate and have various maintenance needs, let us know and we’ll try to connect you to people who can manage your needs. We are still adding this service, but feel welcome to ask.</p>
-              </div>
-            </div>
-            
-          </div>
-          <div class="row justify-content-around homeImage">
-            <div class="col-lg-4 col-md-5 col-sm-6 col-xs-8 card-item">
-              <div class="d-flex justify-content-center align-items-center flex-column">
-                <div class="bg-dark-grey br-5 mb-4 w-100 p-4">
-                  <img
-                    src="../assets/images/BusinessOperation.png"
-                    height="auto"
-                    width="85%"
-                    class="d-block mx-auto rounded"
-                    alt="Insurance"
-                  > 
-                </div>
-                  <h1>Business Operations</h1>
-                  <p
-                      class="text-center"
-                  >To help you manage the dynamic nature of running a trucking business, we make it easier for you to manage your drivers, vehicles, and loads, all in our portal.</p>
-              </div>
-            </div>
-            <div class="col-lg-4 col-md-5 col-sm-6 col-xs-8 card-item">
-              <div class="d-flex justify-content-center align-items-center flex-column">
-                <div class="bg-dark-grey br-5 mb-4 w-100  p-4">
-                  <img
-                    src="../assets/images/AuthorityManagement.png"
-                    height="auto"
-                    width="85%"
-                    class="d-block mx-auto rounded"
-                    alt="Insurance"
-                  >
-                </div>
-                  <h1>
-                    Authority Management</h1>
-                  <p
-                    class="text-center"
-                  >Many new trucking companies receive fines in the first 45 days because they didn’t have the right authority advisory. We have partners that can you help manage your authority.</p>
-              </div>
-            </div>
-            
+            <div class="shadowOne"></div>
+            <div class="shadowTwo"></div>
           </div>
         </div>
+        <div class="col-lg-4 col-md-5 col-sm-6 col-xs-8">
+          <div class="service-main">
+            <div class="service">
+              <div class="service-logo">
+                <img
+                  src="/img/home/Repairing-Truck.png"
+                  alt="Insurance"
+                >
+              </div>
+              <h4>Maintenance</h4>
+              <p
+              >
+                As you operate and have various maintenance needs, let us know and we’ll try to connect you to people who can manage your needs. We are still adding this service, but feel welcome to ask.
+              </p>
+              <router-link
+                :to="{ name: 'Maintenance' }"
+                class="btn btn-primary"
+                >View More</router-link>
+            </div>
+            <div class="shadowOne"></div>
+            <div class="shadowTwo"></div>
+          </div>
+        </div>
+      </div>
+      <div class="row justify-content-around homeImage">
+        <div class="col-lg-4 col-md-5 col-sm-6 col-xs-8">
+          <div class="service-main">
+            <div class="service">
+              <div class="service-logo">
+                <img
+                  src="/img/home/business-operation.png"
+                  alt="Insurance"
+                >
+              </div>
+              <h4>Business Operations</h4>
+              <p
+              >
+                To help you manage the dynamic nature of running a trucking business, we make it easier for you to manage your drivers, vehicles, and loads, all in our portal.
+              </p>
+              <router-link
+                :to="{ name: 'Operations' }"
+                class="btn btn-primary"
+                >View More</router-link>
+            </div>
+            <div class="shadowOne"></div>
+            <div class="shadowTwo"></div>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-5 col-sm-6 col-xs-8">
+          <div class="service-main">
+            <div class="service">
+              <div class="service-logo">
+                <img
+                  src="/img/home/Hand-Stamping-with-white-bg.png"
+                  alt="Insurance"
+                >
+              </div>
+              <h4>Authority Management</h4>
+              <p
+              >
+                Many new trucking companies receive fines in the first 45 days because they didn’t have the right authority advisory. We have partners that can you help manage your authority.
+              </p>
+              <router-link
+                :to="{ name: 'Authority' }"
+                class="btn btn-primary"
+                >View More</router-link>
+            </div>
+            <div class="shadowOne"></div>
+            <div class="shadowTwo"></div>
+          </div>
+        </div>
+      </div>
     </div>
-    </div>
+
     <div class="modal" id="myModal">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -578,6 +597,117 @@ input:focus {
   width: 100%;
   border-radius: 5px
 }
+
+.service-section {
+  background: #007bff;
+
+  .service-main {
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    text-align: center;
+    position: relative;
+    height: 460px;
+
+    a {
+      opacity: 0;
+      transition: all .8s;
+      transform: translateY(10px);
+    }
+  
+    .service {
+      background: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      position: absolute;
+      bottom: 0;
+      z-index: 1;
+      box-shadow: 0 0 20px -15px #030380;
+      transition: all .8s;
+
+      .service-logo {
+        width: 130px;
+        height: 130px;
+        border-radius: 50%;
+        margin: -90px auto 0;
+        background: #fff;
+        border: 18px solid #007bff;
+
+        img {
+          width: 65px;
+          margin-top: 15px;
+        }
+      }
+
+      h4 {
+        height: 35px;
+        width: 80%;
+        background: #fff;
+        margin: 50px auto;
+        position: relative;
+
+        &::after {
+          content: '';
+          width: 40px;
+          height: 30px;
+          position: absolute;
+          right: -5px;
+          top: -5px;
+          background: linear-gradient(to right, #fff, #007bff);
+          z-index: -1;
+        }
+
+        &::before {
+          content: '';
+          width: 40px;
+          height: 30px;
+          position: absolute;
+          left: -5px;
+          bottom: -5px;
+          background: linear-gradient(to right, #007bff, #fff);
+          z-index: -1;
+        }
+      }
+    }
+
+    .shadowOne {
+      height: 200px;
+      width: 80%;
+      background: #fff;
+      position: absolute;
+      border-radius: 10px;
+      bottom: 0;
+      left: 10%;
+      box-shadow: 0 0 20px -15px #030380;
+      transition: all .8s;
+    }
+
+    .shadowTwo {
+      height: 200px;
+      width: 64%;
+      background: #fff;
+      position: absolute;
+      border-radius: 10px;
+      bottom: 0;
+      left: 18%;
+      transition: all .8s;
+    }
+
+    &:hover {
+      .service { 
+        transform: translateY(-50px);
+      }
+      .shadowOne {
+        transform: translateY(-25px);
+      }
+      a {
+        opacity: 1;
+        transform: translateY(-5px);
+      }
+    }
+  }
+}
+
 
 </style>
 
