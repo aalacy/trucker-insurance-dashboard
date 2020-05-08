@@ -150,7 +150,7 @@
           </div>
         </div>
       </div>
-      <div class="row justify-content-around homeImage">
+      <div class="row justify-content-around ">
         <div class="col-lg-4 col-md-5 col-sm-6 col-xs-8">
           <div class="service-main">
             <div class="service">
@@ -179,7 +179,7 @@
             <div class="service">
               <div class="service-logo">
                 <img
-                  src="/img/home/Hand-Stamping-with-white-bg.png"
+                  src="/img/home/Hand-Stamping.png"
                   alt="Insurance"
                 >
               </div>
@@ -588,9 +588,6 @@ input:focus {
     border-top-right-radius: 20px; 
 }
 
-.homeImage img{
-  width:70% !important;
-}
 .company-table{
   max-height: 400px;
   overflow-y: scroll;
@@ -634,8 +631,8 @@ input:focus {
         border: 18px solid #007bff;
 
         img {
-          width: 65px;
-          margin-top: 15px;
+          width: 75px;
+          margin-top: 8px;
           transition: all .8s;
         }
       }
