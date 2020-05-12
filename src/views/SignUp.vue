@@ -49,7 +49,12 @@
                 type="text"
                 class="lt-input border border-color"
                 placeholder="US DOT Number"
+                :state="dotDuplication()"
+                aria-describedby="dotId"
               />
+              <b-form-invalid-feedback id="dotId">
+                <span v-html="dotDuplicationError"></span>
+              </b-form-invalid-feedback>
             </div>
             <div class="form-group">
               <b-input
@@ -98,6 +103,7 @@
                 class="lt-input border border-color"
                 placeholder="Confirm Password"
                 :state="checkPassword()"
+                aria-describedby="input-confirmpassword"
               ></b-input>
               <b-form-invalid-feedback id="input-confirmpassword">
                 {{ passwordConfirmError }}
@@ -158,12 +164,14 @@ export default {
       },
       passwordError: 'Password does not match',
       passwordConfirmError: 'Password does not match',
+      dotDuplicationError: '',
       password_length: 0,
       contains_eight_characters: false,
       contains_number: false,
       contains_uppercase: false,
       contains_special_character: false,
-      valid_password: false
+      valid_password: false,
+      existingDots: []
     };
   },
 
@@ -177,6 +185,7 @@ export default {
 
       return valid
     },
+
   },
 
   validations: {
@@ -208,13 +217,33 @@ export default {
     }
   },
 
-  mounted() {
-    console.log(this.$router.history.current)
+  async mounted() {
+    try{
+      const res = await API.get('users/dots')
+      this.existingDots = res.dots
+    } catch (e) { console.log(e.response) }
   },
   methods: {
+    getAllDots () {
+
+    },
+
     validateState(name) {
       const { $dirty, $error } = this.$v.form[name];
       return $dirty ? !$error : null;
+    },
+
+    dotDuplication () {
+      let valid = false
+      if (this.existingDots.includes(this.form.dotId)) {
+        this.dotDuplicationError = "This DOT # is already in use. Double-check to add your own. If you believe this DOT # belongs to you, <a href='/contactus'>Click here</a>"
+        valid = false
+      } else {
+        this.dotDuplicationError = ""
+        valid = true
+      }
+
+      return valid
     },
 
     checkPassword() {

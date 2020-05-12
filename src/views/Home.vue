@@ -359,11 +359,13 @@ export default {
       this.companies = [];
       this.company = null;
       this.noData = false;
+      const userId = JSON.parse(localStorage.getItem('userId'))
 
       try {
         let data = await API.get("company/search", {
           keyword: this.keyword,
-          coords: this.coords
+          coords: this.coords,
+          userId
         });
 
         if (data.status == "OK") {

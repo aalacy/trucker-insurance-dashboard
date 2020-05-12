@@ -39,6 +39,7 @@ class APIService {
   async request(method, url, data, params, options = {'Content-Type': 'application/json'}) {
     let config = {
       url: `${process.env.VUE_APP_BACKEND_URL}/${url}`,
+      // url: `https://api.luckytruck.co/api/${url}`,
       data,
       method,
       params,

@@ -206,10 +206,10 @@
                       :value="item"
                     >{{ item }}</option>
                   </select>
-                <div
-                  class="text-danger"
-                  v-show="!validations.vehiclesData[index].vehicleType.is_valid"
-                >{{ validations.vehiclesData[index].vehicleType.text }}</div>
+                  <div
+                    class="text-danger"
+                    v-show="!validations.vehiclesData[index].vehicleType.is_valid"
+                  >{{ validations.vehiclesData[index].vehicleType.text }}</div>
               </div>
               
               <div class="form-group col-lg-5 col-md-6 col-sm-8 mb-4">
