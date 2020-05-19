@@ -226,9 +226,9 @@
             this.setLoggedIn(false)
             this.quote = false;
             this.show=false;
+            this.clearLocalStorage()
             setTimeout(()=>{
               this.myacchide = false;
-              this.clearLocalStorage()
               if (this.$router.history.current.name !== 'Home') {
                 this.$router.push({ name: "Home" });
               }
