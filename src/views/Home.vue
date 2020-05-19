@@ -360,12 +360,14 @@ export default {
       this.company = null;
       this.noData = false;
       const userId = JSON.parse(localStorage.getItem('userId')) || ''
+      const dotId = localStorage.getItem('usdot')
 
       try {
         let data = await API.get("company/search", {
           keyword: this.keyword,
           coords: this.coords,
-          userId
+          userId,
+          dotId
         });
 
         if (data.status == "OK") {
