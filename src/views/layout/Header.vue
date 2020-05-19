@@ -202,14 +202,22 @@
         this.show = true;
         this.$router.push({name:'QuotesAllQuotes'})
       },
+
+      clearLocalStorage () {
+        localStorage.removeItem("token");
+        localStorage.removeItem("userId")
+        localStorage.removeItem("uuid")
+        localStorage.removeItem("usdot")
+        localStorage.removeItem("accountInfoProgress")
+      },
+
       async logout(){
         this.loading = true;
         this.error = null;
         try {
           if (window.FB) {
             window.FB.logout();
-            localStorage.removeItem("token");
-            localStorage.removeItem("userId")
+            this.clearLocalStorage()
           }
        
           let data = await API.post("users/logout");
@@ -220,8 +228,7 @@
             this.show=false;
             setTimeout(()=>{
               this.myacchide = false;
-              localStorage.removeItem("token");
-              localStorage.removeItem("userId")
+              this.clearLocalStorage()
               if (this.$router.history.current.name !== 'Home') {
                 this.$router.push({ name: "Home" });
               }

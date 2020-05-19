@@ -199,8 +199,17 @@ export default {
       }
     },
 
+    clearLocalStorage () {
+      // localStorage.removeItem("token");
+      // localStorage.removeItem("userId")
+      // localStorage.removeItem("uuid")
+      // localStorage.removeItem("usdot")
+      // localStorage.removeItem("accountInfoProgress")
+    },
+
     proceedAfterLogin(data, loader) {
       if (data.status === "ok") {
+        this.clearLocalStorage()
         this.setLoggedIn(true)
         this.loading = false;
         if (loader) {

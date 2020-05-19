@@ -359,7 +359,7 @@ export default {
       this.companies = [];
       this.company = null;
       this.noData = false;
-      const userId = JSON.parse(localStorage.getItem('userId'))
+      const userId = JSON.parse(localStorage.getItem('userId')) || ''
 
       try {
         let data = await API.get("company/search", {

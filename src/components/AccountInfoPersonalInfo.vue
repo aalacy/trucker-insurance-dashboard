@@ -91,6 +91,7 @@
                   :class="{ 'has-error': formErrors.dotNumber }"
                   type="text"
                   class="lt-input"
+                  :readonly="submitted"
                   placeholder="USDOT"
                   @focus="onFocus('USDOT')"
                   @blur="onBlur"
@@ -410,6 +411,7 @@ export default {
       },
       paths: [],
       distance: "",
+      submitted: false,
     };
   },
   async created() {
@@ -582,17 +584,13 @@ export default {
       this.loading = false;
       this.error = null;
       this.uuid = localStorage.getItem('uuid');
-      // if (this.uuid == 'null' || this.uuid == null) {
-      //   const _uuid = this.$router.history.current.query.uuid
-      //   if (_uuid) {
-      //     this.uuid = _uuid
-      //   }
-      // }
+      const userId = localStorage.getItem('userId')
       try {
-        let res = await API.get("company/current?uuid=" + this.uuid);
+        let res = await API.get("company/current?uuid=" + this.uuid + "&userId=" + userId);
         this.uuid = res.data.uuid;
   
         if (res.status === "OK") {
+          this.submitted = res.submitted
           await this.parseData(res.data)
         } else if (res.status === "ERROR") {
           // this.$router.replace({ name: "Home" });

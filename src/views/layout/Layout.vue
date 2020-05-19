@@ -55,32 +55,32 @@
 			        { 
 			          header: "Business Information",
 			          link: { name: "AccountInfoPersonalInfo" },
-			          icon: '/img/sidebar/Business-Information.png'
+			          icon: '/img/sidebar/Information.png'
 			        },
 			        {
 			          header: "Business Structure",
 			          link: { name: "AccountInfoBusinessStructure" },
-			          icon: '/img/sidebar/Business-Structure.png'
+			          icon: '/img/sidebar/Structure.png'
 			        },
 			        { 
 			          header: "Cargo Group",
 			          link: { name: "AccountInfoCargoGroup" },
-			          icon: '/img/sidebar/Cargo-Group.png'
+			          icon: '/img/sidebar/Group.png'
 			        },
 			        { 
 			          header: "Cargo Hauled",
 			          link: { name: "AccountInfoCargoHauled" },
-			          icon: '/img/sidebar/Cargo-Hauled.png'
+			          icon: '/img/sidebar/Hauled.png'
 			        },
 			        { 
 			          header: "Vehicles & Trailers",
 			          link:{name:"AccountInfoVehiclesAndTrailers"},
-			          icon: '/img/sidebar/Vehicle-n-Trailer.png'
+			          icon: '/img/sidebar/Vehicle.png'
 			        },
 			        { 
 			          header: "ELD Provider",
 			          link: { name: "AccountInfoEldProvider" },
-			          icon: '/img/sidebar/ELD-Provider.png'
+			          icon: '/img/sidebar/ELD_Provider.png'
 			        },
 			        { 
 			          header: "Drivers",
