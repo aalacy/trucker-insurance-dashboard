@@ -151,7 +151,7 @@ export default {
   },
 
   created() {
-    this.$emit('update-hint', 'Here are all of your current quotes. If anything is missing, just send us a massage or call us.');
+    this.$emit('update-hint', 'Here are all of your current quotes. If anything is missing, just send us a message or call us.');
   },
 
   methods: {
