@@ -85,47 +85,52 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
-import axios from "axios";
+  import { mapState, mapActions } from "vuex";
+  import axios from "axios";
 
-export default {
-  name: 'PoliciesVehiclesAndTrailers',
+  export default {
+    name: 'PoliciesVehiclesAndTrailers',
 
-  data() {
-    return {
-      accept: false,
-      buttonHide: false,
-      status: true,
-      vehicles: [
-        {
-          id: 1,
-          name: "Vehicle 1",
-          img: "/img/sidebar/quote-1.png"
-        },
-        {
-          id: 2,
-          name: "Vehicle 2",
-          img: "/img/sidebar/quote-2.png"
-        },
-        {
-          id: 3,
-          name: "Vehicle 3",
-          img: "/img/sidebar/quote-1.png"
-        },
-        {
-          id: 4,
-          name: "Vehicle 4",
-          img: "/img/sidebar/quote-2.png"
-        }
-      ],
-      loading: false,
-      error: null
-    };
-  },
-  created() {
-    this.$emit('update-hint', 'Please be sure that all vehicles currently operating under your authority are added to your current policy. Please use this section to add or subtract vehicles.');
-  }
-};
+    data() {
+      return {
+        accept: false,
+        buttonHide: false,
+        status: true,
+        vehicles: [
+          {
+            id: 1,
+            name: "Vehicle 1",
+            img: "/img/sidebar/quote-1.png"
+          },
+          {
+            id: 2,
+            name: "Vehicle 2",
+            img: "/img/sidebar/quote-2.png"
+          },
+          {
+            id: 3,
+            name: "Vehicle 3",
+            img: "/img/sidebar/quote-1.png"
+          },
+          {
+            id: 4,
+            name: "Vehicle 4",
+            img: "/img/sidebar/quote-2.png"
+          }
+        ],
+        loading: false,
+        error: null
+      };
+    },
+    
+    created() {
+      this.$emit('update-hint', 'Please be sure that all vehicles currently operating under your authority are added to your current policy. Please use this section to add or subtract vehicles.');
+    },
+
+    computed: {
+      ...mapState(["auth"]),
+    }
+  };
 </script>
 
 

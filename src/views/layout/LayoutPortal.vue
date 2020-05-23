@@ -32,8 +32,8 @@
 </template>
 
 <script>
-	import { createNamespacedHelpers } from 'vuex';
-	const { mapState, mapActions, mutations } = createNamespacedHelpers('layout');
+	import { mapState, mutations, mapActions } from "vuex";
+
 	export default {
 		name: 'Layout',
 
@@ -136,7 +136,7 @@
 	    },
 
 		methods: {
-			...mapActions(['setSidebarStatic', 'switchSidebar', 'handleSwipe', 'changeSidebarActive', 'toggleSidebar'],
+			...mapActions('layout', ['setSidebarStatic', 'switchSidebar', 'handleSwipe', 'changeSidebarActive', 'toggleSidebar'],
 			),
 
 			updateProgress(progress) {
@@ -171,7 +171,7 @@
 		},
 
 		computed: {
-			...mapState(["sidebarClose", "sidebarStatic"]),
+			...mapState('layout', ["sidebarClose", "sidebarStatic"]),
 		},
 
 		created() {
@@ -192,7 +192,7 @@
 
 		beforeDestroy() {
 			window.removeEventListener('resize', this.handleWindowResize);
-		}
+		},
 	}
 </script>
 
@@ -248,4 +248,11 @@
 	    flex-wrap: nowrap;
 	    position: relative;
 	}
+
+</style>
+
+<style>
+	.portal-fontawesome.linkedin path {
+	    fill: #007bff;
+  	}
 </style>

@@ -11,75 +11,80 @@
               alt="Loading"
             >
         </div>
-        <div v-if="status">
-          <div v-for="(item, idx) in certs" :key="idx" class="quote-wrapper block-divider">
-            <div :class="highlightOldCert(item)" class="image-wrapper px-1">
-              <img src="https://picsum.photos/200" alt class="image">
-            </div>
+        <template v-if="auth.quoteSubmitted == 'true'">
+          <div v-if="status">
+            <div v-for="(item, idx) in certs" :key="idx" class="quote-wrapper block-divider">
+              <div :class="highlightOldCert(item)" class="image-wrapper px-1">
+                <img src="https://picsum.photos/200" alt class="image">
+              </div>
 
-            <div class="quote-content">
-              <div :class="highlightOldCert(item)" class="block-title mb-3">{{ item.title }}</div>
-              <div class="action-block row">
-                <!-- <div class="col">
-                  <div class="action-item">
-                    <a href="#" class="lift">
-                      <font-awesome-icon class="fontawesome" :icon="['fas', 'eye']" />
-                    </a>
-                    <div>View</div>
+              <div class="quote-content">
+                <div :class="highlightOldCert(item)" class="block-title mb-3">{{ item.title }}</div>
+                <div class="action-block row">
+                  <!-- <div class="col">
+                    <div class="action-item">
+                      <a href="#" class="lift">
+                        <font-awesome-icon class="fontawesome" :icon="['fas', 'eye']" />
+                      </a>
+                      <div>View</div>
+                    </div>
+                  </div> -->
+                  <div class="col">
+                    <div class="action-item">
+                      <a :href="mailto" class="lift">
+                        <font-awesome-icon class="fontawesome" :icon="['fas', 'envelope']" />
+                      </a>
+                      <div>Email</div>
+                    </div>
                   </div>
-                </div> -->
-                <div class="col">
-                  <div class="action-item">
-                    <a :href="mailto" class="lift">
-                      <font-awesome-icon class="fontawesome" :icon="['fas', 'envelope']" />
-                    </a>
-                    <div>Email</div>
+                  <div class="col">
+                    <div class="action-item">
+                      <a href="javascript:;" class="lift" @click="downloadPDF(item.data)">
+                        <font-awesome-icon class="fontawesome" :icon="['fas', 'download']" />
+                      </a>
+                      <div>Download</div>
+                    </div>
                   </div>
-                </div>
-                <div class="col">
-                  <div class="action-item">
-                    <a href="javascript:;" class="lift" @click="downloadPDF(item.data)">
-                      <font-awesome-icon class="fontawesome" :icon="['fas', 'download']" />
-                    </a>
-                    <div>Download</div>
+                  <div class="col">
+                    <div class="action-item">
+                      <a href="javascript:;" class="lift" @click="displayPDF(item.data)">
+                        <font-awesome-icon class="fontawesome" :icon="['fas', 'file-pdf']" />
+                      </a>
+                      <div>PDF</div>
+                    </div>
                   </div>
-                </div>
-                <div class="col">
-                  <div class="action-item">
-                    <a href="javascript:;" class="lift" @click="displayPDF(item.data)">
-                      <font-awesome-icon class="fontawesome" :icon="['fas', 'file-pdf']" />
-                    </a>
-                    <div>PDF</div>
+                  <div class="col">
+                    <div class="action-item">
+                      <a href="#" class="lift">
+                        <font-awesome-icon class="fontawesome" :icon="['fas', 'pen']" />
+                      </a>
+                      <div>Edit</div>
+                    </div>
                   </div>
-                </div>
-                <div class="col">
-                  <div class="action-item">
-                    <a href="#" class="lift">
-                      <font-awesome-icon class="fontawesome" :icon="['fas', 'pen']" />
-                    </a>
-                    <div>Edit</div>
-                  </div>
-                </div>
-                <div class="col">
-                  <div class="action-item">
-                    <button class="btn" :class="isOldCert(item) ? 'gray-opacity' : 'lift'" :disabled="isOldCert(item)">
-                      <font-awesome-icon class="fontawesome" :icon="['fas', 'sync-alt']" />
-                    </button>
-                    <div>Refresh</div>
+                  <div class="col">
+                    <div class="action-item">
+                      <button class="btn" :class="isOldCert(item) ? 'gray-opacity' : 'lift'" :disabled="isOldCert(item)">
+                        <font-awesome-icon class="fontawesome" :icon="['fas', 'sync-alt']" />
+                      </button>
+                      <div>Refresh</div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-        <div v-else>
-          <span>
-            Your application is complete, we should have an update for you soon. If you have any further questions about this, feel to call us at
-            <a
-              href="tel:15135062400"
-              style="font-weight:bold; white-space:nowrap;"
-            >1-513-506-2400</a>
-          </span>
+          <!-- <div v-else>
+            <span>
+              Your application is complete, we should have an update for you soon. If you have any further questions about this, feel to call us at
+              <a
+                href="tel:15135062400"
+                style="font-weight:bold; white-space:nowrap;"
+              >1-513-506-2400</a>
+            </span>
+          </div> -->
+        </template>
+        <div v-else class="mt-3 text-center">
+          <div>This page is currently empty and will be populated once your submitted Quote is processed.</div>
         </div>
 
         <PDFViewer :showModal="showModal" :pdf="pdf" @close-modal="closeModal" />
@@ -91,9 +96,10 @@
 </template>
 
 <script>
-import moment from "moment";
-import axios from "axios";
-import { API } from "../api.js";
+  import { mapState, mapActions } from "vuex";
+  import moment from "moment";
+  import axios from "axios";
+  import { API } from "../api.js";
 
 export default {
   name: "CertificatesPast",
@@ -150,35 +156,57 @@ export default {
       }
       this.showModal = true
     },
+
+    async getPastCerts () {
+      if (this.auth.quoteSubmitted == 'true') {
+        const dotId = localStorage.getItem('usdot');
+        const userId = localStorage.getItem('userId');
+        let res = await API.post("company/accountinfo/pastcerts", {
+          userId
+        });
+        this.loading = false;
+        const { certs, status, message } = res;
+        if (status == 'ok') {
+          this.certs = certs;
+          this.status = true
+        } else {
+          this.error = message
+          this.status = false
+        }
+      }
+    }
   },
-  async mounted() {
+
+  mounted() {
     let user = {}
     try {
       user = JSON.parse(localStorage.getItem('token'))
     } catch (e) {}
     this.email = user.email || ''
-    const dotId = localStorage.getItem('usdot');
-    const userId = localStorage.getItem('userId');
-    let res = await API.post("company/accountinfo/pastcerts", {
-      userId
-    });
-    this.loading = false;
-    const { certs, status } = res;
-    if (status == 'ok') {
-      this.certs = certs;
-    } else {
-      this.status = false
-    }
+    
+    this.getPastCerts()
   },
+
   created() {
     this.$emit("update-hint", "Use this section to manage your certificates. For more detailed certificates, please submit your request and someone from our team will manually create your certificate.");
   },
 
   computed: {
+    ...mapState(["auth"]),
     mailto () {
       return `mailto:${this.email}?subject=Insurance%20Quote%20from%20LuckyTruck`
     },
   },
+
+  watch: {
+    auth: {
+      deep: true,
+      handler () {
+        this.getPastCerts()
+      }
+    }
+  },
+
 };
 </script>
 

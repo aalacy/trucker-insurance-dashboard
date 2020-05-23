@@ -105,6 +105,9 @@
       this.msg = this.mobile = window.innerWidth <= 768 ? true : false;
 
       this.checkAuth()
+
+      const submitted = localStorage.getItem('submitted')
+      this.updateSubmittedStatus(submitted)
     },
 
     computed: {
@@ -157,11 +160,12 @@
     methods: {
       ...mapActions('layout', ['toggleSidebar', 'switchSidebar', 'changeSidebarActive']),
 
-      ...mapActions('auth', ['setLoggedIn']),
+      ...mapActions('auth', ['setLoggedIn', 'updateSubmittedStatus']),
 
       checkAuth () {
         const token = localStorage.getItem('token')
         const userId = localStorage.getItem('userId')
+        
         if (token && userId) {
           return this.setLoggedIn(true)
         } else {
@@ -209,6 +213,7 @@
         localStorage.removeItem("uuid")
         localStorage.removeItem("usdot")
         localStorage.removeItem("accountInfoProgress")
+        localStorage.removeItem("submitted")
       },
 
       async logout(){

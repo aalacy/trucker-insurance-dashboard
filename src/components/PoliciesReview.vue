@@ -11,57 +11,56 @@
               alt="Loading"
             >
         </div>
-        <div v-if="status">
-          <div v-for="item in policies" :key="item.policyId" class="block-divider policy-wrapper">
-            <div class="policy-image-wrapper px-1 mb-2">
-              <img src="https://picsum.photos/200" alt class="policy-image">
-            </div>
-
-            <div class="policy-info px-3">
-              <div class="block-title">{{ item.accountName }}</div>
-
-              <!-- <div class="policy-subtitle">{{ item.policyType }}</div> -->
-              <div class="block-subtitle">
-                Policy Type:
-                <strong >{{ item.policyType }}</strong>
+        <template v-if="auth.quoteSubmitted == 'true'">
+          <div v-if="status">
+            <div v-for="item in policies" :key="item.policyId" class="block-divider policy-wrapper">
+              <div class="policy-image-wrapper px-1 mb-2">
+                <img src="https://picsum.photos/200" alt class="policy-image">
               </div>
 
-              <div class="block-subtitle">
-                Effective Date:
-                <strong>{{ item.effectiveDate }}</strong>
-              </div>
+              <div class="policy-info px-3">
+                <div class="block-title">{{ item.accountName }}</div>
 
-              <div class="block-subtitle">
-                Current Premium:
-                <strong>${{ item.currentPremium }}</strong>
-              </div>
-
-               <button
-                type="button"
-                :disabled="loading"
-                class="lt-button lt-button-main mt-3 mb-3"
-                @click="requestCertificate(item)"
-              >Request a Certificate</button>
-
-              <div class="d-flex small">
-                <div class="px-2">
-                  <a href="#" class="underline-link" @click.prevent="viewDetails(item)" :disabled="loading">View Details</a>
+                <!-- <div class="policy-subtitle">{{ item.policyType }}</div> -->
+                <div class="block-subtitle">
+                  Policy Type:
+                  <strong >{{ item.policyType }}</strong>
                 </div>
 
-                <div class="px-2">
-                  <a href="#" class="underline-link" @click.prevent="viewHistory(item)" :disabled="loading">View Change History</a>
+                <div class="block-subtitle">
+                  Effective Date:
+                  <strong>{{ item.effectiveDate }}</strong>
+                </div>
+
+                <div class="block-subtitle">
+                  Current Premium:
+                  <strong>${{ item.currentPremium }}</strong>
+                </div>
+
+                 <button
+                  type="button"
+                  :disabled="loading"
+                  class="lt-button lt-button-main mt-3 mb-3"
+                  @click="requestCertificate(item)"
+                >Request a Certificate</button>
+
+                <div class="d-flex small">
+                  <div class="px-2">
+                    <a href="#" class="underline-link" @click.prevent="viewDetails(item)" :disabled="loading">View Details</a>
+                  </div>
+
+                  <div class="px-2">
+                    <a href="#" class="underline-link" @click.prevent="viewHistory(item)" :disabled="loading">View Change History</a>
+                  </div>
                 </div>
               </div>
             </div>
+
+            <div v-if="error" class="alert alert-danger" role="alert">{{ error }}</div>
           </div>
-
-          <div v-if="error" class="alert alert-danger" role="alert">{{ error }}</div>
-        </div>
-        <div v-else>
-          <span>
-            Your application is complete, we should have an update for you soon. If you have any further questions about this, feel to call us at
-            <a href="tel:15135062400" style="font-weight:bold; white-space:nowrap;">1-513-506-2400</a>
-          </span>
+        </template>
+        <div v-else class="mt-3 text-center">
+          <div>This page is currently empty and will be populated once your submitted Quote is processed.</div>
         </div>
       </div>
     </div>
@@ -119,11 +118,12 @@
 </template>
 
 <script>
-import moment from "moment";
-import axios from "axios";
-import { API } from "../api.js";
-import { setTimeout } from "timers";
-import InputComponent from './InputComponent'
+  import { mapState, mapActions } from "vuex";
+  import moment from "moment";
+  import axios from "axios";
+  import { API } from "../api.js";
+  import { setTimeout } from "timers";
+  import InputComponent from './InputComponent'
 
 export default {
   name: "PoliciesReview",
@@ -167,6 +167,7 @@ export default {
   },
 
   computed: {
+    ...mapState(["auth"]),
     historyTitle () {
       return 'Endorsements (' + this.endorsements.length +')'
     },
@@ -261,26 +262,44 @@ export default {
       } else {
         this.status = false
       }
+    },
+
+    async getPolicies () {
+      if (this.auth.quoteSubmitted == 'true') {
+        let res = await API.post("company/accountinfo/policies", {
+          dotId: this.dotId,
+          userId: this.userId
+        });
+        this.loading = false;
+        const { policies, status } = res;
+        if (status == 'ok') {
+          policies.map((policy, i) => {
+            this.policies.push(policy)
+          })
+        } else {
+          this.status = false
+        }
+      }
     }
   },
+
+  watch: {
+    auth: {
+      deep: true,
+      handler () {
+        this.getPolicies()
+      }
+    }
+  },
+
   async mounted() {
     this.dotId = localStorage.getItem('usdot');
     this.userId = localStorage.getItem('userId');
     this.uuid = localStorage.getItem('uuid');
-    let res = await API.post("company/accountinfo/policies", {
-      dotId: this.dotId,
-      userId: this.userId
-    });
-    this.loading = false;
-    const { policies, status } = res;
-    if (status == 'ok') {
-      policies.map((policy, i) => {
-        this.policies.push(policy)
-      })
-    } else {
-      this.status = false
-    }
+    
+    this.getPolicies()
   },
+
   created() {
     this.$emit("update-hint", "Here are your current policies, to add vehicles and drivers, please see the side bar on the left. Please contact us with any questions or changes.");
   }

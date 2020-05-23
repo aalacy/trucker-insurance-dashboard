@@ -170,7 +170,7 @@ export default {
   },
 
   methods: {
-    ...mapActions('auth', ['setLoggedIn']),
+    ...mapActions('auth', ['setLoggedIn', 'updateSubmittedStatus']),
 
     accountStatusUpdate() {
       localStorage.setItem("register_status", "0");
@@ -211,6 +211,8 @@ export default {
       if (data.status === "ok") {
         this.clearLocalStorage()
         this.setLoggedIn(true)
+        this.updateSubmittedStatus(data.submitted)
+        localStorage.setItem('submitted', data.submitted)
         this.loading = false;
         if (loader) {
           loader.hide();

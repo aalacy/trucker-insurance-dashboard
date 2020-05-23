@@ -21,111 +21,116 @@
               alt="Loading"
             >
         </div>
-
-        <div v-for="item in drivers" :key="item.id" class="block-divider d-flex">
-          <div class="policy-image-wrapper px-1">
-            <img :src="item.img" alt="" class="policy-image" />
-          </div>
-
-          <div class="policy-info w-100 px-3">
-            <div class="block-title mb-2">
-              {{ item.firstName }} {{ item.lastName }}
+        
+        <template v-if="auth.quoteSubmitted == 'true'">
+          <div v-for="item in drivers" :key="item.id" class="block-divider d-flex">
+            <div class="policy-image-wrapper px-1">
+              <img :src="item.img" alt="" class="policy-image" />
             </div>
 
-            <div class="row">
-              <div class="col">
-                <div class="block-subtitle">
-                  Policy Type:
-                </div>
-              </div>
-              <div class="col">
-                <div class="block-subtitle"><strong>{{ item.policyType }}</strong></div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col">
-                <div class="block-subtitle">
-                  Date of Birth:
-                </div>
-              </div>
-              <div class="col">
-                <div class="block-subtitle"><strong>{{ item.dob  }}</strong></div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col">
-                <div class="block-subtitle">
-                  Mo/Yr Premium:
-                </div>
-              </div>
-              <div class="col">
-                <div class="block-subtitle"><strong>$ {{ item.premium | premium }}</strong></div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col">
-                <div class="block-subtitle">
-                  License Number:
-                </div>
-              </div>
-              <div class="col">
-                <div class="block-subtitle"><strong>{{ item.licenseNumber }}</strong></div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col">
-                <div class="block-subtitle">
-                  State:
-                </div>
-              </div>
-              <div class="col">
-                <div class="block-subtitle"><strong>{{ item.state }}</strong></div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col">
-                <div class="block-subtitle">
-                  Date Hired:
-                </div>
-              </div>
-              <div class="col">
-                <div class="block-subtitle"><strong>{{ item.hireDate  }}</strong></div>
-              </div>
-            </div>
-            <div class="row mb-2">
-              <div class="col">
-                <div class="block-subtitle">
-                  Years of Experience:
-                </div>
-              </div>
-              <div class="col">
-                <div class="block-subtitle"><strong>{{ item.cdlYearsExperience }}</strong></div>
-              </div>
-            </div>
-            <div>
-              <div class="block-subtitle mb-1">
-                <strong>Remove this Driver</strong>
+            <div class="policy-info w-100 px-3">
+              <div class="block-title mb-2">
+                {{ item.firstName }} {{ item.lastName }}
               </div>
 
-              <textarea
-                class="col-10 mb-2"
-                style="min-height: 81px;"
-                v-model="item.reasonOfRemove"
-                placeholder="Reason..."
-              ></textarea>
-
+              <div class="row">
+                <div class="col">
+                  <div class="block-subtitle">
+                    Policy Type:
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="block-subtitle"><strong>{{ item.policyType }}</strong></div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <div class="block-subtitle">
+                    Date of Birth:
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="block-subtitle"><strong>{{ item.dob  }}</strong></div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <div class="block-subtitle">
+                    Mo/Yr Premium:
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="block-subtitle"><strong>$ {{ item.premium | premium }}</strong></div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <div class="block-subtitle">
+                    License Number:
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="block-subtitle"><strong>{{ item.licenseNumber }}</strong></div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <div class="block-subtitle">
+                    State:
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="block-subtitle"><strong>{{ item.state }}</strong></div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <div class="block-subtitle">
+                    Date Hired:
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="block-subtitle"><strong>{{ item.hireDate  }}</strong></div>
+                </div>
+              </div>
+              <div class="row mb-2">
+                <div class="col">
+                  <div class="block-subtitle">
+                    Years of Experience:
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="block-subtitle"><strong>{{ item.cdlYearsExperience }}</strong></div>
+                </div>
+              </div>
               <div>
-                <button type="button" class="lt-button lt-button-main" :disabled="loading" @click="removeDriver(item.driverId, item.reasonOfRemove)">
-                  Remove
-                </button>
+                <div class="block-subtitle mb-1">
+                  <strong>Remove this Driver</strong>
+                </div>
+
+                <textarea
+                  class="col-10 mb-2"
+                  style="min-height: 81px;"
+                  v-model="item.reasonOfRemove"
+                  placeholder="Reason..."
+                ></textarea>
+
+                <div>
+                  <button type="button" class="lt-button lt-button-main" :disabled="loading" @click="removeDriver(item.driverId, item.reasonOfRemove)">
+                    Remove
+                  </button>
+                </div>
               </div>
             </div>
           </div>
-        </div>
 
-        <div v-if="error" class="alert alert-danger" role="alert">
-          {{ error }}
-        </div>
+          <div v-if="error" class="alert alert-danger" role="alert">
+            {{ error }}
+          </div>
+        </template>
+        <template v-else>
+          <div>This page is currently empty and will be populated once your submitted Quote is processed.</div>
+        </template>
 
         <b-modal v-model="show" id="modal-pdf" centered  size="lg" title="Add a driver" hide-footer>
           <form class="p-3" @submit.prevent="addDriver">
@@ -457,9 +462,10 @@
 </template>
 
 <script>
-import moment from 'moment';
-import axios from "axios";
-import { API } from "../api.js";
+  import { mapState, mapActions } from "vuex";
+  import moment from 'moment';
+  import axios from "axios";
+  import { API } from "../api.js";
 
 export default {
   name: 'PoliciesDrivers',
@@ -478,7 +484,7 @@ export default {
   data() {
     return {
       drivers: [],
-      loading: false,
+      loading: true,
       error: null,
       show: false,
       driversData: {},
@@ -508,27 +514,41 @@ export default {
     this.$emit('update-hint', 'Please be sure that all drivers currently operating under your authority are added to your current policy. Please use this section to add or subtract drivers.');
   },
 
-  async mounted () {
+  mounted () {
     // fetch drivers from SF
-    
-    await this.loadDrivers()
+    this.loadDrivers()
+  },
+
+  computed: {
+    ...mapState(["auth"]),
+  },
+
+  watch: {
+    auth: {
+      deep: true,
+      handler () {
+        this.loadDrivers()
+      }
+    }
   },
 
   methods: {
     async loadDrivers () {
-      this.loading = true
-      const dotId = localStorage.getItem('usdot');
-      const userId = localStorage.getItem('userId');
-      let res = await API.post("company/accountinfo/drivers", {
-        dotId,
-        userId
-      });
-      this.loading = false;
-      const { drivers, status } = res;
-      if (status == 'ok') {
-        this.drivers = drivers;
-      } else {
-        this.status = false
+      if (this.auth.quoteSubmitted == 'true') {
+        this.loading = true
+        const dotId = localStorage.getItem('usdot');
+        const userId = localStorage.getItem('userId');
+        let res = await API.post("company/accountinfo/drivers", {
+          dotId,
+          userId
+        });
+        this.loading = false;
+        const { drivers, status } = res;
+        if (status == 'ok') {
+          this.drivers = drivers;
+        } else {
+          this.status = false
+        }
       }
     },
 

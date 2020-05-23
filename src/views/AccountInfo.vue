@@ -34,8 +34,9 @@
 </template>
 
 <script>
-import SidebarMenu from '../components/SidebarMenu.vue'
-import { isMobile } from "mobile-device-detect";
+  import { mapState, mutations, mapActions } from "vuex";
+  import SidebarMenu from '../components/SidebarMenu.vue'
+  import { isMobile } from "mobile-device-detect";
 export default {
   name: 'AccountInfo',
   components: {
@@ -53,7 +54,10 @@ export default {
     };
   },
   mounted () {
-    
+    const submitted = localStorage.getItem('submitted')
+    this.updateSubmittedStatus(submitted)
+
+    console.log('quotes header')
   },
   methods: {
     updateProgress(progress) {

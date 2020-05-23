@@ -35,7 +35,7 @@
                    <font-awesome-icon class="fontawesome" :icon="['fab', 'linkedin-in']"  />
                   </a>
                   <a href="https://www.facebook.com/LuckyTruck-104402324469770/" target="_blank">
-                       <font-awesome-icon class="fontawesome" :icon="['fab', 'facebook-f']"  />
+                    <font-awesome-icon class="fontawesome" :icon="['fab', 'facebook-f']"  />
                   </a>
                 </div>
               </div>

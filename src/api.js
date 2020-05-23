@@ -52,7 +52,7 @@ class APIService {
       const res = await axios(config);
       return res.data;
     } catch (error) {
-      throw error;
+      return error.response
     }
   }
 }

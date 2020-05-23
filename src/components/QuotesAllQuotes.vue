@@ -11,86 +11,99 @@
               alt="Loading"
             >
         </div>
-        <div v-if="status">
-          <div v-for="item in quotes" :key="item.name" class="quote-wrapper block-divider">
-            <div class="image-wrapper px-1">
-              <img :src="item.img" alt class="image">
-            </div>
+        <div v-if="auth.quoteSubmitted == 'true'">
+          <template v-if="status">
+            <div v-for="item in quotes" :key="item.name" class="quote-wrapper block-divider">
+              <div class="image-wrapper px-1">
+                <img :src="item.img" alt class="image">
+              </div>
 
-            <div class="quote-content">
-              <div class="block-title mb-3">{{ item.title }}</div>
-              <div class="action-block row">
-               <!--  <div class="col">
-                  <div class="action-item">
-                    <a href="#" class="lift">
-                      <font-awesome-icon class="fontawesome" :icon="['fas', 'eye']" />
-                    </a>
-                    <div>View</div>
+              <div class="quote-content">
+                <div class="block-title mb-3">{{ item.title }}</div>
+                <div class="action-block row">
+                 <!--  <div class="col">
+                    <div class="action-item">
+                      <a href="#" class="lift">
+                        <font-awesome-icon class="fontawesome" :icon="['fas', 'eye']" />
+                      </a>
+                      <div>View</div>
+                    </div>
+                  </div> -->
+                  <div class="col">
+                    <div class="action-item">
+                      <a :href="mailto" class="lift">
+                        <font-awesome-icon class="fontawesome" :icon="['fas', 'envelope']" />
+                      </a>
+                      <div>Email</div>
+                    </div>
                   </div>
-                </div> -->
-                <div class="col">
-                  <div class="action-item">
-                    <a :href="mailto" class="lift">
-                      <font-awesome-icon class="fontawesome" :icon="['fas', 'envelope']" />
-                    </a>
-                    <div>Email</div>
+                  <div class="col">
+                    <div class="action-item">
+                      <a href="javascript:;" class="lift" @click="downloadPDF(item.pdf)">
+                        <font-awesome-icon class="fontawesome" :icon="['fas', 'download']" />
+                      </a>
+                      <div>Download</div>
+                    </div>
                   </div>
-                </div>
-                <div class="col">
-                  <div class="action-item">
-                    <a href="javascript:;" class="lift" @click="downloadPDF(item.pdf)">
-                      <font-awesome-icon class="fontawesome" :icon="['fas', 'download']" />
-                    </a>
-                    <div>Download</div>
+                  <div class="col">
+                    <div class="action-item">
+                      <a href="javascript:;" class="lift" @click="displayPDF(item.pdf)">
+                        <font-awesome-icon class="fontawesome" :icon="['fas', 'file-pdf']" />
+                      </a>
+                      <div>PDF</div>
+                    </div>
                   </div>
-                </div>
-                <div class="col">
-                  <div class="action-item">
-                    <a href="javascript:;" class="lift" @click="displayPDF(item.pdf)">
-                      <font-awesome-icon class="fontawesome" :icon="['fas', 'file-pdf']" />
-                    </a>
-                    <div>PDF</div>
-                  </div>
-                </div>
-                <div class="col">
-                  <div class="action-item">
-                    <a href="javascript:;" class="lift" @click="editQuote(item.id)">
-                      <font-awesome-icon class="fontawesome" :icon="['fas', 'pen']" />
-                    </a>
-                    <div>Edit</div>
+                  <div class="col">
+                    <div class="action-item">
+                      <a href="javascript:;" class="lift" @click="editQuote(item.id)">
+                        <font-awesome-icon class="fontawesome" :icon="['fas', 'pen']" />
+                      </a>
+                      <div>Edit</div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div v-if="buttonHide">
-            <div v-if="accept">
-              <router-link
-                :to="{ name: '' }"
-                class="lt-button pad-10 lt-button-main viewquote m-2"
-                active-class="font-weight-bold"
-                @click.native="savequote"
-              >Accept</router-link>
-              <router-link
-                :to="{ name: '' }"
-                class="lt-button pad-10 lt-button-main viewquote m-2"
-                active-class="font-weight-bold"
-                @click.native="request"
-              >Request a new quote</router-link>
+            <div v-if="buttonHide">
+              <div v-if="accept">
+                <router-link
+                  :to="{ name: '' }"
+                  class="lt-button pad-10 lt-button-main viewquote m-2"
+                  active-class="font-weight-bold"
+                  @click.native="savequote"
+                >Accept</router-link>
+                <router-link
+                  :to="{ name: '' }"
+                  class="lt-button pad-10 lt-button-main viewquote m-2"
+                  active-class="font-weight-bold"
+                  @click.native="request"
+                >Request a new quote</router-link>
 
-              <div v-if="error" class="alert alert-danger" role="alert">{{ error }}</div>
+                <div v-if="error" class="alert alert-danger" role="alert">{{ error }}</div>
+              </div>
+              <div v-else>
+                <span>Quotation has been accepted.</span>
+              </div>
             </div>
-            <div v-else>
-              <span>Quotation has been accepted.</span>
-            </div>
-          </div>
-        </div>
-        <div v-else>
-          <span>
+          </template>
+         <!--  <span v-else>
             Your application is complete, we should have an update for you soon. If you have any further questions about this, feel to call us at
             <a href="tel:15135062400" style="font-weight:bold; white-space:nowrap;">1-513-506-2400</a>
-          </span>
+          </span> -->
         </div>
+        <div v-else class="mt-3 text-center">
+          <div>You can see your Quotes once you submit it to us. Click <a href="/">here</a> to send a quote.</div>
+           <!--  <div class="font-weight-bold">Devin Bostick</div>
+            <div>LuckyTruck | luckytruck.co</div>
+            <p>d: +1 (513) 619-0110</p>
+
+            <a href="https://www.linkedin.com/in/devin-bostick" target="_blank" class="mr-3" title="Devin Bostick">
+             <font-awesome-icon class="portal-fontawesome linkedin" :icon="['fab', 'linkedin-in']"  />
+            </a>
+            <a href="tel:15135062400" title="Devin Bostick" style="font-weight:bold; white-space:nowrap;">1-513-506-2400</a> -->
+        </div>
+
+        <div v-if="error" class="text-center text-danger">{{ error }}</div>
 
         <b-modal v-model="showEditModal" centered  size="md" title="Edit a quote" hide-footer>
           <form class="p-3" @submit.prevent="_editQuote">
@@ -114,7 +127,7 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapActions } from "vuex";
 import axios from "axios";
 import { API } from "../api.js";
 
@@ -140,7 +153,7 @@ export default {
       document_file: "",
       filename: "",
       quotes: [],
-      loading: false,
+      loading: true,
       error: null,
       pdf: {},
       showModal: false,
@@ -155,6 +168,9 @@ export default {
   },
 
   methods: {
+    ...mapActions('auth', ['checkQuoteSubmittedStatus'],
+    ),
+
     editQuote (id) {
       this.quoteId = id
       this.showEditModal = true
@@ -196,10 +212,38 @@ export default {
 
     request () {
       
+    },
+
+    async fetchQuotes () {
+      if (this.auth.quoteSubmitted == 'true') {
+        this.loading = true;
+
+        const dotId = localStorage.getItem('usdot');
+        const userId = localStorage.getItem('userId');
+        let res = await API.post("company/accountinfo/quotes", {
+          dotId,
+          userId
+        });
+        this.loading = false;
+        const { quoteList, status } = res;
+        if (status == 'ok' && quoteList && quoteList.length > 0) {
+          quoteList.forEach(quote => {
+            this.quotes.push({
+              id: quote.id,
+              title: quote.name,
+              pdf: quote.quotePdf,
+              img: "https://picsum.photos/200",
+            })
+          })
+        } else {
+          this.status = false
+          this.error = res.message
+        }
+      }
     }
   },
   computed: {
-    ...mapState(["policyData"]),
+    ...mapState(["policyData", "auth"]),
     mailto () {
       let token = localStorage.getItem("token")
       try {
@@ -209,29 +253,18 @@ export default {
       return `mailto:${token.email}?subject=Insurance%20Quote%20from%20LuckyTruck`
     }
   },
-  async mounted() {
-    this.loading = true;
 
-    const dotId = localStorage.getItem('usdot');
-    const userId = localStorage.getItem('userId');
-    let res = await API.post("company/accountinfo/quotes", {
-      dotId,
-      userId
-    });
-    this.loading = false;
-    const { quoteList, status } = res;
-    if (status == 'ok' && quoteList && quoteList.length > 0) {
-      quoteList.forEach(quote => {
-        this.quotes.push({
-          id: quote.id,
-          title: quote.name,
-          pdf: quote.quotePdf,
-          img: "https://picsum.photos/200",
-        })
-      })
-    } else {
-      this.status = false
+  watch: {
+    auth: {
+      deep: true,
+      handler () {
+        this.fetchQuotes()
+      }
     }
+  },
+
+  async mounted() {
+    this.fetchQuotes()
   }
 }
 </script>
