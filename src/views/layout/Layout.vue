@@ -130,7 +130,7 @@
 		      localStorage.setItem('accountInfoProgress', progress);
 		    },
 
-		     updateHint(hint = '') {
+	     	updateHint(hint = '') {
 		      this.hint = hint;
 		    },
 		    goToForm(routeName) {

@@ -91,7 +91,7 @@
                   :class="{ 'has-error': formErrors.dotNumber }"
                   type="text"
                   class="lt-input"
-                  :readonly="submitted"
+                  :readonly="submitted || status"
                   placeholder="USDOT"
                   @focus="onFocus('USDOT')"
                   @blur="onBlur"
@@ -252,7 +252,7 @@
           <div class="form-buttons next-wrapper">
             <div class="col-6 p-0">
               <button
-                :disabled="true"
+                :disabled="!mobile"
                 type="button"
                 class="lt-button lt-button-default btn-block btn-border-radius-lb"
                 @click="goPrevForm"
@@ -328,8 +328,8 @@ export default {
     this.mobile = isMobile ? true : false;
     this.uuid = localStorage.getItem('uuid');
     this.save = true;
-    this.formData.dotNumber = localStorage.getItem("usdot");
-    this.$emit('update-us-dot', localStorage.getItem("usdot"))
+    this.formData.dotNumber = localStorage.getItem("usdot") || '';
+    this.$emit('update-us-dot', localStorage.getItem("usdot") || '')
     this.$emit("update-progress", this.progress);
   },
   beforeMount() {
@@ -355,7 +355,7 @@ export default {
       mobile:false,
       uuid: "",
       dotId: "",
-      // newQuote: false,
+      status: false,
       userData: "",
       formData: {
         address: "",
@@ -591,6 +591,7 @@ export default {
   
         if (res.status === "OK") {
           this.submitted = res.submitted
+          this.status = true
           await this.parseData(res.data)
         } else if (res.status === "ERROR") {
           // this.$router.replace({ name: "Home" });

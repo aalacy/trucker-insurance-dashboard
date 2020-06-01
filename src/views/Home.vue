@@ -253,6 +253,14 @@ export default {
     } else {
       x.innerHTML = "Geolocation is not supported by this browser.";
     }
+
+    // If a user tries to submit the different dotId after done first submittion, refresh all the previous data
+    if (localStorage.getItem('refreshData')) {
+      localStorage.removeItem("uuid");
+      localStorage.removeItem("usdot");
+      // localStorage.removeItem("refreshData");
+      this.$swal('Warning', "It is not allowed to submit new dot Id for the existing user. All data will be removed.", "warning")
+    }
   },
   data() {
     return {

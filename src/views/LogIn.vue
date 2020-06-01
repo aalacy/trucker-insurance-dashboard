@@ -217,9 +217,16 @@ export default {
         if (loader) {
           loader.hide();
         }
+
         this.$swal("Thank You!", data.message, "success")
           .then((value) => {
-            this.$router.push({ name: this.$router.history.current.query.next || 'AccountInfoPersonalInfo' });
+            // If a user tries to submit the different dotId after done first submittion, refresh all the previous data
+            if (data.refreshData) {
+              localStorage.setItem('refreshData', true)
+              this.$router.push({ name: 'Home' });
+            } else {
+              this.$router.push({ name: this.$router.history.current.query.next || 'AccountInfoPersonalInfo' });
+            }
           });
         let t = data.data;
         localStorage.setItem("userId", t.id);
@@ -242,11 +249,9 @@ export default {
       }
 
         let data = await API.post("users/logout");
-        localStorage.removeItem("token");
         this.setLoggedIn(false)
         setTimeout(()=>{
-          
-        this.myacchide = false;
+          this.myacchide = false;
           // localStorage.removeItem("accBtn");
           localStorage.removeItem("token");
           localStorage.removeItem("userId")
@@ -278,6 +283,7 @@ export default {
         let data = await API.post("users/login", {
           email: this.formData.email,
           password: this.formData.password,
+          uuid: localStorage.getItem("uuid")
         });
 
         this.proceedAfterLogin(data, loader)
