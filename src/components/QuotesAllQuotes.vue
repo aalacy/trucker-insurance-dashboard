@@ -64,27 +64,6 @@
                 </div>
               </div>
             </div>
-            <div v-if="buttonHide">
-              <div v-if="accept">
-                <router-link
-                  :to="{ name: '' }"
-                  class="lt-button pad-10 lt-button-main viewquote m-2"
-                  active-class="font-weight-bold"
-                  @click.native="savequote"
-                >Accept</router-link>
-                <router-link
-                  :to="{ name: '' }"
-                  class="lt-button pad-10 lt-button-main viewquote m-2"
-                  active-class="font-weight-bold"
-                  @click.native="request"
-                >Request a new quote</router-link>
-
-                <div v-if="error" class="alert alert-danger" role="alert">{{ error }}</div>
-              </div>
-              <div v-else>
-                <span>Quotation has been accepted.</span>
-              </div>
-            </div>
           </template>
          <!--  <span v-else>
             Your application is complete, we should have an update for you soon. If you have any further questions about this, feel to call us at
@@ -103,7 +82,9 @@
             <a href="tel:15135062400" title="Devin Bostick" style="font-weight:bold; white-space:nowrap;">1-513-506-2400</a> -->
         </div>
 
-        <div v-if="error" class="text-center text-danger">{{ error }}</div>
+        <div v-if="error404" class="text-center text-danger h6 mt-4">We're processing your order and it may take a few days but if you need an update, <a href="javascript::void(0)" @click="showWaitInfo">here's how to do it</a></div>
+        <div v-else-if="error" class="text-center text-danger h6 mt-4" v-html="error"></div>
+
 
         <b-modal v-model="showEditModal" centered  size="md" title="Edit a quote" hide-footer>
           <form class="p-3" @submit.prevent="_editQuote">
@@ -155,6 +136,7 @@ export default {
       quotes: [],
       loading: true,
       error: null,
+      error404: null,
       pdf: {},
       showModal: false,
       showEditModal: false,
@@ -214,6 +196,10 @@ export default {
       
     },
 
+    showWaitInfo () {
+      this.$swal("", "If you have any urgent question please contact us at 1-513-506-2400", "info")
+    },
+
     async fetchQuotes () {
       if (this.auth.quoteSubmitted == 'true') {
         this.loading = true;
@@ -225,7 +211,8 @@ export default {
           userId
         });
         this.loading = false;
-        const { quoteList, status } = res;
+        this.error = this.error404 = null
+        const { quoteList, status, code } = res;
         if (status == 'ok' && quoteList && quoteList.length > 0) {
           quoteList.forEach(quote => {
             this.quotes.push({
@@ -237,7 +224,14 @@ export default {
           })
         } else {
           this.status = false
-          this.error = res.message
+          console.log(res.message)
+          if (code == 400) {
+            this.error = 'Sorry, Something wrong happened on the server. Please contact support if you see this issue again.'
+          } else if (code == 404) {
+            this.error404 = true
+          } else if (code == 500) {
+            this.error = 'Sorry, Something wrong happened on the server. Please try again later.'
+          }
         }
       }
     }
