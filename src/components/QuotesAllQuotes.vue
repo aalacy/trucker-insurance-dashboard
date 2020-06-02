@@ -82,8 +82,8 @@
             <a href="tel:15135062400" title="Devin Bostick" style="font-weight:bold; white-space:nowrap;">1-513-506-2400</a> -->
         </div>
 
-        <div v-if="error404" class="text-center danger-text h6 mt-4">We're processing your order and it may take a few days but if you need an update, <a href="javascript::void(0)" @click="showWaitInfo">here's how to do it</a></div>
-        <div v-else-if="error" class="text-center danger-text h6 mt-4" v-html="error"></div>
+        <div v-if="error404" class="text-center h5 mt-4">We're processing your order and it may take a few days but if you need an update, <a href="javascript::void(0)" @click="showWaitInfo">here's how to do it</a></div>
+        <div v-else-if="error" class="text-center h5 mt-4" v-html="error"></div>
 
 
         <b-modal v-model="showEditModal" centered  size="md" title="Edit a quote" hide-footer>
