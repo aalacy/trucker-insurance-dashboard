@@ -140,10 +140,9 @@ export default {
       policies: [],
       endorsements: [],
       fields: [ 
+        { key: 'name', label: 'Name' },
         { key: 'endorsementType', label: 'Type' },
         { key: 'endorsementAmount', label: 'Amount ($)' },
-        { key: 'driverName', label: 'Driver' },
-        { key: 'vehicleName', label: 'Vehicle' },
       ],
       status: true,
       loading: true,
@@ -209,18 +208,18 @@ export default {
       });
     },
     async submitRequest () {
-      await this.createCOI(this.dotId, this.uuid, this.userId)
+      await this.createCOI(this.dotId, false, this.userId)
     },
 
-    async createCOI (dotId, uuid, userId) {
+    async createCOI (dotId, newpdf, userId) {
       this.loading = true
       this.error = ''
       let res = await API.post("company/coi", {
         dotId,
+        comments: this.comments,
         name: this.name,
         address: this.address,
-        uuid,
-        policy: JSON.stringify(this.policy),
+        newpdf,
         userId
       });
       this.loading = false;
@@ -238,7 +237,7 @@ export default {
     // empty COI pdf
     async viewDetails (item) {
       this.policy = item
-      await this.createCOI("", "", this.userId)
+      await this.createCOI("", true, this.userId)
     },
 
     showModal () {
@@ -248,20 +247,27 @@ export default {
 
     // endorsement list
     async viewHistory (item) {
-      this.loading = true
-      const userId = localStorage.getItem('userId');
-      let res = await API.post("company/accountinfo/policy/endorsements", {
-        policyId: item.policyId,
-        userId
-      });
-      this.loading = false;
-      const { endorsements, status } = res;
-      if (status == 'ok') {
-        this.endorsements = endorsements
-        this.historyModal = true
-      } else {
-        this.status = false
-      }
+      const self = this
+      this.policies.map(policy => {
+        if (policy.policyId == item.policyId) {
+          self.endorsements = policy.endorsementList
+        }
+      })
+      this.historyModal = true
+      // this.loading = true
+      // const userId = localStorage.getItem('userId');
+      // let res = await API.post("company/accountinfo/policy/endorsements", {
+      //   policyId: item.policyId,
+      //   userId
+      // });
+      // this.loading = false;
+      // const { endorsements, status } = res;
+      // if (status == 'ok') {
+      //   this.endorsements = endorsements
+      //   this.historyModal = true
+      // } else {
+      //   this.status = false
+      // }
     },
 
     async getPolicies () {

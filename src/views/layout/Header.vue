@@ -4,7 +4,7 @@
       <div v-if="mobile" class="nav_logo_text">LT</div> 
       <img class="ml-4" v-else src="../../assets/images/logo.svg" alt="logo" height="46px" width="269px">
     </router-link>
-    <a v-else class="nav-link" style="flex: 1;">
+    <a v-else class="nav-link">
       <a class="d-none d-lg-block px-2" href="#" @click="toggleSidebarMethod" id="barsTooltip">
         <font-awesome-icon class="fontawesome" size="lg" icon="bars" />
       </a>
