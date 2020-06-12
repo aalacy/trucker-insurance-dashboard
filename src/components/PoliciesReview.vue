@@ -11,9 +11,9 @@
               alt="Loading"
             >
         </div>
-        <template v-if="auth.quoteSubmitted == 'true'">
+        <template v-if="quoteSubmitted">
           <div v-if="status">
-            <div v-for="item in policies" :key="item.policyId" class="block-divider policy-wrapper">
+            <div v-for="(item, i) in policies" :key="i" class="block-divider policy-wrapper">
               <div class="policy-image-wrapper px-1 mb-2">
                 <img src="https://picsum.photos/200" alt class="policy-image">
               </div>
@@ -166,7 +166,7 @@ export default {
   },
 
   computed: {
-    ...mapState(["auth"]),
+    ...mapState('auth', ['quoteSubmitted']),
     historyTitle () {
       return 'Endorsements (' + this.endorsements.length +')'
     },
@@ -220,7 +220,8 @@ export default {
         name: this.name,
         address: this.address,
         newpdf,
-        userId
+        userId,
+        policyId: this.policy.policyId
       });
       this.loading = false;
       if (res.status == 'ok') {
@@ -230,7 +231,8 @@ export default {
           this.showPdfModal = true
         }
       } else {
-        this.error = res.message
+        console.log(res.message)
+        this.error = 'Something wrong happened. Please try it again.'
       }
     },
 
@@ -271,7 +273,7 @@ export default {
     },
 
     async getPolicies () {
-      if (this.auth.quoteSubmitted == 'true') {
+      if (this.quoteSubmitted) {
         let res = await API.post("company/accountinfo/policies", {
           dotId: this.dotId,
           userId: this.userId
@@ -279,9 +281,7 @@ export default {
         this.loading = false;
         const { policies, status } = res;
         if (status == 'ok') {
-          policies.map((policy, i) => {
-            this.policies.push(policy)
-          })
+          this.policies = policies
         } else {
           this.status = false
         }
@@ -290,9 +290,8 @@ export default {
   },
 
   watch: {
-    auth: {
-      deep: true,
-      handler () {
+    quoteSubmitted () {
+      if (this.quoteSubmitted) {
         this.getPolicies()
       }
     }

@@ -11,10 +11,10 @@
               alt="Loading"
             >
         </div>
-        <template v-if="auth.quoteSubmitted == 'true'">
+        <template v-if="quoteSubmitted">
           <div v-if="status">
             <div v-for="(item, idx) in certs" :key="idx" class="quote-wrapper block-divider">
-              <div :class="highlightOldCert(item)" class="image-wrapper px-1">
+              <div class="image-wrapper px-1">
                 <img src="https://picsum.photos/200" alt class="image">
               </div>
 
@@ -39,7 +39,7 @@
                   </div>
                   <div class="col">
                     <div class="action-item">
-                      <a href="javascript:;" class="lift" @click="downloadPDF(item.data)">
+                      <a href="javascript:;" class="lift" @click="downloadPDF(item)">
                         <font-awesome-icon class="fontawesome" :icon="['fas', 'download']" />
                       </a>
                       <div>Download</div>
@@ -47,7 +47,7 @@
                   </div>
                   <div class="col">
                     <div class="action-item">
-                      <a href="javascript:;" class="lift" @click="displayPDF(item.data)">
+                      <a href="javascript:;" class="lift" @click="displayPDF(item)">
                         <font-awesome-icon class="fontawesome" :icon="['fas', 'file-pdf']" />
                       </a>
                       <div>PDF</div>
@@ -55,7 +55,7 @@
                   </div>
                   <div class="col">
                     <div class="action-item">
-                      <a href="#" class="lift">
+                      <a href="javascript:;" class="lift" @click="editPDF(item)">
                         <font-awesome-icon class="fontawesome" :icon="['fas', 'pen']" />
                       </a>
                       <div>Edit</div>
@@ -63,7 +63,7 @@
                   </div>
                   <div class="col">
                     <div class="action-item">
-                      <button class="btn" :class="isOldCert(item) ? 'gray-opacity' : 'lift'" :disabled="isOldCert(item)">
+                      <button class="btn" :class="isOldCert(item) ? 'lift' : 'gray-opacity'" :disabled="!isOldCert(item)">
                         <font-awesome-icon class="fontawesome" :icon="['fas', 'sync-alt']" />
                       </button>
                       <div>Refresh</div>
@@ -86,6 +86,32 @@
         <div v-else class="mt-3 text-center">
           <div>This page is currently empty and will be populated once your submitted Quote is processed.</div>
         </div>
+
+        <b-modal v-model="inputModal" title="Information" @ok="submitRequest">
+          <form>
+            <b-form-group
+              id="name"
+              label="Enter a name"
+              label-for="input-name"
+            >
+              <b-form-input id="input-name" v-model="name" @focus="onFocus('name')"  trim required></b-form-input>
+            </b-form-group>
+            <b-form-group
+              id="addr"
+              label="Enter an address"
+              label-for="input-addr"
+            >
+              <b-form-input id="input-addr" v-model="address" @focus="onFocus('address')" trim required></b-form-input>
+            </b-form-group>
+            <b-form-group
+              id="comments"
+              label="Comments"
+              label-for="input-comments"
+            >
+              <b-form-input id="input-comments" v-model="comments" @focus="onFocus('comments')" trim required></b-form-input>
+            </b-form-group>
+          </form>
+        </b-modal>
 
         <PDFViewer :showModal="showModal" :pdf="pdf" @close-modal="closeModal" />
 
@@ -116,7 +142,13 @@ export default {
       error: null,
       email: '',
       policyId: "",
+      dotId: '',
+      certId: '',
       status: true,
+      name: '',
+      address: '',
+      comments:'',
+      inputModal: false,
       pdf: {},
       showModal: false
     };
@@ -131,8 +163,9 @@ export default {
     },
 
     isOldCert (item) {
-      const date = moment(item.createDate).add(60, 'days')
+      const date = moment(item.updatedAt).add(60, 'days')
       if (!date.isAfter(moment())) {
+        this.$emit("update-hint", "One of your certificates needs to be refreshed for most vendors to accept it.")
         return true
       } else {
         return false
@@ -142,24 +175,34 @@ export default {
     closeModal () {
       this.showModal = false
     },
-    downloadPDF (pdf) {
+    downloadPDF (item) {
       const downloadLink = document.createElement("a");
 
-      downloadLink.href = `data:application/pdf;base64, ${pdf}`;
-      downloadLink.download = 'COI.pdf';
+      downloadLink.href = `data:application/pdf;base64, ${item.content}`;
+      downloadLink.download = item.title;
       downloadLink.click();
     },
-    displayPDF (pdf) {
+
+    displayPDF (item) {
       this.pdf = {
-        content: pdf,
-        name: 'COI.pdf'
+        content: item.content,
+        name: item.title
       }
       this.showModal = true
     },
 
+    editPDF (item) {
+      const data = JSON.parse(item.data)
+      this.name = data.name
+      this.address = data.address
+      this.comments = data.comments
+      this.certId = item.id
+      this.policyId = data.policyId
+      this.inputModal = true
+    },
+
     async getPastCerts () {
-      if (this.auth.quoteSubmitted == 'true') {
-        const dotId = localStorage.getItem('usdot');
+      if (this.quoteSubmitted) {
         const userId = localStorage.getItem('userId');
         let res = await API.post("company/accountinfo/pastcerts", {
           userId
@@ -174,7 +217,37 @@ export default {
           this.status = false
         }
       }
-    }
+    },
+
+    async submitRequest () {
+      await this.createCOI(this.dotId, false, this.userId)
+    },
+
+    async createCOI (dotId, newpdf, userId) {
+      this.loading = true
+      this.error = ''
+      let res = await API.post("company/coi", {
+        id: this.certId,
+        dotId,
+        comments: this.comments,
+        name: this.name,
+        address: this.address,
+        newpdf,
+        userId,
+        policyId: this.policyId
+      });
+      this.loading = false;
+      if (res.status == 'ok') {
+        this.pdf = res.pdf
+        // this.$swal("", "Successfully created COI!", "success")
+        if (this.pdf) {
+          this.showModal = true
+        }
+      } else {
+        console.log(res.message)
+        this.error = 'Something wrong happened. Please try it again.'
+      }
+    },
   },
 
   mounted() {
@@ -183,6 +256,8 @@ export default {
       user = JSON.parse(localStorage.getItem('token'))
     } catch (e) {}
     this.email = user.email || ''
+
+    this.dotId = localStorage.getItem('usdot')
     
     this.getPastCerts()
   },
@@ -192,16 +267,15 @@ export default {
   },
 
   computed: {
-    ...mapState(["auth"]),
+    ...mapState('auth', ['quoteSubmitted']),
     mailto () {
       return `mailto:${this.email}?subject=Insurance%20Quote%20from%20LuckyTruck`
     },
   },
 
   watch: {
-    auth: {
-      deep: true,
-      handler () {
+    quoteSubmitted () {
+      if (this.quoteSubmitted) {
         this.getPastCerts()
       }
     }
@@ -216,6 +290,9 @@ export default {
 
   .gray-opacity {
     opacity: 0.7;
+    background: lightgrey;
+    border-radius: 4px;
+    padding: 0 9px;
   }
 
   .quote-wrapper {

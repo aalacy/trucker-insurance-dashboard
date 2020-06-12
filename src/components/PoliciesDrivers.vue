@@ -22,7 +22,7 @@
             >
         </div>
         
-        <template v-if="auth.quoteSubmitted == 'true'">
+        <template v-if="quoteSubmitted">
           <div v-for="item in drivers" :key="item.id" class="block-divider d-flex">
             <div class="policy-image-wrapper px-1">
               <img :src="item.img" alt="" class="policy-image" />
@@ -520,13 +520,12 @@ export default {
   },
 
   computed: {
-    ...mapState(["auth"]),
+    ...mapState("auth", ["quoteSubmitted"]),
   },
 
   watch: {
-    auth: {
-      deep: true,
-      handler () {
+    quoteSubmitted() {
+      if (this.quoteSubmitted) {
         this.loadDrivers()
       }
     }
@@ -534,7 +533,7 @@ export default {
 
   methods: {
     async loadDrivers () {
-      if (this.auth.quoteSubmitted == 'true') {
+      if (this.quoteSubmitted) {
         this.loading = true
         const dotId = localStorage.getItem('usdot');
         const userId = localStorage.getItem('userId');

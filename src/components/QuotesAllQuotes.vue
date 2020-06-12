@@ -11,7 +11,7 @@
               alt="Loading"
             >
         </div>
-        <div v-if="auth.quoteSubmitted == 'true'">
+        <div v-if="quoteSubmitted">
           <template v-if="status">
             <div v-for="item in quotes" :key="item.name" class="quote-wrapper block-divider">
               <div class="image-wrapper px-1">
@@ -201,7 +201,7 @@ export default {
     },
 
     async fetchQuotes () {
-      if (this.auth.quoteSubmitted == 'true') {
+      if (this.quoteSubmitted) {
         this.loading = true;
 
         const dotId = localStorage.getItem('usdot');
@@ -237,7 +237,10 @@ export default {
     }
   },
   computed: {
-    ...mapState(["policyData", "auth"]),
+    ...mapState(["policyData"]),
+
+    ...mapState('auth', ["quoteSubmitted"]),
+
     mailto () {
       let token = localStorage.getItem("token")
       try {
@@ -249,9 +252,8 @@ export default {
   },
 
   watch: {
-    auth: {
-      deep: true,
-      handler () {
+    quoteSubmitted () {
+      if (this.quoteSubmitted) {
         this.fetchQuotes()
       }
     }

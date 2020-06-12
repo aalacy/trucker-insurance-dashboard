@@ -139,6 +139,8 @@
 			...mapActions('layout', ['setSidebarStatic', 'switchSidebar', 'handleSwipe', 'changeSidebarActive', 'toggleSidebar'],
 			),
 
+			...mapActions('auth', ['checkQuoteSubmittedStatus']),
+
 			updateProgress(progress) {
 		      this.progress = progress;
 		      localStorage.setItem('accountInfoProgress', progress);
@@ -172,6 +174,7 @@
 
 		computed: {
 			...mapState('layout', ["sidebarClose", "sidebarStatic"]),
+			...mapState('auth', ["quoteSubmitted"]),
 		},
 
 		created() {
@@ -188,6 +191,10 @@
 
 			this.handleWindowResize();
 			window.addEventListener('resize', this.handleWindowResize);
+
+			if (!this.quoteSubmitted) {
+				this.checkQuoteSubmittedStatus()
+			} 
 		},
 
 		beforeDestroy() {
