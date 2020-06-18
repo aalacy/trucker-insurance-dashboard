@@ -200,11 +200,14 @@ export default {
     },
 
     clearLocalStorage () {
-      // localStorage.removeItem("token");
-      // localStorage.removeItem("userId")
-      // localStorage.removeItem("uuid")
-      // localStorage.removeItem("usdot")
-      // localStorage.removeItem("accountInfoProgress")
+      localStorage.removeItem("token");
+      localStorage.removeItem("userId")
+      localStorage.removeItem("uuid")
+      localStorage.removeItem("usdot")
+      localStorage.removeItem("accountInfoProgress")
+      localStorage.removeItem('imageVIN')
+      localStorage.removeItem('imageDOT')
+      localStorage.removeItem('imageDL')
     },
 
     proceedAfterLogin(data, loader) {

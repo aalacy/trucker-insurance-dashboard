@@ -268,7 +268,7 @@
                       <!-- :class="{ 'has-error': formErrors.zip }" -->
                       <input
                         v-model="driversData[index].zip"
-                        type="number"
+                        type="text"
                         class="lt-input"
                         minlength="5"
                         placeholder="Zip Code"
@@ -401,11 +401,12 @@
           </div>
         </div>
       </div>
-    
-      <div v-if="showmodel">
-        <modelLogin/>
-      </div>
     </form>
+
+    <!-- fab for DL on mobile -->
+    <b-button v-if="showDLFab" pill variant="primary" class="ocr-fab" @click="fillDL">
+      <b-icon  icon="upc-scan" variant="primary"></b-icon>
+    </b-button>
   </div>
 </template>
 
@@ -414,6 +415,7 @@ import uuidv4 from "uuid/v4";
 import { API } from "../api.js";
 import ModalLogin from "./ModalLogin.vue";
 import axios from "axios";
+import { isMobile } from "mobile-device-detect";
 import Vue from "vue";
 
 export default {
@@ -448,6 +450,7 @@ export default {
       formData: {
         drivers: []
       },
+      mobile: false,
       mailingAddress: {},
       driversData: [],
       validations: {
@@ -469,12 +472,21 @@ export default {
       }
     };
   },
+
+  computed: {
+    showDLFab () {
+      return localStorage.getItem('imageDL') && this.mobile
+    },
+  },
+
   mounted() {
     if (localStorage.getItem("token")) {
       this.save = false;
     } else {
       this.save = true;
     }
+
+    this.mobile = isMobile ? true : false;
   },
 
   created() {
@@ -489,6 +501,18 @@ export default {
     }
   },
   methods: {
+    fillDL () { 
+      try {
+        const DL = JSON.parse(localStorage.getItem('imageDL'))
+        if (DL) {
+          if (this.driversData.length) {
+            this.driversData = [DL]
+          }
+        }
+      } catch(e) {
+        console.log(e)
+      }
+    },
     ownerOperator(index) {
       if (!this.operator) {
         this.driversData[index].dohD = this.doh.dohD;
@@ -861,16 +885,18 @@ export default {
           }
 
           let structure = {}
-          if (businessStructureRaw.constructor !== Object) {
+          if (businessStructureRaw && businessStructureRaw.constructor !== Object) {
             structure = JSON.parse(businessStructureRaw)
           }
 
-          let doh = structure['MCS-150 Form Date'];
-          if (doh) {
-            doh = doh.split('/')
-            this.doh.dohM = doh[0];
-            this.doh.dohD = doh[1];
-            this.doh.dohY = doh[2];
+          if (structure) {
+            let doh = structure['MCS-150 Form Date'];
+            if (doh) {
+              doh = doh.split('/')
+              this.doh.dohM = doh[0];
+              this.doh.dohD = doh[1];
+              this.doh.dohY = doh[2];
+            }
           }
 
           if (driverInformationList) {
@@ -897,7 +923,7 @@ export default {
       } catch (err) {
         console.error(err);
         this.error = err.message;
-           this.addDriverData();
+        this.addDriverData();
       } finally {
         this.loading = false;
            
@@ -941,21 +967,35 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  select {
-    position: relative;
-    -webkit-appearance: none;
-    background: url("../assets/images/arrow-dropdown.png") no-repeat 96% center;
-    -moz-appearance: none;
-  }
+select {
+  position: relative;
+  -webkit-appearance: none;
+  background: url("../assets/images/arrow-dropdown.png") no-repeat 96% center;
+  -moz-appearance: none;
+}
 
-  .label {
-    font-weight: 500;
-    font-size: 15px;
-    margin-left: 0.5rem;
-  }
+.label {
+  font-weight: 500;
+  font-size: 15px;
+  margin-left: 0.5rem;
+}
 
-  .fontawesome path {
-    fill: black;
+.fontawesome path {
+  fill: black;
+}
+
+.ocr-fab {
+  position: fixed;
+  left: 5%;
+  z-index: 9999;
+  bottom: 5%;
+  overflow: initial;
+  box-sizing: border-box;
+  opacity: .7;
+
+  svg {
+    fill: white;
   }
+}
 </style>
 

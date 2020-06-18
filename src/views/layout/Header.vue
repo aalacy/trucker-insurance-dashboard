@@ -26,7 +26,7 @@
           <li>
             <b-dropdown v-if="loggedIn" variant="primary" :size="profileSize" right>
               <template v-slot:button-content>
-                <b-icon icon="people-circle" style="fill: white;"></b-icon>
+                <b-icon icon="person-circle" style="fill: white;"></b-icon>
               </template>
               <b-dropdown-item-button
                 v-if="mobile"
@@ -214,6 +214,9 @@
         localStorage.removeItem("usdot")
         localStorage.removeItem("accountInfoProgress")
         localStorage.removeItem("submitted")
+        localStorage.removeItem('imageVIN')
+        localStorage.removeItem('imageDOT')
+        localStorage.removeItem('imageDL')
       },
 
       async logout(){

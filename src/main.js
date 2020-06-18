@@ -2,7 +2,8 @@ import Vue from 'vue';
 import Vuelidate from 'vuelidate';
 import 'bootstrap';
 import App from './App.vue';
-import { BootstrapVue, IconsPlugin  } from 'bootstrap-vue'
+import { BootstrapVue, IconsPlugin, BootstrapVueIcons   } from 'bootstrap-vue'
+import 'bootstrap-vue/dist/bootstrap-vue-icons.min.css'
 import router from './router.js';
 import store from './store/index.js';
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -79,6 +80,7 @@ Vue.use(IconsPlugin )
 Vue.use(VueSignaturePad);
 Vue.use(VueIntercom, { appId: 'ct2qyf3u' });
 Vue.use(VueScrollTo);
+Vue.use(BootstrapVueIcons)
 // Vue.use(Vuelidate);
 Vue.use(VueGoogleMaps, {
   load: {
@@ -94,7 +96,8 @@ Vue.use(VueGoogleMaps, {
   installComponents: true
 })
 Vue.use(Vue2TouchEvents)
-Vue.use(VueFileAgent);
+Vue.use(VueFileAgent)
+
 
 // Vue.component('font-awesome-icon', FontAwesomeIcon)
 

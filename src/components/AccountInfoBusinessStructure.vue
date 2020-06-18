@@ -277,10 +277,12 @@ export default {
             if (_businessStuctureRaw && _businessStuctureRaw.constructor !== Object) {
               _businessStuctureRaw = JSON.parse(businessStructureRaw)
             }
-            const names = _businessStuctureRaw['Legal Name'].split(' ')
-            const _type = names[names.length -1]
-            if (['LLC', 'LLP', 'INC'].includes(_type)) {
-              this.formData.businessType = _type
+            if (_businessStuctureRaw) {
+              const names = _businessStuctureRaw['Legal Name'].split(' ')
+              const _type = names[names.length -1]
+              if (['LLC', 'LLP', 'INC'].includes(_type)) {
+                this.formData.businessType = _type
+              }
             }
           }
         } else if (res.status === "ERROR") {

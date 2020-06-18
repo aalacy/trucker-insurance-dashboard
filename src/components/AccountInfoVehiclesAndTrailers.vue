@@ -565,11 +565,13 @@
           </div>
         </div>
 
-        <div v-if="showmodel">
-          <modelLogin/>
-        </div>
       </div>
     </form>
+
+    <!-- fab for VIN on mobile -->
+    <b-button v-if="showVINFab" pill variant="primary" class="ocr-fab" @click="fillVIN">
+      <b-icon  icon="upc-scan" variant="primary"></b-icon>
+    </b-button>
   </div>
 </template>
 
@@ -586,6 +588,8 @@ import ModalLogin from "./ModalLogin.vue";
 import { mapState } from "vuex";
 import axios from "axios";
 import Vue from "vue";
+import { isMobile } from "mobile-device-detect";
+
 
 export default {
   name: "AccountInfoVehiclesAndTrailers",
@@ -613,6 +617,7 @@ export default {
       vehicle: false,
       noFormfilled:false,
       trailer: false,
+      msg: false,
       hints: {
         VIN:
           "Please enter the full VIN for vehicles. Don’t have it? Feel welcome to press save and come back or call us at 646-933-0419”"
@@ -699,9 +704,13 @@ export default {
       this.save = true;
     }
     
+    this.msg = isMobile ? true : false;
   },
 
   computed: {
+    showVINFab () {
+      return localStorage.getItem('imageVIN') && this.msg
+    },
     radiusOfTravelVehicle: {
       get() {
         
@@ -749,10 +758,6 @@ export default {
         this.trailersData.deductible = "";
       }
     }
-    // vehiclesData(v) {
-    //   this.$emit('update:vehiclesData', v);
-    //  
-    // }
   },
   created() {
     this.$emit("update-progress", this.progress);
@@ -760,6 +765,14 @@ export default {
   },
 
   methods: {
+    fillVIN () {
+      const VIN = localStorage.getItem('imageVIN')
+      if (VIN) {
+        if (this.vehiclesData.length) {
+          this.vehiclesData[0].VIN = VIN
+        }
+      }
+    },
     sizeOfObject(obj) {
       var size = 0, key;
       for (key in obj) {
@@ -1411,5 +1424,19 @@ select{
 
 .fontawesome.minus path {
   fill: black;
+}
+
+.ocr-fab {
+  position: fixed;
+  left: 5%;
+  z-index: 9999;
+  bottom: 5%;
+  overflow: initial;
+  box-sizing: border-box;
+  opacity: .7;
+
+  svg {
+    fill: white;
+  }
 }
 </style>

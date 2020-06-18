@@ -10,6 +10,7 @@ import getPolicyData from "./modules/getPolicyData.js"
 
 import layout from './layout';
 import auth from './auth';
+import ocr from './ocr';
 
 export const strict = false
 
@@ -24,6 +25,7 @@ export default new Vuex.Store({
     getPolicyData,
     layout,
     auth,
+    ocr
   },
   state: {},
   mutations: {},

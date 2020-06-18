@@ -225,12 +225,14 @@ export default {
           } else {
             this.prevCargoGroup = cargoGroup;
           }
-          if (Object.keys(cargoHauled ).length === 0 && cargoHauled.constructor === Object) {
-            this.formData.haulType =  {};
-          } else if (cargoHauled.constructor !== Object){
-            this.formData.haulType = JSON.parse(cargoHauled); // 
-          } else {
-            this.formData.haulType = cargoHauled;
+          if (cargoHauled) {
+            if (Object.keys(cargoHauled ).length === 0 && cargoHauled.constructor === Object) {
+              this.formData.haulType =  {};
+            } else if (cargoHauled.constructor !== Object){
+              this.formData.haulType = JSON.parse(cargoHauled); // 
+            } else {
+              this.formData.haulType = cargoHauled;
+            }
           }
           this.uuid = res.data.uuid;
         } else if (res.status === "ERROR") {

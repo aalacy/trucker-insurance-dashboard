@@ -68,6 +68,11 @@ const router = new Router({
           name: 'ContactUs',
           component: () => import('./views/ContactUs.vue')
         },
+        {
+          path: 'ocr',
+          name: 'OCR',
+          component: () => import('./views/ocr/ocr')
+        },
       ]
     },
     {
@@ -81,16 +86,6 @@ const router = new Router({
       component:() => import('./views/NewAccountInfo.vue'),
       redirect: '/new-accountInfo/newpersonal-info',
       children: [
-        {
-          path: 'newpersonal-info',
-          name: 'NewAccountInfoPersonalInfo',
-          component: () => import('./components/NewAccountInfoPersonalInfo.vue'),
-          props: {
-            prevForm:'AccountInfoUploadDocuments',
-            nextForm: 'NewAccountInfoBusinessStructure',
-            progress: 10
-          }
-        },
         {
           path: 'newbusiness-structure',
           name: 'NewAccountInfoBusinessStructure',
@@ -353,21 +348,10 @@ const router = new Router({
       redirect: '/account-info/personal-info',
       children: [
         {
-          path: 'upload-documents',
-          name: 'AccountInfoUploadDocuments',
-          component: () =>
-            import('./components/AccountInfoUploadDocuments.vue'),
-          props: {
-            nextForm: 'AccountInfoPersonalInfo',
-            progress: 0
-          }
-        },
-        {
           path: 'personal-info',
           name: 'AccountInfoPersonalInfo',
           component: () => import('./components/AccountInfoPersonalInfo.vue'),
           props: {
-            prevForm:'AccountInfoUploadDocuments',
             nextForm: 'AccountInfoBusinessStructure',
             progress: 10
           }

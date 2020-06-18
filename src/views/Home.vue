@@ -219,6 +219,11 @@
         </div>
       </div>
     </div>
+
+    <!-- fab for ocr on mobile -->
+    <b-button v-if="msg" pill  variant="primary" class="ocr-fab" @click="showOCR">
+      <b-icon  icon="upc-scan" variant="primary"></b-icon>
+    </b-button>
   </div>
 </template>
 
@@ -226,13 +231,12 @@
 import { API } from "../api.js";
 import { isMobile } from "mobile-device-detect";
 import axios from 'axios';
-import { toUpper as _toUpper } from '../util.js';
 
 export default {
   name: "HomeView",
    updated() {
     if(this.keyword == '') {
-    this.noData = false
+      this.noData = false
     }
   },
   mounted() {
@@ -420,8 +424,9 @@ export default {
         this.loading = false;
       }
     },
-    toUpper(str) {
-      return _toUpper(str);
+
+    showOCR () {
+      this.$router.push({ path: 'ocr' })
     }
   }
 };
@@ -720,8 +725,6 @@ input:focus {
     }
   }
 }
-
-
 </style>
 
 <style lang="scss">
@@ -742,6 +745,20 @@ input:focus {
     width: 100% !important;
     display: flex !important;
     justify-content: flex-end;
+  }
+}
+
+.ocr-fab {
+  position: fixed;
+  left: 5%;
+  z-index: 9999;
+  bottom: 5%;
+  overflow: initial;
+  box-sizing: border-box;
+  opacity: .7;
+
+  svg {
+    fill: white;
   }
 }
 </style>

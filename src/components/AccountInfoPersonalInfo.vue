@@ -252,7 +252,7 @@
           <div class="form-buttons next-wrapper">
             <div class="col-6 p-0">
               <button
-                :disabled="!mobile"
+                disabled
                 type="button"
                 class="lt-button lt-button-default btn-block btn-border-radius-lb"
                 @click="goPrevForm"
@@ -277,18 +277,12 @@
           </div>
         </div>
       </div>
-<!-- 
-      <div class="d-flex justify-content-center m-4" @click="show" v-if="save">
-        <span class="save-hover">Save & Continue</span>
-      </div>
-      <div class="d-flex justify-content-center m-4" @click="newQuoteReq" v-else>
-        <span class="save-hover">Save Changes</span>
-      </div>
- -->
-      <div v-if="showmodel">
-        <modelLogin/>
-      </div>
     </form>
+
+    <!-- fab for VIN on mobile -->
+    <b-button v-if="showUSDOTFab" pill variant="primary" class="ocr-fab" @click="fillUSDOT">
+      <b-icon  icon="upc-scan" variant="primary"></b-icon>
+    </b-button>
   </div>
 </template>
 
@@ -337,6 +331,9 @@ export default {
   },
   computed: {
     ...mapState(["data"]),
+    showUSDOTFab () {
+      return localStorage.getItem('imageDOT') && this.mobile && !this.submitted
+    },
     checked: {
       get () {
         return this.formData.address && this.formData.address == this.formData.address1 && this.formData.city == this.formData.city1 && this.formData.state == this.formData.state1 && this.formData.zip == this.formData.zip1
@@ -411,7 +408,7 @@ export default {
       },
       paths: [],
       distance: "",
-      submitted: false,
+      submitted: true,
     };
   },
   async created() {
@@ -427,6 +424,12 @@ export default {
   
   },
   methods: {
+    fillUSDOT () {
+      const usdot = localStorage.getItem('imageDOT')
+      if (usdot && !this.submitted) {
+        this.formData.dotNumber = usdot
+      }
+    },
     async createCompany(row) {
       this.loading = true;
       try {
@@ -685,26 +688,40 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .color-bg{
-    color:#6f6f6f
-  }
+.color-bg{
+  color:#6f6f6f
+}
 
-  .st-padding {
-    padding-left: 10px;
-    font-weight: bold;
-  }
+.st-padding {
+  padding-left: 10px;
+  font-weight: bold;
+}
 
-  .distance-label {
-    bottom: 0; 
-    left: 0; 
-    padding: 0.25rem 1rem; 
-    background-color: #efefef; 
-    color: #5e98f9; 
-    position: absolute; 
-    z-index: 100;
+.distance-label {
+  bottom: 0; 
+  left: 0; 
+  padding: 0.25rem 1rem; 
+  background-color: #efefef; 
+  color: #5e98f9; 
+  position: absolute; 
+  z-index: 100;
 
-    b {
-      color: #5e98f9;
-    }
+  b {
+    color: #5e98f9;
   }
+}
+
+.ocr-fab {
+  position: fixed;
+  left: 5%;
+  z-index: 9999;
+  bottom: 5%;
+  overflow: initial;
+  box-sizing: border-box;
+  opacity: .7;
+
+  svg {
+    fill: white;
+  }
+}
 </style>
