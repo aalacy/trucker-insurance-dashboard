@@ -143,6 +143,7 @@ import  { BrowserPDF417Reader } from'@zxing/library';
 	  		moveNext () {
 	  			this.status = 'danger'
 	  			this.message = 'Timed out. Please try it later.'
+	  			this.setCancel(!this.cancel)
 	  			const self = this
 	  			setTimeout(function () {
 			    	self.skip()
@@ -170,7 +171,7 @@ import  { BrowserPDF417Reader } from'@zxing/library';
 				        data = await API.formData("ocr/upload", this.formData)
 			        }
 		            this.status = data.status
-			        if (data.status === "success") {
+			        if (data && data.status === "success") {
 			        	if (this.step == 'imageDL') {
 			        		this.value = 'Ok'
 			        	} else {
@@ -182,7 +183,7 @@ import  { BrowserPDF417Reader } from'@zxing/library';
 			          setTimeout(function () {
 					    self.skip()
 					  }, 4000);
-			        } else if (data.status === "danger") {
+			        } else if (data && data.status === "danger") {
 			          this.message = data.message
 			          console.log(data.message)
 			        }
