@@ -9,14 +9,7 @@
 					    <BaseTimer @move-next="moveNext" />
 					</div>
 	        		<div class="h2 control-block">
-	        			<!-- Upload picture with DOT number -->
-					   	<b-button :disabled="loading || !formData[step]"  variant="primary" @click="uploadFile" size="sm" class="mb-2 mr-1">
-					   		<b-spinner variant="light" v-if="loading" small></b-spinner>
-						    <span v-if="loading" class="sr-only">Loading...</span>
-					      	<span class="text-white" v-else>Upload&nbsp;<b-icon  icon="upload" variant="primary"></b-icon></span>
-					    </b-button>
-
-					    <!-- Clear the timer to restart the OCR -->
+	        			<!-- Clear the timer to restart the OCR -->
 					    <b-button :disabled="!loading" variant="primary" @click="clearTimer" size="sm" class="mb-2 mr-1">
 					      	<span class="text-white">Refresh&nbsp;<b-icon  icon="arrow-repeat" variant="primary"></b-icon></span>
 					    </b-button>
@@ -24,6 +17,12 @@
 					    <!-- Skip DOT OCR and move to the next step (VIN OCR) -->
 					    <b-button variant="primary" @click="back" size="sm" class="mb-2 mr-1">
 						    <span class="text-white">Back&nbsp;<b-icon  icon="skip-backward" variant="primary"></b-icon></span>
+					    </b-button>
+	        			<!-- Upload picture with DOT number -->
+					   	<b-button :disabled="loading || !formData[step]"  variant="primary" @click="uploadFile" size="sm" class="mb-2 mr-1">
+					   		<b-spinner variant="light" v-if="loading" small></b-spinner>
+						    <span v-if="loading" class="sr-only">Loading...</span>
+					      	<span class="text-white" v-else>Scan&nbsp;<b-icon  icon="upc-scan" variant="primary"></b-icon></span>
 					    </b-button>
 					    <b-button variant="primary" @click="skip" size="sm" class="mb-2">
 						    <span class="text-white">Skip&nbsp;<b-icon  icon="skip-forward" variant="primary"></b-icon></span>
@@ -133,7 +132,6 @@ import  { BrowserPDF417Reader } from'@zxing/library';
 
 		watch: {
 			step() {
-				console.log('updated')
 				this.initialize()
 			}
 		},

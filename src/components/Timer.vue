@@ -43,7 +43,7 @@ const COLOR_CODES = {
 export default {
   data() {
     return {
-      timeLimit: 20,
+      timeLimit: 59,
       timePassed: 0,
       timerInterval: null
     };
