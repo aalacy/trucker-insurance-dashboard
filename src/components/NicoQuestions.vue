@@ -140,10 +140,10 @@ export default {
         if (res && res.status === "OK" && res.data.company) {
         	let { company: { nico_questions } } = res.data;
 	        if (nico_questions) {
-	            if (Object.keys(nico_questions).length === 0 && nico_questions.constructor === Object) {
+	            if (typeof nico_questions == 'string') {
+	                nico_questions = JSON.parse(nico_questions)
 	            } else {
 	            }
-	                nico_questions = JSON.parse(nico_questions)
               this.buildFormData(nico_questions)
           	} else {
 		  		this.buildFormData({})
