@@ -142,8 +142,8 @@ export default {
 	        if (nico_questions) {
 	            if (Object.keys(nico_questions).length === 0 && nico_questions.constructor === Object) {
 	            } else {
-	              nico_questions = JSON.parse(nico_questions)
 	            }
+	                nico_questions = JSON.parse(nico_questions)
               this.buildFormData(nico_questions)
           	} else {
 		  		this.buildFormData({})
