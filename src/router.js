@@ -353,7 +353,7 @@ const router = new Router({
           component: () => import('./components/AccountInfoPersonalInfo.vue'),
           props: {
             nextForm: 'AccountInfoBusinessStructure',
-            progress: 10
+            progress: 0
           }
         },
         {
@@ -364,7 +364,7 @@ const router = new Router({
           props: {
             prevForm: 'AccountInfoPersonalInfo',
             nextForm: 'AccountInfoCargoGroup',
-            progress: 20
+            progress: 10
           }
         },
         {
@@ -374,7 +374,7 @@ const router = new Router({
           props: {
             prevForm: 'AccountInfoBusinessStructure',
             nextForm: 'AccountInfoCargoHauled',
-            progress: 30
+            progress: 20
           }
         },
         {
@@ -384,7 +384,7 @@ const router = new Router({
           props: {
             prevForm: 'AccountInfoCargoGroup',
             nextForm: 'AccountInfoVehiclesAndTrailers',
-            progress: 40
+            progress: 30
           }
         },
         {
@@ -395,7 +395,7 @@ const router = new Router({
           props: {
             prevForm: 'AccountInfoCargoHauled',
             nextForm: 'AccountInfoEldProvider',
-            progress: 50
+            progress: 40
           }
         },
         {
@@ -405,7 +405,7 @@ const router = new Router({
           props: {
             prevForm: 'AccountInfoVehiclesAndTrailers',
             nextForm: 'AccountInfoDrivers',
-            progress: 60
+            progress: 50
           }
         },
         {
@@ -415,7 +415,7 @@ const router = new Router({
           props: {
             prevForm: 'AccountInfoEldProvider',
             nextForm: 'AccountInfoOwners',
-            progress: 70
+            progress: 60
           }
         },
         {
@@ -425,7 +425,7 @@ const router = new Router({
           props: {
             prevForm: 'AccountInfoDrivers',
             nextForm: 'AccountInfoQuestions',
-            progress: 80
+            progress: 70
           }
         },
         {
@@ -435,7 +435,7 @@ const router = new Router({
           props: {
             prevForm: 'AccountInfoOwners',
             nextForm: 'AccountInfoDocumentUpload',
-            progress: 85
+            progress: 75
           }
         },
         {
@@ -444,8 +444,142 @@ const router = new Router({
           component: () => import('./components/AccountInfoDocumentUpload.vue'),
           props: {
             prevForm: 'AccountInfoQuestions',
+            nextForm: 'NicoQuestions1',
+            progress: 80
+          }
+        },
+        {
+          path: 'nico-questions1',
+          name: 'NicoQuestions1',
+          component: () => import('./components/NicoQuestions.vue'),
+          props: {
+            prevForm: 'AccountInfoDocumentUpload',
+            nextForm: 'NicoQuestions2',
+            progress: 81,
+            questions: [
+              'This is your primary business.',
+              'You have never filed for bankruptcy.',
+              'You haul for hire.'
+            ]
+          }
+        },
+        {
+          path: 'nico-questions2',
+          name: 'NicoQuestions2',
+          component: () => import('./components/NicoQuestions.vue'),
+          props: {
+            prevForm: 'NicoQuestions1',
+            nextForm: 'NicoQuestions3',
+            progress: 82,
+            questions: [
+              'You are a common carrier.',
+              'You are not a contract hauler.',
+              'You don\'t haul hazardous materials.'
+            ]
+          }
+        },
+        {
+          path: 'nico-questions3',
+          name: 'NicoQuestions3',
+          component: () => import('./components/NicoQuestions.vue'),
+          props: {
+            prevForm: 'NicoQuestions2',
+            nextForm: 'NicoQuestions4',
+            progress: 83,
+            questions: [
+              'You don\'t only haul your own cargo.',
+              'You don\'t pull double trailers.',
+              'You don\'t pull triple trailers.'
+            ]
+          }
+        },
+        {
+          path: 'nico-questions4',
+          name: 'NicoQuestions4',
+          component: () => import('./components/NicoQuestions.vue'),
+          props: {
+            prevForm: 'NicoQuestions3',
+            nextForm: 'NicoQuestions5',
+            progress: 84,
+            questions: [
+              'You don\'t rent or lease your equipment to others.',
+              'Your drivers aren’t covered by workers compensation.',
+              'Drivers are allowed to take their vehicles home at night.'
+            ]
+          }
+        },
+        {
+          path: 'nico-questions5',
+          name: 'NicoQuestions5',
+          component: () => import('./components/NicoQuestions.vue'),
+          props: {
+            prevForm: 'NicoQuestions4',
+            nextForm: 'NicoQuestions6',
+            progress: 85,
+            questions: [
+              'Family members without CDL/not listed in the driver section aren’t allowed to drive.',
+              'You order MVRs on all drivers prior to hiring.',
+              'You agree to report all newly hired operators.'
+            ]
+          }
+        },
+        {
+          path: 'nico-questions6',
+          name: 'NicoQuestions6',
+          component: () => import('./components/NicoQuestions.vue'),
+          props: {
+            prevForm: 'NicoQuestions5',
+            nextForm: 'NicoQuestions7',
+            progress: 86,
+            questions: [
+              'You want broad form peril coverage for cargo (if you need cargo).',
+              'You have never changed your operating name.',
+              'You don\'t operate under another name.'
+            ]
+          }
+        },
+        {
+          path: 'nico-questions7',
+          name: 'NicoQuestions7',
+          component: () => import('./components/NicoQuestions.vue'),
+          props: {
+            prevForm: 'NicoQuestions6',
+            nextForm: 'NicoQuestions8',
+            progress: 87,
+            questions: [
+              'You don\'t operate as a subsidiary of another company.',
+              'You don\'t own or manage any other transportation operations that aren’t covered.',
+              'You don\'t lease your authority.'
+            ]
+          }
+        },
+        {
+          path: 'nico-questions8',
+          name: 'NicoQuestions8',
+          component: () => import('./components/NicoQuestions.vue'),
+          props: {
+            prevForm: 'NicoQuestions7',
+            nextForm: 'NicoQuestions9',
+            progress: 88,
+            questions: [
+              'You don\'t appoint agents or hire independent contractors to operate on your behalf.',
+              'You have never lost or had your authority withdrawn or been under probation by any regulatory authority.',
+              'You need proof of coverage.'
+            ]
+          }
+        },
+        {
+          path: 'nico-questions9',
+          name: 'NicoQuestions9',
+          component: () => import('./components/NicoQuestions.vue'),
+          props: {
+            prevForm: 'NicoQuestions8',
             nextForm: 'AccountInfoSignComplete',
-            progress: 90
+            progress: 89,
+            questions: [
+              'You don\'t have agreements with other carriers for the interchange of equipment or transportation of loads.',
+              'You don\'t barter, hire, or lease any vehicles.',
+            ]
           }
         },
         {
@@ -453,9 +587,9 @@ const router = new Router({
           name:'AccountInfoSignComplete',
           component:() => import('./components/AccountInfoSignComplete.vue'),
           props:{
-            prevForm: 'AccountInfoDocumentUpload',
+            prevForm: 'NicoQuestions9',
             nextForm: 'QuotesAccountInfo',
-            progress: 100
+            progress: 90
           },
           meta: {
             requiresAuth: true
@@ -507,6 +641,7 @@ const updateUUIDAndDotId = () => {
     localStorage.setItem('uuid', params.uuid)
   }
   if (params.dotId && params.dotId != undefined) {
+    console.log('router', params.dotId)
     localStorage.setItem('usdot', params.dotId)
   }
 }

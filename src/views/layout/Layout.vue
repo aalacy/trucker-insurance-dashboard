@@ -11,7 +11,7 @@
 		        <account-info-account-progress :progress="progress" :US_DOT_or_company_name="US_DOT_or_company_name" />
 	       		<div class="main-wrapper p-3">
 	   			 	<div class="row forms">
-				        <div class="col-xs-12 col-sm-12 col-lg-8   col-md-12">
+				        <div class="col-xs-12 col-sm-12 col-lg-8 col-md-12 mb-3">
 				          <router-view
 			             	@update-progress="updateProgress"
 				            @update-hint="updateHint"
@@ -100,6 +100,11 @@
 			        {
 			          header: "Document Upload",
 			          link: { name: "AccountInfoDocumentUpload" },
+			          icon: '/img/sidebar/Document Upload.png'
+			        },
+			        {
+			          header: "Nico Questions",
+			          link: { name: "NicoQuestions1" },
 			          icon: '/img/sidebar/Document Upload.png'
 			        },
 			        {

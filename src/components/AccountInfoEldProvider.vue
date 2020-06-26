@@ -221,7 +221,7 @@ export default {
       try {
         let res = await API.get("company/current?uuid=" + this.uuid);
 
-        if (res.status === "OK") {
+        if (res && res.status === "OK") {
           let { company: { currentEldProvider } } = res.data;
           this.uuid = res.data.uuid;
           if (currentEldProvider) {
@@ -231,7 +231,7 @@ export default {
             this.formData.eldProvider = currentEldProvider;
             this.addUserProviders(currentEldProvider);
           }
-        } else if (res.status === "ERROR") {
+        } else if (res && res.status === "ERROR") {
           // this.$router.replace({ name: 'Home' });
         }
       } catch (err) {

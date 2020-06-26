@@ -667,7 +667,7 @@ export default {
       try {
         let res = await API.get("company/current?uuid=" + this.uuid);
 
-        if (res.status === "OK") {
+        if (res && res.status === "OK" && res.data.company) {
           let { company: { driverInformationList, ownerInformationList } } = res.data;
           
           this.uuid = res.data.uuid;
@@ -694,7 +694,7 @@ export default {
           } else {
             this.addDriverData();
           }
-        } else if (res.status === "ERROR") {
+        } else if (res && res.status === "ERROR") {
         }
       } catch (err) {
         console.error(err);

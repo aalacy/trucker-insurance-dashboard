@@ -1214,8 +1214,8 @@ export default {
       try {
         let res = await API.get("company/current?uuid=" + this.uuid);
        
-        this.uuid = res.data.uuid;
-        if (res.status === "OK" && res.data.company) {
+        if (res && res.status === "OK" && res.data.company) {
+          this.uuid = res.data.uuid;
           let { vehicleInformationList } = res.data.company;
           if (vehicleInformationList) {
             if (vehicleInformationList.constructor !== Object) {
@@ -1249,7 +1249,7 @@ export default {
               // this.addTrailerData();
             }
           }
-        } else if (res.status === "ERROR") {
+        } else if (res && res.status === "ERROR") {
           // this.$router.replace({ name: 'Home' });
         }
       } catch (err) {

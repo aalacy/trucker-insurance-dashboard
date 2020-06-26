@@ -231,6 +231,8 @@ export default {
     };
   },
   updated() {
+    this.$emit("update-progress", this.progress);
+    
     if (localStorage.getItem("showModal") == "true") {
       this.showmodel = true;
     } else {
@@ -326,7 +328,7 @@ export default {
       this.uuid = localStorage.getItem('uuid');
       try {
         let res = await API.get("company/current?uuid=" + this.uuid);
-        if (res.status === "OK") {
+        if (res && res.status === "OK") {
           // let data = data.data;
           this.uuid = res.data.uuid;
         }

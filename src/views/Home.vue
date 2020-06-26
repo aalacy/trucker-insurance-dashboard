@@ -400,8 +400,8 @@ export default {
       }
     },
     async createCompany(row) {
-      this.localUsdot = row.item.usdot;
-      this.localcompany = row.item.name;
+      this.localUsdot = row.item.usdot || '';
+      this.localcompany = row.item.name || '';
       localStorage.setItem("usdot", this.localUsdot);
       localStorage.setItem("company", this.localcompany);
       this.loading = true;

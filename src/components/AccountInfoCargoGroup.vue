@@ -201,7 +201,7 @@ export default {
       try {
         let res = await API.get("company/current?uuid=" + this.uuid);
 
-        if (res.status === "OK") {
+        if (res && res.status === "OK") {
           this.uuid = res.data.uuid;
           let { company: { cargoGroup } } = res.data;
           if (cargoGroup) {
@@ -211,7 +211,7 @@ export default {
               this.formData.cargoGroup = cargoGroup;
             }
           }
-        } else if (res.status === "ERROR") {
+        } else if (res && res.status === "ERROR") {
         }
       } catch (err) {
        

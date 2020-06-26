@@ -453,29 +453,33 @@ export default {
     },
     async parseAddress (_mailingAddress, _physicalAddress) {
       try {
-        let MailingAddress = _mailingAddress
-        if (_mailingAddress && _mailingAddress.constructor !== Object) {
-          MailingAddress = JSON.parse(_mailingAddress)
-        }
-        this.formData.address = MailingAddress.address
-        this.formData.state = MailingAddress.state
-        this.formData.city = MailingAddress.city
-        this.formData.zip = MailingAddress.zip.split('-')[0].replace(",", "");
+        if (_mailingAddress) {
+          let MailingAddress = _mailingAddress
+          if (_mailingAddress && _mailingAddress.constructor !== Object) {
+            MailingAddress = JSON.parse(_mailingAddress)
+          }
+          this.formData.address = MailingAddress.address
+          this.formData.state = MailingAddress.state
+          this.formData.city = MailingAddress.city
+          this.formData.zip = MailingAddress.zip.split('-')[0].replace(",", "");
 
-        await this.getMapData(MailingAddress, "Mailing Address");
+          await this.getMapData(MailingAddress, "Mailing Address");
+        }
       } catch(e){ console.log(e)}
 
       try {
-        let PhysicalAddress = _physicalAddress
-        if (_physicalAddress && _physicalAddress.constructor !== Object) {
-          PhysicalAddress = JSON.parse(_physicalAddress)
-        }
-        this.formData.address1 = PhysicalAddress.address;
-        this.formData.state1 = PhysicalAddress.state;
-        this.formData.city1 = PhysicalAddress.city;
-        this.formData.zip1 = PhysicalAddress.zip;
+        if (_physicalAddress) {
+          let PhysicalAddress = _physicalAddress
+          if (_physicalAddress && _physicalAddress.constructor !== Object) {
+            PhysicalAddress = JSON.parse(_physicalAddress)
+          }
+          this.formData.address1 = PhysicalAddress.address;
+          this.formData.state1 = PhysicalAddress.state;
+          this.formData.city1 = PhysicalAddress.city;
+          this.formData.zip1 = PhysicalAddress.zip;
 
-        await this.getMapData(PhysicalAddress, "Physical Address");
+          await this.getMapData(PhysicalAddress, "Physical Address");
+        }
       } catch(e){ console.log(e)}
 
       if (this.markers.length > 1) {
@@ -575,10 +579,10 @@ export default {
       let { company } = data;
       if (company) {
         let { mailingAddress, garagingAddress, dotNumber, name, phoneNumber } = company;
-        this.formData.dotNumber = dotNumber
+        this.formData.dotNumber = dotNumber || ''
         this.formData.name = name
         this.formData.phoneNumber = phoneNumber
-        this.$emit('update-us-dot', dotNumber)
+        this.$emit('update-us-dot', this.formData.dotNumber)
         await this.parseAddress(mailingAddress, garagingAddress)
       }
     },
@@ -590,13 +594,13 @@ export default {
       const userId = localStorage.getItem('userId')
       try {
         let res = await API.get("company/current?uuid=" + this.uuid + "&userId=" + userId);
-        this.uuid = res.data.uuid;
   
-        if (res.status === "OK") {
+        if (res && res.status === "OK") {
+          this.uuid = res.data.uuid;
           this.submitted = res.submitted
           this.status = true
           await this.parseData(res.data)
-        } else if (res.status === "ERROR") {
+        } else if (res && res.status === "ERROR") {
           // this.$router.replace({ name: "Home" });
         }
       } catch (err) {

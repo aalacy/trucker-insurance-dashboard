@@ -218,7 +218,7 @@ export default {
       try {
         let res = await API.get("company/current?uuid=" + this.uuid);
   
-        if (res.status === "OK") {
+        if (res && res.status === "OK" && res.data.company) {
           let { company: { cargoGroup, cargoHauled } } = res.data;
           if (!Array.isArray(cargoGroup)) {
             this.prevCargoGroup = JSON.parse(cargoGroup);
@@ -235,7 +235,7 @@ export default {
             }
           }
           this.uuid = res.data.uuid;
-        } else if (res.status === "ERROR") {
+        } else if (res && res.status === "ERROR") {
           // this.$router.replace({ name: "Home" });
         }
       } catch (err) {

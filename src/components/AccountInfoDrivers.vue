@@ -874,8 +874,8 @@ export default {
       this.uuid = localStorage.getItem('uuid');
       try {
         let res = await API.get("company/current?uuid=" + this.uuid);
-        this.uuid = res.data.uuid;
-        if (res.status === "OK") {
+        if (res && res.status === "OK") {
+          this.uuid = res.data.uuid;
           let { company: { driverInformationList, mailingAddress, businessStructureRaw } } = res.data;
           
           if (mailingAddress && mailingAddress.constructor !== Object) {
@@ -917,7 +917,7 @@ export default {
             // this.addForm();
              this.addDriverData();
           }
-        } else if (res.status === "ERROR") {
+        } else if (res && res.status === "ERROR") {
            
         }
       } catch (err) {

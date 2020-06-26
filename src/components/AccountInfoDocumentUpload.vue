@@ -233,7 +233,7 @@
                 class="lt-button lt-button-main btn-block btn-border-radius-rb"
               >
                  <span class="ctrl-label next-label ml-3 text-white">{{ loading ? 'Loading...' : 'Next' }}</span>
-                <div class="prev-title next-title">Sign & Complete</div>
+                <div class="prev-title next-title">Additional Questions</div>
                 <font-awesome-icon class="fontawesome ctrl-arrow-right" :icon="['fas', 'sort-down']" size="2x"/>
               </button>
             </div>
@@ -305,7 +305,7 @@ export default {
   },
   created() {
     this.$emit("update-progress", this.progress);
-    this.loadCompany();
+    // this.loadCompany();
   },
   updated() {
     if (localStorage.getItem("showModal") == "true") {
@@ -397,10 +397,12 @@ export default {
       this.uuid = localStorage.getItem('uuid');
       try {
         let res = await API.get("company/current?uuid=" + this.uuid);
-        this.uuid = res.data.uuid;
-        
-        if (res.status === "ERROR") {
-          // this.$router.replace({ name: "Home" });
+        if (res) {
+          this.uuid = res.data.uuid;
+          
+          if (res.status === "ERROR") {
+            // this.$router.replace({ name: "Home" });
+          }
         }
       } catch (err) {
         console.error(err);
@@ -412,6 +414,7 @@ export default {
     async updateCompany() {
       this.loading = true;
       this.error = null;
+      this.uuid = localStorage.getItem('uuid');
       
       try {
         const attachmentList = []
