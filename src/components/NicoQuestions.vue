@@ -3,16 +3,17 @@
     <form class="custom_form" @submit.prevent="updateCompany">
       <div class="card">
         <div class="card-body">
-          <h4 class="card-title form-sub-title mb-4">Additional Questions</h4>
+          <h4 class="card-title form-sub-title mb-3">Additional Questions</h4>
+          <div class="mb-4 h4 font-weight-light">Please clearly read each of these questions and be sure to answer accurately.</div>
           <div v-for="(ques, i) in questions" class="question-block" :key="ques + updated">
-        	<span class="question">{{ques}}</span>  
-        	<toggle-button 
-        		:labels="{checked: 'Yes', unchecked: 'No'}" 
-        		:width="70" 
-        		:height="30" 
-        		v-model="formData.nico_questions[ques]"
-        		:font-size="15"
-        	/>
+          	<span class="question">{{ques}}</span>  
+          	<toggle-button 
+          		:labels="{checked: 'Yes', unchecked: 'No'}" 
+          		:width="70" 
+          		:height="30" 
+          		v-model="formData.nico_questions[ques]"
+          		:font-size="15"
+          	/>
           </div>
           <div v-if="error" class="alert alert-danger" role="alert">{{ error }}</div>
       	</div>
@@ -204,12 +205,12 @@ export default {
 
 <style lang="scss" scoped>
 .question-block {
-	margin-bottom: 1.25rem;
+	margin-bottom: .825rem;
 	display: flex;
 	align-items: center;
 
 	.question {
-		margin-right: 1.5rem;
+		margin-right: 2rem;
 		font-size: 20px;
 		font-weight: 500;
 	}

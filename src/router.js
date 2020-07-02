@@ -454,12 +454,35 @@ const router = new Router({
           component: () => import('./components/NicoQuestions.vue'),
           props: {
             prevForm: 'AccountInfoDocumentUpload',
-            nextForm: 'NicoQuestions2',
-            progress: 81,
+            nextForm: 'AccountInfoSignComplete',
+            progress: 85,
             questions: [
               'This is your primary business.',
               'You have never filed for bankruptcy.',
-              'You haul for hire.'
+              'You haul for hire.',
+              'You are a common carrier.',
+              'You are not a contract hauler.',
+              'You don\'t haul hazardous materials.',
+              'You don\'t only haul your own cargo.',
+              'You don\'t pull double trailers.',
+              'You don\'t pull triple trailers.',
+              'You don\'t rent or lease your equipment to others.',
+              'Your drivers aren’t covered by workers compensation.',
+              'Drivers are allowed to take their vehicles home at night.',
+              'Family members without CDL/not listed in the driver section aren’t allowed to drive.',
+              'You order MVRs on all drivers prior to hiring.',
+              'You agree to report all newly hired operators.',
+              'You want broad form peril coverage for cargo (if you need cargo).',
+              'You have never changed your operating name.',
+              'You don\'t operate under another name.',
+              'You don\'t operate as a subsidiary of another company.',
+              'You don\'t own or manage any other transportation operations that aren’t covered.',
+              'You don\'t lease your authority.',
+              'You don\'t appoint agents or hire independent contractors to operate on your behalf.',
+              'You have never lost or had your authority withdrawn or been under probation by any regulatory authority.',
+              'You need proof of coverage.',
+              'You don\'t have agreements with other carriers for the interchange of equipment or transportation of loads.',
+              'You don\'t barter, hire, or lease any vehicles.',
             ]
           }
         },
@@ -587,7 +610,7 @@ const router = new Router({
           name:'AccountInfoSignComplete',
           component:() => import('./components/AccountInfoSignComplete.vue'),
           props:{
-            prevForm: 'NicoQuestions9',
+            prevForm: 'NicoQuestions1',
             nextForm: 'QuotesAccountInfo',
             progress: 90
           },
