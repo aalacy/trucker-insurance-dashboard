@@ -103,7 +103,7 @@
 			          icon: '/img/sidebar/Document Upload.png'
 			        },
 			        {
-			          header: "Nico Questions",
+			          header: "Additional Questions",
 			          link: { name: "NicoQuestions1" },
 			          icon: '/img/sidebar/Document Upload.png'
 			        },
