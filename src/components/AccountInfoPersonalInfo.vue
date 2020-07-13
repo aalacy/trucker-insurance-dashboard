@@ -407,7 +407,7 @@ export default {
       },
       paths: [],
       distance: "",
-      submitted: true,
+      submitted: false,
     };
   },
   async created() {
@@ -596,7 +596,7 @@ export default {
   
         if (res && res.status === "OK") {
           this.uuid = res.data.uuid;
-          this.submitted = res.submitted
+          // this.submitted = res.submitted
           this.status = true
           await this.parseData(res.data)
         } else if (res && res.status === "ERROR") {
