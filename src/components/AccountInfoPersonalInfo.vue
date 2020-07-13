@@ -294,7 +294,6 @@ import { mapState, mutations } from "vuex";
 import { isMobile } from "mobile-device-detect";
 import axios from "axios";
 import { setTimeout } from "timers";
-import { gmapApi } from 'vue2-google-maps'
 
 export default {
   name: "AccountInfoPersonalInfo",

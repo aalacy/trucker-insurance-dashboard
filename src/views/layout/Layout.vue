@@ -143,6 +143,7 @@
 		      window.scrollTo(0, 0);
 		    },
 		    updateUSDot(value) {
+		    	console.log('US_DOT_or_company_name', value)
 		      this.US_DOT_or_company_name = value;
 		      localStorage.setItem('usdot', value)
 		    },
@@ -179,6 +180,12 @@
 
 			this.handleWindowResize();
 			window.addEventListener('resize', this.handleWindowResize);
+		},
+
+		mounted () {
+			if (!this.US_DOT_or_company_name) {
+				this.updateUSDot(localStorage.getItem("usdot") || '')
+			}
 		},
 
 		beforeDestroy() {

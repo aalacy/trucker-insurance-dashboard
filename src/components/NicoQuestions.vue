@@ -168,7 +168,6 @@ export default {
 	    		this.formData.nico_questions[ques] = nico_questions[ques]
     		}
     	})
-    	console.log(this.formData.nico_questions)
     	this.updated += 1
     },
     buildPostData () {

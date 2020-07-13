@@ -33,10 +33,10 @@
 
         <div v-if="loading" class="col-12">
           <img
-              src="../assets/images/loading/loading_truck_128.gif"
-              class="d-block mx-auto rounded mt-4"
-              alt="Loading"
-            >
+            src="../assets/images/loading/loading_truck_128.gif"
+            class="d-block mx-auto rounded mt-4"
+            alt="Loading"
+          >
         </div>
         <div class="row mt-5 search-result">
 

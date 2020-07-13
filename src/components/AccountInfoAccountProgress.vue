@@ -97,7 +97,7 @@ export default {
       myacchide: true,
       quote: false,
     };
-  }
+  },
 };
 </script>
 
