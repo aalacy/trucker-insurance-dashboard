@@ -85,13 +85,13 @@
               </div>
             </div>
             <div class="col-12 col-md-6 col-lg-6 ">
+              <!-- :readonly="submitted || status" -->
               <div class="form-group">
                 <input
                   v-model="formData.dotNumber"
                   :class="{ 'has-error': formErrors.dotNumber }"
                   type="text"
-                  class="lt-input"
-                  :readonly="submitted || status"
+                  class="lt-input" 
                   placeholder="USDOT"
                   @focus="onFocus('USDOT')"
                   @blur="onBlur"
@@ -407,7 +407,7 @@ export default {
       },
       paths: [],
       distance: "",
-      submitted: false,
+      submitted: true,
     };
   },
   async created() {
@@ -596,7 +596,7 @@ export default {
   
         if (res && res.status === "OK") {
           this.uuid = res.data.uuid;
-          // this.submitted = res.submitted
+          this.submitted = res.submitted
           this.status = true
           await this.parseData(res.data)
         } else if (res && res.status === "ERROR") {
