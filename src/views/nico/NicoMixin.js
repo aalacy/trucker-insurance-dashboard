@@ -1,33 +1,6 @@
 import { API } from "../../api.js";
 
 export const NicoMixin = {
- 	computed: {
-    name () {
-      return this.$router.history.current.name.replace('Nico', '')
-    },
-    criteria() {
-        // Compute the search criteria
-        return this.stateSearch.trim().toLowerCase()
-    },
-    availableStates() {
-      const criteria = this.criteria
-      // Filter out already selected options
-      const states = this.states.filter(opt => this.form.Q19.indexOf(opt) === -1)
-      if (criteria) {
-        // Show only options that match criteria
-        return states.filter(opt => opt.toLowerCase().indexOf(criteria) > -1);
-      }
-      // Show all options available
-      return states
-    },
-    searchDesc() {
-      if (this.criteria && this.availableStates.length === 0) {
-        return 'There are no tags matching your search criteria'
-      }
-      return ''
-    }
-  },
-
 	data() {
 	  return {
 	  	loading: false,
