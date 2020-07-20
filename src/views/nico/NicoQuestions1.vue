@@ -584,6 +584,7 @@
                   id="Q26"
                   v-model="$v.form.Q26.$model"
                   :state="validateState('Q26')"
+                  @change="onFileChange($event)"
                   placeholder="Choose a file or drop it here..."
                   drop-placeholder="Drop file here..."
                 ></b-form-file>
@@ -780,7 +781,7 @@ export default {
         Q15: '',
         Q16: '',
         Q17: true,
-        Q18: '',
+        Q18: true,
         Q19: [],
         Q20_0: true,
         Q20: '',
@@ -955,6 +956,27 @@ export default {
       }
       // Show all options available
       return states
+    },
+  },
+
+  methods: {
+    onFileChange(event) {
+      let file = event.target.files[0] || null;
+      this.previewFile(file);
+    },
+    previewFile(file) {
+      let reader = new FileReader();
+      let tempObj = {};
+      reader.onloadend = (evt) => {
+        tempObj.content = evt.target.result;
+      };
+
+      if (file) {
+        reader.readAsDataURL(file);
+        tempObj.name = file.name;
+      } else {
+        tempObj.name = "";
+      }
     },
   },
 
