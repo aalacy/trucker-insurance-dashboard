@@ -451,158 +451,61 @@ const router = new Router({
         {
           path: 'nico-questions1',
           name: 'NicoQuestions1',
-          component: () => import('./components/NicoQuestions.vue'),
+          component: () => import('./views/nico/NicoQuestions1.vue'),
           props: {
             prevForm: 'AccountInfoDocumentUpload',
-            nextForm: 'AccountInfoSignComplete',
-            progress: 85,
-            questions: [
-              'This is your primary business.',
-              'You have never filed for bankruptcy.',
-              'You haul for hire.',
-              'You are a common carrier.',
-              'You are not a contract hauler.',
-              'You don\'t haul hazardous materials.',
-              'You don\'t only haul your own cargo.',
-              'You don\'t pull double trailers.',
-              'You don\'t pull triple trailers.',
-              'You don\'t rent or lease your equipment to others.',
-              'Your drivers aren’t covered by workers compensation.',
-              'Drivers are allowed to take their vehicles home at night.',
-              'Family members without CDL/not listed in the driver section aren’t allowed to drive.',
-              'You order MVRs on all drivers prior to hiring.',
-              'You agree to report all newly hired operators.',
-              'You want broad form peril coverage for cargo (if you need cargo).',
-              'You have never changed your operating name.',
-              'You don\'t operate under another name.',
-              'You don\'t operate as a subsidiary of another company.',
-              'You don\'t own or manage any other transportation operations that aren’t covered.',
-              'You don\'t lease your authority.',
-              'You don\'t appoint agents or hire independent contractors to operate on your behalf.',
-              'You have never lost or had your authority withdrawn or been under probation by any regulatory authority.',
-              'You need proof of coverage.',
-              'You don\'t have agreements with other carriers for the interchange of equipment or transportation of loads.',
-              'You don\'t barter, hire, or lease any vehicles.',
-            ]
+            nextForm: 'NicoQuestions2',
+            progress: 82,
           }
         },
         {
           path: 'nico-questions2',
           name: 'NicoQuestions2',
-          component: () => import('./components/NicoQuestions.vue'),
+          component: () => import('./views/nico/NicoQuestions2.vue'),
           props: {
             prevForm: 'NicoQuestions1',
             nextForm: 'NicoQuestions3',
-            progress: 82,
-            questions: [
-              'You are a common carrier.',
-              'You are not a contract hauler.',
-              'You don\'t haul hazardous materials.'
-            ]
+            progress: 84,
           }
         },
         {
           path: 'nico-questions3',
           name: 'NicoQuestions3',
-          component: () => import('./components/NicoQuestions.vue'),
+          component: () => import('./views/nico/NicoQuestions3.vue'),
           props: {
             prevForm: 'NicoQuestions2',
             nextForm: 'NicoQuestions4',
-            progress: 83,
-            questions: [
-              'You don\'t only haul your own cargo.',
-              'You don\'t pull double trailers.',
-              'You don\'t pull triple trailers.'
-            ]
+            progress: 86,
           }
         },
         {
           path: 'nico-questions4',
           name: 'NicoQuestions4',
-          component: () => import('./components/NicoQuestions.vue'),
+          component: () => import('./views/nico/NicoQuestions4.vue'),
           props: {
             prevForm: 'NicoQuestions3',
             nextForm: 'NicoQuestions5',
-            progress: 84,
-            questions: [
-              'You don\'t rent or lease your equipment to others.',
-              'Your drivers aren’t covered by workers compensation.',
-              'Drivers are allowed to take their vehicles home at night.'
-            ]
+            progress: 87,
           }
         },
         {
           path: 'nico-questions5',
           name: 'NicoQuestions5',
-          component: () => import('./components/NicoQuestions.vue'),
+          component: () => import('./views/nico/NicoQuestions5.vue'),
           props: {
             prevForm: 'NicoQuestions4',
             nextForm: 'NicoQuestions6',
-            progress: 85,
-            questions: [
-              'Family members without CDL/not listed in the driver section aren’t allowed to drive.',
-              'You order MVRs on all drivers prior to hiring.',
-              'You agree to report all newly hired operators.'
-            ]
+            progress: 88,
           }
         },
         {
           path: 'nico-questions6',
           name: 'NicoQuestions6',
-          component: () => import('./components/NicoQuestions.vue'),
+          component: () => import('./views/nico/NicoQuestions6.vue'),
           props: {
             prevForm: 'NicoQuestions5',
-            nextForm: 'NicoQuestions7',
-            progress: 86,
-            questions: [
-              'You want broad form peril coverage for cargo (if you need cargo).',
-              'You have never changed your operating name.',
-              'You don\'t operate under another name.'
-            ]
-          }
-        },
-        {
-          path: 'nico-questions7',
-          name: 'NicoQuestions7',
-          component: () => import('./components/NicoQuestions.vue'),
-          props: {
-            prevForm: 'NicoQuestions6',
-            nextForm: 'NicoQuestions8',
-            progress: 87,
-            questions: [
-              'You don\'t operate as a subsidiary of another company.',
-              'You don\'t own or manage any other transportation operations that aren’t covered.',
-              'You don\'t lease your authority.'
-            ]
-          }
-        },
-        {
-          path: 'nico-questions8',
-          name: 'NicoQuestions8',
-          component: () => import('./components/NicoQuestions.vue'),
-          props: {
-            prevForm: 'NicoQuestions7',
-            nextForm: 'NicoQuestions9',
-            progress: 88,
-            questions: [
-              'You don\'t appoint agents or hire independent contractors to operate on your behalf.',
-              'You have never lost or had your authority withdrawn or been under probation by any regulatory authority.',
-              'You need proof of coverage.'
-            ]
-          }
-        },
-        {
-          path: 'nico-questions9',
-          name: 'NicoQuestions9',
-          component: () => import('./components/NicoQuestions.vue'),
-          props: {
-            prevForm: 'NicoQuestions8',
             nextForm: 'AccountInfoSignComplete',
             progress: 89,
-            questions: [
-              'You don\'t have agreements with other carriers for the interchange of equipment or transportation of loads.',
-              'You don\'t barter, hire, or lease any vehicles.',
-            ]
           }
         },
         {
@@ -610,7 +513,7 @@ const router = new Router({
           name:'AccountInfoSignComplete',
           component:() => import('./components/AccountInfoSignComplete.vue'),
           props:{
-            prevForm: 'NicoQuestions1',
+            prevForm: 'NicoQuestions6',
             nextForm: 'QuotesAccountInfo',
             progress: 90
           },

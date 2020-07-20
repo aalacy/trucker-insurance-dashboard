@@ -143,6 +143,7 @@ export default {
       );
       
     },
+
     cargoHauledMap() {
       let map = {};
 

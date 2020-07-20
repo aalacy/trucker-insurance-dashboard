@@ -112,7 +112,6 @@ export default {
     download() {
       if (this.progress >= 10) {
         const pdfData = `${process.env.VUE_APP_BACKEND_URL}/company/pdf?uuid=` + this.uuid
-        console.log(pdfData)
         window.open(pdfData);
       } else {
         swal("Sorry", "You need to complete 10 steps process first", {

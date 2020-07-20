@@ -69,6 +69,12 @@
                       class="text-white"
                     >Signup</router-link>
                     <a
+                      href='https://blog.luckytruck.co'
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="text-white"
+                    >Blog</a>
+                    <a
                       class="text-white"
                       href="https://luckytruck.co/backend/PRIVACY_POLICY_FOR_LuckyTruck.pdf"
                       rel="noopener noreferrer"

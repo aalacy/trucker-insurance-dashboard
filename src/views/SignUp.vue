@@ -224,10 +224,6 @@ export default {
     } catch (e) { console.log(e.response) }
   },
   methods: {
-    getAllDots () {
-
-    },
-
     validateState(name) {
       const { $dirty, $error } = this.$v.form[name];
       return $dirty ? !$error : null;
@@ -295,7 +291,6 @@ export default {
     },
     async signup() {
       this.$v.form.$touch();
-      console.log(this.form.$anyError)
       if (this.$v.form.$anyError || !this.valid_password) {
         return;
       }

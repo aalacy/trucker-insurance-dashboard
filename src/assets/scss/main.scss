@@ -781,3 +781,15 @@ img {
 .company-table-header th:last-child{
   border-top-right-radius: 5px;
 }
+
+.question-block {
+  margin-top: 0.725rem;
+  display: flex;
+  align-items: center;
+
+  .question {
+    margin-right: 1rem;
+    font-size: 15px;
+    font-weight: 500;
+  }
+}

@@ -24,21 +24,11 @@
             >Login</router-link> <span class="sr-only">(Click to Login)</span>
           </li>
           <li>
-            <b-dropdown v-if="loggedIn" variant="primary" :size="profileSize" right>
+            <b-dropdown v-if="loggedIn" variant="primary" class="mr-2" :size="profileSize" right>
               <template v-slot:button-content>
                 <b-icon icon="person-circle" style="fill: white;"></b-icon>
               </template>
               <b-dropdown-item-button
-                v-if="mobile"
-              >
-                <router-link
-                :to="{ name: 'AccountInfoUploadDocuments' }"
-                active-class="font-weight-bold"
-                >View Quotes</router-link>
-              </b-dropdown-item-button>
-              <b-dropdown-divider v-if="mobile"></b-dropdown-divider>
-              <b-dropdown-item-button
-                v-if="!mobile"
               >
                 <router-link
                   :to="{ name: 'AccountInfo' }"
@@ -59,13 +49,13 @@
                   active-class="font-weight-bold"
                 >Contact Us</router-link>
               </b-dropdown-item-button>
-              <b-dropdown-divider></b-dropdown-divider>
+              <!-- <b-dropdown-divider></b-dropdown-divider>
               <b-dropdown-item-button>
                 <a
                   target="_blank"
                   href="https://blog.luckytruck.co"
                 >My Blog</a>
-              </b-dropdown-item-button>
+              </b-dropdown-item-button> -->
               <b-dropdown-divider></b-dropdown-divider>
               <b-dropdown-item-button>
                 <router-link
@@ -74,6 +64,13 @@
                 >Logout</router-link> <span class="sr-only">(Click to Logout)</span>
               </b-dropdown-item-button>
             </b-dropdown>
+          </li>
+          <li class="nav-item">
+            <a
+              href='https://blog.luckytruck.co'
+              target="_blank"
+              class="btn btn-primary"
+            >Blog</a> <span class="sr-only">(Click to Blog)</span>
           </li>
         </ul>
       </div>
@@ -130,10 +127,10 @@
       },
 
       linkBtn () {
-       let className = 'btn btn-primary lt-btn'
-       if (this.mobile) {
-        className += ' btn-sm'
-       }
+       let className = 'btn btn-primary btn-sm lt-btn'
+       // if (this.mobile) {
+       //  className += ' btn-sm'
+       // }
        return className
       },
 
