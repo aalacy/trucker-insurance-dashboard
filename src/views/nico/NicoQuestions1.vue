@@ -738,7 +738,6 @@ export default {
         required: requiredIf( function() {
           return this.form.Q13_0
         }),
-        ifMinMaxLength: ifMinMaxLength('Q11_0')
       },
       Q14: {
         required: requiredIf( function() {

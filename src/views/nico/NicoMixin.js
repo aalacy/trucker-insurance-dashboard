@@ -14,9 +14,9 @@ export const NicoMixin = {
     	],
     	Q59Options: [
     	 	{ value: '', text: 'Please select an option' },
-    		{ value: 'A', text: 'Anti-lock Brakes?' },
-    		{ value: 'B', text: 'Air Bags?' },
-    		{ value: 'Both', text: 'Both?' },
+    		{ value: 'A', text: 'Anti-lock Brakes' },
+    		{ value: 'B', text: 'Air Bags' },
+    		{ value: 'Both', text: 'Both' },
     	],
     	Q70Q71Options: [
     		{ value: '', text: 'Please select an option' },
