@@ -331,6 +331,8 @@ export const NicoMixin = {
 	  },
 	  async updateCompany() {
 	    this.$v.form.$touch();
+	    console.log(this.form)
+	    console.log(this.$v.form.$anyError)
 	    if (this.$v.form.$anyError) {
 	      return;
 	    }
