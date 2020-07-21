@@ -313,11 +313,13 @@ export const NicoMixin = {
 	      let res = await API.get("company/current?uuid=" + this.uuid);
 	      if (res && res.status === "OK" && res.data.company) {
 	      	let { company: { nico_questions } } = res.data;
-	        if (nico_questions && nico_questions.Q1) {
+	        if (nico_questions) {
 	          if (typeof nico_questions == 'string') {
 	              nico_questions = JSON.parse(nico_questions)
 	          } 
-	          this.form = nico_questions
+	          if (nico_questions.Q5 != undefined) {
+		          this.form = nico_questions
+	          }
 	      	} 
 	      } 
 	    } catch (err) {
