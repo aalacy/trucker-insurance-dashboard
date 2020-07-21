@@ -777,7 +777,9 @@ export default {
         required,
       },
       Q22: {
-        required,
+        required: requiredIf( function() {
+          return this.form.Q21
+        })
       },
       Q23: {
         required: requiredIf( function() {
