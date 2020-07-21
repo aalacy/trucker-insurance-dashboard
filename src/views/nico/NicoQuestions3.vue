@@ -44,7 +44,8 @@
                 <b-form-input 
                   type="number"
                   id="Q50"
-                  v-model="form.Q50"
+                  v-model="$v.form.Q50.$model"
+                  :state="validateState('Q50')"
                 ></b-form-input>
               </b-form-group>
             </b-col>
@@ -117,14 +118,16 @@
 				  				<b-col cols="12" md="6">
 		                <b-form-input 
 		                  type="number"
-		                  v-model="form.Q52_daily"
+		                  v-model="$v.form.Q52_daily.$model"
+		                  :state="validateState('Q52_daily')"
 		                  placeholder="daily"
 		                ></b-form-input>
 		            	</b-col>
 		            	<b-col cols="12" md="6">
 		                <b-form-input 
 		                  type="number"
-		                  v-model="form.Q52_weekly"
+		                  v-model="$v.form.Q52_weekly.$model"
+		                  :state="validateState('Q52_weekly')"
 		                  placeholder="weekly"
 		                ></b-form-input>
 		            	</b-col>
@@ -154,7 +157,7 @@
                 class="mb-0"
                 label="What is the basis for driver(s) pay?"
               >
-              	<b-form-select v-model="form.Q53" :options="driverPayBasis"></b-form-select>
+              	<b-form-select v-model="$v.form.Q53.$model" :state="validateState('Q53')" :options="driverPayBasis"></b-form-select>
 		          </b-form-group>
 		      	</b-col>
 	  		  </b-form-row>
@@ -194,7 +197,8 @@
 		                <b-form-input 
 		                  type="number"
 		                  id="Q55"
-		                  v-model="form.Q55"
+		                  v-model="$v.form.Q55.$model"
+		                  :state="validateState('Q55')"
 		                ></b-form-input>
 		              </b-form-group>
 		            </b-col>
@@ -207,7 +211,8 @@
 		                <b-form-input 
 		                  type="number"
 		                  id="Q56"
-		                  v-model="form.Q56"
+		                  v-model="$v.form.Q56.$model"
+		                  :state="validateState('Q56')"
 		                ></b-form-input>
 		              </b-form-group>
 		            </b-col>
@@ -221,7 +226,8 @@
 		              >
 		                <b-form-input 
 		                  id="Q57"
-		                  v-model="form.Q57"
+		                  v-model="$v.form.Q57.$model"
+		                  :state="validateState('Q57')"
 		                ></b-form-input>
 		              </b-form-group>
 		            </b-col>
@@ -234,7 +240,8 @@
 		                <b-form-input 
 		                  type="number"
 		                  id="Q58"
-		                  v-model="form.Q58"
+		                  v-model="$v.form.Q58.$model"
+		                  :state="validateState('Q58')"
 		                ></b-form-input>
 		              </b-form-group>
 		            </b-col>
@@ -245,7 +252,7 @@
 			                class="mb-0"
 			                label="(A) Anti-lock Brakes? (B) Air Bags?"
 			              >
-			              	<b-form-select v-model="form.Q59" :options="Q59Options"></b-form-select>
+			              	<b-form-select v-model="$v.form.Q59.$model" :state="validateState('Q59')" :options="Q59Options"></b-form-select>
 				          </b-form-group>
 				      	</b-col>
 		  		  	</b-form-row>
@@ -291,25 +298,28 @@
                 label="Number of vehicles owned:"
               >
               	<b-form-row class="mb-2">
-				  		<b-col cols="12" md="4">
+				  				<b-col cols="12" md="4">
 		                <b-form-input 
 		                  type="number"
-		                  v-model="form.Q62_pick_ups"
+		                  v-model="$v.form.Q62_pick_ups.$model"
+		                  :state="validateState('Q62_pick_ups')"
 		                  placeholder="Pick-ups"
 		                ></b-form-input>
-		            </b-col>
-		            <b-col cols="12" md="4">
+			            </b-col>
+			            <b-col cols="12" md="4">
 		                <b-form-input 
 		                  type="number"
-		                  v-model="form.Q62_trucks"
+		                  v-model="$v.form.Q62_trucks.$model"
+		                  :state="validateState('Q62_trucks')"
 		                  placeholder="Trucks"
 		                ></b-form-input>
 		            </b-col>
 		            <b-col cols="12" md="4">
 		                <b-form-input 
 		                  type="number"
-		                  v-model="form.Q62_tractors"
-		                  placeholder="Trucks"
+		                  v-model="$v.form.Q62_tractors.$model"
+		                  :state="validateState('Q62_tractors')"
+		                  placeholder="Tractors"
 		                ></b-form-input>
 		            </b-col>
 			        </b-form-row>
@@ -317,21 +327,24 @@
 					  	<b-col cols="12" md="4">
 		                <b-form-input 
 		                  type="number"
-		                  v-model="form.Q62_semi_trailers"
+		                  v-model="$v.form.Q62_semi_trailers.$model"
+		                  :state="validateState('Q62_semi_trailers')"
 		                  placeholder="Semi-Trailers"
 		                ></b-form-input>
 		            </b-col>
 		            <b-col cols="12" md="4">
 		                <b-form-input 
 		                  type="number"
-		                  v-model="form.Q62_trailers"
+		                  v-model="$v.form.Q62_trailers.$model"
+		                  :state="validateState('Q62_trailers')"
 		                  placeholder="Trailers"
 		                ></b-form-input>
 		            </b-col>
 		            <b-col cols="12" md="4">
 		                <b-form-input 
 		                  type="number"
-		                  v-model="form.Q62_pup_trailers"
+		                  v-model="$v.form.Q62_pup_trailers.$model"
+		                  :state="validateState('Q62_pup_trailers')"
 		                  placeholder="Pup-Trailers"
 		                ></b-form-input>
 		            </b-col>
@@ -349,44 +362,50 @@
 				  				<b-col cols="12" md="4">
 		                <b-form-input 
 		                  type="number"
-		                  v-model="form.Q63_pick_ups"
+		                  v-model="$v.form.Q63_pick_ups.$model"
+		                  :state="validateState('Q63_pick_ups')"
 		                  placeholder="Pick-ups"
 		                ></b-form-input>
 		            	</b-col>
 		            	<b-col cols="12" md="4">
 		                <b-form-input 
 		                  type="number"
-		                  v-model="form.Q63_trucks"
+		                  v-model="$v.form.Q63_trucks.$model"
+		                  :state="validateState('Q63_trucks')"
 		                  placeholder="Trucks"
 		                ></b-form-input>
-		            </b-col>
-		            <b-col cols="12" md="4">
+			            </b-col>
+			            <b-col cols="12" md="4">
 		                <b-form-input 
 		                  type="number"
-		                  v-model="form.Q63_tractors"
-		                  placeholder="Trucks"
+		                  v-model="$v.form.Q63_tractors.$model"
+		                  :state="validateState('Q63_tractors')"
+		                  placeholder="Tractors"
 		                ></b-form-input>
-		            </b-col>
-			        </b-form-row>
-			        <b-form-row>
-					  	<b-col cols="12" md="4">
+			            </b-col>
+				        </b-form-row>
+				        <b-form-row>
+						  	<b-col cols="12" md="4">
 		                <b-form-input 
 		                  type="number"
-		                  v-model="form.Q63_semi_trailers"
+		                  v-model="$v.form.Q63_semi_trailers.$model"
+		                  :state="validateState('Q63_semi_trailers')"
 		                  placeholder="Semi-Trailers"
 		                ></b-form-input>
-		            </b-col>
-		            <b-col cols="12" md="4">
+			            </b-col>
+			            <b-col cols="12" md="4">
 		                <b-form-input 
 		                  type="number"
-		                  v-model="form.Q63_trailers"
+		                  v-model="$v.form.Q63_trailers.$model"
+		                  :state="validateState('Q63_trailers')"
 		                  placeholder="Trailers"
 		                ></b-form-input>
 		            </b-col>
 		            <b-col cols="12" md="4">
 		                <b-form-input 
 		                  type="number"
-		                  v-model="form.Q63_pup_trailers"
+		                  v-model="$v.form.Q63_pup_trailers.$model"
+		                  :state="validateState('Q63_pup_trailers')"
 		                  placeholder="Pup-Trailers"
 		                ></b-form-input>
 		            </b-col>
@@ -410,7 +429,7 @@
 		                label="Date Published"
 		                label-for="Q65"
 		              >
-		                <b-form-datepicker reset-button locale="en-US" placeholder="Choose a date" v-model="form.Q65" class="mb-2"></b-form-datepicker>
+		                <b-form-datepicker reset-button locale="en-US" placeholder="Choose a date" v-model="$v.form.Q65.$model" :state="validateState('Q65')" class="mb-2"></b-form-datepicker>
 		              </b-form-group>
 		            </b-col>
 		            <b-col cols="12" md="6">
@@ -422,7 +441,8 @@
 		                <b-form-input 
 		                  type="number"
 		                  id="Q66"
-		                  v-model="form.Q66"
+		                  v-model="$v.form.Q66.$model"
+		                  :state="validateState('Q66')"
 		                ></b-form-input>
 		              </b-form-group>
 		            </b-col>
@@ -437,7 +457,8 @@
 		                <b-form-input 
 		                  type="number"
 		                  id="Q67"
-		                  v-model="form.Q67"
+		                  v-model="$v.form.Q67.$model"
+		                  :state="validateState('Q67')"
 		                ></b-form-input>
 		              </b-form-group>
 		            </b-col>
@@ -450,7 +471,8 @@
 		                <b-form-input 
 		                  type="number"
 		                  id="Q68"
-		                  v-model="form.Q68"
+		                  v-model="$v.form.Q68.$model"
+		                  :state="validateState('Q68')"
 		                ></b-form-input>
 		              </b-form-group>
 		            </b-col>
@@ -465,7 +487,8 @@
 		                <b-form-input 
 		                  type="number"
 		                  id="Q69"
-		                  v-model="form.Q69"
+		                  v-model="$v.form.Q69.$model"
+		                  :state="validateState('Q69')"
 		                ></b-form-input>
 		              </b-form-group>
 		            </b-col>
@@ -475,7 +498,7 @@
 		                label="Physical Damage Deductible"
 		                label-for="Q70"
 		              >
-		                <b-form-select v-model="form.Q70" :options="Q70Q71Options"></b-form-select>
+		                <b-form-select v-model="$v.form.Q70.$model" :state="validateState('Q70')" :options="Q70Q71Options"></b-form-select>
 		              </b-form-group>
 		            </b-col>
 				    	</b-form-row>
@@ -489,7 +512,8 @@
 		                <b-form-input 
 		                  type="number"
 		                  id="Q72"
-		                  v-model="form.Q72"
+		                  v-model="$v.form.Q72.$model"
+		                  :state="validateState('Q72')"
 		                ></b-form-input>
 		              </b-form-group>
 		            </b-col>
@@ -502,7 +526,8 @@
 		                <b-form-input 
 		                  type="number"
 		                  id="Q73"
-		                  v-model="form.Q73"
+		                  v-model="$v.form.Q73.$model"
+		                  :state="validateState('Q73')"
 		                ></b-form-input>
 		              </b-form-group>
 		            </b-col>
@@ -577,15 +602,102 @@ export default {
           return this.form.Q49_0
         }),
       },
+      Q50: {
+      	required
+      },
+      Q52_daily: {
+      	required
+      },
+      Q52_weekly: {
+      	required
+      },
+      Q53: {
+      	required
+      },
       Q53_explain: {
       	required: requiredIf( function() {
           return this.form.Q53 == 'Other'
         }),
       },
+      Q55: {
+      	required
+      },
+      Q56: {
+      	required
+      },
+      Q57: {
+      	required
+      },
+      Q58: {
+      	required
+      },
+      Q59: {
+      	required
+      },
       Q61: {
       	required: requiredIf( function() {
           return this.form.Q60
         }),
+      },
+      Q62_pick_ups: {
+      	required
+      },
+      Q62_trucks: {
+      	required
+      },
+      Q62_tractors: {
+      	required
+      },
+      Q62_semi_trailers: {
+      	required
+      },
+      Q62_trailers: {
+      	required
+      },
+      Q62_pup_trailers: {
+      	required
+      },
+      Q63_pick_ups: {
+      	required
+      },
+      Q63_trucks: {
+      	required
+      },
+      Q63_tractors: {
+      	required
+      },
+      Q63_semi_trailers: {
+      	required
+      },
+      Q63_trailers: {
+      	required
+      },
+      Q63_pup_trailers: {
+      	required
+      },
+      Q65: {
+      	required
+      },
+      Q66: {
+      	required
+      },
+      Q67: {
+      	required
+      },
+      Q68: {
+      	required
+      },
+      Q69: {
+      	required
+      },
+      Q70: {
+      	required
+      },
+      Q72: {
+      	required
+      },
+      Q73: {
+      	required
       },
     }
   }

@@ -70,7 +70,8 @@
                 <b-form-textarea 
                   id="Q129"
                   rows="2"
-                  v-model="form.Q129"
+                  v-model="$v.form.Q129.$model"
+                  :state="validateState('Q129')"
                 ></b-form-textarea>
               </b-form-group>
             </b-col>
@@ -151,11 +152,6 @@
             </b-col>
           </b-form-row>
 
-
-
-
-
-
           <div v-if="error" class="alert alert-danger" role="alert">{{ error }}</div>
         </div>
         <div class="card-footer">
@@ -229,6 +225,11 @@ export default {
           return this.form.Q126_0 && this.form.Q127
         }),
       },
+      Q129: {
+        required: requiredIf( function() {
+          return this.form.Q126_0
+        }),
+      },
       Q131: {
         required: requiredIf( function() {
           return this.form.Q131_0
@@ -236,7 +237,7 @@ export default {
       },
       Q133: {
         required: requiredIf( function() {
-          return this.form.Q133_0
+          return this.form.Q132
         }),
       }
     }

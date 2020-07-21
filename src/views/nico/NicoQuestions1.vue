@@ -85,7 +85,7 @@
                 class="mb-0"
                 label="Describe Business"
                 label-for="describeBusiness"
-                description="250 - 500 characters"
+                description="maximum 250 characters"
               >
                 <b-form-textarea 
                   id="describeBusiness"
@@ -101,7 +101,12 @@
             <b-col cols="12" md="6">
               <div class="question-block">
                 <div class="question" style="min-width: 120px;">Years experience?</div>
-                <b-form-input type="number" v-model="form.yearsExperience"></b-form-input>
+                <b-form-input 
+                  type="number" 
+                  v-model="$v.form.yearsExperience.$model"
+                  :state="validateState('yearsExperience')"
+                  >
+                </b-form-input>
               </div>
             </b-col>
             <b-col cols="12" md="6">
@@ -157,7 +162,7 @@
                 class="mb-0"
                 label="If not, please explain"
                 label-for="Q11"
-                description="250 - 500 characters"
+                description="maximum 250 characters"
               >
                 <b-form-textarea 
                   id="Q11"
@@ -222,7 +227,7 @@
                 class="mb-0"
                 label="If yes, explain"
                 label-for="Q14"
-                description="250 - 500 characters"
+                description="maximum 250 characters"
               >
                 <b-form-textarea 
                   id="Q14"
@@ -244,7 +249,8 @@
                 <b-form-input 
                   id="Q15"
                   type="number"
-                  v-model="form.Q15"
+                  v-model="$v.form.Q15.$model"
+                  :state="validateState('Q15')"
                 ></b-form-input>
               </b-form-group>
             </b-col>
@@ -257,7 +263,8 @@
                 <b-form-input 
                   id="Q16"
                   type="number"
-                  v-model="form.Q16"
+                  v-model="$v.form.Q16.$model"
+                  :state="validateState('Q16')"
                 ></b-form-input>
               </b-form-group>
             </b-col>
@@ -299,7 +306,11 @@
                 label="If yes, list states"
                 label-for="Q19"
               >
-                <b-form-tags v-model="form.Q19" no-outer-focus class="mb-2">
+                <b-form-tags 
+                  v-model="$v.form.Q19.$model" 
+                  :state="validateState('Q19')"
+                  no-outer-focus class="mb-2"
+                >
                   <template v-slot="{ tags, disabled, addTag, removeTag }">
                     <ul v-if="tags.length > 0" class="list-inline d-inline-block mb-2">
                       <li v-for="tag in tags" :key="tag" class="list-inline-item">
@@ -379,7 +390,8 @@
               >
                 <b-form-input 
                   id="Q20"
-                  v-model="form.Q20"
+                  v-model="$v.form.Q20.$model"
+                  :state="validateState('Q20')"
                 ></b-form-input>
               </b-form-group>
             </b-col>
@@ -409,7 +421,8 @@
               >
                 <b-form-input 
                   id="Q22"
-                  v-model="form.Q22"
+                  v-model="$v.form.Q22.$model"
+                  :state="validateState('Q22')"
                 ></b-form-input>
               </b-form-group>
             </b-col>
@@ -450,7 +463,7 @@
                 class="mb-0"
                 label="If yes, for whom"
                 label-for="Q23"
-                description="250 - 500 characters"
+                description="maximum 250 characters"
               >
                 <b-form-textarea 
                   id="Q23"
@@ -484,7 +497,7 @@
                 class="mb-0"
                 label="If yes, provide the complete listing identifying all materials(s) and/or chemical content"
                 label-for="Q24"
-                description="250 - 500 characters"
+                description="maximum 250 characters"
               >
                 <b-form-textarea 
                   id="Q24"
@@ -521,7 +534,8 @@
               >
                 <b-form-textarea 
                   id="Q25"
-                  v-model="form.Q25"
+                  v-model="$v.form.Q25.$model"
+                  :state="validateState('Q25')"
                   rows="2"
                 ></b-form-textarea>
               </b-form-group>
@@ -726,12 +740,15 @@ export default {
       },
       Q7: {
         required,
-        minLength: minLength(250),
-        maxLength: maxLength(500)
+        maxLength: maxLength(250)
+      },
+      yearsExperience: {
+        required,
+        maxLength: maxLength(10)
       },
       Q11: {
         required: requiredIf( function() {
-          return this.form.Q11_0
+          return !this.form.Q11_0
         })
       },
       Q13: {
@@ -745,6 +762,23 @@ export default {
         }),
         ifMinMaxLength: ifMinMaxLength('Q13_0') 
       },
+      Q15: {
+        required,
+        maxLength: maxLength(10)
+      },
+      Q16: {
+        required,
+        maxLength: maxLength(10)
+      },
+      Q19: {
+        required,
+      },
+      Q20: {
+        required,
+      },
+      Q22: {
+        required,
+      },
       Q23: {
         required: requiredIf( function() {
           return this.form.Q23_1
@@ -756,6 +790,11 @@ export default {
           return this.form.Q24_0
         }),
         ifMinMaxLength: ifMinMaxLength('Q24_0')
+      },
+      Q25: {
+        required: requiredIf( function() {
+          return !this.form.Q25_0
+        }),
       },
       Q26: {
         required: requiredIf( function() {

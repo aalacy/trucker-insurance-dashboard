@@ -44,7 +44,8 @@
 		                <b-form-input 
 		                  type="number"
 		                  id="Q30"
-		                  v-model="form.Q30"
+		                  v-model="$v.form.Q30.$model"
+		                  :state="validateState('Q30')"
 		                ></b-form-input>
 		              </b-form-group>
 		            </b-col>
@@ -59,22 +60,24 @@
 				                <b-form-input 
 				                  type="number"
 				                  placeholder="Per Person"
-				                  v-model="form.Q31_1"
+				                  v-model="$v.form.Q31_1.$model"
+				                  :state="validateState('Q31_1')"
 				                ></b-form-input>
 				            </b-col>
 				            <b-col>
 				                <b-form-input 
 				                  type="number"
 				                  placeholder="Per Accident"
-				                  v-model="form.Q31_2"
+				                  v-model="$v.form.Q31_2.$model"
+				                  :state="validateState('Q31_2')"
 				                ></b-form-input>
 				            </b-col>
 		              	</b-form-row>
 		              </b-form-group>
 		            </b-col>
-				  </b-form-row>
-				  <b-form-row class="mb-2">
-				  	<b-col cols="12" md="6">
+						  </b-form-row>
+						  <b-form-row class="mb-2">
+						  	<b-col cols="12" md="6">
 		              <b-form-group
 		                class="mb-0"
 		                label="Property Damage (Per Person)"
@@ -83,7 +86,8 @@
 		                <b-form-input 
 		                  type="number"
 		                  id="Q32"
-		                  v-model="form.Q32"
+		                  v-model="$v.form.Q32.$model"
+		                  :state="validateState('Q32')"
 		                ></b-form-input>
 		              </b-form-group>
 		            </b-col>
@@ -96,7 +100,8 @@
 		                <b-form-input 
 		                  type="number"
 		                  id="Q33"
-		                  v-model="form.Q33"
+		                  v-model="$v.form.Q33.$model"
+		                  :state="validateState('Q33')"
 		                ></b-form-input>
 		              </b-form-group>
 		            </b-col>
@@ -111,22 +116,23 @@
 		                <b-form-input 
 		                  type="number"
 		                  id="Q34"
-		                  v-model="form.Q34"
+		                  v-model="$v.form.Q34.$model"
+		                  :state="validateState('Q34')"
 		                ></b-form-input>
 		              </b-form-group>
 		            </b-col>
 		          </b-form-row>
 			    </b-card-text>
-			</b-card>
-		    <b-card
-		    	v-if="form.Q27"
-			    header="UNINSURED MOTORIST COVERAGE"
-			    header-text-variant="black"
-			    header-bg-variant="white"
-			    header-tag="header"
-			    class="mb-3"
-			    style="border-radius: 0.25rem !important;"
-			  >
+				</b-card>
+			    <b-card
+			    	v-if="form.Q27"
+				    header="UNINSURED MOTORIST COVERAGE"
+				    header-text-variant="black"
+				    header-bg-variant="white"
+				    header-tag="header"
+				    class="mb-3"
+				    style="border-radius: 0.25rem !important;"
+				  >
 			    <b-card-text>
 			    	<b-form-row class="mb-2">
 					  	<b-col cols="12" md="6">
@@ -138,7 +144,8 @@
 			                <b-form-input 
 			                  type="number"
 			                  id="Q36"
-			                  v-model="form.Q36"
+			                  v-model="$v.form.Q36.$model"
+			                  :state="validateState('Q36')"
 			                ></b-form-input>
 			              </b-form-group>
 			            </b-col>
@@ -153,14 +160,16 @@
 				                <b-form-input 
 				                  type="number"
 				                  placeholder="Per Person"
-				                  v-model="form.Q37_1"
+				                  v-model="$v.form.Q37_1.$model"
+				                  :state="validateState('Q37_1')"
 				                ></b-form-input>
 				            </b-col>
 				            <b-col>
 				                <b-form-input 
 				                  type="number"
 				                  placeholder="Per Accident"
-				                  v-model="form.Q37_2"
+				                  v-model="$v.form.Q37_2.$model"
+				                  :state="validateState('Q37_2')"
 				                ></b-form-input>
 				            </b-col>
 		              	</b-form-row>
@@ -168,16 +177,16 @@
 		            </b-col>
 			        </b-form-row>
 			    </b-card-text>
-			</b-card>
-			<b-card
-				v-if="form.Q27"
-			    header="Driver Information"
-			    header-text-variant="black"
-			    header-bg-variant="white"
-			    header-tag="header"
-			    class="mb-3"
-			    style="border-radius: 0.25rem !important;"
-			  >
+				</b-card>
+				<b-card
+					v-if="form.Q27"
+				    header="Driver Information"
+				    header-text-variant="black"
+				    header-bg-variant="white"
+				    header-tag="header"
+				    class="mb-3"
+				    style="border-radius: 0.25rem !important;"
+				  >
 			    <b-card-text>
 			    	<b-form-row class="mb-2">
 			    		<b-col cols="12" md="6">
@@ -189,11 +198,12 @@
 			                <b-form-input 
 			                  type="number"
 			                  id="Q38"
-			                  v-model="form.Q38"
+			                  v-model="$v.form.Q38.$model"
+			                  :state="validateState('Q38')"
 			                ></b-form-input>
 			              </b-form-group>
 			            </b-col>
-			    		<b-col cols="12" md="6">
+			    				<b-col cols="12" md="6">
 			              <b-form-group
 			                class="mb-0"
 			                label="Type of Unit (Bus, Van, Truck, Tractor, etc.)"
@@ -201,13 +211,14 @@
 			              >
 			                <b-form-input 
 			                  id="Q39"
-			                  v-model="form.Q39"
+			                  v-model="$v.form.Q39.$model"
+			                  :state="validateState('Q39')"
 			                ></b-form-input>
 			              </b-form-group>
 			            </b-col>
-			    	</b-form-row>
-			    	<b-form-row>
-			    		<b-col cols="12" md="6">
+					    	</b-form-row>
+					    	<b-form-row>
+					    		<b-col cols="12" md="6">
 			              <b-form-group
 			                class="mb-0"
 			                label="Number of Years Driving"
@@ -216,22 +227,23 @@
 			                <b-form-input 
 			                  type="number"
 			                  id="Q40"
-			                  v-model="form.Q40"
+			                  v-model="$v.form.Q40.$model"
+			                  :state="validateState('Q40')"
 			                ></b-form-input>
 			              </b-form-group>
 			            </b-col>
 			    	</b-form-row>
 			    </b-card-text>
-			</b-card>
-			<b-card
-				v-if="form.Q27"
-		    header="Driver Information (Continued)"
-		    header-text-variant="black"
-		    header-bg-variant="white"
-		    header-tag="header"
-		    class="mb-3"
-		    style="border-radius: 0.25rem !important;"
-		  >
+				</b-card>
+				<b-card
+					v-if="form.Q27"
+			    header="Driver Information (Continued)"
+			    header-text-variant="black"
+			    header-bg-variant="white"
+			    header-tag="header"
+			    class="mb-3"
+			    style="border-radius: 0.25rem !important;"
+			  >
 		    <b-card-text>
 		    	<b-form-row class="mb-2">
 		    		<b-col cols="12" md="6">
@@ -243,7 +255,8 @@
                 <b-form-input 
                   type="number"
                   id="Q41"
-                  v-model="form.Q41"
+                  v-model="$v.form.Q41.$model"
+                  :state="validateState('Q41')"
                 ></b-form-input>
               </b-form-group>
             </b-col>
@@ -260,11 +273,12 @@
 			                <b-form-input 
 			                  type="number"
 			                  placeholder="No. of Accidents"
-			                  v-model="form.Q42"
+			                  v-model="$v.form.Q42.$model"
+			                  :state="validateState('Q42')"
 			                ></b-form-input>
 				            </b-col>
 				            <b-col cols="12" md="6">
-				                <b-form-datepicker reset-button locale="en-US" placeholder="Choose a date" v-model="form.Q43" class="mb-2"></b-form-datepicker>
+				                <b-form-datepicker reset-button locale="en-US" placeholder="Choose a date" v-model="$v.form.Q43.$model" :state="validateState('Q43')" class="mb-2"></b-form-datepicker>
 				            </b-col>
 			            </b-form-row>
 			            <b-form-row id="Q41">
@@ -272,11 +286,12 @@
 				                <b-form-input 
 				                  type="number"
 				                  placeholder="No. of Violations"
-				                  v-model="form.Q44"
+				                  v-model="$v.form.Q44.$model"
+				                  :state="validateState('Q44')"
 				                ></b-form-input>
 				            </b-col>
 				            <b-col cols="12" md="6">
-				                <b-form-datepicker reset-button locale="en-US" v-model="form.Q45" placeholder="Choose a date" class="mb-2"></b-form-datepicker>
+				                <b-form-datepicker reset-button locale="en-US" v-model="$v.form.Q45.$model" :state="validateState('Q45')" placeholder="Choose a date" class="mb-2"></b-form-datepicker>
 				            </b-col>
 			            </b-form-row>
 	              </b-form-group>
@@ -287,7 +302,7 @@
               <b-form-group
                 class="mb-0"
                 label="Major Convictions"
-                description="100 - 250 characters"
+                description="maximum 100 characters"
                 label-for="Q46"
               >
               	<b-form-row >
@@ -314,7 +329,7 @@
                 class="mb-0"
                 label="(E) Employee? (IC) Independent Contractor? (O/O) Owner/Operator? (F) Franchisee?"
               >
-              	<b-form-select v-model="form.Q48" :options="driverInfoList"></b-form-select>
+              	<b-form-select v-model="$v.form.Q48.$model" :state="validateState('Q48')" :options="driverInfoList"></b-form-select>
 		          </b-form-group>
 		      	</b-col>
 	      	</b-form-row>
@@ -382,14 +397,107 @@ export default {
 
   validations: {
     form: {
+    	Q30: {
+        required: requiredIf( function() {
+          return this.form.Q27
+        }),
+      },
+      Q31_1: {
+        required: requiredIf( function() {
+          return this.form.Q27
+        }),
+      },
+      Q31_2: {
+        required: requiredIf( function() {
+          return this.form.Q27
+        }),
+      },
+      Q32: {
+        required: requiredIf( function() {
+          return this.form.Q27
+        }),
+      },
+      Q33: {
+        required: requiredIf( function() {
+          return this.form.Q27
+        }),
+      },
+      Q34: {
+        required: requiredIf( function() {
+          return this.form.Q27
+        }),
+      },
+      Q36: {
+        required: requiredIf( function() {
+          return this.form.Q27
+        }),
+      },
+      Q37_1: {
+        required: requiredIf( function() {
+          return this.form.Q27
+        }),
+      },
+      Q37_2: {
+        required: requiredIf( function() {
+          return this.form.Q27
+        }),
+      },
+      Q38: {
+        required: requiredIf( function() {
+          return this.form.Q27
+        }),
+      },
+      Q39: {
+        required: requiredIf( function() {
+          return this.form.Q27
+        }),
+      },
+      Q40: {
+        required: requiredIf( function() {
+          return this.form.Q27
+        }),
+      },
+      Q41: {
+        required: requiredIf( function() {
+          return this.form.Q27
+        }),
+      },
+      Q42: {
+        required: requiredIf( function() {
+          return this.form.Q27
+        }),
+      },
+      Q43: {
+        required: requiredIf( function() {
+          return this.form.Q27
+        }),
+      },
+      Q44: {
+        required: requiredIf( function() {
+          return this.form.Q27
+        }),
+      },
+      Q45: {
+        required: requiredIf( function() {
+          return this.form.Q27
+        }),
+      },
       Q46: {
-        ifMinMaxLength: ifMinMaxLength('Q46', 100, 250)
+      	required: requiredIf( function() {
+          return this.form.Q27
+        }),
+        ifMinMaxLength: ifMinMaxLength('Q27', 0, 100)
       },
       Q47: {
         required: requiredIf( function() {
-          return this.form.Q46
+          return this.form.Q27
         }),
-      }
+      },
+      Q48: {
+        required: requiredIf( function() {
+          return this.form.Q27
+        }),
+      },
     }
   }
 }

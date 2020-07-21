@@ -8,6 +8,6 @@ export function toUpper(str) {
     .join(' ');
 }
 
-export const ifMinMaxLength = (cond, lenMin=250, lenMax=500) => (val, vm) => {
+export const ifMinMaxLength = (cond, lenMin=0, lenMax=250) => (val, vm) => {
   return !vm[cond] || val.length > lenMin && val.length < lenMax
 }

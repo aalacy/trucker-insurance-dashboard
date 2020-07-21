@@ -11,7 +11,7 @@
                 class="mb-0"
                 label="Select Type of Coverage Desired:"
               >
-                <b-form-select v-model="form.Q104" :options="Q104Options"></b-form-select>
+                <b-form-select v-model="$v.form.Q104.$model" :state="validateState('Q104')" :options="Q104Options"></b-form-select>
               </b-form-group>
             </b-col>
             <b-col cols="12" md="8">
@@ -19,7 +19,7 @@
                 class="mb-0"
                 label="Additional Coverage Options (additional premium may apply):"
               >
-                <b-form-select v-model="form.Q105" :options="Q105Options"></b-form-select>
+                <b-form-select v-model="$v.form.Q105.$model" :state="validateState('Q105')" :options="Q105Options"></b-form-select>
               </b-form-group>
             </b-col>
           </b-row>
@@ -59,7 +59,7 @@
                 class="mb-0"
                 label="Common? Contract? Broker?"
               >
-                <b-form-select v-model="form.Q109" :options="Q109Options"></b-form-select>
+                <b-form-select v-model="$v.form.Q109.$model" :state="validateState('Q109')" :options="Q109Options"></b-form-select>
               </b-form-group>
             </b-col>
             <b-col cols="12" md="6">
@@ -87,7 +87,8 @@
                 <b-form-textarea 
                   id="Q111"
                   rows="2"
-                  v-model="form.Q111"
+                  v-model="$v.form.Q111.$model"
+                  :state="validateState('Q111')"
                 ></b-form-textarea>
               </b-form-group>
             </b-col>
@@ -102,7 +103,8 @@
                 <b-form-textarea 
                   id="Q112"
                   rows="2"
-                  v-model="form.Q112"
+                  v-model="$v.form.Q112.$model"
+                  :state="validateState('Q112')"
                 ></b-form-textarea>
               </b-form-group>
             </b-col>
@@ -146,7 +148,8 @@
                 <b-form-textarea 
                   id="Q115"
                   rows="2"
-                  v-model="form.Q115"
+                  v-model="$v.form.Q115.$model"
+                  :state="validateState('Q115')"
                 ></b-form-textarea>
               </b-form-group>
             </b-col>
@@ -161,7 +164,8 @@
                 <b-form-textarea 
                   id="Q116"
                   rows="2"
-                  v-model="form.Q116"
+                  v-model="$v.form.Q116.$model"
+                  :state="validateState('Q116')"
                 ></b-form-textarea>
               </b-form-group>
             </b-col>
@@ -238,7 +242,8 @@
               >
                 <b-form-input 
                   id="Q121"
-                  v-model="form.Q121"
+                  v-model="$v.form.Q121.$model"
+                  :state="validateState('Q121')"
                 ></b-form-input>
               </b-form-group>
             </b-col>
@@ -464,8 +469,6 @@
             </b-card-text>
           </b-card>
 
-
-
         <div v-if="error" class="alert alert-danger" role="alert">{{ error }}</div>
         </div>
         <div class="card-footer">
@@ -543,20 +546,48 @@ export default {
 
   validations: {
     form: {
+      Q104: {
+        required
+      },
+      Q105: {
+        required
+      },
       Q108: {
         required: requiredIf( function() {
           return this.form.Q107
         }),
+      },
+      Q109: {
+        required
+      },
+      Q111: {
+        required,
+        maxLength: maxLength(100)
+      },
+      Q112: {
+        required,
+        maxLength: maxLength(100)
       },
       Q114: {
         required: requiredIf( function() {
           return this.form.Q113
         }),
       },
+      Q115: {
+        required,
+        maxLength: maxLength(100)
+      },
+      Q116: {
+        required,
+        maxLength: maxLength(100)
+      },
       Q119: {
         required: requiredIf( function() {
           return this.form.Q118
         }),
+      },
+      Q121: {
+        required,
       },
       Q125: {
         required: requiredIf( function() {
