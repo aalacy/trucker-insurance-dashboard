@@ -55,7 +55,12 @@
                     class="mb-0"
                     label="Effective Date"
                   >
-                    <b-form-datepicker reset-button locale="en-US" placeholder="Choose a date" v-model="$v.form.Q78.$model" :state="validateState('Q78')" class="mb-2"></b-form-datepicker>
+                    <b-form-datepicker 
+                      reset-button 
+                      locale="en-US"
+                      placeholder="Choose a date"
+                      v-model="$v.form.Q78.$model"
+                      class="mb-2"></b-form-datepicker>
                   </b-form-group>
                 </b-col>
                 <b-col cols="12" md="6">
@@ -63,7 +68,7 @@
                     class="mb-0"
                     label="Expiration Date"
                   >
-                    <b-form-datepicker reset-button locale="en-US" placeholder="Choose a date" v-model="$v.form.Q79.$model" :state="validateState('Q79')" class="mb-2"></b-form-datepicker>
+                    <b-form-datepicker reset-button locale="en-US" placeholder="Choose a date" v-model="$v.form.Q79.$model" class="mb-2"></b-form-datepicker>
                   </b-form-group>
                 </b-col>
               </b-form-row>
@@ -77,7 +82,6 @@
                     <b-form-input 
                       id="Q80"
                       v-model="$v.form.Q80.$model"
-                      :state="validateState('Q80')"
                     ></b-form-input>
                   </b-form-group>
                 </b-col>
@@ -91,7 +95,6 @@
                       id="Q81"
                       type="number"
                       v-model="$v.form.Q81.$model"
-                      :state="validateState('Q81')"
                     ></b-form-input>
                   </b-form-group>
                 </b-col>
@@ -107,7 +110,6 @@
                       id="Q82"
                       type="number"
                       v-model="$v.form.Q82.$model"
-                      :state="validateState('Q82')"
                     ></b-form-input>
                   </b-form-group>
                 </b-col>
@@ -119,7 +121,7 @@
                     class="mb-0"
                     label="From"
                   >
-                    <b-form-datepicker reset-button locale="en-US" placeholder="Choose a date" v-model="$v.form.Q83.$model" :state="validateState('Q83')" class="mb-2"></b-form-datepicker>
+                    <b-form-datepicker reset-button locale="en-US" placeholder="Choose a date" v-model="$v.form.Q83.$model" class="mb-2"></b-form-datepicker>
                   </b-form-group>
                 </b-col>
                 <b-col cols="12" md="6">
@@ -127,7 +129,7 @@
                     class="mb-0"
                     label="To"
                   >
-                    <b-form-datepicker reset-button locale="en-US" placeholder="Choose a date" v-model="$v.form.Q84.$model" :state="validateState('Q84')" class="mb-2"></b-form-datepicker>
+                    <b-form-datepicker reset-button locale="en-US" placeholder="Choose a date" v-model="$v.form.Q84.$model" class="mb-2"></b-form-datepicker>
                   </b-form-group>
                 </b-col>
               </b-form-row>
@@ -279,7 +281,7 @@
                     class="mb-0"
                     label="Effective Date"
                   >
-                    <b-form-datepicker reset-button locale="en-US" placeholder="Choose a date" v-model="$v.form.Q94.$model" :state="validateState('Q94')" class="mb-2"></b-form-datepicker>
+                    <b-form-datepicker reset-button locale="en-US" placeholder="Choose a date" v-model="$v.form.Q94.$model" class="mb-2"></b-form-datepicker>
                   </b-form-group>
                 </b-col>
                 <b-col cols="12" md="6">
@@ -287,7 +289,7 @@
                     class="mb-0"
                     label="Expiration Date"
                   >
-                    <b-form-datepicker reset-button locale="en-US" placeholder="Choose a date" v-model="$v.form.Q95.$model" :state="validateState('Q95')" class="mb-2"></b-form-datepicker>
+                    <b-form-datepicker reset-button locale="en-US" placeholder="Choose a date" v-model="$v.form.Q95.$model" class="mb-2"></b-form-datepicker>
                   </b-form-group>
                 </b-col>
               </b-form-row>
@@ -301,7 +303,6 @@
                     <b-form-input 
                       id="Q96"
                       v-model="$v.form.Q96.$model"
-                      :state="validateState('Q96')"
                     ></b-form-input>
                   </b-form-group>
                 </b-col>
@@ -315,7 +316,6 @@
                       id="Q97"
                       type="number"
                       v-model="$v.form.Q97.$model"
-                      :state="validateState('Q97')"
                     ></b-form-input>
                   </b-form-group>
                 </b-col>
@@ -331,7 +331,6 @@
                       id="Q98"
                       type="number"
                       v-model="$v.form.Q98.$model"
-                      :state="validateState('Q98')"
                     ></b-form-input>
                   </b-form-group>
                 </b-col>
@@ -344,7 +343,6 @@
                     <b-form-input 
                       id="Q99"
                       v-model="$v.form.Q99.$model"
-                      :state="validateState('Q99')"
                     ></b-form-input>
                   </b-form-group>
                 </b-col>
@@ -360,7 +358,6 @@
                       id="Q100"
                       type="number"
                       v-model="$v.form.Q100.$model"
-                      :state="validateState('Q100')"
                     ></b-form-input>
                   </b-form-group>
                 </b-col>
@@ -374,13 +371,12 @@
                       id="Q101"
                       type="number"
                       v-model="$v.form.Q101.$model"
-                      :state="validateState('Q101')"
                     ></b-form-input>
                   </b-form-group>
                 </b-col>
               </b-form-row>
               <b-form-row class="mb-2">
-                <b-col cols="12" md="4">
+                <b-col cols="12" md="6">
                   <b-form-group
                     class="mb-0"
                     label="Average Value "
@@ -390,16 +386,15 @@
                       id="Q102"
                       type="number"
                       v-model="$v.form.Q102.$model"
-                      :state="validateState('Q102')"
                     ></b-form-input>
                   </b-form-group>
                 </b-col>
-                <b-col cols="12" md=4>
+                <b-col cols="12" md=6>
                   <b-form-group
                     class="mb-0"
                     label="Deductible"
                   >
-                    <b-form-select v-model="$v.form.Q103.$model" :state="validateState('Q103')" :options="Q103Options"></b-form-select>
+                    <b-form-select v-model="$v.form.Q103.$model" :options="Q103Options"></b-form-select>
                   </b-form-group>
                 </b-col>
                 <b-col v-if="form.Q103=='Other'" cols="12" md="4">
@@ -422,8 +417,25 @@
               </b-form-row>
             </b-card-text>
           </b-card>
-
-        <div v-if="error" class="alert alert-danger" role="alert">{{ error }}</div>
+          <b-form-row class="mb-2">
+            <b-col cols="12" md="5">
+              <b-form-group
+                class="mb-0"
+                label="Select Type of Coverage Desired:"
+              >
+                <b-form-select v-model="$v.form.Q104.$model" :state="validateState('Q104')" :options="Q104Options"></b-form-select>
+              </b-form-group>
+            </b-col>
+            <b-col cols="12" md="7">
+              <b-form-group
+                class="mb-0"
+                label="Additional Coverage Options (additional premium may apply):"
+              >
+                <b-form-select v-model="$v.form.Q105.$model" :options="Q105Options"></b-form-select>
+              </b-form-group>
+            </b-col>
+          </b-form-row>
+          <div v-if="error" class="alert alert-danger" role="alert">{{ error }}</div>
         </div>
         <div class="card-footer">
           <div class="form-buttons next-wrapper">
@@ -493,25 +505,18 @@ export default {
         ifMinMaxLength: ifMinMaxLength('Q74')
       },
       Q78: {
-        required
       },
       Q79: {
-        required
       },
       Q80: {
-        required
       },
       Q81: {
-        required
       },
       Q82: {
-        required
       },
       Q83: {
-        required
       },
       Q84: {
-        required
       },
       Q90: {
         required: requiredIf( function() {
@@ -526,39 +531,34 @@ export default {
         ifMinMaxLength: ifMinMaxLength('Q91')
       },
       Q94: {
-        required
       },
       Q95: {
-        required
       },
       Q96: {
-        required
       },
       Q97: {
-        required
       },
       Q98: {
-        required
       },
       Q99: {
-        required
       },
       Q100: {
-        required
       },
       Q101: {
-        required
       },
       Q102: {
-        required
       },
       Q103: {
-        required
       },
       Q103_other: {
         required: requiredIf( function() {
           return this.form.Q103 == 'Other'
         }),
+      },
+      Q104: {
+        required
+      },
+      Q105: {
       },
     }
   }

@@ -125,7 +125,7 @@
           <b-form-row class="mb-2">
             <b-col cols="12">
               <div class="question-block">
-                <span class="question">Will premium financed?</span>
+                <span class="question">Will this policy/these polices be premium financed?</span>
                 <toggle-button 
                   :labels="{checked: 'Yes', unchecked: 'No'}" 
                   :width="70" 

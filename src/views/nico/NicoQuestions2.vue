@@ -178,163 +178,179 @@
 			        </b-form-row>
 			    </b-card-text>
 				</b-card>
-				<b-card
-					v-if="form.Q27"
-				    header="Driver Information"
-				    header-text-variant="black"
-				    header-bg-variant="white"
-				    header-tag="header"
-				    class="mb-3"
-				    style="border-radius: 0.25rem !important;"
-				  >
-			    <b-card-text>
-			    	<b-form-row class="mb-2">
-			    		<b-col cols="12" md="6">
-			              <b-form-group
-			                class="mb-0"
-			                label="DL Year's Licensed (In Class Type)"
-			                label-for="Q38"
-			              >
-			                <b-form-input 
-			                  type="number"
-			                  id="Q38"
-			                  v-model="$v.form.Q38.$model"
-			                  :state="validateState('Q38')"
-			                ></b-form-input>
-			              </b-form-group>
-			            </b-col>
-			    				<b-col cols="12" md="6">
-			              <b-form-group
-			                class="mb-0"
-			                label="Type of Unit (Bus, Van, Truck, Tractor, etc.)"
-			                label-for="Q39"
-			              >
-			                <b-form-input 
-			                  id="Q39"
-			                  v-model="$v.form.Q39.$model"
-			                  :state="validateState('Q39')"
-			                ></b-form-input>
-			              </b-form-group>
-			            </b-col>
-					    	</b-form-row>
-					    	<b-form-row>
-					    		<b-col cols="12" md="6">
-			              <b-form-group
-			                class="mb-0"
-			                label="Number of Years Driving"
-			                label-for="Q40"
-			              >
-			                <b-form-input 
-			                  type="number"
-			                  id="Q40"
-			                  v-model="$v.form.Q40.$model"
-			                  :state="validateState('Q40')"
-			                ></b-form-input>
-			              </b-form-group>
-			            </b-col>
-			    	</b-form-row>
-			    </b-card-text>
-				</b-card>
-				<b-card
-					v-if="form.Q27"
-			    header="Driver Information (Continued)"
-			    header-text-variant="black"
-			    header-bg-variant="white"
-			    header-tag="header"
-			    class="mb-3"
-			    style="border-radius: 0.25rem !important;"
-			  >
-		    <b-card-text>
-		    	<b-form-row class="mb-2">
-		    		<b-col cols="12" md="6">
-              <b-form-group
+				<b-form-row class="mb-2 align-items-center">
+          <b-col cols="12" md="6">
+            <div class="question-block">
+              <span class="question">Are drivers covered by workers compensation?</span>  
+              <toggle-button 
+                :labels="{checked: 'Yes', unchecked: 'No'}" 
+                :width="70" 
+                :height="30" 
                 class="mb-0"
-                label="Previous Commercial Driving Experience - years"
-                label-for="Q41"
-              >
-                <b-form-input 
-                  type="number"
-                  id="Q41"
-                  v-model="$v.form.Q41.$model"
-                  :state="validateState('Q41')"
-                ></b-form-input>
-              </b-form-group>
-            </b-col>
-		    	</b-form-row>
-		    	<b-form-row class="mb-2">
-		    		<b-col cols="12">
-	              <b-form-group
-	                class="mb-0"
-	                label="Accidents and Minor Moving Traffic Violations in Past 5 Years"
-	                label-for="Q42"
-	              >
-	              	<b-form-row id="Q41">
-	              		<b-col cols="12" md="6">
-			                <b-form-input 
-			                  type="number"
-			                  placeholder="No. of Accidents"
-			                  v-model="$v.form.Q42.$model"
-			                  :state="validateState('Q42')"
-			                ></b-form-input>
-				            </b-col>
-				            <b-col cols="12" md="6">
-				                <b-form-datepicker reset-button locale="en-US" placeholder="Choose a date" v-model="$v.form.Q43.$model" :state="validateState('Q43')" class="mb-2"></b-form-datepicker>
-				            </b-col>
-			            </b-form-row>
-			            <b-form-row id="Q41">
-		              		<b-col cols="12" md="6">
-				                <b-form-input 
-				                  type="number"
-				                  placeholder="No. of Violations"
-				                  v-model="$v.form.Q44.$model"
-				                  :state="validateState('Q44')"
-				                ></b-form-input>
-				            </b-col>
-				            <b-col cols="12" md="6">
-				                <b-form-datepicker reset-button locale="en-US" v-model="$v.form.Q45.$model" :state="validateState('Q45')" placeholder="Choose a date" class="mb-2"></b-form-datepicker>
-				            </b-col>
-			            </b-form-row>
-	              </b-form-group>
-            </b-col>
-		    	</b-form-row>
-		    	<b-form-row class="mb-2">
-		    		<b-col cols="12">
-              <b-form-group
+                :sync="true"
+                v-model="form.Q49_0"
+                :font-size="15"
+              />
+            </div>
+          </b-col>
+	  			<b-col v-if="form.Q49_0" cols="12" md="6">
+            <b-form-group
+              class="mb-0"
+              label="If yes, name of carrier?"
+              label-for="Q49"
+            >
+              <b-form-input 
+                id="Q49"
+                v-model="$v.form.Q49.$model"
+                :state="validateState('Q49')"
+              ></b-form-input>
+            </b-form-group>
+          </b-col>
+        </b-form-row>
+        <b-form-row class="mb-2 align-items-center">
+	  			<b-col cols="12" md="6">
+            <b-form-group
+              class="mb-0"
+              label="Minimum years driving experience required?"
+              label-for="Q50"
+            >
+              <b-form-input 
+                type="number"
+                id="Q50"
+                v-model="$v.form.Q50.$model"
+                :state="validateState('Q50')"
+              ></b-form-input>
+            </b-form-group>
+          </b-col>
+          <b-col cols="12" md="6">
+            <div class="question-block">
+              <span class="question">Are vehicles owner-driven only?</span>  
+              <toggle-button 
+                :labels="{checked: 'Yes', unchecked: 'No'}" 
+                :width="70" 
+                :height="30" 
+                :sync="true"
                 class="mb-0"
-                label="Major Convictions"
-                description="maximum 100 characters"
-                label-for="Q46"
-              >
-              	<b-form-row >
-              		<b-col cols="12" md="6">
-		                <b-form-textarea 
-		                  id="Q46"
-		                  placeholder="Describe Conviction"
-		                  v-model="$v.form.Q46.$model"
-		                  rows="2"
-		                  max-rows="7"
-		                  :state="validateState('Q46')"
-		                ></b-form-textarea>
-			            </b-col>
-			            <b-col cols="12" md="6">
-			                <b-form-datepicker locale="en-US" placeholder="Choose a date" v-model="$v.form.Q47.$model" reset-button :state="validateState('Q47')" class="mb-2"></b-form-datepicker>
-			            </b-col>
-		            </b-form-row>
-		          </b-form-group>
-		      	</b-col>
-	      	</b-form-row>
-	      	<b-form-row class="mb-2">
-	    			<b-col cols="12">
-              <b-form-group
+                v-model="form.Q51"
+                :font-size="15"
+              />
+            </div>
+          </b-col>
+        </b-form-row>
+        <b-form-row class="mb-2">
+          <b-col cols="12" md="6">
+            <div class="question-block">
+              <span class="question">Are drivers ever allowed to take vehicles home at night?</span>  
+              <toggle-button 
+                :labels="{checked: 'Yes', unchecked: 'No'}" 
+                :width="70" 
+                :height="30" 
+                :sync="true"
                 class="mb-0"
-                label="(E) Employee? (IC) Independent Contractor? (O/O) Owner/Operator? (F) Franchisee?"
-              >
-              	<b-form-select v-model="$v.form.Q48.$model" :state="validateState('Q48')" :options="driverInfoList"></b-form-select>
-		          </b-form-group>
-		      	</b-col>
-	      	</b-form-row>
-		    </b-card-text>
-			</b-card>
+                v-model="form.Q51_22_1"
+                :font-size="15"
+              />
+            </div>
+          </b-col>
+          <b-col v-if="form.Q51_22_1" cols="12" md="6">
+            <div class="question-block">
+              <span class="question">If yes, will family members drive?</span>  
+              <toggle-button 
+                :labels="{checked: 'Yes', unchecked: 'No'}" 
+                :width="70" 
+                :height="30" 
+                :sync="true"
+                class="mb-0"
+                v-model="form.Q51_22_2"
+                :font-size="15"
+              />
+            </div>
+          </b-col>
+      	</b-form-row>
+        <b-form-row class="mb-2 align-items-center">
+        	<b-col cols="12" md="6">
+            <div class="question-block">
+              <span class="question">Do you order MVRs on all drivers prior to hiring?</span>  
+              <toggle-button 
+                :labels="{checked: 'Yes', unchecked: 'No'}" 
+                :width="70" 
+                :height="30" 
+                :sync="true"
+                class="mb-0"
+                v-model="form.Q52_0"
+                :font-size="15"
+              />
+            </div>
+          </b-col>
+	  			<b-col cols="12" md="6">
+            <b-form-group
+              class="mb-0"
+              label="Drivers maximum driving hours: Daily? Weekly?"
+            >
+            	<b-form-row>
+			  				<b-col cols="12" md="6">
+	                <b-form-input 
+	                  type="number"
+	                  v-model="$v.form.Q52_daily.$model"
+	                  :state="validateState('Q52_daily')"
+	                  placeholder="daily"
+	                ></b-form-input>
+	            	</b-col>
+	            	<b-col cols="12" md="6">
+	                <b-form-input 
+	                  type="number"
+	                  v-model="$v.form.Q52_weekly.$model"
+	                  :state="validateState('Q52_weekly')"
+	                  placeholder="weekly"
+	                ></b-form-input>
+	            	</b-col>
+	        		</b-form-row>
+            </b-form-group>
+          </b-col>
+        </b-form-row>
+        <b-form-row class="mb-2">
+        	<b-col cols="12">
+            <div class="question-block">
+              <span class="question">Do you agree to report all newly hired operators?</span>  
+              <toggle-button 
+                :labels="{checked: 'Yes', unchecked: 'No'}" 
+                :width="70" 
+                :height="30" 
+                :sync="true"
+                class="mb-0"
+                v-model="form.Q52_24"
+                :font-size="15"
+              />
+            </div>
+          </b-col>
+        </b-form-row>
+        <b-form-row class="mb-3">
+					<b-col cols="12" md="6">
+            <b-form-group
+              class="mb-0"
+              label="What is the basis for driver(s) pay?"
+            >
+            	<b-form-select v-model="$v.form.Q53.$model" :state="validateState('Q53')" :options="driverPayBasis"></b-form-select>
+	          </b-form-group>
+	      	</b-col>
+  		  </b-form-row>
+  		  <b-form-row v-if="form.Q53=='Other'" class="mb-2">
+		  		<b-col cols="12">
+            <b-form-group
+              class="mb-0"
+              label="Other, Explain"
+              label-for="Q53_explain"
+            >
+              <b-form-textarea 
+                id="Q53_explain"
+                rows='2'
+                max-rows="5"
+                v-model="$v.form.Q53_explain.$model"
+                :state="validateState('Q53_explain')"
+              ></b-form-textarea>
+            </b-form-group>
+          </b-col>
+        </b-form-row>
       <div v-if="error" class="alert alert-danger" role="alert">{{ error }}</div>
     	</div>
       	<div class="card-footer">
@@ -395,110 +411,147 @@ export default {
     }
   },
 
-  validations: {
-    form: {
-    	Q30: {
-        required: requiredIf( function() {
-          return this.form.Q27
-        }),
-      },
-      Q31_1: {
-        required: requiredIf( function() {
-          return this.form.Q27
-        }),
-      },
-      Q31_2: {
-        required: requiredIf( function() {
-          return this.form.Q27
-        }),
-      },
-      Q32: {
-        required: requiredIf( function() {
-          return this.form.Q27
-        }),
-      },
-      Q33: {
-        required: requiredIf( function() {
-          return this.form.Q27
-        }),
-      },
-      Q34: {
-        required: requiredIf( function() {
-          return this.form.Q27
-        }),
-      },
-      Q36: {
-        required: requiredIf( function() {
-          return this.form.Q27
-        }),
-      },
-      Q37_1: {
-        required: requiredIf( function() {
-          return this.form.Q27
-        }),
-      },
-      Q37_2: {
-        required: requiredIf( function() {
-          return this.form.Q27
-        }),
-      },
-      Q38: {
-        required: requiredIf( function() {
-          return this.form.Q27
-        }),
-      },
-      Q39: {
-        required: requiredIf( function() {
-          return this.form.Q27
-        }),
-      },
-      Q40: {
-        required: requiredIf( function() {
-          return this.form.Q27
-        }),
-      },
-      Q41: {
-        required: requiredIf( function() {
-          return this.form.Q27
-        }),
-      },
-      Q42: {
-        required: requiredIf( function() {
-          return this.form.Q27
-        }),
-      },
-      Q43: {
-        required: requiredIf( function() {
-          return this.form.Q27
-        }),
-      },
-      Q44: {
-        required: requiredIf( function() {
-          return this.form.Q27
-        }),
-      },
-      Q45: {
-        required: requiredIf( function() {
-          return this.form.Q27
-        }),
-      },
-      Q46: {
-      	required: requiredIf( function() {
-          return this.form.Q27
-        }),
-        ifMinMaxLength: ifMinMaxLength('Q27', 0, 100)
-      },
-      Q47: {
-        required: requiredIf( function() {
-          return this.form.Q27
-        }),
-      },
-      Q48: {
-        required: requiredIf( function() {
-          return this.form.Q27
-        }),
-      },
-    }
+  validations() {
+  	return {
+	    form: {
+	    	Q30: {
+	        required: requiredIf( function() {
+	          return this.form.Q27
+	        }),
+	      },
+	      Q31_1: {
+	      	required: requiredIf( function() {
+	          return this.form.Q27
+	        }),
+	      },
+	      Q31_2: {
+	      	required: requiredIf( function() {
+	          return this.form.Q27
+	        }),
+	      },
+	      Q32: {
+	      	required: requiredIf( function() {
+	          return this.form.Q27
+	        }),
+	      },
+	      Q33: {
+	        required: requiredIf( function() {
+	          return this.form.Q27
+	        }),
+	      },
+	      Q34: {
+	        required: requiredIf( function() {
+	          return this.form.Q27
+	        }),
+	      },
+	      Q36: {
+	        required: requiredIf( function() {
+	          return this.form.Q27
+	        }),
+	      },
+	      Q37_1: {
+	        required: requiredIf( function() {
+	          return this.form.Q27
+	        }),
+	      },
+	      Q37_2: {
+	        required: requiredIf( function() {
+	          return this.form.Q27
+	        }),
+	      },
+	      drivers: {
+	        required: requiredIf( function() {
+	          return this.form.Q27
+	        }),
+	        $each: {
+	          Q38: {
+	          	required: requiredIf( function() {
+			          return this.form.Q27
+			        }),
+	          },
+	          Q39: {
+	          	required: requiredIf( function() {
+			          return this.form.Q27
+			        }),
+	          },
+	          Q40: {
+	          	required: requiredIf( function() {
+			          return this.form.Q27
+			        }),
+	          }
+		      }
+	      },
+	      driversContinue: {
+	        required: requiredIf( function() {
+	          return this.form.Q27
+	        }),
+	        $each: {
+	          Q41: {
+	          	required: requiredIf( function() {
+			          return this.form.Q27
+			        }),
+	          },
+	          Q42: {
+	          	required: requiredIf( function() {
+			          return this.form.Q27
+			        }),
+	          },
+	          Q43: {
+	          	required: requiredIf( function() {
+			          return this.form.Q27
+			        }),
+	          },
+	          Q44: {
+	          	required: requiredIf( function() {
+			          return this.form.Q27
+			        }),
+	          },
+	          Q45: {
+	          	required: requiredIf( function() {
+			          return this.form.Q27
+			        }),
+	          },
+	          Q46: {
+	          	required: requiredIf( function() {
+			          return this.form.Q27
+			        }),
+	          },
+	          Q47: {
+	          	required: requiredIf( function() {
+			          return this.form.Q27
+			        }),
+	          },
+	          Q48: {
+	          	required: requiredIf( function() {
+			          return this.form.Q27
+			        }),
+	          },
+		      }
+	      },
+	      Q49: {
+	        required: requiredIf( function() {
+	          return this.form.Q49_0
+	        }),
+	      },
+	      Q50: {
+	      	required
+	      },
+	      Q52_daily: {
+	      	required
+	      },
+	      Q52_weekly: {
+	      	required
+	      },
+	      Q53: {
+	      	required
+	      },
+	      Q53_explain: {
+	      	required: requiredIf( function() {
+	          return this.form.Q53 == 'Other'
+	        }),
+	      },
+	    }
+  	}
   }
 }
 </script>

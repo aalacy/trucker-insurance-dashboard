@@ -8,352 +8,320 @@
             </h4>
             <b-form-checkbox v-on:change="changeData()">Same as Mailing Address</b-form-checkbox>
           </div>
-          <hr>
-          <template>
-            <div
-              class="owner-form-item mob-2"
-              v-for="(singleDriver, index) in driversData"
-              :key="index"
-            >
-            
-              <div class="row">
-                <div class="col mb-3">
-                  <h2 class="h4 font-weight-bold">Driver #{{ index + 1 }}</h2>
-                </div>
-
-                <button
-                  v-show="index > 0"
-                  type="button"
-                  class="lt-button mx-2 mb-3"
-                  @click="removeDriverData(index)"
-                  title="Remove Driver"
-                >
-                  <font-awesome-icon class="fontawesome minus" icon="minus" />
-                </button>
+          <template
+            v-for="(driver, index) in $v.form.drivers.$each.$iter"
+          >
+            <div class="row">
+              <div class="col mt-3 mb-2">
+                <h2 class="h4 font-weight-bold">Driver #{{ Number(index) + 1 }}</h2>
               </div>
 
-              <div class="row">
-                <div class="col-12 col-lg-5">
-                  <div class="form-group">
-                    <input
-                      v-model="driversData[index].firstName"
-                      type="text"
-                      class="lt-input"
-                      placeholder="First Name"
-                      :class="{ 'has-error': !validations.driversData[index].firstName.is_valid }"
-                      @change="validateFieldCustom('firstName', index)"
-                    >
-                    <div
-                      class="text-danger"
-                      v-show="!validations.driversData[index].firstName.is_valid"
-                    >{{ validations.driversData[index].firstName.text }}</div>
-                  </div>
-                </div>
-                  <div class="col-6 col-lg-2">
-                    <div class="form-group">
-                      <input
-                      v-model="driversData[index].middleName"
-                      type="text"
-                      class="lt-input"
-                      maxlength="1"
-                      placeholder="M."
-                    >
-                      <div
-                        class="text-danger"
-                        v-show="!validations.driversData[index].middleName.is_valid"
-                      >{{ validations.driversData[index].middleName.text }}</div>
-                   </div>
-                  </div>
-
-                  <div class="col-12 col-lg-5">
-                    <div class="form-group">
-                      <input
-                        v-model="driversData[index].lastName"
-                        type="text"
-                        class="lt-input"
-                        placeholder="Last Name"
-                        :class="{ 'has-error': !validations.driversData[index].lastName.is_valid }"
-                        @change="validateFieldCustom('lastName', index)"
-                      >
-                      <div
-                        class="text-danger"
-                        v-show="!validations.driversData[index].lastName.is_valid"
-                      >{{ validations.driversData[index].lastName.text }}</div>
-                    </div>
-                  </div>
-                </div>
-                
-                <div class="row" id="text-date">
-                  <div class="col-sm-12 col-md-5 pt-2">
-                    <b class="mr-3">Date of Birth</b>
-                  </div>
-
-                  <div class="col-sm-12 col-md-7" id="text-date">
-                    <div class="row">
-                      <div class="col">
-                        <div class="form-group">
-                          <input
-                            v-model="driversData[index].dobM"
-                            type="number"
-                            class="lt-input"
-                            placeholder="MM"
-                            :class="{ 'has-error': !validations.driversData[index].dobM.is_valid }"
-                            @change="validateFieldCustom('dobM', index)"
-                          >
-                          <!-- required -->
-                          <!-- @focus="onFocus('dobM')"
-                          @blur="onBlur"
-                          @change="validateField('dobM')"-->
-
-                          <div
-                            class="text-danger"
-                            v-show="!validations.driversData[index].dobM.is_valid"
-                          >{{ validations.driversData[index].dobM.text }}</div>
-                        </div>
-                      </div>
-                      <span class="mt-1">/</span>
-                      <div class="col">
-                        <div class="form-group">
-                          <!-- :class="{ 'has-error': formErrors.dobD }" -->
-                          <input
-                            v-model="driversData[index].dobD"
-                            type="number"
-                            class="lt-input"
-                            placeholder="DD"
-                            :class="{ 'has-error': !validations.driversData[index].dobD.is_valid }"
-                            @change="validateFieldCustom('dobD', index)"
-                          >
-                          <!-- required -->
-                          <!-- @focus="onFocus('dobD')"
-                          @blur="onBlur"
-                          @change="validateField('dobD')"-->
-
-                          <div
-                            class="text-danger"
-                            v-show="!validations.driversData[index].dobD.is_valid"
-                          >{{ validations.driversData[index].dobD.text }}</div>
-                        </div>
-                      </div>
-                      <span class="mt-1">/</span>
-                      <div class="col-5">
-                        <div class="form-group">
-                          <!-- :class="{ 'has-error': formErrors.dobY }" -->
-                          <input
-                            v-model="driversData[index].dobY"
-                            type="number"
-                            class="lt-input"
-                            placeholder="YYYY"
-                            :class="{ 'has-error': !validations.driversData[index].dobY.is_valid }"
-                            @change="validateFieldCustom('dobY', index)"
-                          >
-                          
-
-                          <div
-                            class="text-danger"
-                            v-show="!validations.driversData[index].dobY.is_valid"
-                          >{{ validations.driversData[index].dobY.text }}</div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="row">
-                  <div class="col-12 col-lg-6">
-                    <div class="form-group">
-                      <input
-                        v-model="driversData[index].licenseNumber"
-                        type="text"
-                        class="lt-input"
-                        placeholder="License Number"
-                        :class="{ 'has-error': !validations.driversData[index].licenseNumber.is_valid }"
-                        @change="validateFieldCustom('licenseNumber', index)"
-                      >
-
-                      <div
-                        class="text-danger"
-                        v-show="!validations.driversData[index].licenseNumber.is_valid"
-                      >{{ validations.driversData[index].licenseNumber.text }}</div>
-                    </div>
-                  </div>
-
-                  <div class="col-12 col-lg-6">
-                    <div class="form-group">
-                      <input
-                        v-model="driversData[index].CDL"
-                        type="number"
-                        class="lt-input"
-                        placeholder="Years of CDL Experience"
-                      >
-
-                      <!-- <div
-                        class="text-danger"
-                        v-show="!validations.driversData[index].CDL.is_valid"
-                      >{{ validations.driversData[index].CDL.text }}</div> -->
-                    </div>
-                  </div>
-                </div>
-
-                <div class="row">
-                  <div class="col-12 col-md-6">
-                    <div class="form-group">
-                      <!-- :class="{ 'has-error': formErrors.address }" -->
-                      <input
-                        v-model="driversData[index].address"
-                        type="text"
-                        class="lt-input"
-                        placeholder="Address"
-                       :class="{ 'has-error': !validations.driversData[index].address.is_valid }"
-                       @change="validateFieldCustom('address', index)"
-                      >
-                      <!-- required -->
-                      <!-- @focus="onFocus('address')"
-                      @blur="onBlur"
-                      @change="validateField('address')"-->
-
-                      <div
-                        class="text-danger"
-                        v-show="!validations.driversData[index].address.is_valid"
-                      >{{ validations.driversData[index].address.text }}</div>
-                    </div>
-                  </div>
-                  <div class="col-12 col-md-6">
-                    <div class="form-group">
-                      <!-- :class="{ 'has-error': formErrors.city }" -->
-                      <input
-                        v-model="driversData[index].city"
-                        type="text"
-                        class="lt-input"
-                        placeholder="City"
-                       :class="{ 'has-error': !validations.driversData[index].city.is_valid }"
-                       @change="validateFieldCustom('city', index)"
-                      >
-                      <!-- required -->
-                      <!-- @focus="onFocus('city')"
-                      @blur="onBlur"
-                      @change="validateField('city')"-->
-
-                      <div
-                        class="text-danger"
-                        v-show="!validations.driversData[index].city.is_valid"
-                      >{{ validations.driversData[index].city.text }}</div>
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-6">
-                    <div class="form-group">
-                      <!-- :class="{ 'has-error': formErrors.state }" -->
-                      <input
-                        v-model="driversData[index].state"
-                        type="text"
-                        class="lt-input"
-                        placeholder="State"
-                       :class="{ 'has-error': !validations.driversData[index].state.is_valid }"
-                       @change="validateFieldCustom('state', index)"
-                      >
-                      <!-- required -->
-                      <!-- @focus="onFocus('state')"
-                      @blur="onBlur"
-                      @change="validateField('state')"-->
-
-                      <div
-                        class="text-danger"
-                        v-show="!validations.driversData[index].state.is_valid"
-                      >{{ validations.driversData[index].state.text }}</div>
-                    </div>
-                  </div>
-                  <div class="col-6">
-                    <div class="form-group">
-                      <!-- :class="{ 'has-error': formErrors.zip }" -->
-                      <input
-                        v-model="driversData[index].zip"
-                        type="text"
-                        class="lt-input"
-                        minlength="5"
-                        placeholder="Zip Code"
-                      :class="{ 'has-error': !validations.driversData[index].zip.is_valid }"
-                      @change="validateFieldCustom('zip', index)"
-                      >
-                      <!-- required -->
-                      <!-- @focus="onFocus('zip')"
-                      @blur="onBlur"
-                      @change="validateField('zip')"-->
-
-                      <div
-                        class="text-danger"
-                        v-show="!validations.driversData[index].zip.is_valid"
-                      >{{ validations.driversData[index].zip.text }}</div>
-                    </div>
-                  </div>
-              
-              </div>
-              <div class="row" id="text-date">
-                <div class="col-12 col-md-5 pt-2">
-                   <div class="d-flex">
-                      <b class="mr-3">Date of Hire</b> <b-form-checkbox v-model="operator" v-on:change="ownerOperator(index)">Owner Operator</b-form-checkbox>
-                    </div>
-                </div>
-
-                <div class="col-12 col-md-7">
-                  <div class="row">
-                    <div class="col">
-                      <div class="form-group">
-                        <input
-                          v-model="driversData[index].dohM"
-                          type="number"
-                          class="lt-input"
-                          placeholder="MM"
-                          :class="{ 'has-error': !validations.driversData[index].dohM.is_valid }"
-                          @change="validateFieldCustom('dohM', index)"
-                        >
-                        <div
-                          class="text-danger"
-                          v-show="!validations.driversData[index].dohM.is_valid"
-                        >{{ validations.driversData[index].dohM.text }}</div>
-                      </div>
-                    </div>
-                    <span class="mt-1">/</span>
-                    <div class="col">
-                      <div class="form-group">
-                        <input
-                          v-model="driversData[index].dohD"
-                          type="number"
-                          class="lt-input"
-                          placeholder="DD"
-                           :class="{ 'has-error': !validations.driversData[index].dohD.is_valid }"
-                          @change="validateFieldCustom('dohD', index)"
-                        >
-                        <div
-                          class="text-danger"
-                          v-show="!validations.driversData[index].dohD.is_valid"
-                        >{{ validations.driversData[index].dohD.text }}</div>
-                      </div>
-                    </div>
-                    <span class="mt-1">/</span>
-                    <div class="col-5">
-                      <div class="form-group">
-                        <input
-                          v-model="driversData[index].dohY"
-                          type="number"
-                          class="lt-input"
-                          placeholder="YYYY"
-                           :class="{ 'has-error': !validations.driversData[index].dohY.is_valid }"
-                          @change="validateFieldCustom('dohY', index)"
-                        >
-                        <div
-                          class="text-danger"
-                          v-show="!validations.driversData[index].dohY.is_valid"
-                        >{{ validations.driversData[index].dohY.text }}</div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-             
-              </div>
+              <button
+                v-show="index > 0"
+                type="button"
+                class="lt-button mx-2 mb-3"
+                @click="removeDriverData(index)"
+                title="Remove Driver"
+              >
+                <font-awesome-icon class="fontawesome minus" icon="minus" />
+              </button>
             </div>
+            <b-row>
+              <b-col cols="12" md="4">
+                <b-form-group
+                  label="First Name"
+                >
+                  <b-form-input 
+                    v-model="driver.firstName.$model"
+                    :state="validateState(index, 'firstName')"
+                    :aria-describedby="`firstName${index}`"
+                  />
+                  <b-form-invalid-feedback :id="`firstName${index}`">{{ errorMessage(index, 'firstName')}}</b-form-invalid-feedback>
+                </b-form-group>
+              </b-col>
+              <b-col cols="12" md="3">
+                <b-form-group
+                  label="Middle Name"
+                >
+                  <b-form-input 
+                    v-model="driver.middleName.$model"
+                  />
+                </b-form-group>
+              </b-col>
+              <b-col cols="12" md="4">
+                <b-form-group
+                  label="Last Name"
+                >
+                  <b-form-input 
+                    v-model="driver.lastName.$model"
+                    :state="validateState(index, 'lastName')"
+                  />
+                  <b-form-invalid-feedback>{{ errorMessage(index, 'lastName')}}</b-form-invalid-feedback>
+                </b-form-group>
+              </b-col>
+            </b-row>
+            <b-row>
+              <b-col cols="12" md="6">
+                <b-form-group
+                  label="Date of Birth"
+                >
+                  <b-form-datepicker 
+                    reset-button 
+                    locale="en-US" 
+                    placeholder="Choose a date" 
+                    v-model="driver.dob.$model"
+                    min="01/01/1900" 
+                    max="01/01/9999"
+                    :date-format-options="{ year: 'numeric', month: 'numeric', day: 'numeric' }"
+                    :state="validateState(index, 'dob')" 
+                  >
+                  <b-form-invalid-feedback>{{ errorMessage(index, 'lastName')}}</b-form-invalid-feedback>
+                  </b-form-datepicker>
+                </b-form-group>
+              </b-col>
+            </b-row>
+            <b-row>
+              <b-col cols="12" md="6">
+                <b-form-group
+                  label="License Number"
+                  description="12 digits"
+                >
+                  <b-form-input 
+                    v-model="driver.licenseNumber.$model"
+                    :state="validateState(index, 'licenseNumber')"
+                  />
+                  <b-form-invalid-feedback>{{ errorMessage(index, 'licenseNumber')}}</b-form-invalid-feedback>
+                </b-form-group>
+              </b-col>
+              <b-col cols="12" md="6">
+                <b-form-group
+                  label="CDL Experience Years"
+                >
+                  <b-form-input 
+                    v-model="driver.CDL.$model"
+                    :state="validateState(index, 'CDL')"
+                  />
+                </b-form-group>
+              </b-col>
+            </b-row>
+            <b-row>
+              <b-col cols="12" md="6">
+                <b-form-group
+                  label="Address"
+                >
+                  <b-form-input 
+                    v-model="driver.address.$model"
+                    :state="validateState(index, 'address')"
+                  />
+                </b-form-group>
+              </b-col>
+              <b-col cols="12" md="6">
+                <b-form-group
+                  label="City"
+                >
+                  <b-form-input 
+                    v-model="driver.city.$model"
+                    :state="validateState(index, 'city')"
+                  />
+                </b-form-group>
+              </b-col>
+            </b-row>
+            <b-row>
+              <b-col cols="12" md="6">
+                <b-form-group
+                  label="State"
+                >
+                  <b-form-input 
+                    v-model="driver.state.$model"
+                    :state="validateState(index, 'state')"
+                  />
+                </b-form-group>
+              </b-col>
+              <b-col cols="12" md="6">
+                <b-form-group
+                  label="Zip"
+                  description="5 digits"
+                >
+                  <b-form-input 
+                    type="number"
+                    v-model="driver.zip.$model"
+                    :state="validateState(index, 'zip')"
+                  />
+                </b-form-group>
+              </b-col>
+            </b-row>
+            <b-row>
+              <b-col cols="12" md="6">
+                <b-form-group
+                  label="DL Year's Licensed (In Class Type)"
+                  label-for="Q38"
+                >
+                  <b-form-input 
+                    type="number"
+                    id="Q38"
+                    v-model="driver.dlYearLicensed.$model"
+                    :state="validateState(index, 'dlYearLicensed')"
+                  />
+                </b-form-group>
+              </b-col>
+              <b-col cols="12" md="6">
+                <b-form-group
+                  label="Type of Unit (Bus, Van, Truck, Tractor, etc.)"
+                >
+                  <b-form-input 
+                    v-model="driver.typeOfUnit.$model"
+                    :state="validateState(index, 'typeOfUnit')"
+                  ></b-form-input>
+                </b-form-group>
+              </b-col>
+            </b-row>
+            <b-row>
+              <b-col cols="12" md="6">
+                <b-form-group
+                  label="Number of Years Driving"
+                  label-for="Q40"
+                >
+                  <b-form-input 
+                    type="number"
+                    id="Q40"
+                    v-model="driver.noOfYearsDriving.$model"
+                    :state="validateState(index, 'noOfYearsDriving')"
+                  ></b-form-input>
+                </b-form-group>
+              </b-col>
+            </b-row>
+            <b-form-row>
+              <b-col cols="12" md="6">
+                <b-form-group
+                  label="Previous Commercial Driving Experience - years"
+                >
+                  <b-form-input 
+                    type="number"
+                    v-model="driver.prevCDE.$model"
+                    :state="validateState(index, 'prevCDE')"
+                  ></b-form-input>
+                </b-form-group>
+              </b-col>
+              <b-col cols="12" md="6">
+                <div
+                  class="mb-2 form-group"
+                  role="group"
+                >
+                  <label
+                    class="d-flex"
+                  >
+                    Date of Hire
+                    <b-form-checkbox
+                      class="ml-2"
+                      name="owner"
+                      @change="ownerOperator(index)"
+                    >
+                      Owner Operator
+                    </b-form-checkbox>
+                  </label>
+                  <b-form-datepicker 
+                    reset-button 
+                    locale="en-US" 
+                    placeholder="Choose a date" 
+                    v-model="driver.doh.$model"
+                    min="01/01/1900" 
+                    max="01/01/9999"
+                    :date-format-options="{ year: 'numeric', month: 'numeric', day: 'numeric' }"
+                    :state="validateState(index, 'doh')" 
+                  >
+                  </b-form-datepicker>
+                </div>
+              </b-col>
+            </b-form-row>
+            <b-form-row>
+              <b-col cols="12">
+                  <b-form-group
+                    label="Accidents and Minor Moving Traffic Violations in Past 5 Years"
+                  >
+                    <b-form-row class="mb-3">
+                      <b-col cols="12" md="6">
+                        <b-form-input 
+                          type="number"
+                          placeholder="No. of Accidents"
+                          v-model="driver.noOfAccidents.$model"
+                          :state="validateState(index, 'noOfAccidents')"
+                        ></b-form-input>
+                      </b-col>
+                      <b-col cols="12" md="6">
+                          <b-form-datepicker 
+                            reset-button 
+                            locale="en-US" 
+                            v-model="driver.noOfAccidentsDate.$model"
+                            :state="validateState(index, 'noOfAccidentsDate')"
+                            placeholder="Choose a date">
+                          </b-form-datepicker>
+                      </b-col>
+                    </b-form-row>
+                    <b-form-row>
+                        <b-col cols="12" md="6">
+                          <b-form-input 
+                            type="number"
+                            placeholder="No. of Violations"
+                            v-model="driver.noOfViolations.$model"
+                            :state="validateState(index, 'noOfViolations')"
+                          ></b-form-input>
+                      </b-col>
+                      <b-col cols="12" md="6">
+                          <b-form-datepicker 
+                            reset-button 
+                            locale="en-US" 
+                            v-model="driver.noOfViolationsDate.$model"
+                            :state="validateState(index, 'noOfViolationsDate')"
+                            placeholder="Choose a date">
+                          </b-form-datepicker>
+                      </b-col>
+                    </b-form-row>
+                  </b-form-group>
+              </b-col>
+            </b-form-row>
+            <b-form-row >
+              <b-col cols="12">
+                <b-form-group
+                  label="Major Convictions"
+                  description="maximum 100 characters"
+                >
+                  <b-form-row >
+                    <b-col cols="12" md="6">
+                      <b-form-textarea 
+                        placeholder="Describe Conviction"
+                        v-model="driver.conviction.$model"
+                        :state="validateState(index, 'conviction')"
+                        rows="2"
+                        max-rows="7"
+                      ></b-form-textarea>
+                    </b-col>
+                    <b-col cols="12" md="6">
+                        <b-form-datepicker 
+                          reset-button 
+                          locale="en-US" 
+                          v-model="driver.convictionDate.$model"
+                          :state="validateState(index, 'convictionDate')"
+                          placeholder="Choose a date">
+                        </b-form-datepicker>
+                    </b-col>
+                  </b-form-row>
+                </b-form-group>
+              </b-col>
+            </b-form-row>
+            <b-form-row>
+              <b-col cols="12">
+                <b-form-group
+                  label="(E) Employee? (IC) Independent Contractor? (O/O) Owner/Operator? (F) Franchisee?"
+                >
+                  <b-form-select 
+                    v-model="driver.EICOOF.$model"
+                    :state="validateState(index, 'EICOOF')"
+                    :options="driverInfoList">
+                  </b-form-select>
+                </b-form-group>
+              </b-col>
+            </b-form-row>
           </template>
-
           <div class="row align-items-center mb-3">
             <div class="col font-weight-bold h5">Add another driver</div>
 
@@ -361,7 +329,7 @@
               <button
                 type="button"
                 class="lt-button px-3"
-                @click="addDriverData"
+                @click="addDefaultDrivers"
                 title="Add Driver"
               >
                 <font-awesome-icon class="fontawesome minus" icon="plus" />
@@ -369,7 +337,7 @@
             </div>
           </div>
 
-          <!-- <div v-if="error" class="alert alert-danger" role="alert">{{ error }}</div> -->
+          <div v-if="error" class="alert alert-danger" role="alert">{{ error }}</div>
         </div>
 
         <div class="card-footer">
@@ -412,18 +380,21 @@
 
 <script>
 import uuidv4 from "uuid/v4";
-import { API } from "../api.js";
-import ModalLogin from "./ModalLogin.vue";
-import axios from "axios";
-import { isMobile } from "mobile-device-detect";
 import Vue from "vue";
+import { validationMixin } from "vuelidate";
+import { required, minLength, maxLength, minValue, maxValue } from "vuelidate/lib/validators";
+
+import { API } from "../api.js";
+import { isMobile } from "mobile-device-detect";
 
 export default {
   name: "AccountInfoDrivers",
+  mixins: [validationMixin],
+
   components: {
     AccountInfoDriversItem: () => import("./AccountInfoDriversItem.vue"),
-    modelLogin: ModalLogin,
   },
+
   props: {
     prevForm: {
       type: String,
@@ -441,35 +412,24 @@ export default {
   data() {
     return {
       userData:"",
-      final_uuid: "",
       uuid: "",
       loading: false,
       error: null,
       save: true,
-      showmodel: false,
-      formData: {
-        drivers: []
-      },
       mobile: false,
       mailingAddress: {},
-      driversData: [],
-      validations: {
-        driversData: {},
-        oneOwner: {
-          is_valid: true,
-          text: ""
-        },
-        website: {
-          is_valid: true,
-          text: ""
-        }
+      doh: {},
+      form: {
+        drivers: []
       },
       operator: false,
-      doh: {
-        dohM: '',
-        dohD: '',
-        dohY: ''
-      }
+      driverInfoList: [
+        { value: '', text: 'Please select an option' },
+        { value: 'E', text: 'Employee' },
+        { value: 'IC', text: 'Independent Contractor' },
+        { value: 'O/O', text: 'Owner/Operator' },
+        { value: 'F', text: 'Franchisee' },
+      ],
     };
   },
 
@@ -477,6 +437,89 @@ export default {
     showDLFab () {
       return localStorage.getItem('imageDL') && this.mobile
     },
+  },
+
+  validations() {
+    return {
+      form: {
+        drivers: {
+          required,
+
+          $each: {
+            firstName: {
+              required
+            },
+            middleName: {
+            },
+            lastName: {
+              required
+            },
+            dob: {
+              required,
+            },
+            doh: {
+              required,
+            },
+            licenseNumber: {
+              required,
+              minLength: minLength(12),
+              maxLength: maxLength(12)
+            },
+            CDL: {
+            },
+            address: {
+              required
+            },
+            city: {
+              required
+            },
+            state: {
+              required
+            },
+            zip: {
+              required,
+              minLength: minLength(5),
+              maxLength: maxLength(5)
+            },
+            dlYearLicensed: {
+              required,
+              minValue: minValue(1)
+            },
+            typeOfUnit: {
+              required
+            },
+            noOfYearsDriving: {
+              required,
+              minValue: minValue(1)
+            },
+            prevCDE: {
+              required
+            },
+            noOfAccidents: {
+              required
+            },
+            noOfAccidentsDate: {
+              required
+            },
+            noOfViolations: {
+              required
+            },
+            noOfViolationsDate: {
+              required
+            },
+            conviction: {
+              required
+            },
+            convictionDate: {
+              required
+            },
+            EICOOF: {
+              required
+            }
+          }
+        }
+      }
+    }
   },
 
   mounted() {
@@ -493,13 +536,6 @@ export default {
     this.$emit("update-progress", this.progress);
     this.loadCompany();
   },
-  updated() {
-    if (localStorage.getItem("showModal") == "true") {
-      this.showmodel = true;
-    } else {
-      this.showmodel = false;
-    }
-  },
   methods: {
     fillDL () { 
       try {
@@ -513,19 +549,57 @@ export default {
         console.log(e)
       }
     },
+    validateState(index, name) {
+      const { $dirty, $error } = this.$v.form.drivers.$each.$iter[index][name];
+      return $dirty ? !$error : null;
+    },
+
+    errorMessage(index, name) {
+      const { required, minLength, maxLength } = this.$v.form.drivers.$each.$iter[index][name]
+
+      let msg = ''
+      if (required != undefined && !required) {
+        msg = 'This field is required.'
+      } 
+
+      if ((minLength != undefined && !minLength) || (maxLength != undefined && !maxLength)) {
+        msg = 'The length must be correct'
+      } 
+
+      return msg
+    },
+
+    addDefaultDrivers () {
+      this.form.drivers.push({
+        firstName: '',
+        lastName: '',
+        middleName: '',
+        dob: '',
+        licenseNumber: '',
+        CDL: '',
+        address: '',
+        city: '',
+        state: '',
+        zip: '',
+        dlYearLicensed: '',
+        typeOfUnit: '',
+        noOfYearsDriving: '',
+        prevCDE: '',
+        doh: '',
+        noOfAccidents: '',
+        noOfAccidentsDate: '',
+        noOfViolations: '',
+        noOfViolationsDate: '',
+        conviction: '',
+        convictionDate: '',
+        EICOOF: ''
+      })
+    },
+
     ownerOperator(index) {
       if (!this.operator) {
-        this.driversData[index].dohD = this.doh.dohD;
-        this.driversData[index].dohM = this.doh.dohM;
-        this.driversData[index].dohY = this.doh.dohY;
+        this.form.drivers[index].doh = this.doh;
       }
-    },
-    capitalize(str) {
-      const newStr = str.split(' ').map(s => {
-        if (typeof s !== 'string') return ''
-        return s.charAt(0).toUpperCase() + s.slice(1).toLowerCase()
-      })
-      return newStr.join(' ');
     },
     changeData() {
       if (this.driversData.length > 0 && this.mailingAddress) {
@@ -534,127 +608,6 @@ export default {
         this.driversData[0].state = this.mailingAddress.state;
         this.driversData[0].zip = this.mailingAddress.zip;
       }
-    },
-    validateFieldCustom(fieldName, index){
-      if (this.driversData[index][fieldName].trim() == '') {
-        this.validations.driversData[index][fieldName].is_valid = false;
-        let text = fieldName;
-        if (fieldName == 'licenseNumber') {
-          text = 'license number';
-        }
-        this.validations.driversData[index][fieldName].text = 'Please enter   ' + text + '!';
-      } else {
-        this.validations.driversData[index][fieldName].is_valid = true;
-      }
-    },
-    sizeOfObject(obj) {
-      var size = 0, key;
-      for (key in obj) {
-          if (obj.hasOwnProperty(key)) size++;
-      }
-      return size;
-    },
-   
-    addDriverDataValidation(count){
-      let driverDatavalidationsLength = this.sizeOfObject(this.validations.driversData);
-      for (let index = 0; index < count; index++) {
-
-        this.$set(this.validations.driversData, driverDatavalidationsLength + index, {
-         firstName: {
-            is_valid: true,
-            text: ""
-          },
-          middleName: {
-            is_valid: true,
-            text: ""
-          },
-          lastName: {
-            is_valid: true,
-            text: ""
-          },
-          dobM: {
-            is_valid: true,
-            text: ""
-          },
-          dobD: {
-            is_valid: true,
-            text: ""
-          },
-          dobY: {
-            is_valid: true,
-            text: ""
-          },
-          dohM: {
-            is_valid: true,
-            text: ""
-          },
-          dohD: {
-            is_valid: true,
-            text: ""
-          },
-          dohY: {
-            is_valid: true,
-            text: ""
-          },
-          address: {
-            is_valid: true,
-            text: ""
-          },
-          city: {
-            is_valid: true,
-            text: ""
-          },
-          state: {
-            is_valid: true,
-            text: ""
-          },
-          zip: {
-            is_valid: true,
-            text: ""
-          },
-          licenseNumber: {
-            is_valid: true,
-            text: ""
-          },
-          // yearsOfExperience: {
-          //   is_valid: true,
-          //   text: ""
-          // },
-          CDL: {
-            is_valid: true,
-            text: ""
-          }
-        });
-      }
-    },
-    addDriverData(data) {
-      // 
-      if (data == undefined || data.firstName   == undefined ) {
-        // 
-       this.driversData.push({
-          firstName: '',
-          middleName: '',
-          lastName: '',
-          dobM: '',
-          dobD: '',
-          dobY: '',
-          address: '',
-          city: '',
-          state: '',
-          zip: '',
-          dohM: '',
-          dohD: '',
-          dohY: '',
-          licenseNumber: '',
-          CDL: ''
-        });
-        // 
-        this.addDriverDataValidation(1);
-      } else {
-        
-        this.driversData.push(data);
-      }
-      
     },
     removeDriverData(key) {
       this.$swal({
@@ -668,195 +621,9 @@ export default {
         confirmButtonText: 'Yes, delete it!'
       }).then((willDelete) => {
         if (willDelete) {
-          this.driversData.splice(key, 1);
-          Vue.delete(this.validations.driversData,key)
+          this.form.drivers.splice(key, 1);
         }
       })
-    },
-    validateNewDriverData() {
-      let validNewDriverForm = true;
-      for (var index in this.driversData) {
-        if (this.driversData.hasOwnProperty(index)) {
-          if (this.driversData[index].firstName.trim() == "") {
-            validNewDriverForm = false;
-            this.validations.driversData[index].firstName.is_valid = false;
-            this.validations.driversData[index].firstName.text =
-              "Please enter firstname!";
-          } else {
-            this.validations.driversData[index].firstName.is_valid = true;
-            this.validations.driversData[index].firstName.text = "";
-          }
-
-          if (this.driversData[index].lastName.trim() == "") {
-            validNewDriverForm = false;
-            this.validations.driversData[index].lastName.is_valid = false;
-            this.validations.driversData[index].lastName.text =
-              "Please enter lastname!";
-          } else {
-            this.validations.driversData[index].lastName.is_valid = true;
-            this.validations.driversData[index].lastName.text = "";
-          }
-
-          if (this.driversData[index].dobM < 1 || this.driversData[index].dobM > 12)  {
-              validNewDriverForm = false;
-            this.validations.driversData[index].dobM.is_valid = false;
-            this.validations.driversData[index].dobM.text =
-              "Please enter valid month!";
-            if(this.driversData[index].dobM.trim() == ""){
-            validNewDriverForm = false;
-            this.validations.driversData[index].dobM.is_valid = false;
-            this.validations.driversData[index].dobM.text =
-              "Please enter month!";
-          }
-           }else {
-            this.validations.driversData[index].dobM.is_valid = true;
-            this.validations.driversData[index].dobM.text = "";
-          }
-
-          if (this.driversData[index].dobD < 1 || this.driversData[index].dobD > 31)  {
-            validNewDriverForm = false;
-            this.validations.driversData[index].dobD.is_valid = false;
-            this.validations.driversData[index].dobD.text =
-              "Please enter valid date!";
-          if (this.driversData[index].dobD.trim() == "") {
-            validNewDriverForm = false;
-            this.validations.driversData[index].dobD.is_valid = false;
-            this.validations.driversData[index].dobD.text =
-              "Please enter date!";
-          } }else {
-            this.validations.driversData[index].dobD.is_valid = true;
-            this.validations.driversData[index].dobD.text = "";
-          }
-
-          if(this.driversData[index].dobY.length<4){
-              validNewDriverForm = false;
-            this.validations.driversData[index].dobY.is_valid = false;
-            this.validations.driversData[index].dobY.text =
-              "Please enter valid year!";
-          if (this.driversData[index].dobY.trim() == "") {
-            validNewDriverForm = false;
-            this.validations.driversData[index].dobY.is_valid = false;
-            this.validations.driversData[index].dobY.text =
-              "Please enter year!";
-          } }else {
-            
-            this.validations.driversData[index].dobY.is_valid = true;
-            this.validations.driversData[index].dobY.text = "";
-          }
-
-           if (this.driversData[index].dohM < 1 || this.driversData[index].dohM > 12)  {
-              validNewDriverForm = false;
-            this.validations.driversData[index].dohM.is_valid = false;
-            this.validations.driversData[index].dohM.text =
-              "Please enter valid month!";
-          if (this.driversData[index].dohM.trim() == "") {
-            validNewDriverForm = false;
-            this.validations.driversData[index].dohM.is_valid = false;
-            this.validations.driversData[index].dohM.text =
-              "Please enter month!";
-          } }else {
-            this.validations.driversData[index].dohM.is_valid = true;
-            this.validations.driversData[index].dohM.text = "";
-          }
-          
-          if (this.driversData[index].dohD < 1 || this.driversData[index].dohD > 31)  {
-            validNewDriverForm = false;
-            this.validations.driversData[index].dohD.is_valid = false;
-            this.validations.driversData[index].dohD.text =
-              "Please enter valid date!";
-          if (this.driversData[index].dohD.trim() == "") {
-            validNewDriverForm = false;
-            this.validations.driversData[index].dohD.is_valid = false;
-            this.validations.driversData[index].dohD.text =
-              "Please enter date!";
-          }} else {
-            this.validations.driversData[index].dohD.is_valid = true;
-            this.validations.driversData[index].dohD.text = "";
-          }
-
-          if(this.driversData[index].dohY.length<4){
-              validNewDriverForm = false;
-            this.validations.driversData[index].dohY.is_valid = false;
-            this.validations.driversData[index].dohY.text =
-              "Please enter valid year!";
-          if (this.driversData[index].dohY.trim() == "") {
-            validNewDriverForm = false;
-            this.validations.driversData[index].dohY.is_valid = false;
-            this.validations.driversData[index].dohY.text =
-              "Please enter year!";
-          }} else {
-            this.validations.driversData[index].dohY.is_valid = true;
-            this.validations.driversData[index].dohY.text = "";
-          }
-
-          if (this.driversData[index].address.trim() == "") {
-            validNewDriverForm = false;
-            this.validations.driversData[index].address.is_valid = false;
-            this.validations.driversData[index].address.text =
-              "Please enter an address!";
-          } else {
-            this.validations.driversData[index].address.is_valid = true;
-            this.validations.driversData[index].address.text = "";
-          }
-
-          if (this.driversData[index].city.trim() == "") {
-            validNewDriverForm = false;
-            this.validations.driversData[index].city.is_valid = false;
-            this.validations.driversData[index].city.text =
-              "Please enter city!";
-          } else {
-            this.validations.driversData[index].city.is_valid = true;
-            this.validations.driversData[index].city.text = "";
-          }
-
-          if (this.driversData[index].state.trim() == "") {
-            validNewDriverForm = false;
-            this.validations.driversData[index].state.is_valid = false;
-            this.validations.driversData[index].state.text =
-              "Please enter state!";
-          } else {
-            this.validations.driversData[index].state.is_valid = true;
-            this.validations.driversData[index].state.text = "";
-          }
-
-          if(!this.driversData[index].zip.match(/(^\d{5}$)/)){
-            validNewDriverForm = false;
-            this.validations.driversData[index].zip.is_valid = false;
-            this.validations.driversData[index].zip.text = 'Invalid Zip Code';
-          
-          if (this.driversData[index].zip.trim() == "") {
-            validNewDriverForm = false;
-            this.validations.driversData[index].zip.is_valid = false;
-            this.validations.driversData[index].zip.text = "Please enter zip!";
-          }} else {
-            this.validations.driversData[index].zip.is_valid = true;
-            this.validations.driversData[index].zip.text = "";
-          }
-
-          if (this.driversData[index].licenseNumber.trim() == "") {
-            validNewDriverForm = false;
-            this.validations.driversData[index].licenseNumber.is_valid = false;
-            this.validations.driversData[index].licenseNumber.text =
-              "Please enter license Number!";
-          } else {
-            this.validations.driversData[index].licenseNumber.is_valid = true;
-            this.validations.driversData[index].licenseNumber.text = "";
-          }
-          
-        }
-      }
-      return validNewDriverForm;
-    },
-    addForm() {
-      this.drivers.push({ _uuid: uuidv4() });
-      this.error = null;
-    },
-    removeForm(index) {
-      this.drivers.splice(index, 1);
-
-      // if (!this.drivers.length) {
-      //   this.error = "Please add at least one driver";
-      // }
     },
 
     updateHint(hint) {
@@ -892,10 +659,7 @@ export default {
           if (structure) {
             let doh = structure['MCS-150 Form Date'];
             if (doh) {
-              doh = doh.split('/')
-              this.doh.dohM = doh[0];
-              this.doh.dohD = doh[1];
-              this.doh.dohY = doh[2];
+              this.doh = doh
             }
           }
 
@@ -903,49 +667,37 @@ export default {
             if (!Array.isArray(driverInformationList)) {
               driverInformationList = JSON.parse(driverInformationList);
             }
-            
-            this.drivers = driverInformationList.map(d => ({ ...d, _uuid: uuidv4() }));
 
-            if(driverInformationList.length > 0){
-              this.driversData = driverInformationList;
-              
-              this.addDriverDataValidation(driverInformationList.length)
-            }else{
-              this.addDriverData();
+            if(driverInformationList.length > 0 && driverInformationList[0].prevCDE != undefined){
+              this.form.drivers = driverInformationList;
+            } else {
+              this.addDefaultDrivers()
             }
           } else {
-            // this.addForm();
-             this.addDriverData();
+            this.addDefaultDrivers()
           }
         } else if (res && res.status === "ERROR") {
-           
         }
       } catch (err) {
-        console.error(err);
         this.error = err.message;
-        this.addDriverData();
+        // this.addDefaultDrivers()
       } finally {
         this.loading = false;
-           
       }
     },
     
     async updateCompany() {
-      // if (!this.driversData.length) {
-      //   return;
-      // }
-      let allFormAreValid = this.validateNewDriverData();
-      if (!allFormAreValid) {
+      this.$v.form.$touch();
+      if (this.$v.form.$anyError) {
         return;
-      } 
+      }
 
       this.loading = true;
       this.error = null;
-      this.final_uuid = this.uuid;
       try {
         const data = {
-          driverInformationList: this.driversData,
-          uuid: this.final_uuid
+          driverInformationList: this.form.drivers,
+          uuid: this.uuid
         };
         let res = await API.post("company/save", { data });
 
@@ -972,12 +724,6 @@ select {
   -webkit-appearance: none;
   background: url("../assets/images/arrow-dropdown.png") no-repeat 96% center;
   -moz-appearance: none;
-}
-
-.label {
-  font-weight: 500;
-  font-size: 15px;
-  margin-left: 0.5rem;
 }
 
 .fontawesome path {

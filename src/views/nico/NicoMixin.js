@@ -12,12 +12,6 @@ export const NicoMixin = {
 	  		{ value: 'Mileage', text: 'Mileage' },
 	  		{ value: 'Other', text: 'Other' },
     	],
-    	Q59Options: [
-    	 	{ value: '', text: 'Please select an option' },
-    		{ value: 'A', text: 'Anti-lock Brakes' },
-    		{ value: 'B', text: 'Air Bags' },
-    		{ value: 'Both', text: 'Both' },
-    	],
     	Q70Q71Options: [
     		{ value: '', text: 'Please select an option' },
     		{ value: 'Comprehensive', text: 'Comprehensive' },
@@ -144,8 +138,8 @@ export const NicoMixin = {
 	      Q24: '',
 	      Q25_0: true,
 	      Q25: '',
-	      Q25_17_1: true,
-	      Q25_17_2: true,
+	      Q25_17_1: false,
+	      Q25_17_2: false,
 	      Q26_0: false,
 	      Q26: null,
 	      Q27: true,
@@ -158,17 +152,10 @@ export const NicoMixin = {
 	      Q36: '',
 	      Q37_1: '',
 	      Q37_2: '',
-	      Q38: '',
-	      Q39: '',
-	      Q40: '',
-	      Q41: '',
-	      Q42: '',
-	      Q43: '',
-	      Q44: '',
-	      Q45: '',
-	      Q46: '',
-	      Q47: '',
-	      Q48: '',
+	      driversContinue: [
+	      ],
+	      drivers: [
+	      ],
 	      Q49_0: true,
 	      Q49: '',
 	      Q50: '',
@@ -181,25 +168,20 @@ export const NicoMixin = {
 	      Q52_24: true,
 	      Q53: '',
 	      Q53_explain: '',
-	      Q55: '',
-	      Q56: '',
-	      Q57: '',
-	      Q58: '',
-	      Q59: '',
 	      Q60: true,
 	      Q61: '',
-	      Q62_pick_ups: '',
-	      Q62_trucks: '',
-	      Q62_tractors: '',
-	      Q62_semi_trailers: '',
-	      Q62_trailers: '',
-	      Q62_pup_trailers: '',
-	      Q63_pick_ups: '',
-	      Q63_trucks: '',
-	      Q63_tractors: '',
-	      Q63_semi_trailers: '',
-	      Q63_trailers: '',
-	      Q63_pup_trailers: '',
+	      Q62_pick_ups: 0,
+	      Q62_trucks: 0,
+	      Q62_tractors: 0,
+	      Q62_semi_trailers: 0,
+	      Q62_trailers: 0,
+	      Q62_pup_trailers: 0,
+	      Q63_pick_ups: 0,
+	      Q63_trucks: 0,
+	      Q63_tractors: 0,
+	      Q63_semi_trailers: 0,
+	      Q63_trailers: 0,
+	      Q63_pup_trailers: 0,
 	      Q65: '',
 	      Q66: '',
 	      Q67: '',
@@ -279,7 +261,7 @@ export const NicoMixin = {
 	      Q131: '',
 	      Q132: true,
 	      Q133: '',
-	  	}
+	  	},
 	  }
 	},
 
@@ -313,18 +295,45 @@ export const NicoMixin = {
 	    try {
 	      let res = await API.get("company/current?uuid=" + this.uuid);
 	      if (res && res.status === "OK" && res.data.company) {
-	      	let { company: { nico_questions } } = res.data;
+	      	let { company: { nico_questions, driverInformationList, vehicleInformationList } } = res.data;
 	        if (nico_questions) {
 	          if (typeof nico_questions == 'string') {
 	              nico_questions = JSON.parse(nico_questions)
 	          } 
-	          if (nico_questions.Q5 != undefined) {
+
+	          if (nico_questions.Q5 != undefined && nico_questions.driversContinue != undefined) {
 		          this.form = nico_questions
 	          }
 	      	} 
+
+	      	if (driverInformationList) {
+	            if (!Array.isArray(driverInformationList)) {
+	              driverInformationList = JSON.parse(driverInformationList);
+	            }
+
+	            if (this.form.driversContinue.length == 0) {
+		            driverInformationList.map(() => {
+		            	this.form.driversContinue.push({
+		            		Q41: '',
+		            		Q42: '',
+		            		Q43: '',
+		            		Q44: '',
+		            		Q45: '',
+		            		Q46: '',
+		            		Q47: '',
+		            		Q48: '',
+		            	})
+		            	this.form.drivers.push({
+		            		Q38: '',
+		            		Q39: '',
+		            		Q40: '',
+		            	});
+		            })
+	            }
+	        }
 	      } 
 	    } catch (err) {
-	      console.error(err.response)
+	      console.error(err)
 	      this.error = err.message
 	    } finally {
 	      this.loading = false
@@ -332,8 +341,6 @@ export const NicoMixin = {
 	  },
 	  async updateCompany() {
 	    this.$v.form.$touch();
-	    console.log(this.form)
-	    console.log(this.$v.form.$anyError)
 	    if (this.$v.form.$anyError) {
 	      return;
 	    }

@@ -5,504 +5,472 @@
         <div class="card-body">
           <h4 class="card-title form-sub-title">Vehicle(s) & Trailer(s)</h4>
 
-          <template>
-            <div
-              class="driver-form-item mob-2"
-              v-for="(singleVehicle, index) in vehiclesData"
-              :key="'vehicle' + index"
-            >
-              <div class="d-flex justify-content-between align-items-center">
-                <div class="col">
-                  <div class="h5 mb-0">Vehicle #{{ index + 1 }}</div>
-                </div>
-                <button
-                  type="button"
-                  class="lt-button lift mx-2"
-                  @click="removeVehiclesData(index)"
-                  title="Remove Vehicle"
-                >
-                  <font-awesome-icon class="fontawesome minus" icon="minus" />
-                </button>
-              </div>
-
-              <div class="form-group col-lg-10 col-sm-12">
-                <b-input-group>
-                  <input v-model.trim="vehiclesData[index].VIN" class="lt-input" :class="{ 'has-error': !validations.vehiclesData[index].VIN.is_valid }" autocomplete="off" @change="validateFieldCustom('VIN', index)" placeholder="Enter VIN number"></input>
-                  <b-input-group-append>
-                    <b-button :disabled="loading" type="button" @click="getVinData('vehicle', index)" variant="primary">
-                      <font-awesome-icon class="fontawesome" icon="search"  />
-                    </b-button>
-                  </b-input-group-append>
-                </b-input-group>
-                <div
-                  class="text-danger pb-2"
-                  v-show="!validations.vehiclesData[index].VIN.is_valid"
-                >{{ validations.vehiclesData[index].VIN.text }}</div>
-              </div> 
-
-              <div class="form-group col-lg-5 col-sm-8">
-                <input
-                  v-model="vehiclesData[index].year"
-                  type="text"
-                  class="lt-input"
-                  placeholder="Year"
-                  :class="{ 'has-error': !validations.vehiclesData[index].year.is_valid }"
-                  @change="validateFieldCustom('year', index)"
-                >
-
-                <div
-                  class="text-danger"
-                  v-show="!validations.vehiclesData[index].year.is_valid"
-                >{{ validations.vehiclesData[index].year.text }}</div>
-              </div>
-
-              <div class="form-group col-lg-5 col-sm-8">
-                <input
-                  v-model="vehiclesData[index].make"
-                  type="text"
-                  class="lt-input"
-                  placeholder="Make"
-                  :class="{ 'has-error': !validations.vehiclesData[index].make.is_valid }"
-                  @change="validateFieldCustom('make', index)"
-                >
-
-                <div
-                  class="text-danger"
-                  v-show="!validations.vehiclesData[index].make.is_valid"
-                >{{ validations.vehiclesData[index].make.text }}</div>
-              </div>
-
-              <div class="form-group col-lg-5 col-sm-8 mb-4">
-                <input
-                  v-model="vehiclesData[index].model"
-                  type="text"
-                  class="lt-input"
-                  placeholder="Model"
-                  :class="{ 'has-error': !validations.vehiclesData[index].model.is_valid }"
-                  @change="validateFieldCustom('model', index)"
-                >
-
-                <div
-                  class="text-danger"
-                  v-show="!validations.vehiclesData[index].model.is_valid"
-                >{{ validations.vehiclesData[index].model.text }}</div>
-              </div>
-
-              <div class="form-group border-top col-lg-10 col-sm-12 pt-4">
-                  <!-- <div class="border-bottom p-1">
-                    <span>Select Vehicle Type</span>
-                  </div>
--->
-                 <!--  <div class="containera-hov d-inline">
-                    <label class="d-block">
-                      <input
-                        type="radio"
-                        @change="onSelectImage(index)"
-                        name="test"
-                        value="Tractor"
-                        v-model="vehiclesData[index].vehicleImage"
-                      >
-                      <img
-                        alt="Tractor"
-                        src="../assets/images/tracktor.png"
-                        style="width:100px;"
-                        class="d-inline mt-2 image mr-2"
-                      >
-
-                      <span>Tractor</span>
-                    </label>
-                  </div>
-                  <div class="containera-hov d-inline">
-                    <label class="d-block">
-                      <input
-                        type="radio"
-                        @change="onSelectImage(index)"
-                        name="test"
-                        value="Box Truck"
-                        checked
-                        v-model="vehiclesData[index].vehicleImage"
-                      >
-                      <img
-                        src="../assets/images/boxtruck.png"
-                        style="width:100px;"
-                        class="d-inline mt-2 image mr-2"
-                      >
-                      <span>Box Truck</span>
-                    </label>
-                  </div>
-
-                  <div class="containera-hov d-inline">
-                    <label class="d-block">
-                      <input
-                        type="radio"
-                        @change="onSelectImage(index)"
-                        name="test"
-                        value="Dump Truck"
-                        checked
-                        v-model="vehiclesData[index].vehicleImage"
-                      >
-                      <img
-                        src="../assets/images/dumptruck.png"
-                        alt
-                        style="width:100px;"
-                        class="d-inline mt-2 image mr-2"
-                      >
-                      <span>Dump Truck</span>
-                    </label>
-                  </div>
-                  <div class="containera-hov d-inline">
-                    <label class="d-block">
-                      <input
-                        type="radio"
-                        @change="onSelectImage(index)"
-                        name="test"
-                        value="Tow Trucks"
-                        checked
-                        v-model="vehiclesData[index].vehicleImage"
-                      >
-                      <img
-                        src="../assets/images/twotrucks.png"
-                        alt
-                        style="width:100px;"
-                        class="d-inline mt-2 image mr-2"
-                      >
-                      <span>Tow Trucks</span>
-                    </label>
-                  </div>
-                  <div class="containera-hov d-inline">
-                    <label class="d-block">
-                      <input
-                        type="radio"
-                        @change="onSelectImage(index)"
-                        name="test"
-                        value="Pickup Truck"
-                        checked
-                        v-model="vehiclesData[index].vehicleImage"
-                      >
-                      <img
-                        src="../assets/images/pickup_truck.png"
-                        alt
-                        style="width:100px;"
-                        class="d-inline mt-2 image mr-2"
-                      >
-                      <span>Pickup Truck</span>
-                    </label>
-                  </div>
-
-                  <div class="p-3">
-                    <span>Select Vehicle Type</span>
-                    <h5><span class=""><strong>OR</strong></span></h5>
-
-                  </div> -->
-                  <select
-                    v-model="vehiclesData[index].vehicleType"
-                    class="lt-input"
-                    @change="onSelectDropDown(index)"
-                  >
-                    <option value>Select Vehicle type</option>
-                    <option
-                      v-for="item in otherVehicleType"
-                      :key="item"
-                      :value="item"
-                    >{{ item }}</option>
-                  </select>
-                  <div
-                    class="text-danger"
-                    v-show="!validations.vehiclesData[index].vehicleType.is_valid"
-                  >{{ validations.vehiclesData[index].vehicleType.text }}</div>
-              </div>
-              
-              <div class="form-group col-lg-5 col-md-6 col-sm-8 mb-4">
-                <input
-                  v-model="vehiclesData[index].zipCode"
-                  type="text"
-                  class="lt-input"
-                  minlength="5"
-                  placeholder="Garaging Zip"
-                  :class="{ 'has-error': !validations.vehiclesData[index].zipCode.is_valid }"
-                  @change="validateFieldCustom('zipCode', index)"
-                >
-
-                <div
-                  class="text-danger"
-                  v-show="!validations.vehiclesData[index].zipCode.is_valid"
-                >{{ validations.vehiclesData[index].zipCode.text }}</div>
-              </div>
-
-              <div class="col-12">
-                <div class="label mb-4 border-top pt-4"><b>Radius of Travel</b> (in miles)</div>
-                <div class="col-12">
-                  <div class="form-group">
-                    <input
-                      v-model="vehiclesData[index].radiusOfTravelVehicle"
-                      type="range"
-                      min="0"
-                      :max="550"
-                      step="50"
-                      class="lt-input"
-                      placeholder="Radius of Travel*"
-                    >
-                    <div class="text-center">
-                      <strong>{{ vehiclesData[index].radiusOfTravelVehicle > 500 ? "500+":vehiclesData[index].radiusOfTravelVehicle }}</strong>
-                    </div>
-                  </div>
-                  <div
-                    class="text-danger"
-                    v-show="!validations.vehiclesData[index].radiusOfTravelVehicle.is_valid"
-                  >{{ validations.vehiclesData[index].radiusOfTravelVehicle.text }}</div>
-                  <div class="row mb-3">
-                    <div
-                      class="col-lg-6 col-sm-12"
-                    >Are you looking for Comprehesive & Collision Coverage?</div>
-
-                    <div class="col-lg-6 col-sm-12 mt-sm-1">
-                      <b-form-group>
-                        <b-form-radio-group
-                          v-model="vehiclesData[index].coverage"
-                          :options="options"
-                          button-variant="outline-primary"
-                          buttons
-                        ></b-form-radio-group>
-                      </b-form-group>
-                    </div>
-                  </div>
-                  <template v-if="vehiclesData[index].coverage">
-                    <div class="row mb-3">
-                      <div class="col-lg-6 col-sm-12">Current value of the vehicle or trailer</div>
-
-                      <div class="col-lg-6 col-md-6 col-sm-12 text-right">
-                        <input
-                          :value="vehiclesData[index].currentValue"
-                          type="text"
-                          class="lt-input"
-                          placeholder="$"
-                          @change="changeCurrentValue(vehiclesData[index],$event)"
-                        >
-                        <!-- <div class="text-danger" v-show="!validations.vehiclesData[index].radiusOfTravel.is_valid">{{ validations.vehiclesData[index].radiusOfTravel.text }}</div>-->
-                      </div>
-                    </div>
-
-                    <div class="row mb-5">
-                      <div class="col-lg-6 col-sm-12">Deductible</div>
-
-                      <div class="col-lg-6 col-md-6 col-sm-12 text-right">
-                        <select v-model="vehiclesData[index].deductible" class="lt-input" required>
-                          <option disabled value>Deductible*</option>
-                          <option
-                            v-for="item in deductibles"
-                            :key="item.value"
-                            :value="item.value"
-                          >{{ item.name }}</option>
-                        </select>
-
-                        <div
-                          class="text-danger"
-                          v-show="!validations.vehiclesData[index].deductible.is_valid"
-                        >{{ validations.vehiclesData[index].deductible.text }}</div>
-                      </div>
-                    </div>
-                  </template>
-                </div> 
-              </div>
+          <template
+            v-for="(vehicle, index) in $v.form.vehicles.$each.$iter"
+          >
+            <div class="d-flex justify-content-between align-items-center">
+              <b class="mb-0">Vehicle #{{ Number(index) + 1 }}</b>
+              <button
+                type="button"
+                class="lt-button lift mx-2"
+                @click="removeVehiclesData(index)"
+                title="Remove Vehicle"
+              >
+                <font-awesome-icon class="fontawesome minus" icon="minus" />
+              </button>
             </div>
-          </template>
-          <template>
-            <div
-              class="driver-form-item mob-2"
-              v-for="(singleTrailer, index) in trailersData"
-              :key="'trailer' + index"
-            >
-              <div class="d-flex justify-content-between align-items-center">
-                  <h2 class="h5 mb-0">Trailer #{{ index + 1 }}</h2>
-                <!-- v-show="index > 0" -->
-                <button
-                  
-                  type="button"
-                  class="lt-button mx-2 mb-3"
-                  @click="removeTrailersData(index)"
-                  title="Remove Trailer"
-                >
-                  <h3>-</h3>
-                </button>
-              </div>
 
-                <div class="form-group col-lg-10 col-sm-12">
+            <b-row>
+              <b-col cols="12">
+                <b-form-group
+                  label="VIN"
+                >
                   <b-input-group>
-                    <input v-model.trim="trailersData[index].VIN" class="lt-input"  autocomplete="off" placeholder="Enter VIN number"></input>
+                    <b-form-input 
+                      v-model="vehicle.VIN.$model"
+                      :state="validateVehicleState(index, 'VIN')"
+                      :aria-describedby="`VIN${index}`"
+                    />
                     <b-input-group-append>
-                      <b-button :disabled="loading" type="button" @click="getVinData('trailer', index)" variant="primary">
+                      <b-button :disabled="loading" type="button" @click="getVinData('vehicle', index)" variant="primary">
                         <font-awesome-icon class="fontawesome" icon="search"  />
                       </b-button>
                     </b-input-group-append>
+                    <b-form-invalid-feedback :id="`VIN${index}`">{{ errrorMessageVehicle(index, 'VIN')}}</b-form-invalid-feedback>
                   </b-input-group>
-                </div> 
+                </b-form-group>
+              </b-col>
+            </b-row>
 
-                <div class="col-lg-5 col-sm-12">
-                  <div class="form-group">
-                    <input
-                      v-model="trailersData[index].year"
-                      type="text"
-                      class="lt-input"
-                      placeholder="Year"
-                      :class="{ 'has-error': !validations.trailersData[index].year.is_valid }"
-                      @change="validateTrailerField('year', index)"
-                    >
+            <b-row>
+              <b-col cols="12" md="6">
+                <b-form-group
+                  label="Year"
+                >
+                  <b-form-input 
+                    type="number"
+                    v-model="vehicle.year.$model"
+                    :state="validateVehicleState(index, 'year')"
+                  />
+                  <b-form-invalid-feedback>{{ errrorMessageVehicle(index, 'year')}}</b-form-invalid-feedback>
+                </b-form-group>
+              </b-col>
+              <b-col cols="12" md="6">
+                <b-form-group
+                  label="Make"
+                >
+                  <b-form-input 
+                    v-model="vehicle.make.$model"
+                    :state="validateVehicleState(index, 'make')"
+                  />
+                  <b-form-invalid-feedback>{{ errrorMessageVehicle(index, 'make')}}</b-form-invalid-feedback>
+                </b-form-group>
+              </b-col>
+            </b-row>
 
-                    <div
-                      class="text-danger"
-                      v-show="!validations.trailersData[index].year.is_valid"
-                    >{{ validations.trailersData[index].year.text }}</div>
-                  </div>
-                </div>
+            <b-row>
+              <b-col cols="12" md="6">
+                <b-form-group
+                  label="Model"
+                >
+                  <b-form-input 
+                    v-model="vehicle.model.$model"
+                    :state="validateVehicleState(index, 'model')"
+                  />
+                  <b-form-invalid-feedback>{{ errrorMessageVehicle(index, 'model')}}</b-form-invalid-feedback>
+                </b-form-group>
+              </b-col>
+              <b-col cols="12" md="6">
+                <b-form-group
+                  label="Garaging Zip"
+                >
+                  <b-form-input 
+                    v-model="vehicle.zipCode.$model"
+                    :state="validateVehicleState(index, 'zipCode')"
+                  />
+                  <b-form-invalid-feedback>{{ errrorMessageVehicle(index, 'zipCode')}}</b-form-invalid-feedback>
+                </b-form-group>
+              </b-col>
+            </b-row>
 
-                <div class="col-lg-5 col-sm-12">
-                  <div class="form-group">
-                    <input
-                      v-model="trailersData[index].make"
-                      type="text"
-                      class="lt-input"
-                      placeholder="Make"
-                      :class="{ 'has-error': !validations.trailersData[index].make.is_valid }"
-                      @change="validateTrailerField('make', index)"
-                    >
-
-                    <div
-                      class="text-danger"
-                      v-show="!validations.trailersData[index].make.is_valid"
-                    >{{ validations.trailersData[index].make.text }}</div>
-                  </div>
-                </div>
-
-                <div class="col-lg-5 col-sm-12">
-                  <div class="form-group">
-                    <input
-                      v-model="trailersData[index].model"
-                      type="text"
-                      class="lt-input"
-                      placeholder="Model"
-                      :class="{ 'has-error': !validations.trailersData[index].model.is_valid }"
-                      @change="validateTrailerField('model', index)"
-                    >
-
-                    <div
-                      class="text-danger"
-                      v-show="!validations.trailersData[index].model.is_valid"
-                    >{{ validations.trailersData[index].model.text }}</div>
-                  </div>
-                </div>
-
-                <div class="form-group col-lg-10 col-sm-12 border-top pt-4">
-                  <select 
-                   v-model="trailersData[index].trailerType"
-                   class="lt-input" 
-                   @change="validateTrailerField('trailerType', index)" >
-                    <option value disabled>Select Trailer type</option>
-                    <option v-for="item in trailerTypes" :key="item" :value="item">{{ item }}</option>
-                  </select>
-                  <div
-                    class="text-danger"
-                    v-show="!validations.trailersData[index].trailerType.is_valid"
-                  >{{ validations.trailersData[index].trailerType.text }}</div>
-                </div>
-
-                <div class="form-group col-lg-5 col-sm-8">
-                  <input
-                    v-model="trailersData[index].zipCode"
-                    type="text"
-                    class="lt-input"
-                    minlength="5"
-                    placeholder="Garaging Zip"
-                    :class="{ 'has-error': !validations.trailersData[index].zipCode.is_valid }"
-                    @change="validateTrailerField('zipCode', index)"
+            <b-row>
+              <b-col cols="12" md="6">
+                <b-form-group
+                  label="Select Vehicle Type"
+                >
+                  <b-form-select 
+                    v-model="vehicle.vehicleType.$model"
+                    :state="validateVehicleState(index, 'vehicleType')"
+                    :options="otherVehicleType">
+                  </b-form-select>
+                  <b-form-invalid-feedback>{{ errrorMessageVehicle(index, 'vehicleType')}}</b-form-invalid-feedback>
+                </b-form-group>
+              </b-col>
+            </b-row>
+            <b-form-row class="mb-2">
+              <b-col cols="12" md="6">
+                <b-form-group
+                  class="mb-0"
+                  label="Gross Vehicle Weight"
+                >
+                  <b-form-input 
+                    type="number"
+                    v-model="vehicle.grossVehicleWeight.$model"
+                    :state="validateVehicleState(index, 'grossVehicleWeight')"
+                  ></b-form-input>
+                  <b-form-invalid-feedback>{{ errrorMessageVehicle(index, 'grossVehicleWeight')}}</b-form-invalid-feedback>
+                </b-form-group>
+              </b-col>
+              <b-col cols="12" md="6">
+                <b-form-group
+                  class="mb-0"
+                  label="Total # of Rear Axles"
+                >
+                  <b-form-input 
+                    type="number"
+                    v-model="vehicle.totalRearAxles.$model"
+                    :state="validateVehicleState(index, 'totalRearAxles')"
+                  ></b-form-input>
+                  <b-form-invalid-feedback>{{ errrorMessageVehicle(index, 'totalRearAxles')}}</b-form-invalid-feedback>
+                </b-form-group>
+              </b-col>
+            </b-form-row>
+            <b-form-row class="mb-2">
+              <b-col cols="12" md="6">
+                <b-form-group
+                  class="mb-0"
+                  label="Principal Garaging Location (City & State)"
+                >
+                  <b-form-input 
+                    v-model="vehicle.garagingLocation.$model"
+                    :state="validateVehicleState(index, 'garagingLocation')"
+                  ></b-form-input>
+                  <b-form-invalid-feedback>{{ errrorMessageVehicle(index, 'garagingLocation')}}</b-form-invalid-feedback>
+                </b-form-group>
+              </b-col>
+              <b-col cols="12" md="6">
+                <b-form-group
+                  class="mb-0"
+                  label="Annual Mileage Per Vehicle"
+                >
+                  <b-form-input 
+                    type="number"
+                    v-model="vehicle.annualMileagePerVehicle.$model"
+                    :state="validateVehicleState(index, 'annualMileagePerVehicle')"
+                  ></b-form-input>
+                  <b-form-invalid-feedback>{{ errrorMessageVehicle(index, 'annualMileagePerVehicle')}}</b-form-invalid-feedback>
+                </b-form-group>
+              </b-col>
+            </b-form-row>
+            <b-form-row class="mb-2">
+              <b-col cols="12">
+                  <b-form-group
+                    class="mb-0"
+                    label="(A) Anti-lock Brakes? (B) Air Bags?"
                   >
+                    <b-form-select 
+                      v-model="vehicle.antilockBrakersOrAirBags.$model" 
+                      :state="validateVehicleState(index, 'antilockBrakersOrAirBags')" 
+                      :options="antilockBrakersOrAirBagsptions">
+                    </b-form-select>
+                    <b-form-invalid-feedback>{{ errrorMessageVehicle(index, 'antilockBrakersOrAirBags')}}</b-form-invalid-feedback>
+                </b-form-group>
+              </b-col>
+            </b-form-row>
 
-                  <div
-                    class="text-danger"
-                    v-show="!validations.trailersData[index].zipCode.is_valid"
-                  >{{ validations.trailersData[index].zipCode.text }}</div>
+            <b-row class="align-items-center">
+              <b-col cols="12" md="4">
+                <b-form-group
+                  label="Radius of Travel (in miles)"
+                  :description="radiusOfTravel(vehicle.radiusOfTravelVehicle.$model)"
+                >
+                  <b-form-input 
+                    type="range"
+                    min="0"
+                    :max="550"
+                    step="50"
+                    v-model="vehicle.radiusOfTravelVehicle.$model"
+                    :state="validateVehicleState(index, 'radiusOfTravelVehicle')"
+                  />
+                  <b-form-invalid-feedback>{{ errrorMessageVehicle(index, 'radiusOfTravelVehicle')}}</b-form-invalid-feedback>
+                </b-form-group>
+              </b-col>
+              <b-col cols="12" md="8">
+                <div class="question-block">
+                  <span class="question">Are you looking for Comprehesive & Collision Coverage?</span>
+                  <toggle-button 
+                    :labels="{checked: 'Yes', unchecked: 'No'}" 
+                    :width="70" 
+                    :height="30" 
+                    :sync="true"
+                    class="mb-0"
+                    v-model="form.Q60"
+                    :font-size="15"
+                  />
                 </div>
+              </b-col>
+            </b-row>
 
-                <div class="col pt-3 form-group">
-                  <div>
-                    <label class="d-block">
-                      <span class="label">Radius of Travel (in miles)</span>
+            <b-row v-if="vehicle.coverage">
+              <b-col cols="12" md="6">
+                <b-form-group
+                  label="Current value of the vehicle or trailer"
+                >
+                  <b-form-input 
+                    type="number"
+                    v-model="vehicle.currentValue.$model"
+                    :state="validateVehicleState(index, 'currentValue')"
+                  />
+                  <b-form-invalid-feedback>{{ errrorMessageVehicle(index, 'currentValue')}}</b-form-invalid-feedback>
+                </b-form-group>
+              </b-col>
+              <b-col cols="12" md="6">
+                <b-form-group
+                  label="Deductible"
+                >
+                  <b-form-select 
+                    v-model="vehicle.deductible.$model"
+                    :state="validateVehicleState(index, 'deductible')"
+                    :options="deductibles">
+                  </b-form-select>
+                  <b-form-invalid-feedback>{{ errrorMessageVehicle(index, 'deductible')}}</b-form-invalid-feedback>
+                </b-form-group>
+              </b-col>
+            </b-row>
+          </template>
 
-                      <input
-                        v-model="trailersData[index].radiusOfTravelTrailer"
-                        type="range"
-                        min="0"
-                        :max="550"
-                        step="50"
-                        class="lt-input-range lt-input"
-                        placeholder="Radius of Travel*"
-                        @change="validateTrailerField('radiusOfTravelTrailer', index)"
-                      >
-                    </label>
-                  </div>
-                    <div class="text-center">
-                      <strong>{{ trailersData[index].radiusOfTravelTrailer > 500 ? "500+":trailersData[index].radiusOfTravelTrailer}}</strong>
-                  </div>
-                  <div
-                    class="text-danger"
-                    v-show="!validations.trailersData[index].radiusOfTravelTrailer.is_valid"
-                  >{{ validations.trailersData[index].radiusOfTravelTrailer.text }}</div>
-                </div>
-
-              <div class="form-group">
-                <div
-                  class="col-lg-6 col-sm-12 font-weight-bold"
-                >Are you looking for Comprehesive & Collision Coverage?</div>
-
-                <div class="col-lg-6 col-sm-12 mt-sm-1">
-                  <b-form-group>
-                    <b-form-radio-group
-                      v-model="trailersData[index].coverage"
-                      :options="options"
-                      button-variant="outline-primary"
-                      buttons
-                    ></b-form-radio-group>
-                  </b-form-group>
-                </div>
-                <!-- </div> -->
-              </div>
-              <template v-if="trailersData[index].coverage">
-                <div class="form-group mb-3">
-                  <div class="col-lg-6 col-sm-12 font-weight-bold">Current value of the vehicle or trailer</div>
-
-                  <div class="col-lg-6 col-md-6 col-sm-12 text-right">
-                    <input
-                      :value="trailersData[index].currentValue"
-                      type="text"
-                      class="lt-input"
-                      placeholder="$"
-                      @change="changeCurrentValue(trailersData[index],$event)"
-                    >
-
-                    <!-- <div class="text-danger" v-show="!validations.trailersData[index].radiusOfTravel.is_valid">{{ validations.trailersData[index].radiusOfTravel.text }}</div>-->
-                  </div>
-                </div>
-
-                <div class="form-group mb-3">
-                  <div class="col-lg-6 col-sm-12 font-weight-bold">Deductible</div>
-
-                  <div class="col-lg-6 col-md-6 col-sm-12 text-right">
-                    <select v-model="trailersData[index].deductible" class="lt-input" required>
-                      <option disabled value>Deductible*</option>
-                      <option
-                        v-for="item in deductibles"
-                        :key="item.value"
-                        :value="item.value"
-                      >{{ item.name }}</option>
-                    </select>
-
-                    <div
-                      class="text-danger"
-                      v-show="!validations.trailersData[index].deductible.is_valid"
-                    >{{ validations.trailersData[index].deductible.text }}</div>
-                  </div>
-                </div>
-              </template>
+          <template
+            v-for="(trailer, index) in $v.form.trailers.$each.$iter"
+          >
+            <div class="d-flex justify-content-between align-items-center">
+              <b class="mb-0">Trailer #{{ Number(index) + 1 }}</b>
+              <button
+                type="button"
+                class="lt-button lift mx-2"
+                @click="removeTrailersData(index)"
+                title="Remove Trailer"
+              >
+                <font-awesome-icon class="fontawesome minus" icon="minus" />
+              </button>
             </div>
+
+            <b-row>
+              <b-col cols="12">
+                <b-form-group
+                  label="VIN"
+                >
+                  <b-input-group>
+                    <b-form-input 
+                      v-model="trailer.VIN.$model"
+                      :state="validateTrailerState(index, 'VIN')"
+                      :aria-describedby="`VIN${index}`"
+                    />
+                    <b-input-group-append>
+                      <b-button :disabled="loading" type="button" @click="getVinData('vehicle', index)" variant="primary">
+                        <font-awesome-icon class="fontawesome" icon="search"  />
+                      </b-button>
+                    </b-input-group-append>
+                    <b-form-invalid-feedback :id="`VIN${index}`">{{ errrorMessageTrailer(index, 'VIN')}}</b-form-invalid-feedback>
+                  </b-input-group>
+                </b-form-group>
+              </b-col>
+            </b-row>
+
+            <b-row>
+              <b-col cols="12" md="6">
+                <b-form-group
+                  label="Year"
+                >
+                  <b-form-input 
+                    type="number"
+                    v-model="trailer.year.$model"
+                    :state="validateTrailerState(index, 'year')"
+                  />
+                  <b-form-invalid-feedback>{{ errrorMessageTrailer(index, 'year')}}</b-form-invalid-feedback>
+                </b-form-group>
+              </b-col>
+              <b-col cols="12" md="6">
+                <b-form-group
+                  label="Make"
+                >
+                  <b-form-input 
+                    v-model="trailer.make.$model"
+                    :state="validateTrailerState(index, 'make')"
+                  />
+                  <b-form-invalid-feedback>{{ errrorMessageTrailer(index, 'make')}}</b-form-invalid-feedback>
+                </b-form-group>
+              </b-col>
+            </b-row>
+
+            <b-row>
+              <b-col cols="12" md="6">
+                <b-form-group
+                  label="Model"
+                >
+                  <b-form-input 
+                    v-model="trailer.model.$model"
+                    :state="validateTrailerState(index, 'model')"
+                  />
+                  <b-form-invalid-feedback>{{ errrorMessageTrailer(index, 'model')}}</b-form-invalid-feedback>
+                </b-form-group>
+              </b-col>
+              <b-col cols="12" md="6">
+                <b-form-group
+                  label="Garaging Zip"
+                >
+                  <b-form-input 
+                    v-model="trailer.zipCode.$model"
+                    :state="validateTrailerState(index, 'zipCode')"
+                  />
+                  <b-form-invalid-feedback>{{ errrorMessageTrailer(index, 'zipCode')}}</b-form-invalid-feedback>
+                </b-form-group>
+              </b-col>
+            </b-row>
+
+            <b-row>
+              <b-col cols="12" md="6">
+                <b-form-group
+                  label="Select Trailer Type"
+                >
+                  <b-form-select 
+                    v-model="trailer.vehicleType.$model"
+                    :state="validateTrailerState(index, 'vehicleType')"
+                    :options="otherVehicleType">
+                  </b-form-select>
+                  <b-form-invalid-feedback>{{ errrorMessageTrailer(index, 'vehicleType')}}</b-form-invalid-feedback>
+                </b-form-group>
+              </b-col>
+            </b-row>
+            <b-form-row class="mb-2">
+              <b-col cols="12" md="6">
+                <b-form-group
+                  class="mb-0"
+                  label="Gross Trailer Weight"
+                >
+                  <b-form-input 
+                    type="number"
+                    v-model="trailer.grossVehicleWeight.$model"
+                    :state="validateTrailerState(index, 'grossVehicleWeight')"
+                  ></b-form-input>
+                  <b-form-invalid-feedback>{{ errrorMessageTrailer(index, 'grossVehicleWeight')}}</b-form-invalid-feedback>
+                </b-form-group>
+              </b-col>
+              <b-col cols="12" md="6">
+                <b-form-group
+                  class="mb-0"
+                  label="Total # of Rear Axles"
+                >
+                  <b-form-input 
+                    type="number"
+                    v-model="trailer.totalRearAxles.$model"
+                    :state="validateTrailerState(index, 'totalRearAxles')"
+                  ></b-form-input>
+                  <b-form-invalid-feedback>{{ errrorMessageTrailer(index, 'totalRearAxles')}}</b-form-invalid-feedback>
+                </b-form-group>
+              </b-col>
+            </b-form-row>
+            <b-form-row class="mb-2">
+              <b-col cols="12" md="6">
+                <b-form-group
+                  class="mb-0"
+                  label="Principal Garaging Location (City & State)"
+                >
+                  <b-form-input 
+                    v-model="trailer.garagingLocation.$model"
+                    :state="validateTrailerState(index, 'garagingLocation')"
+                  ></b-form-input>
+                  <b-form-invalid-feedback>{{ errrorMessageTrailer(index, 'garagingLocation')}}</b-form-invalid-feedback>
+                </b-form-group>
+              </b-col>
+              <b-col cols="12" md="6">
+                <b-form-group
+                  class="mb-0"
+                  label="Annual Mileage Per Trailer"
+                >
+                  <b-form-input 
+                    type="number"
+                    v-model="trailer.annualMileagePerVehicle.$model"
+                    :state="validateTrailerState(index, 'annualMileagePerVehicle')"
+                  ></b-form-input>
+                  <b-form-invalid-feedback>{{ errrorMessageTrailer(index, 'annualMileagePerVehicle')}}</b-form-invalid-feedback>
+                </b-form-group>
+              </b-col>
+            </b-form-row>
+            <b-form-row class="mb-2">
+              <b-col cols="12">
+                  <b-form-group
+                    class="mb-0"
+                    label="(A) Anti-lock Brakes? (B) Air Bags?"
+                  >
+                    <b-form-select 
+                      v-model="trailer.antilockBrakersOrAirBags.$model" 
+                      :state="validateTrailerState(index, 'antilockBrakersOrAirBags')" 
+                      :options="antilockBrakersOrAirBagsptions">
+                    </b-form-select>
+                    <b-form-invalid-feedback>{{ errrorMessageTrailer(index, 'antilockBrakersOrAirBags')}}</b-form-invalid-feedback>
+                </b-form-group>
+              </b-col>
+            </b-form-row>
+
+            <b-row class="align-items-center">
+              <b-col cols="12" md="4">
+                <b-form-group
+                  label="Radius of Travel (in miles)"
+                  :description="radiusOfTravel(trailer.radiusOfTravelVehicle.$model)"
+                >
+                  <b-form-input 
+                    type="range"
+                    min="0"
+                    :max="550"
+                    step="50"
+                    v-model="trailer.radiusOfTravelVehicle.$model"
+                    :state="validateTrailerState(index, 'radiusOfTravelVehicle')"
+                  />
+                  <b-form-invalid-feedback>{{ errrorMessageTrailer(index, 'radiusOfTravelVehicle')}}</b-form-invalid-feedback>
+                </b-form-group>
+              </b-col>
+              <b-col cols="12" md="8">
+                <div class="question-block">
+                  <span class="question">Are you looking for Comprehesive & Collision Coverage?</span>
+                  <toggle-button 
+                    :labels="{checked: 'Yes', unchecked: 'No'}" 
+                    :width="70" 
+                    :height="30" 
+                    :sync="true"
+                    class="mb-0"
+                    v-model="form.Q60"
+                    :font-size="15"
+                  />
+                </div>
+              </b-col>
+            </b-row>
+
+            <b-row v-if="trailer.coverage">
+              <b-col cols="12" md="6">
+                <b-form-group
+                  label="Current value of the vehicle or trailer"
+                >
+                  <b-form-input 
+                    type="number"
+                    v-model="trailer.currentValue.$model"
+                    :state="validateTrailerState(index, 'currentValue')"
+                  />
+                  <b-form-invalid-feedback>{{ errrorMessageTrailer(index, 'currentValue')}}</b-form-invalid-feedback>
+                </b-form-group>
+              </b-col>
+              <b-col cols="12" md="6">
+                <b-form-group
+                  label="Deductible"
+                >
+                  <b-form-select 
+                    v-model="trailer.deductible.$model"
+                    :state="validateTrailerState(index, 'deductible')"
+                    :options="deductibles">
+                  </b-form-select>
+                  <b-form-invalid-feedback>{{ errrorMessageTrailer(index, 'deductible')}}</b-form-invalid-feedback>
+                </b-form-group>
+              </b-col>
+            </b-row>
           </template>
 
           <div v-if="error" class="alert alert-danger" role="alert">{{ error }}</div>
@@ -512,11 +480,6 @@
           </div>
           <div class="row mb-4">
             <div class=" col">
-              <!-- <b-form-select v-model="selected" @change="onChange()"" :options="options"></b-form-select> -->
-            <!--   <select @click="onChange($event)" class="lt-input">
-                <option value>Vehicle or Trailer</option>
-                <option v-for="item in type" :key="item" :value="item">{{ item }}</option>
-              </select> -->
                <b-dropdown
                 block 
                 split
@@ -527,7 +490,7 @@
                 :size="dropdownSize"
                 menu-class="w-100"
               >
-                <b-dropdown-item-button v-for="item in type" :key="item" @click="onChange(item)">{{item}}</b-dropdown-item-button>
+                <b-dropdown-item-button v-for="item in type" :key="item" @click="addMoreItem(item)">{{item}}</b-dropdown-item-button>
               </b-dropdown>
             </div>
             <div class=" alert alert-danger d-flex col-12"
@@ -576,26 +539,15 @@
 </template>
 
 <script>
-import {
-  validateField,
-  validateForm,
-  required,
-  minLength
-} from "../validators.js";
-import uuidv4 from "uuid/v4";
 import { API } from "../api.js";
-import ModalLogin from "./ModalLogin.vue";
 import { mapState } from "vuex";
-import axios from "axios";
-import Vue from "vue";
 import { isMobile } from "mobile-device-detect";
-
+import { validationMixin } from "vuelidate";
+import { required, minLength, maxLength, minValue, maxValue } from "vuelidate/lib/validators";
 
 export default {
   name: "AccountInfoVehiclesAndTrailers",
-  components: {
-    modelLogin: ModalLogin
-  },
+  mixins: [validationMixin],
 
   props: {
     prevForm: {
@@ -613,20 +565,17 @@ export default {
   },
   data() {
     return {
-      userData:"",
-      vehicle: false,
       noFormfilled:false,
-      trailer: false,
       msg: false,
       hints: {
         VIN:
           "Please enter the full VIN for vehicles. Don’t have it? Feel welcome to press save and come back or call us at 646-933-0419”"
       },
       deductibles: [
-        { name: "$ 500", value: "500" },
-        { name: "$ 1000", value: "1000" },
-        { name: "$ 2500", value: "2500" },
-        { name: "$ 5000", value: "5000" }
+        { text: "$ 500", value: "500" },
+        { text: "$ 1000", value: "1000" },
+        { text: "$ 2500", value: "2500" },
+        { text: "$ 5000", value: "5000" }
       ],
       otherVehicleType: [
         "Bus",
@@ -663,47 +612,151 @@ export default {
         "Utility Trailer"
       ],
       radiuses: [50, 100, 200, 300, 500, "500+"],
-      final_uuid: "",
       uuid: "",
-      showmodel: false,
-      save: true,
-      formData: {
-        vehiclesTrailers: []
+      form: {
+        vehicles: [],
+        trailers: []
       },
-      vehiclesData: [],
-      trailersData: [],
-      validations: {
-        vehiclesData: {},
-        trailersData: {}
-      },
-      oneVehicleTrailer: {
-        is_valid: true,
-        text: ""
-      },
-      website: {
-        is_valid: true,
-        text: ""
+      defaultData: {
+        VIN: "",
+        year: "",
+        make: "",
+        vehicleType: "",
+        vehicleImage: "",
+        model: "",
+        zipCode: "",
+        grossVehicleWeight: "",
+        totalRearAxles: "",
+        garagingLocation: "",
+        annualMileagePerVehicle: "",
+        antilockBrakersOrAirBags: "",
+        radiusOfTravelVehicle: 50,
+        coverage: false,
+        currentValue: "",
+        deductible: ""
       },
       loading: false,
       error: null,
-      vehicleOrTrailer: "",
-      formErrors: [],
       type: ["Vehicle", "Trailer"],
-      options: [
-        {text: "Yes", value: true},
-        {text: "No", value: false}
-      ]
+      antilockBrakersOrAirBagsptions: [
+        { value: '', text: 'Please select an option' },
+        { value: 'A', text: 'Anti-lock Brakes' },
+        { value: 'B', text: 'Air Bags' },
+        { value: 'Both', text: 'Both' },
+      ],
     };
   },
 
-  mounted() {
-    if (localStorage.getItem("token")) {
-      this.save = false;
-        
-    } else {
-      this.save = true;
+  validations() {
+    return {
+      form: {
+        vehicles: {
+          required,
+
+          $each: {
+            VIN: {
+              required
+            },
+            year: {
+              required
+            },
+            make: {
+              required
+            },
+            model: {
+              required
+            },
+            vehicleType: {
+              required
+            },
+            zipCode: {
+              required
+            },
+            grossVehicleWeight: {
+              required
+            },
+            totalRearAxles: {
+              required
+            },
+            garagingLocation: {
+              required
+            },
+            annualMileagePerVehicle: {
+              required
+            },
+            antilockBrakersOrAirBags: {
+              required
+            },
+            radiusOfTravelVehicle: {
+              required
+            },
+            coverage: {
+              required
+            },
+            currentValue: {
+              required
+            },
+            deductible: {
+              required
+            },
+          }
+        },
+        trailers: {
+          required,
+
+          $each: {
+            VIN: {
+              required
+            },
+            year: {
+              required
+            },
+            make: {
+              required
+            },
+            model: {
+              required
+            },
+            vehicleType: {
+              required
+            },
+            zipCode: {
+              required
+            },
+            grossVehicleWeight: {
+              required
+            },
+            totalRearAxles: {
+              required
+            },
+            garagingLocation: {
+              required
+            },
+            annualMileagePerVehicle: {
+              required
+            },
+            antilockBrakersOrAirBags: {
+              required
+            },
+            radiusOfTravelVehicle: {
+              required
+            },
+            coverage: {
+              required
+            },
+            currentValue: {
+              required
+            },
+            deductible: {
+              required
+            },
+          }
+        }
+      }
     }
-    
+  },
+
+  mounted() {
     this.msg = isMobile ? true : false;
   },
 
@@ -711,54 +764,12 @@ export default {
     showVINFab () {
       return localStorage.getItem('imageVIN') && this.msg
     },
-    radiusOfTravelVehicle: {
-      get() {
-        
-        let index = this.radiuses.findIndex(
-          radius => radius == this.vehiclesData.radiusOfTravelVehicle
-          
-        );
-        
-        return index > -1 ? index : 1;
-      },
-      set(index) {
-        
-        this.vehiclesData.radiusOfTravelVehicle = this.radiuses[index];
-        
-      }
-    },
-    radiusOfTravelTrailer: {
-      get() {
-        let index = this.radiuses.findIndex(
-          radius => radius == this.trailersData.radiusOfTravelTrailer
-        );
-
-        return index > -1 ? index : 1;
-      },
-      set(index) {
-        this.trailersData.radiusOfTravelTrailer = this.radiuses[index];
-      }
-    },
-
+    
     dropdownSize () {
       return  window.innerWidth <= 768 ? 'md' : 'lg'
     }
   },
   
-  watch: {
-    "vehiclesData.coverage"(val) {
-      if (!val) {
-        this.vehiclesData.currentValue = "";
-        this.vehiclesData.deductible = "";
-      }
-    },
-    "trailersData.coverage"(val) {
-      if (!val) {
-        this.trailersData.currentValue = "";
-        this.trailersData.deductible = "";
-      }
-    }
-  },
   created() {
     this.$emit("update-progress", this.progress);
     this.loadCompany();
@@ -773,29 +784,37 @@ export default {
         }
       }
     },
-    sizeOfObject(obj) {
-      var size = 0, key;
-      for (key in obj) {
-          if (obj.hasOwnProperty(key)) size++;
-      }
-      return size;
+    radiusOfTravel(val) {
+      return val > 500 ? '500+': val.toString()
     },
-    validateTrailerField(fieldName,index){
-       
-      if (this.trailersData[index][fieldName].trim() == '') {
-        this.validations.trailersData[index][fieldName].is_valid = false;
-        this.validations.trailersData[index][fieldName].text = 'Please enter   ' + fieldName + '!';
-      } else {
-        this.validations.trailersData[index][fieldName].is_valid = true;
-      }
+    validateVehicleState(index, name) {
+      const { $dirty, $error } = this.$v.form.vehicles.$each.$iter[index][name];
+      return $dirty ? !$error : null;
     },
-    validateFieldCustom(fieldName, index){
-        if (this.vehiclesData[index][fieldName].trim() == '') {
-        this.validations.vehiclesData[index][fieldName].is_valid = false;
-        this.validations.vehiclesData[index][fieldName].text = 'Please enter   ' + fieldName + '!';
-      } else {
-        this.validations.vehiclesData[index][fieldName].is_valid = true;
-      }
+    validateTrailerState(index, name) {
+      const { $dirty, $error } = this.$v.form.trailers.$each.$iter[index][name];
+      return $dirty ? !$error : null;
+    },
+    errorMessage (required, minLength, maxLength) {
+      let msg = ''
+      if (required != undefined && !required) {
+        msg = 'This field is required.'
+      } 
+
+      if ((minLength != undefined && !minLength) || (maxLength != undefined && !maxLength)) {
+        msg = 'The length must be correct'
+      } 
+      return msg
+    },
+    errrorMessageVehicle(index, name) {
+      const { required, minLength, maxLength } = this.$v.form.vehicles.$each.$iter[index][name]
+
+      return this.errorMessage(required, minLength, maxLength)
+    },
+    errrorMessageTrailer(index, name) {
+      const { required, minLength, maxLength } = this.$v.form.trailers.$each.$iter[index][name]
+
+      return this.errorMessage(required, minLength, maxLength)
     },
     changeCurrentValue(item, $event) {
       if (event.target.value.indexOf("$") == -1) {
@@ -808,151 +827,11 @@ export default {
       this.vehiclesData[index].vehicleType = "";
       // this.vehiclesData[index].vehicleImage = this.vehiclesData[index].vehicleImage;
     },
-    onSelectDropDown(index) {
-      // this.vehiclesData[index].vehicleImage = false;
-      // this.vehiclesData[index].vehicleType = this.otherVehicleType[index];
-    },
-    addVehicleDataValidations(counts) {
-      let vehicleDataValidationsLength = this.sizeOfObject(this.validations.vehiclesData);
-      for (let index = 0; index < counts; index++) {
-        this.$set(this.validations.vehiclesData, vehicleDataValidationsLength + index, {
-          VIN: {
-            is_valid: true,
-            text: ""
-          },
-          make: {
-            is_valid: true,
-            text: ""
-          },
-          year: {
-            is_valid: true,
-            text: ""
-          },
-          model: {
-            is_valid: true,
-            text: ""
-          },
-          // vehicleImage: {
-          //   is_valid: true,
-          //   text: ""
-          // },
-          vehicleType: {
-            is_valid: true,
-            text: ""
-          },
-          zipCode: {
-            is_valid: true,
-            text: ""
-          },
-          radiusOfTravelVehicle: {
-            is_valid: true,
-            text: ""
-          },
-          coverage: {
-            is_valid: true,
-            text: ""
-          },
-          currentValue: {
-            is_valid: true,
-            text: ""
-          },
-          deductible: {
-            is_valid: true,
-            text: ""
-          }
-        });
-      }
-    },
-    addTrailersDataValidations(counts) {
-      //
-      let trailersDataValidationsLength = this.sizeOfObject(this.validations.trailersData);
-      for (let index = 0; index < counts; index++) {
-        this.$set(this.validations.trailersData,trailersDataValidationsLength + index, {
-          VIN: {
-            is_valid: true,
-            text: ""
-          },
-          make: {
-            is_valid: true,
-            text: ""
-          },
-          year: {
-            is_valid: true,
-            text: ""
-          },
-          model: {
-            is_valid: true,
-            text: ""
-          },
-          trailerType: {
-            is_valid: true,
-            text: ""
-          },
-          zipCode: {
-            is_valid: true,
-            text: ""
-          },
-          radiusOfTravelTrailer: {
-            is_valid: true,
-            text: ""
-          },
-          coverage: {
-            is_valid: true,
-            text: ""
-          },
-          currentValue: {
-            is_valid: true,
-            text: ""
-          },
-          deductible: {
-            is_valid: true,
-            text: ""
-          }
-        });
-      }
-    },
-    addVehicleData(data) {
-     
-      if (data == undefined || data.VIN == undefined) {
-        
-        this.vehiclesData.push({
-          VIN: "",
-          year: "",
-          make: "",
-          vehicleType: "",
-          vehicleImage: "",
-          model: "",
-          zipCode: "",
-          radiusOfTravelVehicle: 50,
-          coverage: false,
-          currentValue: "",
-          deductible: ""
-        });
-        this.addVehicleDataValidations(1);
-      } else {
-        this.vehiclesData.push(data);
-      }
+    addVehicleData() {
+      this.form.vehicles.push(Object.assign({}, this.defaultData));
     },
     addTrailerData(data) {
-     
-      if (data == undefined || data.VIN == undefined) {
-       
-        this.trailersData.push({
-          VIN: "",
-          year: "",
-          make: "",
-          trailerType: "",
-          model: "",
-          zipCode: "",
-          radiusOfTravelTrailer: 50,
-          coverage: false,
-          currentValue: "",
-          deductible: ""
-        });
-        this.addTrailersDataValidations(1);
-      } else {
-        this.trailersData.push(data);
-      }
+      this.form.trailers.push(Object.assign({}, this.defaultData));
     },
     removeVehiclesData(key) {
       this.$swal({
@@ -966,182 +845,51 @@ export default {
         confirmButtonText: 'Yes, delete it!'
       }).then((willDelete) => {
         if (willDelete) {
-          this.vehiclesData.splice(key, 1);
-          Vue.delete(this.validations.vehiclesData,key)
+          this.form.vehicles.splice(key, 1);
         } 
       });
     },
     removeTrailersData(key) {
-      this.trailersData.splice(key, 1);
-      // this.validations.trailersData.splice(key, 1);
-      Vue.delete( this.validations.trailersData,key)
-    },
-    validateNewVehicleData() {
-      let validNewVehicleForm = true;
-
-      for (var index in this.vehiclesData) {
-        if (this.vehiclesData.hasOwnProperty(index)) {
-          if (this.vehiclesData[index].VIN.trim() == "") {
-            validNewVehicleForm = false;
-            this.validations.vehiclesData[index].VIN.is_valid = false;
-            this.validations.vehiclesData[index].VIN.text = "Please enter VIN!";
-          } else {
-            this.validations.vehiclesData[index].VIN.is_valid = true;
-            this.validations.vehiclesData[index].VIN.text = "";
-          }
-
-          if (this.vehiclesData[index].year.trim() == "") {
-            validNewVehicleForm = false;
-            this.validations.vehiclesData[index].year.is_valid = false;
-            this.validations.vehiclesData[index].year.text =
-              "Please enter Year of Vehicle!";
-          } else {
-            this.validations.vehiclesData[index].year.is_valid = true;
-            this.validations.vehiclesData[index].year.text = "";
-          }
-
-          if (this.vehiclesData[index].make.trim() == "") {
-            validNewVehicleForm = false;
-            this.validations.vehiclesData[index].make.is_valid = false;
-            this.validations.vehiclesData[index].make.text =
-              "Please enter Make of Vehicle!";
-          } else {
-            this.validations.vehiclesData[index].make.is_valid = true;
-            this.validations.vehiclesData[index].make.text = "";
-          }
-
-          if (this.vehiclesData[index].model.trim() == "") {
-            validNewVehicleForm = false;
-            this.validations.vehiclesData[index].model.is_valid = false;
-            this.validations.vehiclesData[index].model.text =
-              "Please enter Model of Vehicle!";
-          } else {
-            this.validations.vehiclesData[index].model.is_valid = true;
-            this.validations.vehiclesData[index].model.text = "";
-          }
-
-          if (this.vehiclesData[index].zipCode.trim() == "") {
-            
-            validNewVehicleForm = false;
-            this.validations.vehiclesData[index].zipCode.is_valid = false;
-            this.validations.vehiclesData[index].zipCode.text =
-              "Please enter Garaging Zip Code!";
-          } else {
-            this.validations.vehiclesData[index].zipCode.is_valid = true;
-            this.validations.vehiclesData[index].zipCode.text = "";
-          }
-          if (!this.vehiclesData[index].radiusOfTravelVehicle) {
-            
-            validNewVehicleForm = false;
-            this.validations.vehiclesData[index].radiusOfTravelVehicle.is_valid = false;
-            this.validations.vehiclesData[index].radiusOfTravelVehicle.text =
-              "Please enter radiusOfTravelVehicle!";
-          } else {
-            
-            this.validations.vehiclesData[index].radiusOfTravelVehicle.is_valid = true;
-            this.validations.vehiclesData[index].radiusOfTravelVehicle.text = "";
-          }
-        }
-      }
-      return validNewVehicleForm;
-    },
-    validateNewTrailerData() {
-      let validNewTrailerForm = true;
-
-      for (var index in this.trailersData) {
-        if (this.trailersData.hasOwnProperty(index)) {
-          if (this.trailersData[index].VIN.trim() == "") {
-            validNewTrailerForm = false;
-            this.validations.trailersData[index].VIN.is_valid = false;
-            this.validations.trailersData[index].VIN.text = "Please enter VIN!";
-          } else {
-            this.validations.trailersData[index].VIN.is_valid = true;
-            this.validations.trailersData[index].VIN.text = "";
-          }
-
-          if (this.trailersData[index].year.trim() == "") {
-            validNewTrailerForm = false;
-            this.validations.trailersData[index].year.is_valid = false;
-            this.validations.trailersData[index].year.text =
-              "Please enter Year of Trailer!";
-          } else {
-            this.validations.trailersData[index].year.is_valid = true;
-            this.validations.trailersData[index].year.text = "";
-          }
-
-          if (this.trailersData[index].make.trim() == "") {
-            validNewTrailerForm = false;
-            this.validations.trailersData[index].make.is_valid = false;
-            this.validations.trailersData[index].make.text =
-              "Please enter Make of Trailer!";
-          } else {
-            this.validations.trailersData[index].make.is_valid = true;
-            this.validations.trailersData[index].make.text = "";
-          }
-
-          if (this.trailersData[index].model.trim() == "") {
-            validNewTrailerForm = false;
-            this.validations.trailersData[index].model.is_valid = false;
-            this.validations.trailersData[index].model.text =
-              "Please enter Model of Trialer!";
-          } else {
-            this.validations.trailersData[index].model.is_valid = true;
-            this.validations.trailersData[index].model.text = "";
-          }
-
-          if (this.trailersData[index].trailerType.trim() == "") {
-            validNewTrailerForm = false;
-            this.validations.trailersData[index].trailerType.is_valid = false;
-            this.validations.trailersData[index].trailerType.text =
-              "Please select Trialer Type!";
-          } else {
-            this.validations.trailersData[index].trailerType.is_valid = true;
-            this.validations.trailersData[index].trailerType.text = "";
-          }
-
-          if (this.trailersData[index].zipCode.trim() == "") {
-            validNewTrailerForm = false;
-            this.validations.trailersData[index].zipCode.is_valid = false;
-            this.validations.trailersData[index].zipCode.text =
-              "Please enter Garaging Zip Code!";
-          } else {
-            this.validations.trailersData[index].zipCode.is_valid = true;
-            this.validations.trailersData[index].zipCode.text = "";
-          }
-        }
-      }
-      return validNewTrailerForm;
+      this.$swal({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        buttons: true,
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then((willDelete) => {
+        if (willDelete) {
+          this.form.trailers.splice(key, 1);
+        } 
+      });
     },
     async getVinData(vehicleType, index) {
+      console.log(vehicleType, index)
       let vinToUse = false;
       if (vehicleType == "vehicle") {
-        vinToUse = this.vehiclesData[index].VIN;
+        vinToUse = this.form.vehicles[index].VIN;
       } else if (vehicleType == "trailer") {
-        vinToUse = this.trailersData[index].VIN;
+        vinToUse = this.form.trailers[index].VIN;
       }
       if (!vinToUse) {
-       
         return;
       }
 
       this.loading = true;
-
       try {
         let data = await API.get("company/vin", {
           vin: vinToUse
         });
-       
-
         delete data.data.raw;
         delete data.data.vehicleHistory;
 
         if (vehicleType == "vehicle") {
-          // delete data.data.vehicleType;
-
-          this.vehiclesData[index].make = data.data.make;
-          this.vehiclesData[index].model = data.data.model;
-          this.vehiclesData[index].year = data.data.year;
-          this.vehiclesData[index].vehicleType = data.data.vehicleType
+          this.form.vehicles[index].make = data.data.make;
+          this.form.vehicles[index].model = data.data.model;
+          this.form.vehicles[index].year = data.data.year;
+          this.form.vehicles[index].vehicleType = data.data.vehicleType
         } else if (vehicleType == "trailer") {
           if (this.trailerTypes.indexOf(data.data.vehicleType) > -1) {
             data.data.trailerType = data.data.vehicleType;
@@ -1149,9 +897,9 @@ export default {
             delete data.data.vehicleType;
           }
 
-          this.trailersData[index].make = data.data.make;
-          this.trailersData[index].model = data.data.model;
-          this.trailersData[index].year = data.data.year;
+          this.form.trailers[index].make = data.data.make;
+          this.form.trailers[index].model = data.data.model;
+          this.form.trailers[index].year = data.data.year;
         }
       } catch (err) {
         console.error("err", err);
@@ -1160,36 +908,11 @@ export default {
         this.loading = false;
       }
     },
-    onChange(item) {
+    addMoreItem(item) {
       if (item == 'Vehicle') {
-      // if ($event.target.value == "Vehicle") {
-        this.vehicle = true;
-       
-        this.trailer = false;
         this.addVehicleData();
-      // } else if ($event.target.value == "Trailer") {
       } else if (item == 'Trailer') {
-        this.vehicle = false;
-        this.trailer = true;
         this.addTrailerData();
-      }
-    },
-    addForm() {
-      if (this.vehicleOrTrailer == "Trailer") {
-        // 
-        // this.trailerIndex += 1
-      } else {
-        // 
-        // this.vehicleIndex += 1;
-      }
-      this.vehiclesTrailers.push({ _uuid: uuidv4() });
-      this.error = null;
-    },
-    removeForm(index) {
-      this.vehiclesTrailers.splice(index, 1);
-
-      if (!this.vehiclesTrailers.length) {
-        this.error = "Please add at least one vehicle / trailer";
       }
     },
     updateHint(hint) {
@@ -1223,31 +946,19 @@ export default {
             } else {
               vehicleInformationList = vehicleInformationList;
             }
-            if (vehicleInformationList.vehicle.length > 0) {
-              this.vehiclesData = vehicleInformationList.vehicle.map(v => ({
-                ...v,
-                _uuid: uuidv4()
-              }));
-              this.addVehicleDataValidations(
-                vehicleInformationList.vehicle.length
-              );
+            if (vehicleInformationList.vehicle.length > 0 && vehicleInformationList.vehicle[0].grossVehicleWeight != undefined) {
+              this.form.vehicles = vehicleInformationList
             } else {
-              // this.addVehicleData();
+              this.addVehicleData();
             }
 
-            if (vehicleInformationList.trailer.length > 0) {
-             
-             
-              this.trailersData = vehicleInformationList.trailer.map(t => ({
-                ...t,
-                _uuid: uuidv4()
-              }));
-              this.addTrailersDataValidations(
-                vehicleInformationList.trailer.length
-              );
+            if (vehicleInformationList.trailer.length > 0 && vehicleInformationList.trailer[0].grossVehicleWeight != undefined) {
+              this.form.trailers = vehicleInformationList.trailer
             } else {
-              // this.addTrailerData();
+              this.addTrailerData();
             }
+          } else {
+            this.addVehicleData();
           }
         } else if (res && res.status === "ERROR") {
           // this.$router.replace({ name: 'Home' });
@@ -1260,46 +971,27 @@ export default {
       }
     },
     async updateCompany() {
+      this.$v.form.$touch();
+      if (this.$v.form.$anyError) {
+        return;
+      }
       
-      if((this.vehiclesData.length == 0) && (this.trailersData.length == 0)){
+      if((this.form.vehicles.length == 0) && (this.form.trailers.length == 0)){
         this.noFormfilled = true;
-       
         return;
-      }
-      console.log(this.vehiclesData);
-      //
-      if(this.vehiclesData){
-        let allFormAreValid = this.validateNewVehicleData();
-      if (!allFormAreValid) {
-       
-        return;
-      } else {
-       
-      }
-      }
-      if(this.trailersData){
-        let allFormAreValid = this.validateNewTrailerData();
-      if (!allFormAreValid) {
-       
-        return;
-      } else {
-       
       }
 
-      }
-      
       this.loading = true;
       this.error = null;
-      this.final_uuid = this.uuid;
       try {
         const vehicleInformationList = {
-          vehicle: this.vehiclesData,
-          trailer: this.trailersData
+          vehicle: this.form.vehicles,
+          trailer: this.form.trailers
         }
 
         const data = {
-          vehicleInformationList: vehicleInformationList,
-          uuid: this.final_uuid
+          vehicleInformationList,
+          uuid: this.uuid
         };
         let res = await API.post("company/save", { data });
 

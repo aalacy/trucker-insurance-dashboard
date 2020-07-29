@@ -5,24 +5,6 @@
         <div class="card-body">
           <h4 class="card-title form-sub-title mb-3">Additional Questions</h4>
           <div class="mb-4 h4 font-weight-light">Please clearly read each of these questions and be sure to answer accurately.</div>
-          <b-row class="mb-2">
-            <b-col cols="12" md="4">
-              <b-form-group
-                class="mb-0"
-                label="Select Type of Coverage Desired:"
-              >
-                <b-form-select v-model="$v.form.Q104.$model" :state="validateState('Q104')" :options="Q104Options"></b-form-select>
-              </b-form-group>
-            </b-col>
-            <b-col cols="12" md="8">
-              <b-form-group
-                class="mb-0"
-                label="Additional Coverage Options (additional premium may apply):"
-              >
-                <b-form-select v-model="$v.form.Q105.$model" :state="validateState('Q105')" :options="Q105Options"></b-form-select>
-              </b-form-group>
-            </b-col>
-          </b-row>
           <div class="font-weight-bold">FILING INFORMATION</div>
           <b-row class="mb-2 align-items-center">
             <b-col cols="12" md="6">
@@ -88,7 +70,6 @@
                   id="Q111"
                   rows="2"
                   v-model="$v.form.Q111.$model"
-                  :state="validateState('Q111')"
                 ></b-form-textarea>
               </b-form-group>
             </b-col>
@@ -104,7 +85,6 @@
                   id="Q112"
                   rows="2"
                   v-model="$v.form.Q112.$model"
-                  :state="validateState('Q112')"
                 ></b-form-textarea>
               </b-form-group>
             </b-col>
@@ -149,7 +129,6 @@
                   id="Q115"
                   rows="2"
                   v-model="$v.form.Q115.$model"
-                  :state="validateState('Q115')"
                 ></b-form-textarea>
               </b-form-group>
             </b-col>
@@ -165,7 +144,6 @@
                   id="Q116"
                   rows="2"
                   v-model="$v.form.Q116.$model"
-                  :state="validateState('Q116')"
                 ></b-form-textarea>
               </b-form-group>
             </b-col>
@@ -297,7 +275,7 @@
             </b-col>
           </b-row>
           <b-card
-            header="Questions 44 - 51"
+            header="Additional Filing Questions"
             header-text-variant="black"
             header-bg-variant="white"
             header-tag="header"
@@ -453,7 +431,7 @@
                 <b-col cols="12">
                   <b-form-group
                     class="mb-0"
-                    label='Please explain any "yes" answer to quetions 44 through 50'
+                    label='Please explain any No answer to the Additonal Filing Questions'
                     label-for="Q125"
                   >
                     <b-form-textarea 
@@ -546,12 +524,6 @@ export default {
 
   validations: {
     form: {
-      Q104: {
-        required
-      },
-      Q105: {
-        required
-      },
       Q108: {
         required: requiredIf( function() {
           return this.form.Q107
@@ -561,11 +533,9 @@ export default {
         required
       },
       Q111: {
-        required,
         maxLength: maxLength(100)
       },
       Q112: {
-        required,
         maxLength: maxLength(100)
       },
       Q114: {
@@ -574,11 +544,9 @@ export default {
         }),
       },
       Q115: {
-        required,
         maxLength: maxLength(100)
       },
       Q116: {
-        required,
         maxLength: maxLength(100)
       },
       Q119: {

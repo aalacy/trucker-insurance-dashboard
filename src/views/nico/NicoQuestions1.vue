@@ -535,7 +535,6 @@
                 <b-form-textarea 
                   id="Q25"
                   v-model="$v.form.Q25.$model"
-                  :state="validateState('Q25')"
                   rows="2"
                 ></b-form-textarea>
               </b-form-group>
@@ -794,9 +793,6 @@ export default {
         ifMinMaxLength: ifMinMaxLength('Q24_0')
       },
       Q25: {
-        required: requiredIf( function() {
-          return !this.form.Q25_0
-        }),
       },
       Q26: {
         required: requiredIf( function() {
