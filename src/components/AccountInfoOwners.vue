@@ -361,9 +361,7 @@ export default {
         
         this.ownerData[0].firstName = "";
         this.ownerData[0].lastName = "";
-        this.ownerData[0].dobM = "";
-        this.ownerData[0].dobD = "";
-        this.ownerData[0].dobY="";
+        this.ownerData[0].dob
         this.ownerData[0].address="";
         this.ownerData[0].city="";
         this.ownerData[0].state="";
@@ -383,15 +381,7 @@ export default {
             is_valid: true,
             text: ""
           },
-          dobM: {
-            is_valid: true,
-            text: ""
-          },
-          dobD: {
-            is_valid: true,
-            text: ""
-          },
-          dobY: {
+          dob: {
             is_valid: true,
             text: ""
           },
@@ -420,9 +410,7 @@ export default {
         this.ownerData.push({
           firstName: "",
           lastName: "",
-          dobM: "",
-          dobD: "",
-          dobY: "",
+          dob: "",
           address: "",
           city: "",
           zip: "",
@@ -473,47 +461,14 @@ export default {
             this.validations.ownerData[index].lastName.text = '';
           }
 
-          if (this.ownerData[index].dobM < 1 || this.ownerData[index].dobM > 12)  {
-              validNewDriverForm = false;
-              this.validations.ownerData[index].dobM.is_valid = false;
-              this.validations.ownerData[index].dobM.text =
-              "Please enter valid month!";
-          if( this.ownerData[index].dobM.trim() == '' ){
+          if( this.ownerData[index].dob.trim() == '' ){
             validNewDriverForm = false;
-            this.validations.ownerData[index].dobM.is_valid = false;
-            this.validations.ownerData[index].dobM.text = 'Please enter month!';
-          }}
+            this.validations.ownerData[index].dob.is_valid = false;
+            this.validations.ownerData[index].dob.text = 'Please enter birthday!';
+          }
           else{
-            this.validations.ownerData[index].dobM.is_valid = true;
-            this.validations.ownerData[index].dobM.text = '';
-          }
-
-          if (this.ownerData[index].dobD < 1 || this.ownerData[index].dobD > 31)  {
-            validNewDriverForm = false;
-            this.validations.ownerData[index].dobD.is_valid = false;
-            this.validations.ownerData[index].dobD.text =
-              "Please enter valid date!";
-          if( this.ownerData[index].dobD.trim() == '' ){
-            validNewDriverForm = false;
-            this.validations.ownerData[index].dobD.is_valid = false;
-            this.validations.ownerData[index].dobD.text = 'Please enter date!';
-          }}else{
-            this.validations.ownerData[index].dobD.is_valid = true;
-            this.validations.ownerData[index].dobD.text = '';
-          }
-          
-          if(this.ownerData[index].dobY.length<4){
-              validNewDriverForm = false;
-            this.validations.ownerData[index].dobY.is_valid = false;
-            this.validations.ownerData[index].dobY.text =
-              "Please enter valid year!";
-          if( this.ownerData[index].dobY.trim() == '' ){
-            validNewDriverForm = false;
-            this.validations.ownerData[index].dobY.is_valid = false;
-            this.validations.ownerData[index].dobY.text = 'Please enter year!';
-          }}else{
-            this.validations.ownerData[index].dobY.is_valid = true;
-            this.validations.ownerData[index].dobY.text = '';
+            this.validations.ownerData[index].dob.is_valid = true;
+            this.validations.ownerData[index].dob.text = '';
           }
 
           if( this.ownerData[index].address.trim() == '' ){
@@ -575,9 +530,7 @@ export default {
       this.ownerData[0].city = this.drivers[$event.target.value].city;
       this.ownerData[0].state = this.drivers[$event.target.value].state;
       this.ownerData[0].zip = this.drivers[$event.target.value].zip;
-      this.ownerData[0].dobD = this.drivers[$event.target.value].dobD;
-      this.ownerData[0].dobM = this.drivers[$event.target.value].dobM;
-      this.ownerData[0].dobY = this.drivers[$event.target.value].dobY;
+      this.ownerData[0].dob = this.drivers[$event.target.value].dob;
       
     },
     updateHint(hint) {
