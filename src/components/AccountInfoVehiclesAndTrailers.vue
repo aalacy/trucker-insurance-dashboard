@@ -495,7 +495,7 @@
             </div>
             <div class=" alert alert-danger d-flex col-12"
               v-if="noFormfilled"
-            >Please add atleast one Vehicle/Trailer</div>
+            >Please add at least one Vehicle/Trailer</div>
           </div>
         </div>
 
@@ -651,8 +651,6 @@ export default {
     return {
       form: {
         vehicles: {
-          required,
-
           $each: {
             VIN: {
               required
@@ -702,8 +700,6 @@ export default {
           }
         },
         trailers: {
-          required,
-
           $each: {
             VIN: {
               required
@@ -947,7 +943,7 @@ export default {
               vehicleInformationList = vehicleInformationList;
             }
             if (vehicleInformationList.vehicle.length > 0 && vehicleInformationList.vehicle[0].grossVehicleWeight != undefined) {
-              this.form.vehicles = vehicleInformationList
+              this.form.vehicles = vehicleInformationList.vehicle
             } else {
               this.addVehicleData();
             }
@@ -1027,92 +1023,6 @@ select{
   -moz-appearance: none;
 }
 
-.form-group {
-  margin-bottom: 0.5rem;
-}
-
-.driver-form-item {
-  margin-right: -15px;
-  margin-left: -15px;
-}
-
-.vehicles-and-trailers-form-item {
-  .label {
-    font-size: 1.2rem;
-  }
-
-  .get-data {
-    font-weight: 300;
-        font-size: 17px;
-    padding: 8px;
-  }
-  .containera-hov {
-    position: relative;
-    width: 50%;
-  }
-
-  .image {
-    opacity: 1;
-    display: block;
-    width: 100%;
-    height: auto;
-    transition: 0.5s ease;
-    backface-visibility: hidden;
-  }
-
-  .middle {
-    transition: 0.5s ease;
-    opacity: 0;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    -ms-transform: translate(-50%, -50%);
-    text-align: center;
-    background-color: #5e98f9;
-  }
-
-  .containera-hov:hover .image {
-    opacity: 1;
-    cursor: pointer;
-  }
-
-  .containera-hov:hover .middle {
-    opacity: 1;
-  }
-
-  .text {
-    background-color: #4caf50;
-    color: white;
-    font-size: 16px;
-    padding: 16px 32px;
-  }
-  [type="radio"] {
-    position: absolute;
-    opacity: 0;
-    width: 0;
-    height: 0;
-  }
-
-  /* IMAGE STYLES */
-  [type="radio"] + img {
-    cursor: pointer;
-  }
-
-  /* CHECKED STYLES */
-  [type="radio"]:checked + img {
-    border: 2px solid #5e98f9;
-
-  }
-  [type="radio"]:checked + img + span {
-    // outline: 2px solid #5e98f9;
-    color:#5e98f9;
-    text-decoration: underline;
-  }
-}
-.btn-bg-white{
-  background: #fff;
-}
 
 .fontawesome.minus path {
   fill: black;

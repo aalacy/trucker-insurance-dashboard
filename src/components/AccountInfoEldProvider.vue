@@ -23,7 +23,7 @@
             </b-input-group>
           </form>
 
-          <div class="container">
+          <div class="container-fluid">
             <div class="row cargo-group-page">
               <div
                 v-for="(item, index) in allProviders"
