@@ -17,11 +17,26 @@
           <b-form-row class="mb-2">
             <b-col cols="12" md="6">
               <label for="policyEffectiveDate-datepicker">Policy Effective Date</label>
-              <b-form-datepicker reset-button id="policyEffectiveDate-datepicker" :state="validateState('policyEffectiveDate')" locale="en-US" placeholder="Choose a date" v-model="$v.form.policyEffectiveDate.$model" class="mb-2"></b-form-datepicker>
+              <b-form-datepicker 
+                reset-button 
+                id="policyEffectiveDate-datepicker" 
+                :state="validateState('policyEffectiveDate')" 
+                locale="en-US"
+                placeholder="Choose a date" 
+                :date-format-options="{ year: 'numeric', month: 'numeric', day: 'numeric' }"
+                v-model="$v.form.policyEffectiveDate.$model" 
+                class="mb-2"></b-form-datepicker>
             </b-col>
             <b-col cols="12" md="6">
               <label for="policyExpirationDate-datepicker">Policy Expiration Date</label>
-              <b-form-datepicker reset-button :state="validateState('policyExpirationDate')" locale="en-US" placeholder="Choose a date" v-model="$v.form.policyExpirationDate.$model" class="mb-2"></b-form-datepicker>
+              <b-form-datepicker 
+                reset-button 
+                :state="validateState('policyExpirationDate')" 
+                locale="en-US" 
+                placeholder="Choose a date" 
+                v-model="$v.form.policyExpirationDate.$model" 
+                :date-format-options="{ year: 'numeric', month: 'numeric', day: 'numeric' }"
+                class="mb-2"></b-form-datepicker>
             </b-col>
           </b-form-row>
           <b-form-row class="mb-2">
@@ -72,6 +87,7 @@
                   reset-button
                   placeholder="Choose a date" 
                   v-model="$v.form.Q6_policyNumberEffectiveDate.$model" 
+                  :date-format-options="{ year: 'numeric', month: 'numeric', day: 'numeric' }"
                   :state="validateState('Q6_policyNumberEffectiveDate')" 
                   class="mb-2">
                 </b-form-datepicker>
@@ -217,6 +233,7 @@
                   reset-button
                   placeholder="Choose a date" 
                   v-model="$v.form.Q13.$model" 
+                  :date-format-options="{ year: 'numeric', month: 'numeric', day: 'numeric' }"
                   :state="validateState('Q13')"
                   class="mb-2">
                 </b-form-datepicker>

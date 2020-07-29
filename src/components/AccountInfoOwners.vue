@@ -14,7 +14,7 @@
           </div>
 
           <div v-if="formData.driverIsOwner" class="mt-2">
-            <select v-model="formData.driverOwnerIndex" @change="onChange($event)" class="lt-input col-sm-12 col-lg-6" id="driverList" >
+            <select v-model="formData.driverOwnerIndex" @change="onChange($event)" class="form-control col-sm-12 col-lg-6" id="driverList" >
               <option value="" disabled>Select Driver</option>
  
               <option
@@ -46,20 +46,14 @@
               <div class="row">
                 <div class="col-6">
                   <div class="form-group">
-                      <!-- :class="{ 'has-error': formErrors.firstName }" -->
                     <input
                       v-model="ownerData[index].firstName"
                       type="text"
-                      class="lt-input"
+                      class="form-control"
                       placeholder="First name"
                       :class="{ 'has-error': !validations.ownerData[index].firstName.is_valid }"
                       @change="validateFieldCustom('firstName', index)"
                     />
-                      <!-- required -->
-                      <!-- @focus="onFocus('firstName')"
-                      @blur="onBlur"
-                      @change="validateField('firstName')" -->
-                    
                     <div class="text-danger" v-show="!validations.ownerData[index].firstName.is_valid">{{ validations.ownerData[index].firstName.text }}</div>
                   </div>
                 </div>
@@ -70,95 +64,33 @@
                     <input
                       v-model="ownerData[index].lastName"
                       type="text"
-                      class="lt-input"
+                      class="form-control"
                       placeholder="Last name"
                       :class="{ 'has-error': !validations.ownerData[index].lastName.is_valid }"
                       @change="validateFieldCustom('lastName', index)"
                     />
-                      <!-- required -->
-                      <!-- @focus="onFocus('lastName')"
-                      @blur="onBlur"
-                      @change="validateField('lastName')" -->
-
                     <div class="text-danger" v-show="!validations.ownerData[index].lastName.is_valid">{{ validations.ownerData[index].lastName.text }}</div>
                   </div>
                 </div>
               </div>
 
-              <div class="row" id="text-date">
-                <div class="col-12 col-md-6 pt-2">
-                  <div>Date of Birth</div>
-
-                  <!-- <div
-                    v-if="formErrors.dateOfBirth"
-                    class="text-danger"
-                  >{{ formErrors.dateOfBirth }}</div> -->
-                </div>
-
-                <div class="col-12 col-md-6">
-                  <div class="row">
-                    <div class="col">
-                      <div class="form-group">
-                          <!-- :class="{ 'has-error': formErrors.dobM }" -->
-                        <input
-                          v-model="ownerData[index].dobM"
-                          type="number"
-                          class="lt-input"
-                          :class="{ 'has-error': !validations.ownerData[index].dobM.is_valid }"
-                          @change="validateFieldCustom('dobM', index)"
-                          placeholder="MM"
-                        />
-                          <!-- required -->
-                          <!-- @focus="onFocus('dobM')"
-                          @blur="onBlur"
-                          @change="validateField('dobM')" -->
-
-                        <div class="text-danger" v-show="!validations.ownerData[index].dobM.is_valid">{{ validations.ownerData[index].dobM.text }}</div>
-                      </div>
-                    </div>
-                    <span class="mt-1">/</span>
-                    <div class="col">
-                      <div class="form-group">
-                          <!-- :class="{ 'has-error': formErrors.dobD }" -->
-                        <input
-                          v-model="ownerData[index].dobD"
-                          type="number"
-                          class="lt-input"
-                          :class="{ 'has-error': !validations.ownerData[index].dobD.is_valid }"
-                          @change="validateFieldCustom('dobD', index)"
-                          placeholder="DD"
-                        />
-                          <!-- required -->
-                          <!-- @focus="onFocus('dobD')"
-                          @blur="onBlur"
-                          @change="validateField('dobD')" -->
-
-                        <div class="text-danger" v-show="!validations.ownerData[index].dobD.is_valid">{{ validations.ownerData[index].dobD.text }}</div>
-                      </div>
-                    </div>
-                    <span class="mt-1">/</span>
-                    <div class="col">
-                      <div class="form-group">
-                          <!-- :class="{ 'has-error': formErrors.dobY }" -->
-                        <input
-                          v-model="ownerData[index].dobY"
-                          type="number"
-                          class="lt-input"
-                          placeholder="YYYY"
-                          :class="{ 'has-error': !validations.ownerData[index].dobY.is_valid }"
-                          @change="validateFieldCustom('dobY', index)"
-                        />
-                          <!-- required -->
-                          <!-- @focus="onFocus('dobY')"
-                          @blur="onBlur"
-                          @change="validateField('dobY')" -->
-
-                        <div class="text-danger" v-show="!validations.ownerData[index].dobY.is_valid">{{ validations.ownerData[index].dobY.text }}</div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <b-row>
+                <b-col cols="12" md="6">
+                  Date of Birth
+                </b-col>
+                <b-col cols="12" md="6">
+                  <b-form-group
+                  >
+                    <b-form-datepicker 
+                      reset-button 
+                      locale="en-US"
+                      placeholder="Choose a date"
+                      v-model="ownerData[index].dob"
+                      :date-format-options="{ year: 'numeric', month: 'numeric', day: 'numeric' }"
+                      class="mb-2"></b-form-datepicker>
+                  </b-form-group>
+                </b-col>
+              </b-row>
 
               <div class="row">
                 <div class="col-6">
@@ -167,7 +99,7 @@
                     <input
                       v-model="ownerData[index].address"
                       type="text"
-                      class="lt-input"
+                      class="form-control"
                       placeholder="Address"
                       :class="{ 'has-error': !validations.ownerData[index].address.is_valid }"
                       @change="validateFieldCustom('address', index)"
@@ -186,7 +118,7 @@
                     <input
                       v-model="ownerData[index].city"
                       type="text"
-                      class="lt-input"
+                      class="form-control"
                       placeholder="City"
                       :class="{ 'has-error': !validations.ownerData[index].city.is_valid }"
                       @change="validateFieldCustom('city', index)"
@@ -207,7 +139,7 @@
                     <input
                       v-model="ownerData[index].state"
                       type="text"
-                      class="lt-input"
+                      class="form-control"
                       placeholder="State"
                       :class="{ 'has-error': !validations.ownerData[index].state.is_valid }"
                       @change="validateFieldCustom('state', index)"
@@ -226,7 +158,7 @@
                     <input
                       v-model="ownerData[index].zip"
                       type="text"
-                      class="lt-input"
+                      class="form-control"
                       minlength="5"
                       placeholder="Zip"
                       :class="{ 'has-error': !validations.ownerData[index].zip.is_valid }"
@@ -628,8 +560,6 @@ export default {
       return validNewDriverForm;
     },
     addForm() {
-      // 
-
       this.formData.owners.push({ _uuid: uuidv4() });
       this.error = null;
     },
@@ -638,7 +568,6 @@ export default {
     },
 
     onChange($event) {
-      // if(this.drivers.drivers[$event.target.value] != undefined){
       this.ownerData[0] = Object.assign({}, this.ownerData[0], this.drivers[$event.target.value]);
       this.ownerData[0].firstName = this.drivers[$event.target.value].firstName;
       this.ownerData[0].lastName = this.drivers[$event.target.value].lastName;

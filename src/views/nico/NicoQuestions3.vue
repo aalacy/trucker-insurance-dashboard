@@ -177,7 +177,14 @@
 		                label="Date Published"
 		                label-for="Q65"
 		              >
-		                <b-form-datepicker reset-button locale="en-US" placeholder="Choose a date" v-model="$v.form.Q65.$model" :state="validateState('Q65')" class="mb-2"></b-form-datepicker>
+		                <b-form-datepicker 
+		                	reset-button 
+		                	locale="en-US" 
+		                	placeholder="Choose a date" 
+		                	v-model="$v.form.Q65.$model" 
+		                	:date-format-options="{ year: 'numeric', month: 'numeric', day: 'numeric' }"
+		                	:state="validateState('Q65')" 
+		                	class="mb-2"></b-form-datepicker>
 		              </b-form-group>
 		            </b-col>
 		            <b-col cols="12" md="6">

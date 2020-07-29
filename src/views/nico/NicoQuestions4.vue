@@ -60,6 +60,7 @@
                       locale="en-US"
                       placeholder="Choose a date"
                       v-model="$v.form.Q78.$model"
+                      :date-format-options="{ year: 'numeric', month: 'numeric', day: 'numeric' }"
                       class="mb-2"></b-form-datepicker>
                   </b-form-group>
                 </b-col>
@@ -68,7 +69,13 @@
                     class="mb-0"
                     label="Expiration Date"
                   >
-                    <b-form-datepicker reset-button locale="en-US" placeholder="Choose a date" v-model="$v.form.Q79.$model" class="mb-2"></b-form-datepicker>
+                    <b-form-datepicker 
+                      reset-button 
+                      locale="en-US" 
+                      placeholder="Choose a date" 
+                      v-model="$v.form.Q79.$model" 
+                      :date-format-options="{ year: 'numeric', month: 'numeric', day: 'numeric' }"
+                      class="mb-2"></b-form-datepicker>
                   </b-form-group>
                 </b-col>
               </b-form-row>
@@ -121,7 +128,13 @@
                     class="mb-0"
                     label="From"
                   >
-                    <b-form-datepicker reset-button locale="en-US" placeholder="Choose a date" v-model="$v.form.Q83.$model" class="mb-2"></b-form-datepicker>
+                    <b-form-datepicker 
+                      reset-button
+                      locale="en-US"
+                      placeholder="Choose a date"
+                      v-model="$v.form.Q83.$model"
+                      :date-format-options="{ year: 'numeric', month: 'numeric', day: 'numeric' }"
+                      class="mb-2"></b-form-datepicker>
                   </b-form-group>
                 </b-col>
                 <b-col cols="12" md="6">
@@ -129,7 +142,13 @@
                     class="mb-0"
                     label="To"
                   >
-                    <b-form-datepicker reset-button locale="en-US" placeholder="Choose a date" v-model="$v.form.Q84.$model" class="mb-2"></b-form-datepicker>
+                    <b-form-datepicker 
+                      reset-button
+                      locale="en-US" 
+                      placeholder="Choose a date" 
+                      v-model="$v.form.Q84.$model"
+                      :date-format-options="{ year: 'numeric', month: 'numeric', day: 'numeric' }" 
+                      class="mb-2"></b-form-datepicker>
                   </b-form-group>
                 </b-col>
               </b-form-row>
@@ -281,7 +300,13 @@
                     class="mb-0"
                     label="Effective Date"
                   >
-                    <b-form-datepicker reset-button locale="en-US" placeholder="Choose a date" v-model="$v.form.Q94.$model" class="mb-2"></b-form-datepicker>
+                    <b-form-datepicker 
+                      reset-button 
+                      locale="en-US" 
+                      placeholder="Choose a date" 
+                      v-model="$v.form.Q94.$model" 
+                      :date-format-options="{ year: 'numeric', month: 'numeric', day: 'numeric' }"
+                      class="mb-2"></b-form-datepicker>
                   </b-form-group>
                 </b-col>
                 <b-col cols="12" md="6">
@@ -289,7 +314,13 @@
                     class="mb-0"
                     label="Expiration Date"
                   >
-                    <b-form-datepicker reset-button locale="en-US" placeholder="Choose a date" v-model="$v.form.Q95.$model" class="mb-2"></b-form-datepicker>
+                    <b-form-datepicker 
+                      reset-button 
+                      locale="en-US" 
+                      placeholder="Choose a date" 
+                      v-model="$v.form.Q95.$model" 
+                      :date-format-options="{ year: 'numeric', month: 'numeric', day: 'numeric' }"
+                      class="mb-2"></b-form-datepicker>
                   </b-form-group>
                 </b-col>
               </b-form-row>
