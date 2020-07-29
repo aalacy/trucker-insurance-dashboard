@@ -602,11 +602,11 @@ export default {
       }
     },
     changeData() {
-      if (this.driversData.length > 0 && this.mailingAddress) {
-        this.driversData[0].address = this.mailingAddress.address;
-        this.driversData[0].city = this.mailingAddress.city;
-        this.driversData[0].state = this.mailingAddress.state;
-        this.driversData[0].zip = this.mailingAddress.zip;
+      if (this.form.drivers.length > 0 && this.mailingAddress) {
+        this.form.drivers[0].address = this.mailingAddress.address;
+        this.form.drivers[0].city = this.mailingAddress.city;
+        this.form.drivers[0].state = this.mailingAddress.state;
+        this.form.drivers[0].zip = this.mailingAddress.zip;
       }
     },
     removeDriverData(key) {
