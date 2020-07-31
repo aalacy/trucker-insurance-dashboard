@@ -95,12 +95,9 @@
               </b-col>
               <b-col cols="12" md="6">
                 <b-form-group
-                  label="CDL Experience Years"
+                  label="Class Type ( i.e. CDL)"
                 >
-                  <b-form-input 
-                    v-model="driver.CDL.$model"
-                    :state="validateState(index, 'CDL')"
-                  />
+                  <b-form-select v-model="driver.CDL.$model" :state="validateState(index, 'CDL')" :options="CDLOptions"></b-form-select>
                 </b-form-group>
               </b-col>
             </b-row>
@@ -153,7 +150,18 @@
             <b-row>
               <b-col cols="12" md="6">
                 <b-form-group
-                  label="DL Year's Licensed (In Class Type)"
+                  label="Previous Commercial Driving Experience - years"
+                >
+                  <b-form-input 
+                    type="number"
+                    v-model="driver.prevCDE.$model"
+                    :state="validateState(index, 'prevCDE')"
+                  ></b-form-input>
+                </b-form-group>
+              </b-col>
+              <b-col cols="12" md="6">
+                <b-form-group
+                  label="Year's Licensed (In Class Type)"
                   label-for="Q38"
                 >
                   <b-form-input 
@@ -164,6 +172,8 @@
                   />
                 </b-form-group>
               </b-col>
+            </b-row>
+            <b-row>
               <b-col cols="12" md="6">
                 <b-form-group
                   label="Type of Unit (Bus, Van, Truck, Tractor, etc.)"
@@ -174,8 +184,6 @@
                   ></b-form-input>
                 </b-form-group>
               </b-col>
-            </b-row>
-            <b-row>
               <b-col cols="12" md="6">
                 <b-form-group
                   label="Number of Years Driving"
@@ -191,17 +199,7 @@
               </b-col>
             </b-row>
             <b-form-row>
-              <b-col cols="12" md="6">
-                <b-form-group
-                  label="Previous Commercial Driving Experience - years"
-                >
-                  <b-form-input 
-                    type="number"
-                    v-model="driver.prevCDE.$model"
-                    :state="validateState(index, 'prevCDE')"
-                  ></b-form-input>
-                </b-form-group>
-              </b-col>
+              
               <b-col cols="12" md="6">
                 <div
                   class="mb-2 form-group"
@@ -429,6 +427,11 @@ export default {
         { value: 'O/O', text: 'Owner/Operator' },
         { value: 'F', text: 'Franchisee' },
       ],
+      CDLOptions: [
+        'Class A',
+        'Class B',
+        'Class C',
+      ]
     };
   },
 
@@ -501,10 +504,8 @@ export default {
               required
             },
             noOfViolations: {
-              required
             },
             noOfViolationsDate: {
-              required
             },
             conviction: {
             },
@@ -552,7 +553,7 @@ export default {
     },
 
     validateIfDate(date, cond) {
-      if (cond) {
+      if (cond > 0) {
         return date != ''
       } else {
         return null

@@ -326,7 +326,6 @@
               >
                 <b-form-tags 
                   v-model="$v.form.Q19.$model" 
-                  :state="validateState('Q19')"
                   no-outer-focus class="mb-2"
                 >
                   <template v-slot="{ tags, disabled, addTag, removeTag }">
@@ -346,23 +345,26 @@
                         <b-icon icon="tag-fill"></b-icon> Choose states
                       </template>
                       <b-dropdown-form @submit.stop.prevent="() => {}">
-                        <b-form-group
-                          label-for="tag-search-input"
-                          label="Search states"
-                          label-cols-md="auto"
-                          class="mb-0"
-                          label-size="sm"
-                          :description="searchDesc"
-                          :disabled="disabled"
-                        >
-                          <b-form-input
-                            v-model="stateSearch"
-                            id="tag-search-input"
-                            type="search"
-                            size="sm"
-                            autocomplete="off"
-                           ></b-form-input>
-                        </b-form-group>
+                        <div class="d-flex">
+                          <b-button @click="selectContinentalStates" class="mr-2" variant="primary" size="sm">Continental</b-button>
+                          <b-form-group
+                            label-for="tag-search-input"
+                            label="Search states"
+                            label-cols-md="auto"
+                            class="mb-0 w-100"
+                            label-size="sm"
+                            :description="searchDesc"
+                            :disabled="disabled"
+                          >
+                            <b-form-input
+                              v-model="stateSearch"
+                              id="tag-search-input"
+                              type="search"
+                              size="sm"
+                              autocomplete="off"
+                             ></b-form-input>
+                          </b-form-group>
+                        </div>
                       </b-dropdown-form>
                       <b-dropdown-divider></b-dropdown-divider>
                       <b-dropdown-group id="dropdown-group-2" header="" style="max-height: 200px; overflow-y: auto;">
@@ -732,6 +734,10 @@ export default {
       if (!this.form.Q18) {
         this.form.Q19 = []
       }
+    },
+    selectContinentalStates () {
+      this.form.Q19 = this.states.filter(state => state != 'AL' && state != 'HI')
+      this.stateSearch = ''
     }
   },
 

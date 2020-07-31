@@ -81,9 +81,6 @@
           </div>
         </div>
       </div>
-      <div v-if="showmodel">
-        <modelLogin/>
-      </div>
     </form>
   </div>
 </template>
@@ -92,7 +89,6 @@
 import { mapState } from "vuex";
 import { validateField, validateForm, minLength } from "../validators.js";
 import { API } from "../api.js";
-import ModalLogin from "./ModalLogin.vue";
 import axios from "axios";
 import { setTimeout } from 'timers';
 
@@ -112,16 +108,9 @@ export default {
       required: true
     }
   },
-  components: {
-    modelLogin: ModalLogin,
-    
-  },
   data() {
     return {
-      final_uuid:"",
-      showmodel: false,
       save: true,
-      userData:"",
       uuid:"",
       prevCargoGroup: [],
       formData: {
@@ -137,16 +126,15 @@ export default {
   },
   computed: {
     ...mapState("cargo", ["cargoGroups"]),
+
     selectedCargoGroups() {
       return this.cargoGroups.filter(
         group => this.prevCargoGroup.indexOf(group.value) > -1
       );
-      
     },
 
     cargoHauledMap() {
       let map = {};
-
       for (let cargoGroupValue in this.formData.haulType) {
         map[cargoGroupValue] = {};
 
@@ -164,13 +152,6 @@ export default {
     this.$emit("update-progress", this.progress);
     this.loadCompany();
   },
-  updated() {
-    if (localStorage.getItem("showModal") == "true") {
-      this.showmodel = true;
-    } else {
-      this.showmodel = false;
-    }
-  },
   mounted() {
   
   },
@@ -183,7 +164,6 @@ export default {
       let haulTypeIndex = this.formData.haulType[cargoGroupValue].indexOf(
         haulTypeValue
       );
-
 
       if (haulTypeIndex > -1) {
         this.formData.haulType[cargoGroupValue].splice(haulTypeIndex, 1);
@@ -205,9 +185,6 @@ export default {
       this.$emit("update-hint", "");
       this.$emit("go-to-form", this.nextForm);
     },
-    validateField(fieldName) {
-      validateField(fieldName, this.formData, this.rules, this.formErrors);
-    },
     validateForm() {
       this.formErrors = {};
       return validateForm(this.formData, this.rules, this.formErrors);
@@ -227,7 +204,7 @@ export default {
             this.prevCargoGroup = cargoGroup;
           }
           if (cargoHauled) {
-            if (Object.keys(cargoHauled ).length === 0 && cargoHauled.constructor === Object) {
+            if (Object.keys(cargoHauled).length === 0 && cargoHauled.constructor === Object) {
               this.formData.haulType =  {};
             } else if (cargoHauled.constructor !== Object){
               this.formData.haulType = JSON.parse(cargoHauled); // 
@@ -237,7 +214,6 @@ export default {
           }
           this.uuid = res.data.uuid;
         } else if (res && res.status === "ERROR") {
-          // this.$router.replace({ name: "Home" });
         }
       } catch (err) {
         console.error(err);
