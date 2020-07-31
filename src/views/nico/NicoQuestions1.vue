@@ -311,6 +311,7 @@
                   class="mb-0"
                   :sync="true"
                   v-model="form.Q18"
+                  @change="changeQ18"
                   :font-size="15"
                 />
               </div>
@@ -514,7 +515,6 @@
                 class="mb-0"
                 label="If yes, provide the complete listing identifying all materials(s) and/or chemical content"
                 label-for="Q24"
-                description="maximum 250 characters"
               >
                 <b-form-textarea 
                   id="Q24"
@@ -612,7 +612,6 @@
               >
                 <b-form-file
                   id="Q26"
-                  v-model="$v.form.Q26.$model"
                   :state="validateState('Q26')"
                   @change="onFileChange($event)"
                   placeholder="Choose a file or drop it here..."
@@ -719,6 +718,7 @@ export default {
       let tempObj = {};
       reader.onloadend = (evt) => {
         tempObj.content = evt.target.result;
+        // this.form.Q26 = tempObj
       };
 
       if (file) {
@@ -728,6 +728,11 @@ export default {
         tempObj.name = "";
       }
     },
+    changeQ18 () {
+      if (!this.form.Q18) {
+        this.form.Q19 = []
+      }
+    }
   },
 
   validations: {
@@ -787,7 +792,9 @@ export default {
         maxLength: maxLength(10)
       },
       Q19: {
-        required,
+        required: requiredIf( function() {
+          return this.form.Q18
+        }),
       },
       Q20: {
         required,
@@ -807,7 +814,6 @@ export default {
         required: requiredIf( function() {
           return this.form.Q24_0
         }),
-        ifMinMaxLength: ifMinMaxLength('Q24_0')
       },
       Q25: {
       },

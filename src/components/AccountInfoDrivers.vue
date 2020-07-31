@@ -252,7 +252,7 @@
                             reset-button 
                             locale="en-US" 
                             v-model="driver.noOfAccidentsDate.$model"
-                            :state="validateState(index, 'noOfAccidentsDate')"
+                            :state="validateIfDate(driver.noOfAccidentsDate.$model, driver.noOfAccidents.$model)"
                             placeholder="Choose a date">
                           </b-form-datepicker>
                       </b-col>
@@ -271,7 +271,7 @@
                             reset-button 
                             locale="en-US" 
                             v-model="driver.noOfViolationsDate.$model"
-                            :state="validateState(index, 'noOfViolationsDate')"
+                            :state="validateIfDate(driver.noOfViolationsDate.$model, driver.noOfViolations.$model)"
                             placeholder="Choose a date">
                           </b-form-datepicker>
                       </b-col>
@@ -290,7 +290,6 @@
                       <b-form-textarea 
                         placeholder="Describe Conviction"
                         v-model="driver.conviction.$model"
-                        :state="validateState(index, 'conviction')"
                         rows="2"
                         max-rows="7"
                       ></b-form-textarea>
@@ -300,7 +299,7 @@
                           reset-button 
                           locale="en-US" 
                           v-model="driver.convictionDate.$model"
-                          :state="validateState(index, 'convictionDate')"
+                          :state="validateIfDate(driver.convictionDate.$model, driver.conviction.$model)"
                           placeholder="Choose a date">
                         </b-form-datepicker>
                     </b-col>
@@ -508,10 +507,8 @@ export default {
               required
             },
             conviction: {
-              required
             },
             convictionDate: {
-              required
             },
             EICOOF: {
               required
@@ -552,6 +549,14 @@ export default {
     validateState(index, name) {
       const { $dirty, $error } = this.$v.form.drivers.$each.$iter[index][name];
       return $dirty ? !$error : null;
+    },
+
+    validateIfDate(date, cond) {
+      if (cond) {
+        return date != ''
+      } else {
+        return null
+      }
     },
 
     errorMessage(index, name) {

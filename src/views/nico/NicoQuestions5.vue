@@ -175,6 +175,7 @@
                   class="mb-0" 
                   :sync="true"
                   v-model="form.Q118"
+                  @change="changeQ118"
                   :font-size="15"
                 />
               </div>
@@ -510,15 +511,23 @@ export default {
 
   computed: {
     isQ44_Q50() {
-      return this.form.Q124_44_1 ||
-            this.form.Q124_44_2 ||
-            this.form.Q124_45 ||
-            this.form.Q124_46 ||
-            this.form.Q124_47_1 ||
-            this.form.Q124_47_2 ||
-            this.form.Q124_48 ||
-            this.form.Q124_49 ||
-            this.form.Q124_50
+      return !this.form.Q124_44_1 ||
+            !this.form.Q124_44_2 ||
+            !this.form.Q124_45 ||
+            !this.form.Q124_46 ||
+            !this.form.Q124_47_1 ||
+            !this.form.Q124_47_2 ||
+            !this.form.Q124_48 ||
+            !this.form.Q124_49 ||
+            !this.form.Q124_50
+    }
+  },
+
+  methods: {
+    changeQ118 () {
+      if (!this.form.Q118) {
+        this.form.Q119 = ''
+      }
     }
   },
 
@@ -555,7 +564,9 @@ export default {
         }),
       },
       Q121: {
-        required,
+        required: requiredIf( function() {
+          return this.form.Q117
+        }),
       },
       Q125: {
         required: requiredIf( function() {
