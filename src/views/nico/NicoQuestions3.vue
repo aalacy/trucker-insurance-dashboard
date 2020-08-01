@@ -197,134 +197,127 @@
               </b-form-group>
             </b-col>
           </b-form-row>
-          <b-card
-            header="PHYSICAL DAMAGE COVERAGE"
-            header-text-variant="black"
-            header-bg-variant="white"
-            header-tag="header"
-            class="mb-3"
-            style="border-radius: 0.25rem !important;"
+          <template
+            v-for="(cov, index) in $v.form.physicalDamageCovs.$each.$iter"
           >
-            <b-card-text>
-              <b-form-row class="mb-2">
-                <b-col cols="12" md="6">
-                  <b-form-group
-                    class="mb-0"
-                    label="Date Published"
-                    label-for="Q65"
-                  >
-                    <b-form-datepicker 
-                      reset-button 
-                      locale="en-US" 
-                      placeholder="Choose a date" 
-                      v-model="$v.form.Q65.$model" 
-                      :date-format-options="{ year: 'numeric', month: 'numeric', day: 'numeric' }"
-                      :state="validateState('Q65')" 
-                      class="mb-2"></b-form-datepicker>
-                  </b-form-group>
-                </b-col>
-                <b-col cols="12" md="6">
-                  <b-form-group
-                    class="mb-0"
-                    label="Cost When Purchased"
-                    label-for="Q66"
-                  >
-                    <b-form-input 
-                      type="number"
-                      id="Q66"
-                      v-model="$v.form.Q66.$model"
-                      :state="validateState('Q66')"
-                    ></b-form-input>
-                  </b-form-group>
-                </b-col>
-              </b-form-row>
-              <b-form-row class="mb-2">
-                <b-col cols="12" md="4">
-                  <b-form-group
-                    class="mb-0"
-                    label="Current Stated Value"
-                    label-for="Q67"
-                  >
-                    <b-form-input 
-                      type="number"
-                      id="Q67"
-                      v-model="$v.form.Q67.$model"
-                      :state="validateState('Q67')"
-                    ></b-form-input>
-                  </b-form-group>
-                </b-col>
-                <b-col cols="12" md="8">
-                  <b-form-group
-                    class="mb-0"
-                    label="Value of Permanently Attached Special Equipment"
-                    label-for="Q68"
-                  >
-                    <b-form-input 
-                      type="number"
-                      id="Q68"
-                      v-model="$v.form.Q68.$model"
-                      :state="validateState('Q68')"
-                    ></b-form-input>
-                  </b-form-group>
-                </b-col>
-              </b-form-row>
-              <b-form-row class="mb-2">
-                <b-col cols="12" md="6">
-                  <b-form-group
-                    class="mb-0"
-                    label="Total Stated Amount to be Insured"
-                    label-for="Q69"
-                  >
-                    <b-form-input 
-                      type="number"
-                      id="Q69"
-                      v-model="$v.form.Q69.$model"
-                      :state="validateState('Q69')"
-                    ></b-form-input>
-                  </b-form-group>
-                </b-col>
-                <b-col cols="12" md="6">
-                  <b-form-group
-                    class="mb-0"
-                    label="Comprehensive or Spec. C of Loss?"
-                    label-for="Q70"
-                  >
-                    <b-form-select v-model="$v.form.Q70.$model" :state="validateState('Q70')" :options="Q70Q71Options"></b-form-select>
-                  </b-form-group>
-                </b-col>
-              </b-form-row>
-              <b-form-row class="mb-2">
-                <b-col cols="12" md="6">
-                  <b-form-group
-                    class="mb-0"
-                    label="Collision"
-                    label-for="Q72"
-                  >
-                    <b-form-input 
-                      type="number"
-                      id="Q72"
-                      v-model="$v.form.Q72.$model"
-                      :state="validateState('Q72')"
-                    ></b-form-input>
-                  </b-form-group>
-                </b-col>
-                <b-col cols="12" md="6">
-                  <b-form-group
-                    class="mb-0"
-                    label="Cargo Limit of Insurance"
-                    label-for="Q73"
-                  >
-                    <b-form-input 
-                      type="number"
-                      id="Q73"
-                      v-model="$v.form.Q73.$model"
-                      :state="validateState('Q73')"
-                    ></b-form-input>
-                  </b-form-group>
-                </b-col>
-              </b-form-row>
-            </b-card-text>
-          </b-card>
+            <b-card
+              class="mb-3"
+              style="border-radius: 0.25rem !important;"
+            >
+              <template v-slot:header>
+                <div class="d-flex justify-content-between">
+                  <h5 class="mb-0">PHYSICAL DAMAGE COVERAGE # {{Number(index)+1}}</h5>
+                  <div>
+                    <b-button @click="addPhysicalDamageCov" class="mr-2" size="sm" variant="primary">
+                      <font-awesome-icon class="fontawesome" icon="plus" />
+                    </b-button>
+                    <b-button @click="removePhysicalDamaageCov(index)" v-if="form.cargoInfos.length > 1" class="mr-2" size="sm" variant="danger">
+                      <font-awesome-icon class="fontawesome" icon="minus" />
+                    </b-button>
+                  </div>
+                </div>
+              </template>
+              <b-card-text>
+                <b-form-row class="mb-2">
+                  <b-col cols="12" md="6">
+                    <b-form-group
+                      label="Date Published"
+                    >
+                      <b-form-datepicker 
+                        reset-button 
+                        locale="en-US" 
+                        placeholder="Choose a date" 
+                        v-model="cov.Q65.$model" 
+                        :date-format-options="{ year: 'numeric', month: 'numeric', day: 'numeric' }"
+                        :state="validateCovState(index, 'Q65')" 
+                        class="mb-2"></b-form-datepicker>
+                    </b-form-group>
+                  </b-col>
+                  <b-col cols="12" md="6">
+                    <b-form-group
+                      label="Cost When Purchased"
+                    >
+                      <b-form-input 
+                        type="number"
+                        v-model="cov.Q66.$model"
+                        :state="validateCovState(index, 'Q66')"
+                      ></b-form-input>
+                    </b-form-group>
+                  </b-col>
+                </b-form-row>
+                <b-form-row class="mb-2">
+                  <b-col cols="12" md="4">
+                    <b-form-group
+                      label="Current Stated Value"
+                    >
+                      <b-form-input 
+                        type="number"
+                        v-model="cov.Q67.$model"
+                        :state="validateCovState(index, 'Q67')"
+                      ></b-form-input>
+                    </b-form-group>
+                  </b-col>
+                  <b-col cols="12" md="8">
+                    <b-form-group
+                      label="Value of Permanently Attached Special Equipment"
+                    >
+                      <b-form-input 
+                        type="number"
+                        v-model="cov.Q68.$model"
+                        :state="validateCovState(index, 'Q68')"
+                      ></b-form-input>
+                    </b-form-group>
+                  </b-col>
+                </b-form-row>
+                <b-form-row class="mb-2">
+                  <b-col cols="12" md="6">
+                    <b-form-group
+                      label="Total Stated Amount to be Insured"
+                    >
+                      <b-form-input 
+                        type="number"
+                        v-model="cov.Q69.$model"
+                        :state="validateCovState(index, 'Q69')"
+                      ></b-form-input>
+                    </b-form-group>
+                  </b-col>
+                  <b-col cols="12" md="6">
+                    <b-form-group
+                      label="Comprehensive or Spec. C of Loss?"
+                    >
+                      <b-form-select v-model="cov.Q70.$model" :state="validateCovState(index, 'Q70')" :options="Q70Q71Options"></b-form-select>
+                    </b-form-group>
+                  </b-col>
+                </b-form-row>
+                <b-form-row class="mb-2">
+                  <b-col cols="12" md="6">
+                    <b-form-group
+                      label="Collision"
+                    >
+                      <b-form-input 
+                        type="number"
+                        v-model="cov.Q72.$model"
+                        :state="validateCovState(index, 'Q72')"
+                      ></b-form-input>
+                    </b-form-group>
+                  </b-col>
+                  <b-col cols="12" md="6">
+                    <b-form-group
+                      label="Cargo Limit of Insurance"
+                      label-for="Q73"
+                    >
+                      <b-form-input 
+                        type="number"
+                        id="Q73"
+                        v-model="cov.Q73.$model"
+                        :state="validateCovState(index, 'Q73')"
+                      ></b-form-input>
+                    </b-form-group>
+                  </b-col>
+                </b-form-row>
+              </b-card-text>
+            </b-card>
+          </template>
           <div v-if="error" class="alert alert-danger" role="alert">{{ error }}</div>
         </div>
         <div class="card-footer">
@@ -386,6 +379,44 @@ export default {
     }
   },
 
+  methods: {
+    validateCovState(index, name) {
+      const { $dirty, $error } = this.$v.form.physicalDamageCovs.$each.$iter[index][name];
+      return $dirty ? !$error : null;
+    },
+    addPhysicalDamageCov() {
+      let _form = this.form
+      this.form.physicalDamageCovs.push({
+        Q65: '',
+        Q66: '',
+        Q67: '',
+        Q68: '',
+        Q69: '',
+        Q70: '',
+        Q71: '',
+        Q72: '',
+        Q73: '',
+      })
+      this.form = Object.assign({}, _form)
+    },
+    removePhysicalDamaageCov(key) {
+      this.$swal({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        buttons: true,
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then((willDelete) => {
+        if (willDelete) {
+          this.form.physicalDamageCovs.splice(key, 1);
+        }
+      })
+    }
+  },
+
   validations: {
     form: {
       Q61: {
@@ -429,30 +460,34 @@ export default {
       Q63_pup_trailers: {
         required
       },
-      Q65: {
-        required
-      },
-      Q66: {
-        required
-      },
-      Q67: {
-        required
-      },
-      Q68: {
-        required
-      },
-      Q69: {
-        required
-      },
-      Q70: {
-        required
-      },
-      Q72: {
-        required
-      },
-      Q73: {
-        required
-      },
+      physicalDamageCovs: {
+        $each: {
+          Q65: {
+            required
+          },
+          Q66: {
+            required
+          },
+          Q67: {
+            required
+          },
+          Q68: {
+            required
+          },
+          Q69: {
+            required
+          },
+          Q70: {
+            required
+          },
+          Q72: {
+            required
+          },
+          Q73: {
+            required
+          },
+        }
+      }
     }
   }
 }

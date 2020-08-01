@@ -182,41 +182,17 @@ export const NicoMixin = {
         Q63_semi_trailers: 0,
         Q63_trailers: 0,
         Q63_pup_trailers: 0,
-        Q65: '',
-        Q66: '',
-        Q67: '',
-        Q68: '',
-        Q69: '',
-        Q70: '',
-        Q71: '',
-        Q72: '',
-        Q73: '',
+        physicalDamageCovs: [],
         Q74: true,
         Q75: '',
         Q76: '',
-        Q78: '',
-        Q79: '',
-        Q80: '',
-        Q81: '',
-        Q82: '',
-        Q83: '',
-        Q84: '',
-        Q85: true,
-        Q86: true,
-        Q87: true,
-        Q88: true,
+        lossExps: [],
         Q89: true,
         Q90: '',
         Q91: true,
         Q92: '',
         Q93: '',
-        Q94: '',
-        Q95: '',
-        Q96: '',
-        Q97: '',
-        Q98: '',
-        Q99: '',
-        Q100: '',
+        cargoInfos: [],
         Q101: '',
         Q102: '',
         Q103: '',
@@ -288,6 +264,45 @@ export const NicoMixin = {
     goNextForm() {
       this.$emit("go-to-form", this.nextForm);
     },
+    addPhysicalDamageCov() {
+      this.form.physicalDamageCovs.push({
+        Q65: '',
+        Q66: '',
+        Q67: '',
+        Q68: '',
+        Q69: '',
+        Q70: '',
+        Q71: '',
+        Q72: '',
+        Q73: '',
+      })
+    },
+    addLossExp() {
+      this.form.lossExps.push({
+        Q78: '',
+        Q79: '',
+        Q80: '',
+        Q81: '',
+        Q82: '',
+        Q83: '',
+        Q84: '',
+        Q85: true,
+        Q86: true,
+        Q87: true,
+        Q88: true,
+      })
+    },
+    addCargoInfo () {
+      this.form.cargoInfos.push({
+        Q94: '',
+        Q95: '',
+        Q96: '',
+        Q97: '',
+        Q98: '',
+        Q99: '',
+        Q100: '',
+      })
+    },
     async loadCompany() {
       this.loading = true
       this.error = null
@@ -303,6 +318,27 @@ export const NicoMixin = {
 
             if (nico_questions.Q5 != undefined && nico_questions.driversContinue != undefined) {
               this.form = nico_questions
+              // newly add loss Experience blocks as an array
+              if (!nico_questions.lossExps) {
+                this.form.lossExps = []
+              }
+              if (this.form.lossExps.length == 0) {
+                this.addLossExp()
+              }
+              // newly add the cargo Information blocks as an array
+              if (!nico_questions.cargoInfos) {
+                this.form.cargoInfos = []
+              }
+              if (this.form.cargoInfos.length == 0) {
+                this.addCargoInfo()
+              }
+              // newly add the physical damage coverage block as an array
+              if (!nico_questions.physicalDamageCovs) {
+                this.form.physicalDamageCovs = []
+              }
+              if (this.form.physicalDamageCovs.length == 0) {
+                this.addPhysicalDamageCov()
+              }
             }
           } 
 
