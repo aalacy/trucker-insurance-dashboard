@@ -21,28 +21,31 @@
                 <div
                   v-for="(subItem, subIndex) in item.cargoHauled"
                   :key="subIndex"
-                  class="col-3 text-center mb-2 p-1 pointer "
-                  @click="selectHaulType(item.value, subItem.value)"
+                  class="col-3 text-center mb-2 p-1 pointer"
+                  v-b-tooltip.hover.top="haulingPercent(item.value, subItem.value)"
+                  @click="showPercentModal(item.value, subItem.value)"
                   :class="{
                       selected:
-                          cargoHauledMap[item.value] &&
-                        cargoHauledMap[item.value][subItem.value]
+                          formData.haulType[item.value] &&
+                        formData.haulType[item.value][subItem.value]
                     }"
                 >
-                <div class="haul-type">
-                  <div class="haul-type-wrapper">
-                    <img :src="subItem.img" alt="haul type">
+                  <div class="haul-type">
+                    <div class="haul-type-wrapper">
+                      <img 
+                        :src="subItem.img"
+                        
+                        alt="haul type">
+                    </div>
+                    <div
+                      class="name"
+                      :class="{
+                        selected:
+                          formData.haulType[item.value] &&
+                          formData.haulType[item.value][subItem.value]
+                      }"
+                    >{{ subItem.value }}</div>
                   </div>
-
-                  <div
-                    class="name"
-                    :class="{
-                      selected:
-                        cargoHauledMap[item.value] &&
-                        cargoHauledMap[item.value][subItem.value]
-                    }"
-                  >{{ subItem.value }}</div>
-                </div>
                 </div>
               </div>
             </div>
@@ -82,18 +85,79 @@
         </div>
       </div>
     </form>
+
+    <b-modal
+      id="modal-hauling"
+      ref="modal"
+      v-model="percentModal"
+      title="Information of Hauled"
+      @show="resetModal"
+      @hidden="resetModal"
+      @ok="handleOk"
+    >
+      <b-form @submit.prevent="handleSubmit">
+        <b-form-group
+          class="mt-3"
+          label="% of Hauling"
+          :state="validatePercent('percent')"
+          :invalid-feedback="invalidPercent('percent')"
+        >
+          <b-input-group append="%">
+            <b-form-input 
+              type="number"
+              v-model="$v.form1.percent.$model"
+              :state="validatePercent('percent')"
+              required
+            >
+            </b-form-input>
+          </b-input-group>
+        </b-form-group>
+        <b-form-group
+          class="mt-3"
+          label="Maximum Value"
+          :state="validatePercent('maxValue')"
+          :invalid-feedback="invalidPercent('maxValue')"
+        >
+          <b-form-input 
+            type="number"
+            v-model="$v.form1.maxValue.$model"
+            :state="validatePercent('maxValue')"
+            required
+          >
+          </b-form-input>
+        </b-form-group>
+        <b-form-group
+          class="mt-3"
+          label="Average Value"
+          :state="validatePercent('avgValue')"
+          :invalid-feedback="invalidPercent('avgValue')"
+        >
+          <b-form-input 
+            type="number"
+            v-model="$v.form1.avgValue.$model"
+            :state="validatePercent('avgValue')"
+            required
+          >
+          </b-form-input>
+        </b-form-group>
+      </b-form>
+    </b-modal>
   </div>
 </template>
 
 <script>
 import { mapState } from "vuex";
 import { validateField, validateForm, minLength } from "../validators.js";
+import { validationMixin } from "vuelidate";
+import { required, minValue, maxValue } from "vuelidate/lib/validators";
 import { API } from "../api.js";
 import axios from "axios";
-import { setTimeout } from 'timers';
 
 export default {
   name: "AccountInfoCargoHauled",
+
+  mixins: [validationMixin],
+
   props: {
     prevForm: {
       type: String,
@@ -108,10 +172,39 @@ export default {
       required: true
     }
   },
+
+  validations: {
+    form1: {
+      percent: {
+        required,
+        minValue: minValue(0),
+        maxValue: maxValue(100)
+      },
+      avgValue: {
+        required,
+        minValue: minValue(0),
+      },
+      maxValue: {
+        required,
+        minValue: minValue(0),
+      }
+    }
+  },
+
   data() {
     return {
       save: true,
       uuid:"",
+      form1:{
+        percent: '',
+        avgValue: '',
+        maxValue: ''
+      },
+      curHauling: {
+        group: '',
+        hauled: ''
+      },
+      percentModal: false,
       prevCargoGroup: [],
       formData: {
         haulType: {}
@@ -133,19 +226,6 @@ export default {
       );
     },
 
-    cargoHauledMap() {
-      let map = {};
-      for (let cargoGroupValue in this.formData.haulType) {
-        map[cargoGroupValue] = {};
-
-        let haulTypes = this.formData.haulType[cargoGroupValue];
-        haulTypes.forEach(haulType => {
-          map[cargoGroupValue][haulType] = true;
-        });
-      }
-
-      return map;
-    },
     ...mapState(["data"])
   },
   created() {
@@ -156,23 +236,21 @@ export default {
   
   },
   methods: {
-    selectHaulType(cargoGroupValue, haulTypeValue) {
+    selectHaulType(cargoGroupValue, haulTypeValue, data={}) {
       if (!this.formData.haulType[cargoGroupValue]) {
-        this.$set(this.formData.haulType, cargoGroupValue, []);
+        this.$set(this.formData.haulType, cargoGroupValue, {});
       }
 
-      let haulTypeIndex = this.formData.haulType[cargoGroupValue].indexOf(
-        haulTypeValue
-      );
+      let hasValue = this.formData.haulType[cargoGroupValue].hasOwnProperty(haulTypeValue)
 
-      if (haulTypeIndex > -1) {
-        this.formData.haulType[cargoGroupValue].splice(haulTypeIndex, 1);
+      if (hasValue) {
+        this.$delete(this.formData.haulType[cargoGroupValue], haulTypeValue);
 
-        if (!this.formData.haulType[cargoGroupValue].length) {
+        if (!Object.keys(this.formData.haulType[cargoGroupValue]).length) {
           this.$delete(this.formData.haulType, cargoGroupValue);
         }
       } else {
-        this.formData.haulType[cargoGroupValue].push(haulTypeValue);
+        this.formData.haulType[cargoGroupValue][haulTypeValue] = data
       }
 
       this.formErrors = {};
@@ -206,10 +284,22 @@ export default {
           if (cargoHauled) {
             if (Object.keys(cargoHauled).length === 0 && cargoHauled.constructor === Object) {
               this.formData.haulType =  {};
-            } else if (cargoHauled.constructor !== Object){
-              this.formData.haulType = JSON.parse(cargoHauled); // 
             } else {
-              this.formData.haulType = cargoHauled;
+              if (cargoHauled.constructor !== Object){
+                cargoHauled = JSON.parse(cargoHauled)
+              } 
+
+              let isNewData = false;
+              Object.keys(cargoHauled).map(key => {
+                if (cargoHauled[key] instanceof Object) {
+                  isNewData = true
+                }
+              })
+              if (!isNewData) {
+                this.formData.haulType = {}
+              } else {
+                this.formData.haulType = cargoHauled
+              }
             }
           }
           this.uuid = res.data.uuid;
@@ -250,7 +340,71 @@ export default {
       } finally {
         this.loading = false;
       }
-    }
+    },
+    showPercentModal(group, hauled) {
+      this.$v.form1.$reset()
+      this.curHauling = {
+        group,
+        hauled
+      } 
+      if (this.formData.haulType[group] && this.formData.haulType[group][hauled]) {
+        this.selectHaulType(group, hauled)
+      } else {
+        this.percentModal = true
+      }
+    },
+    resetModal() {
+      this.form1 = {
+        percent: '',
+        avgValue: '',
+        maxValue: ''
+      }
+    },
+    handleOk(bvModalEvt) {
+      // Prevent modal from closing
+      bvModalEvt.preventDefault()
+      // Trigger submit handler
+      this.handleSubmit()
+    },
+    handleSubmit() {
+      // Exit when the form isn't valid
+      this.$v.form1.$touch();
+      if (this.$v.form1.$anyError) {
+        return;
+      }
+      
+      // Hide the modal manually
+      this.$nextTick(() => {
+        this.$bvModal.hide('modal-hauling')
+      })
+
+      this.selectHaulType(this.curHauling.group, this.curHauling.hauled, this.form1)
+    },
+    validatePercent(name) {
+      const { $dirty, $error } = this.$v.form1[name];
+      return $dirty ? !$error : null;
+    },
+    invalidPercent(name) {
+      const { required, minValue, maxValue } = this.$v.form1[name]
+
+      let msg = ''
+      if (required != undefined && !required) {
+        msg = 'This field is required.'
+      } 
+
+      if ((minValue != undefined && !minValue) || (maxValue != undefined && !maxValue)) {
+        msg = 'The value must be valid.'
+      } 
+
+      return msg
+    },
+    haulingPercent (group, hauled) {
+      if (this.formData.haulType[group] && this.formData.haulType[group][hauled]) {
+        return `${this.formData.haulType[group][hauled]}%`
+      } else {
+        return ''
+      }
+    },
   }
 };
 </script>
