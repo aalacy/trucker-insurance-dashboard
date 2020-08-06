@@ -69,7 +69,7 @@
             <a
               href='https://blog.luckytruck.co'
               target="_blank"
-              class="btn btn-primary"
+              :class="blogBtn"
             >Blog</a> <span class="sr-only">(Click to Blog)</span>
           </li>
         </ul>
@@ -127,11 +127,19 @@
       },
 
       linkBtn () {
-       let className = 'btn btn-primary btn-sm lt-btn'
+       let className = 'btn btn-primary btn-sm mr-2'
        // if (this.mobile) {
        //  className += ' btn-sm'
        // }
        return className
+      },
+
+      blogBtn () {
+        if (this.loggedIn) {
+          return 'btn btn-primary'
+        } else {
+          return 'btn btn-primary btn-sm' 
+        }
       },
 
       profileSize () {

@@ -17,6 +17,7 @@
                   class="mb-0" 
                   :sync="true"
                   v-model="form.Q107"
+                  @change="cleanDataOnYes('Q107', 'Q108')"
                   :font-size="15"
                 />
               </div>
@@ -100,6 +101,7 @@
                   class="mb-0" 
                   :sync="true"
                   v-model="form.Q113"
+                  @change="cleanDataOnYes('Q113', 'Q114')"
                   :font-size="15"
                 />
               </div>
@@ -175,7 +177,7 @@
                   class="mb-0" 
                   :sync="true"
                   v-model="form.Q118"
-                  @change="changeQ118"
+                  @change="cleanDataOnYes('Q118', 'Q119')"
                   :font-size="15"
                 />
               </div>
@@ -295,6 +297,7 @@
                       class="mb-0" 
                       :sync="true"
                       v-model="form.Q124_44_1"
+                      @change="changeFilingQuestions"
                       :font-size="15"
                     />
                   </div>
@@ -311,6 +314,7 @@
                       class="mb-0" 
                       :sync="true"
                       v-model="form.Q124_44_2"
+                      @change="changeFilingQuestions"
                       :font-size="15"
                     />
                   </div>
@@ -327,6 +331,7 @@
                       class="mb-0" 
                       :sync="true"
                       v-model="form.Q124_45"
+                      @change="changeFilingQuestions"
                       :font-size="15"
                     />
                   </div>
@@ -343,6 +348,7 @@
                       class="mb-0" 
                       :sync="true"
                       v-model="form.Q124_46"
+                      @change="changeFilingQuestions"
                       :font-size="15"
                     />
                   </div>
@@ -359,6 +365,7 @@
                       class="mb-0" 
                       :sync="true"
                       v-model="form.Q124_47_1"
+                      @change="changeFilingQuestions"
                       :font-size="15"
                     />
                   </div>
@@ -375,6 +382,7 @@
                       class="mb-0" 
                       :sync="true"
                       v-model="form.Q124_47_2"
+                      @change="changeFilingQuestions"
                       :font-size="15"
                     />
                   </div>
@@ -391,6 +399,7 @@
                       class="mb-0" 
                       :sync="true"
                       v-model="form.Q124_48"
+                      @change="changeFilingQuestions"
                       :font-size="15"
                     />
                   </div>
@@ -407,6 +416,7 @@
                       class="mb-0" 
                       :sync="true"
                       v-model="form.Q124_49"
+                      @change="changeFilingQuestions"
                       :font-size="15"
                     />
                   </div>
@@ -423,6 +433,7 @@
                       class="mb-0" 
                       :sync="true"
                       v-model="form.Q124_50"
+                      @change="changeFilingQuestions"
                       :font-size="15"
                     />
                   </div>
@@ -524,9 +535,9 @@ export default {
   },
 
   methods: {
-    changeQ118 () {
-      if (!this.form.Q118) {
-        this.form.Q119 = ''
+    changeFilingQuestions () {
+      if (!this.isQ44_Q50) {
+        this.form.Q125 = ''
       }
     }
   },

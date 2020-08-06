@@ -16,7 +16,6 @@
                   class="mb-0"
                   :sync="true"
                   v-model="form.Q27"
-                  @change="changeQ27"
                   :font-size="15"
                 />
               </div>

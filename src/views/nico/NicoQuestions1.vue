@@ -326,6 +326,7 @@
               >
                 <b-form-tags 
                   v-model="$v.form.Q19.$model" 
+                  :state="validateState('Q19')"
                   no-outer-focus class="mb-2"
                 >
                   <template v-slot="{ tags, disabled, addTag, removeTag }">

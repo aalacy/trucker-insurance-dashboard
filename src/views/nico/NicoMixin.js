@@ -258,6 +258,11 @@ export const NicoMixin = {
       const { $dirty, $error } = this.$v.form[name];
       return $dirty ? !$error : null;
     },
+    cleanDataOnYes(v1, v2) {
+      if (this.form[v1]) {
+        this.form[v2] = ''
+      }
+    },
     goPrevForm() {
       this.$emit("go-to-form", this.prevForm);
     },

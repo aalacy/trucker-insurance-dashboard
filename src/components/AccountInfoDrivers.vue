@@ -415,7 +415,7 @@ export default {
       save: true,
       mobile: false,
       mailingAddress: {},
-      doh: {},
+      doh: '',
       form: {
         drivers: []
       },
@@ -667,6 +667,7 @@ export default {
             if (doh) {
               this.doh = doh
             }
+            console.log(this.doh)
           }
 
           if (driverInformationList) {

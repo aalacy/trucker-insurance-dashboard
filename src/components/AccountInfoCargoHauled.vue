@@ -90,24 +90,19 @@
       id="modal-hauling"
       ref="modal"
       v-model="percentModal"
-      title="Information of Hauled"
+      title="Previous Physical Damage Coverage"
       @show="resetModal"
       @hidden="resetModal"
       @ok="handleOk"
     >
       <b-form @submit.prevent="handleSubmit">
         <b-form-group
-          class="mt-3"
           label="% of Hauling"
-          :state="validatePercent('percent')"
-          :invalid-feedback="invalidPercent('percent')"
         >
           <b-input-group append="%">
             <b-form-input 
               type="number"
               v-model="$v.form1.percent.$model"
-              :state="validatePercent('percent')"
-              required
             >
             </b-form-input>
           </b-input-group>
@@ -115,28 +110,20 @@
         <b-form-group
           class="mt-3"
           label="Maximum Value"
-          :state="validatePercent('maxValue')"
-          :invalid-feedback="invalidPercent('maxValue')"
         >
           <b-form-input 
             type="number"
             v-model="$v.form1.maxValue.$model"
-            :state="validatePercent('maxValue')"
-            required
           >
           </b-form-input>
         </b-form-group>
         <b-form-group
           class="mt-3"
           label="Average Value"
-          :state="validatePercent('avgValue')"
-          :invalid-feedback="invalidPercent('avgValue')"
         >
           <b-form-input 
             type="number"
             v-model="$v.form1.avgValue.$model"
-            :state="validatePercent('avgValue')"
-            required
           >
           </b-form-input>
         </b-form-group>
@@ -289,10 +276,11 @@ export default {
                 cargoHauled = JSON.parse(cargoHauled)
               } 
 
-              let isNewData = false;
+              let isNewData = true;
               Object.keys(cargoHauled).map(key => {
-                if (cargoHauled[key] instanceof Object) {
-                  isNewData = true
+                console.log(cargoHauled[key])
+                if (Array.isArray(cargoHauled[key])) {
+                  isNewData = false
                 }
               })
               if (!isNewData) {
@@ -368,10 +356,10 @@ export default {
     },
     handleSubmit() {
       // Exit when the form isn't valid
-      this.$v.form1.$touch();
-      if (this.$v.form1.$anyError) {
-        return;
-      }
+      // this.$v.form1.$touch();
+      // if (this.$v.form1.$anyError) {
+      //   return;
+      // }
       
       // Hide the modal manually
       this.$nextTick(() => {
@@ -399,8 +387,8 @@ export default {
       return msg
     },
     haulingPercent (group, hauled) {
-      if (this.formData.haulType[group] && this.formData.haulType[group][hauled]) {
-        return `${this.formData.haulType[group][hauled]}%`
+      if (this.formData.haulType[group] && this.formData.haulType[group][hauled] && this.formData.haulType[group][hauled].percent ) {
+        return `${this.formData.haulType[group][hauled].percent}%`
       } else {
         return ''
       }

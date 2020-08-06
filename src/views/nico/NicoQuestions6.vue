@@ -16,6 +16,7 @@
                   class="mb-0" 
                   :sync="true"
                   v-model="form.Q126_0"
+                  @change="changeQ126_0"
                   :font-size="15"
                 />
               </div>
@@ -45,6 +46,7 @@
                   class="mb-0" 
                   :sync="true"
                   v-model="form.Q127"
+                  @change="cleanDataOnYes('Q127', 'Q128')"
                   :font-size="15"
                 />
               </div>
@@ -101,6 +103,7 @@
                   class="mb-0" 
                   :sync="true"
                   v-model="form.Q131_0"
+                  @change="cleanDataOnYes('Q131_0', 'Q131')"
                   :font-size="15"
                 />
               </div>
@@ -133,6 +136,7 @@
                   class="mb-0" 
                   :sync="true"
                   v-model="form.Q132"
+                  @change="cleanDataOnYes('Q132', 'Q133')"
                   :font-size="15"
                 />
               </div>
@@ -210,6 +214,18 @@ export default {
     progress: {
       type: Number,
       required: true
+    }
+  },
+
+  methods: {
+    changeQ126_0() {
+      if (!this.form.Q126_0) {
+        this.form.Q126 = ''
+        this.form.Q127 = false
+        this.form.Q128 = ''
+        this.form.Q129 = ''
+        this.form.Q130 = false
+      }
     }
   },
 

@@ -15,6 +15,7 @@
                   :sync="true"
                   :height="30" 
                   v-model="form.Q74"
+                  @change="cleanDataOnYes('Q74', 'Q75')"
                   class="mb-0"
                   :font-size="15"
                 />
@@ -238,6 +239,7 @@
                   class="mb-0" 
                   :sync="true"
                   v-model="form.Q89"
+                  @change="cleanDataOnYes('Q89', 'Q90')"
                   :font-size="15"
                 />
               </div>
@@ -272,6 +274,7 @@
                   class="mb-0" 
                   :sync="true"
                   v-model="form.Q91"
+                  @change="cleanDataOnYes('Q91', 'Q92')"
                   :font-size="15"
                 />
               </div>
@@ -282,11 +285,9 @@
               <b-form-group
                 class="mb-0"
                 label="If yes, date and why"
-                label-for="Q92"
                 description="maximum 250 characters"
               >
                 <b-form-textarea 
-                  id="Q92"
                   v-model="$v.form.Q92.$model"
                   :state="validateState('Q92')"
                   rows="2"
@@ -580,7 +581,7 @@ export default {
           array.splice(key, 1);
         }
       })
-    }
+    },
   },
 
   validations: {
