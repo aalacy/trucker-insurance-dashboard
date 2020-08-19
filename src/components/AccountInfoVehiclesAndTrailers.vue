@@ -11,6 +11,7 @@
             <div class="d-flex justify-content-between align-items-center">
               <b class="mb-0">Vehicle #{{ Number(index) + 1 }}</b>
               <button
+                v-if="$v.form.vehicles.length > 1"
                 type="button"
                 class="lt-button lift mx-2"
                 @click="removeVehiclesData(index)"
@@ -170,10 +171,9 @@
                   >
                     <b-form-select 
                       v-model="vehicle.antilockBrakersOrAirBags.$model" 
-                      :state="validateVehicleState(index, 'antilockBrakersOrAirBags')" 
                       :options="antilockBrakersOrAirBagsptions">
                     </b-form-select>
-                    <b-form-invalid-feedback>{{ errrorMessageVehicle(index, 'antilockBrakersOrAirBags')}}</b-form-invalid-feedback>
+                    <!-- <b-form-invalid-feedback>{{ errrorMessageVehicle(index, 'antilockBrakersOrAirBags')}}</b-form-invalid-feedback> -->
                 </b-form-group>
               </b-col>
             </b-form-row>
@@ -204,14 +204,15 @@
                     :height="30" 
                     :sync="true"
                     class="mb-0"
-                    v-model="form.Q60"
+                    v-model="vehicle.coverage.$model"
+                    @change="cleanDataOnYes(vehicle, 'coverage', 'currentValue', 'deductible')"
                     :font-size="15"
                   />
                 </div>
               </b-col>
             </b-row>
 
-            <b-row v-if="vehicle.coverage">
+            <b-row v-if="vehicle.coverage.$model">
               <b-col cols="12" md="6">
                 <b-form-group
                   label="Current value of the vehicle or trailer"
@@ -219,7 +220,6 @@
                   <b-form-input 
                     type="number"
                     v-model="vehicle.currentValue.$model"
-                    :state="validateVehicleState(index, 'currentValue')"
                   />
                   <b-form-invalid-feedback>{{ errrorMessageVehicle(index, 'currentValue')}}</b-form-invalid-feedback>
                 </b-form-group>
@@ -230,7 +230,6 @@
                 >
                   <b-form-select 
                     v-model="vehicle.deductible.$model"
-                    :state="validateVehicleState(index, 'deductible')"
                     :options="deductibles">
                   </b-form-select>
                   <b-form-invalid-feedback>{{ errrorMessageVehicle(index, 'deductible')}}</b-form-invalid-feedback>
@@ -438,14 +437,15 @@
                     :height="30" 
                     :sync="true"
                     class="mb-0"
-                    v-model="form.Q60"
+                    v-model="trailer.coverage.$model"
+                    @change="cleanDataOnYes(trailer, 'coverage', 'currentValue', 'deductible')"
                     :font-size="15"
                   />
                 </div>
               </b-col>
             </b-row>
 
-            <b-row v-if="trailer.coverage">
+            <b-row v-if="trailer.coverage.$model">
               <b-col cols="12" md="6">
                 <b-form-group
                   label="Current value of the vehicle or trailer"
@@ -453,7 +453,6 @@
                   <b-form-input 
                     type="number"
                     v-model="trailer.currentValue.$model"
-                    :state="validateTrailerState(index, 'currentValue')"
                   />
                   <b-form-invalid-feedback>{{ errrorMessageTrailer(index, 'currentValue')}}</b-form-invalid-feedback>
                 </b-form-group>
@@ -464,7 +463,6 @@
                 >
                   <b-form-select 
                     v-model="trailer.deductible.$model"
-                    :state="validateTrailerState(index, 'deductible')"
                     :options="deductibles">
                   </b-form-select>
                   <b-form-invalid-feedback>{{ errrorMessageTrailer(index, 'deductible')}}</b-form-invalid-feedback>
@@ -543,7 +541,7 @@ import { API } from "../api.js";
 import { mapState } from "vuex";
 import { isMobile } from "mobile-device-detect";
 import { validationMixin } from "vuelidate";
-import { required, minLength, maxLength, minValue, maxValue } from "vuelidate/lib/validators";
+import { required, requiredIf, minLength, maxLength, minValue, maxValue } from "vuelidate/lib/validators";
 
 export default {
   name: "AccountInfoVehiclesAndTrailers",
@@ -589,7 +587,9 @@ export default {
         "Sport Utility Vehicle",
         "Emergency Vehicle",
         "Military Vehicle",
-        "Pickup or Tractor Truck"
+        "Pickup or Tractor Truck",
+        "Straight Truck",
+        "Box Truck"
       ],
       trailerTypes: [
         "Auto Hauler",
@@ -683,7 +683,6 @@ export default {
               required
             },
             antilockBrakersOrAirBags: {
-              required
             },
             radiusOfTravelVehicle: {
               required
@@ -692,10 +691,8 @@ export default {
               required
             },
             currentValue: {
-              required
             },
             deductible: {
-              required
             },
           }
         },
@@ -829,6 +826,12 @@ export default {
     addTrailerData(data) {
       this.form.trailers.push(Object.assign({}, this.defaultData));
     },
+    cleanDataOnYes(obj, v, v1, v2) {
+      if (obj[v].$model) {
+        obj[v1].$model = ''
+        obj[v2].$model = ''
+      }
+    },
     removeVehiclesData(key) {
       this.$swal({
         title: 'Are you sure?',
@@ -951,7 +954,7 @@ export default {
             if (vehicleInformationList.trailer.length > 0 && vehicleInformationList.trailer[0].grossVehicleWeight != undefined) {
               this.form.trailers = vehicleInformationList.trailer
             } else {
-              this.addTrailerData();
+              // this.addTrailerData();
             }
           } else {
             this.addVehicleData();

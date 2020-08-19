@@ -45,7 +45,7 @@
             </div>
             <div class="form-group">
               <b-input
-                v-model="form.dotId"
+                v-model="$v.form.dotId.$model"
                 type="text"
                 class="lt-input border border-color"
                 placeholder="US DOT Number"
@@ -138,6 +138,7 @@
 <script>
 import { API } from "../api.js";
 import Vue from "vue";
+import { mapState } from 'vuex'
 import { validationMixin } from "vuelidate";
 import { required, minLength, email, sameAs } from "vuelidate/lib/validators";
 import Loading from "vue-loading-overlay";
@@ -171,11 +172,11 @@ export default {
       contains_uppercase: false,
       contains_special_character: false,
       valid_password: false,
-      existingDots: []
     };
   },
 
   computed: {
+    ...mapState('auth', { existingDots: state => state.existingDots }),
     validatePassword() {
       let valid = false
       if (!this.form.password || !this.form.confirmpassword) {
@@ -213,15 +214,13 @@ export default {
       companyName: {
         required,
         minLength: minLength(3)
+      },
+      dotId: {
       }
     }
   },
 
   async mounted() {
-    try{
-      const res = await API.get('users/dots')
-      this.existingDots = res.dots
-    } catch (e) { console.log(e.response) }
   },
   methods: {
     validateState(name) {
@@ -230,9 +229,13 @@ export default {
     },
 
     dotDuplication () {
+      let dotId = this.$v.form.dotId.$model
+      if (!dotId) {
+        return true
+      }
       let valid = false
-      if (this.existingDots.includes(this.form.dotId)) {
-        this.dotDuplicationError = "This DOT # is already in use. Double-check to add your own. If you believe this DOT # belongs to you, <a href='/contactus'>Click here</a>"
+      if (this.existingDots.includes(dotId)) {
+        this.dotDuplicationError = "<span class='text-danger'>This DOT # is already in use. Double-check to add your own. If you believe this DOT # belongs to you, <a href='/contactus'>Click here</a></span>"
         valid = false
       } else {
         this.dotDuplicationError = ""

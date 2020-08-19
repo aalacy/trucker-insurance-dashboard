@@ -567,7 +567,6 @@ const updateUUIDAndDotId = () => {
     localStorage.setItem('uuid', params.uuid)
   }
   if (params.dotId && params.dotId != undefined) {
-    console.log('router', params.dotId)
     localStorage.setItem('usdot', params.dotId)
   }
 }

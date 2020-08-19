@@ -28,7 +28,7 @@
           </div>
 
           <div class="row">
-            <div class="col-12 col-md-6 col-lg-6 ">
+            <div class="col-12 col-md-6 col-lg-6">
               <div class="form-group">
                 <input
                   v-model="formData.city"
@@ -95,6 +95,7 @@
                   placeholder="USDOT"
                   @focus="onFocus('USDOT')"
                   @blur="onBlur"
+                  :readonly="submitted && status"
                 >
 
                 <div v-if="formErrors.dotNumber" class="text-danger">{{ formErrors.dotNumber }}</div>
@@ -113,7 +114,6 @@
                   @focus="onFocus('Company name')"
                   @blur="onBlur"
                 >
-
                 <div v-if="formErrors.name" class="text-danger">{{ formErrors.name }}</div>
               </div>
             </div>
@@ -289,18 +289,13 @@
 <script>
 import { validateField, validateForm, required } from "../validators.js";
 import { API } from "../api.js";
-import ModalLogin from "./ModalLogin.vue";
 import { mapState, mutations } from "vuex";
 import { isMobile } from "mobile-device-detect";
-import axios from "axios";
-import { setTimeout } from "timers";
 
 export default {
   name: "AccountInfoPersonalInfo",
 
   components: {
-    modelLogin: ModalLogin,
-    
   },
   props: {
     nextForm: {
@@ -326,10 +321,11 @@ export default {
     this.$emit("update-progress", this.progress);
   },
   beforeMount() {
-    // localStorage.setItem("uuid", null);
   },
   computed: {
     ...mapState(["data"]),
+    ...mapState('auth', { existingDots: state => state.existingDots }),
+
     showUSDOTFab () {
       return localStorage.getItem('imageDOT') && this.mobile && !this.submitted
     },
@@ -346,7 +342,6 @@ export default {
   data() {
     return {
       showmodel: false,
-      final_uuid:"",
       save: true,
       mobile:false,
       uuid: "",
@@ -420,7 +415,6 @@ export default {
     }
   },
   updated() {
-  
   },
   methods: {
     fillUSDOT () {
@@ -642,12 +636,10 @@ export default {
 
       this.loading = true;
       this.error = null;
-      this.final_uuid = this.uuid;
       let emailAddress = "";
       try {
         emailAddress = JSON.parse(localStorage.getItem('token')).email;
       } catch (e) {
-
       }
       try {
         const { name, dotNumber, phoneNumber } = this.formData;
@@ -668,7 +660,7 @@ export default {
             zip: this.formData.zip1,
           },
           emailAddress,
-          uuid: this.final_uuid
+          uuid: this.uuid
         };
         let res = await API.post("company/save", { data});
   

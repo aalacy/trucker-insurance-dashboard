@@ -143,7 +143,7 @@
           <b-form-row class="mb-2">
             <b-col cols="12">
               <div class="question-block">
-                <span class="question">If you are a low truck operation, Do you do Repossessions?</span>  
+                <span class="question">If you are a tow truck operation, Do you do Repossessions?</span>  
                 <toggle-button 
                   :labels="{checked: 'Yes', unchecked: 'No'}" 
                   :width="70" 

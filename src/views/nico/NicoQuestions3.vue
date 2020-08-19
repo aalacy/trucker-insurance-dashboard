@@ -211,7 +211,7 @@
                     <b-button @click="addPhysicalDamageCov" class="mr-2" size="sm" variant="primary">
                       <font-awesome-icon class="fontawesome" icon="plus" />
                     </b-button>
-                    <b-button @click="removePhysicalDamaageCov(index)" v-if="form.cargoInfos.length > 1" class="mr-2" size="sm" variant="danger">
+                    <b-button @click="removePhysicalDamaageCov(index)" class="mr-2" size="sm" variant="danger">
                       <font-awesome-icon class="fontawesome" icon="minus" />
                     </b-button>
                   </div>

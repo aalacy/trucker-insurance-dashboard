@@ -103,6 +103,8 @@
 
       this.checkAuth()
 
+      this.getDots()
+
       const submitted = localStorage.getItem('submitted')
       this.updateSubmittedStatus(submitted)
     },
@@ -135,11 +137,16 @@
       },
 
       blogBtn () {
+        let className = ''
         if (this.loggedIn) {
-          return 'btn btn-primary'
+          className = 'btn btn-primary'
+          if (this.mobile) {
+            className += ' btn-sm'
+          }
         } else {
-          return 'btn btn-primary btn-sm' 
+          className = 'btn btn-primary btn-sm' 
         }
+        return className
       },
 
       profileSize () {
@@ -165,7 +172,7 @@
     methods: {
       ...mapActions('layout', ['toggleSidebar', 'switchSidebar', 'changeSidebarActive']),
 
-      ...mapActions('auth', ['setLoggedIn', 'updateSubmittedStatus']),
+      ...mapActions('auth', ['setLoggedIn', 'updateSubmittedStatus', 'getDots']),
 
       checkAuth () {
         const token = localStorage.getItem('token')

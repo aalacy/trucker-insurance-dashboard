@@ -65,7 +65,7 @@
                 <b-form-group
                   label="Date of Birth"
                 >
-                  <b-form-datepicker 
+                  <!-- <b-form-datepicker 
                     reset-button 
                     locale="en-US" 
                     placeholder="Choose a date" 
@@ -74,8 +74,15 @@
                     max="01/01/9999"
                     :date-format-options="{ year: 'numeric', month: 'numeric', day: 'numeric' }"
                     :state="validateState(index, 'dob')" 
-                  >
-                  <b-form-invalid-feedback>{{ errorMessage(index, 'lastName')}}</b-form-invalid-feedback>
+                  > -->
+                  <input 
+                    type="date" 
+                    class="form-control"
+                    :class="{ 'is-invalid': !driver.dob.$model}"
+                    v-model="driver.dob.$model"
+                    :aria-describedby="`dob${index}`"
+                  />
+                  <b-form-invalid-feedback :id="`dob${index}`">{{ errorMessage(index, 'dob')}}</b-form-invalid-feedback>
                   </b-form-datepicker>
                 </b-form-group>
               </b-col>
@@ -464,8 +471,8 @@ export default {
             },
             licenseNumber: {
               required,
-              minLength: minLength(12),
-              maxLength: maxLength(12)
+              minLength: minLength(11),
+              maxLength: maxLength(15)
             },
             CDL: {
             },
@@ -498,10 +505,8 @@ export default {
               required
             },
             noOfAccidents: {
-              required
             },
             noOfAccidentsDate: {
-              required
             },
             noOfViolations: {
             },

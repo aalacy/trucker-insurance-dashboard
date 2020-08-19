@@ -321,6 +321,7 @@ export const NicoMixin = {
                 nico_questions = JSON.parse(nico_questions)
             } 
 
+            console.log(nico_questions.driversContinue, nico_questions.Q5)
             if (nico_questions.Q5 != undefined && nico_questions.driversContinue != undefined) {
               this.form = nico_questions
               // newly add loss Experience blocks as an array
@@ -343,6 +344,7 @@ export const NicoMixin = {
               }
               if (this.form.physicalDamageCovs.length == 0) {
                 this.addPhysicalDamageCov()
+                console.log(this.form.physicalDamageCovs)
               }
             }
           } 

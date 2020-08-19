@@ -250,16 +250,19 @@ export default {
     },
   },
 
-  mounted() {
-    let user = {}
-    try {
-      user = JSON.parse(localStorage.getItem('token'))
-    } catch (e) {}
-    this.email = user.email || ''
+  watch: {
+    quoteSubmitted: {
+      handler(newValue) {
+        if (newValue) {
+          this.getPastCerts()
+        }
+      },
+      immediate: true
+    }
+  },
 
+  mounted() {
     this.dotId = localStorage.getItem('usdot')
-    
-    this.getPastCerts()
   },
 
   created() {
@@ -267,7 +270,7 @@ export default {
   },
 
   computed: {
-    ...mapState('auth', ['quoteSubmitted']),
+    ...mapState('auth', ['quoteSubmitted', 'email']),
     mailto () {
       return `mailto:${this.email}?subject=Insurance%20Quote%20from%20LuckyTruck`
     },

@@ -43,12 +43,10 @@
 
     mounted () {
       this.uuid = localStorage.getItem('uuid')
-
-      this.checkQuoteSubmittedStatus()
     },
 
     methods: {
-      ...mapActions('auth', ['setLoggedIn', 'checkQuoteSubmittedStatus']),
+      ...mapActions('auth', ['setLoggedIn']),
 
       downloadPDF (data, name) {
         const blob = new Blob([data], { type: "application/pdf;charset=utf-8;" })

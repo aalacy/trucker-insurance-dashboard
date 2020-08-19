@@ -87,7 +87,10 @@
                       placeholder="Choose a date"
                       v-model="ownerData[index].dob"
                       :date-format-options="{ year: 'numeric', month: 'numeric', day: 'numeric' }"
-                      class="mb-2"></b-form-datepicker>
+                      class="mb-2"
+                      @input="validateFieldCustom('dob', index)"
+                    ></b-form-datepicker>
+                    <div class="text-danger" v-show="!validations.ownerData[index].dob.is_valid">{{ validations.ownerData[index].dob.text }}</div>
                   </b-form-group>
                 </b-col>
               </b-row>
@@ -361,7 +364,7 @@ export default {
         
         this.ownerData[0].firstName = "";
         this.ownerData[0].lastName = "";
-        this.ownerData[0].dob
+        this.ownerData[0].dob = ""
         this.ownerData[0].address="";
         this.ownerData[0].city="";
         this.ownerData[0].state="";
@@ -405,7 +408,6 @@ export default {
       }
     },
     addDriverData(data) {
-      
       if  (data == undefined || data.firstName == undefined) {
         this.ownerData.push({
           firstName: "",
