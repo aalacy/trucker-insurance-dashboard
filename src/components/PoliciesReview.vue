@@ -6,14 +6,14 @@
 
         <div v-if="loading" class="col-12">
           <img
-              src="../assets/images/loading/loading_truck_128.gif"
-              class="d-block mx-auto rounded"
-              alt="Loading"
-            >
+            src="../assets/images/loading/loading_truck_128.gif"
+            class="d-block mx-auto rounded"
+            alt="Loading"
+          >
         </div>
         <template v-if="quoteSubmitted">
           <div v-if="status">
-            <div v-for="(item, i) in policies" :key="i" class="block-divider policy-wrapper">
+            <div v-for="(item, i) in policies" :key="i+key" class="block-divider policy-wrapper">
               <div class="policy-image-wrapper px-1 mb-2">
                 <img src="https://picsum.photos/200" alt class="policy-image">
               </div>
@@ -144,8 +144,9 @@ export default {
         { key: 'endorsementType', label: 'Type' },
         { key: 'endorsementAmount', label: 'Amount ($)' },
       ],
+      key: 1,
       status: true,
-      loading: true,
+      loading: false,
       error: null,
       policy: "",
       name: '',
@@ -274,6 +275,7 @@ export default {
 
     async getPolicies () {
       if (this.quoteSubmitted) {
+        this.loading = true
         let res = await API.post("company/accountinfo/policies", {
           dotId: this.dotId,
           userId: this.userId
@@ -281,7 +283,9 @@ export default {
         this.loading = false;
         const { policies, status } = res;
         if (status == 'ok') {
+          this.status = 'ok'
           this.policies = policies
+          this.key++
         } else {
           this.status = false
         }
@@ -290,10 +294,13 @@ export default {
   },
 
   watch: {
-    quoteSubmitted () {
-      if (this.quoteSubmitted) {
-        this.getPolicies()
-      }
+    quoteSubmitted: {
+      handler(newValue) {
+        if (newValue == true) {
+          this.getPolicies()
+        }
+      },
+      immediate: true
     }
   },
 

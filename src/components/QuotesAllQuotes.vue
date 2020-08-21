@@ -12,8 +12,8 @@
             >
         </div>
         <div v-if="quoteSubmitted">
-          <template v-if="status">
-            <div v-for="item in quotes" :key="item.name" class="quote-wrapper block-divider">
+          <!-- <template v-if="status=='ok'"> -->
+            <div v-for="item in quotes" :key="item.id + key" class="quote-wrapper block-divider">
               <div class="image-wrapper px-1">
                 <img :src="item.img" alt class="image">
               </div>
@@ -64,14 +64,14 @@
                 </div>
               </div>
             </div>
-          </template>
+          <!-- </template> -->
          <!--  <span v-else>
             Your application is complete, we should have an update for you soon. If you have any further questions about this, feel to call us at
             <a href="tel:15135062400" style="font-weight:bold; white-space:nowrap;">1-513-506-2400</a>
           </span> -->
         </div>
         <div v-else class="mt-3 text-center">
-          <div>You can see your Quotes once you submit it to us. Click <a href="/">here</a> to send a quote.</div>
+          <div>You can see your Quotes once you submit it to us. Click <a href="/account-info/personal-info">here</a> to send a quote.</div>
            <!--  <div class="font-weight-bold">Devin Bostick</div>
             <div>LuckyTruck | luckytruck.co</div>
             <p>d: +1 (513) 619-0110</p>
@@ -124,6 +124,7 @@ export default {
       buttonHide: false,
       status: true,
       apires: [],
+      key: 1,
       auto_liability: "",
       aggregate: "",
       cargo_deductible: "",
@@ -198,7 +199,6 @@ export default {
     async fetchQuotes () {
       if (this.quoteSubmitted) {
         this.loading = true;
-
         const dotId = localStorage.getItem('usdot');
         const userId = localStorage.getItem('userId');
         let res = await API.post("company/accountinfo/quotes", {
@@ -208,16 +208,18 @@ export default {
         this.loading = false;
         this.error = this.error404 = null
         const { quoteList, status, code } = res;
+        this.quotes = []
+        this.status = status
         if (status == 'ok' && quoteList && quoteList.length > 0) {
-          quoteList.forEach(quote => {
-            this.quotes.push({
+          this.quotes = quoteList.map(quote => {
+            return {
               id: quote.id,
               title: quote.name,
               pdf: quote.quotePdf,
               img: "https://picsum.photos/200",
-            })
+            }
           })
-          console.log(this.quotes)
+          this.key++
         } else {
           this.status = false
           console.log(res.message)
@@ -247,15 +249,18 @@ export default {
   },
 
   watch: {
-    quoteSubmitted () {
-      if (this.quoteSubmitted) {
-        this.fetchQuotes()
-      }
+    quoteSubmitted: {
+      handler(newValue) {
+        if (newValue == true) {
+          this.fetchQuotes()
+        }
+      },
+      immediate: true
     }
   },
 
   async mounted() {
-    // this.fetchQuotes()
+    this.fetchQuotes()
   }
 }
 </script>

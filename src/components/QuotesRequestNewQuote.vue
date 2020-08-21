@@ -36,6 +36,8 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
   name: 'QuotesRequestNewQuote',
   data() {
@@ -46,6 +48,9 @@ export default {
   },
   created() {
     this.$emit('update-hint', "Please enter your certificate information here. If a certificate isn't generated right away, one from our team will manually generate it for you.");
+  },
+  computed: {
+    ...mapState('auth', ["quoteSubmitted"]),
   }
 };
 </script>

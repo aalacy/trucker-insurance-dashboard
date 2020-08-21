@@ -484,7 +484,7 @@ export default {
   data() {
     return {
       drivers: [],
-      loading: true,
+      loading: false,
       error: null,
       show: false,
       driversData: {},
@@ -524,10 +524,13 @@ export default {
   },
 
   watch: {
-    quoteSubmitted() {
-      if (this.quoteSubmitted) {
-        this.loadDrivers()
-      }
+    quoteSubmitted: {
+      handler(newValue) {
+        if (newValue == true) {
+          this.loadDrivers()
+        }
+      },
+      immediate: true
     }
   },
 

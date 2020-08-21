@@ -42,11 +42,11 @@ export default {
     data () {
 	    return {
 	    	curPDF: {
-		        title: "",
-		        content: "",
-		        base64: ""
-	      	},
-	      	show: this.showModal
+	        title: "",
+	        content: "",
+	        base64: ""
+      	},
+      	show: this.showModal
 	    }
 	},
 
