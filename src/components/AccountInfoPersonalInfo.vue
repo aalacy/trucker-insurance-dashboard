@@ -95,9 +95,7 @@
                   placeholder="USDOT"
                   @focus="onFocus('USDOT')"
                   @blur="onBlur"
-                  :readonly="submitted && status"
                 >
-
                 <div v-if="formErrors.dotNumber" class="text-danger">{{ formErrors.dotNumber }}</div>
               </div>
             </div>

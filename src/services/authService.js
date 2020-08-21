@@ -9,5 +9,5 @@ export const getEmail = () => {
   try {
     user = JSON.parse(localStorage.getItem('token'))
   } catch (e) {}
-  return user.email || ''
+  return user && user.email || ''
 }

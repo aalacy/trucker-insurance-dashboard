@@ -133,7 +133,7 @@ export default {
       document_file: "",
       filename: "",
       quotes: [],
-      loading: true,
+      loading: false,
       error: null,
       error404: null,
       pdf: {},
@@ -217,6 +217,7 @@ export default {
               img: "https://picsum.photos/200",
             })
           })
+          console.log(this.quotes)
         } else {
           this.status = false
           console.log(res.message)
@@ -254,7 +255,7 @@ export default {
   },
 
   async mounted() {
-    this.fetchQuotes()
+    // this.fetchQuotes()
   }
 }
 </script>

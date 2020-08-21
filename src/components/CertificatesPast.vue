@@ -140,7 +140,6 @@ export default {
       ],
       loading: true,
       error: null,
-      email: '',
       policyId: "",
       dotId: '',
       certId: '',
