@@ -391,9 +391,7 @@ export const NicoMixin = {
       this.error = null;
       try {
         const data = {
-          nico_questions: {
-            ...this.form
-          },
+          nico_questions: JSON.stringify(this.form),
           uuid: this.uuid
         };
         let res = await API.post("company/save", { data });

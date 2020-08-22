@@ -263,7 +263,7 @@ export default {
       try {
         const { eldProvider } = this.formData;
         const data = {
-          currentEldProvider: eldProvider,
+          currentEldProvider: JSON.stringify(eldProvider),
           uuid: this.final_uuid
         };
         let res = await API.post("company/save", { data });

@@ -277,7 +277,7 @@ export default {
             if (_businessStuctureRaw && _businessStuctureRaw.constructor !== Object) {
               _businessStuctureRaw = JSON.parse(businessStructureRaw)
             }
-            if (_businessStuctureRaw) {
+            if (_businessStuctureRaw && _businessStuctureRaw['Legal Name']) {
               const names = _businessStuctureRaw['Legal Name'].split(' ')
               const _type = names[names.length -1]
               if (['LLC', 'LLP', 'INC'].includes(_type)) {

@@ -91,7 +91,7 @@
               <b-col cols="12" md="6">
                 <b-form-group
                   label="License Number"
-                  description="12 digits"
+                  description="11 - 15 digits"
                 >
                   <b-form-input 
                     v-model="driver.licenseNumber.$model"
@@ -708,7 +708,7 @@ export default {
       this.error = null;
       try {
         const data = {
-          driverInformationList: this.form.drivers,
+          driverInformationList: JSON.stringify(this.form.drivers),
           uuid: this.uuid
         };
         let res = await API.post("company/save", { data });

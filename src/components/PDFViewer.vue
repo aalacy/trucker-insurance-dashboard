@@ -58,19 +58,19 @@ export default {
  	},
 
  	methods: {
-	    diaplayPDF (pdf) {
-	      let objbuilder = '';
-	      objbuilder += (`<html><body><object width="100%" height="400px" data="data:application/pdf;base64,`);
-	      objbuilder += (pdf.content);
-	      objbuilder += ('#toolbar=0" type="application/pdf" class="internal">');
-	      objbuilder += ('<embed src="data:application/pdf;base64,');
-	      objbuilder += (pdf.content);
-	      objbuilder += ('" type="application/pdf" />');
-	      objbuilder += ('</object></body></html>');
-	      this.curPDF.content = objbuilder;
-	      this.curPDF.base64 = `data:application/pdf;base64, ${pdf.content}`
-	      this.curPDF.title = pdf.name;
-	    },
+    diaplayPDF (pdf) {
+      let objbuilder = '';
+      objbuilder += (`<html><body><object width="100%" height="400px" data="data:application/pdf;base64,`);
+      objbuilder += (pdf.content);
+      objbuilder += ('#toolbar=0" type="application/pdf" class="internal">');
+      objbuilder += ('<embed src="data:application/pdf;base64,');
+      objbuilder += (pdf.content);
+      objbuilder += ('" type="application/pdf" />');
+      objbuilder += ('</object></body></html>');
+      this.curPDF.content = objbuilder;
+      this.curPDF.base64 = `data:application/pdf;base64, ${pdf.content}`
+      this.curPDF.title = pdf.name;
+    },
 	}
 }
 </script>

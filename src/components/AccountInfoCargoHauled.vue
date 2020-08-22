@@ -312,7 +312,7 @@ export default {
       try {
         const { haulType } = this.formData;
         const data = {
-          cargoHauled: haulType,
+          cargoHauled: JSON.stringify(haulType),
           uuid: this.uuid
         };
         let res = await API.post("company/save", { data });

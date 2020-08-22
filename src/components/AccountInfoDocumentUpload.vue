@@ -426,7 +426,7 @@ export default {
           })
         });
         const data = {
-          attachmentList,
+          attachmentList: JSON.stringify(attachmentList),
           uuid: this.uuid
         };
         let res = await API.post("company/save", { data });

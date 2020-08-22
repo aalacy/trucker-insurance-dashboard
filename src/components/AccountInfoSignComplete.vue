@@ -413,7 +413,7 @@ export default {
       
       try {
         const data = {
-          signSignature: this.formData,
+          signSignature: JSON.stringify(this.formData),
           user_id: localStorage.getItem("userId"),
           uuid: this.final_uuid,
         };

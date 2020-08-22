@@ -989,7 +989,7 @@ export default {
         }
 
         const data = {
-          vehicleInformationList,
+          vehicleInformationList: JSON.stringify(vehicleInformationList),
           uuid: this.uuid
         };
         let res = await API.post("company/save", { data });

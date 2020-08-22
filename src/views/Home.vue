@@ -382,7 +382,7 @@ export default {
           dotId
         });
 
-        if (data.status == "OK") {
+        if (data && data.status == "OK") {
           if (Array.isArray(data.data)) {
             this.companies = data.data;
             this.noData = !this.companies.length;

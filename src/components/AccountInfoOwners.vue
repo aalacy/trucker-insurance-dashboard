@@ -607,11 +607,11 @@ export default {
       this.final_uuid = this.uuid;
       try {
         const data = {
-          ownerInformationList: this.ownerData.map(o => {
-              let owner = { ...o };
-              delete owner._uuid;
-              return owner;
-             }),
+          ownerInformationList: JSON.stringify(this.ownerData.map(o => {
+            let owner = { ...o };
+            delete owner._uuid;
+            return owner;
+           })),
           uuid: this.final_uuid
         };
         let res = await API.post("company/save", { data });

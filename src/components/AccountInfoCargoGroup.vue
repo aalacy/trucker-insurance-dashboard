@@ -232,7 +232,7 @@ export default {
       try {
         const { cargoGroup } = this.formData;
         const data = {
-          cargoGroup,
+          cargoGroup: JSON.stringify(cargoGroup),
           uuid: this.final_uuid
         };
         let res = await API.post("company/save", { data });

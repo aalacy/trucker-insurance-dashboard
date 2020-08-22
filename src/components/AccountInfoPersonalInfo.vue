@@ -645,18 +645,18 @@ export default {
           name,
           dotNumber,
           phoneNumber,
-          mailingAddress: {
+          mailingAddress: JSON.stringify( {
             address: this.formData.address,
             city: this.formData.city,
             state: this.formData.state,
             zip: this.formData.zip,
-          },
-          garagingAddress: {
+          }),
+          garagingAddress: JSON.stringify({
             address: this.formData.address1,
             city: this.formData.city1,
             state: this.formData.state1,
             zip: this.formData.zip1,
-          },
+          }),
           emailAddress,
           uuid: this.uuid
         };
