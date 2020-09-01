@@ -216,6 +216,7 @@ export default {
         this.setLoggedIn(true)
         this.updateSubmittedStatus(data.submitted)
         localStorage.setItem('submitted', data.submitted)
+        localStorage.setItem('uuid', data.data.last_uuid)
         this.loading = false;
         if (loader) {
           loader.hide();

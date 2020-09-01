@@ -641,8 +641,10 @@ export default {
       }
       try {
         const { name, dotNumber, phoneNumber } = this.formData;
+        const user_id = localStorage.getItem('userId')
         let data = {
           name,
+          user_id,
           dotNumber,
           phoneNumber,
           mailingAddress: JSON.stringify( {
