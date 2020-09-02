@@ -29,7 +29,7 @@ export const NicoMixin = {
         { value: 'Named Perils', text: 'Named Perils' },
         { value: 'Broad Form', text: 'Broad Form' },
       ],
-      Q105Options: [
+      Q105Options1: [
         { value: '', text: 'Please select an option' },
         { value: 'Additional Insured Endorsement (Lessee)', text: 'Additional Insured Endorsement (Lessee)' },
         { value: 'Loading and Unloading Coverage', text: 'Loading and Unloading Coverage' },
@@ -37,6 +37,15 @@ export const NicoMixin = {
         { value: 'Refrigeration Breakdown Coverage', text: 'Refrigeration Breakdown Coverage' },
         { value: 'Hired Car Cargo Coverage', text: 'Hired Car Cargo Coverage' },
         { value: 'Exclude Theft Coverage', text: 'Exclude Theft Coverage' },
+      ],
+      Q105Options: [
+        'Please select an option',
+        'Additional Insured Endorsement (Lessee)',
+        'Loading and Unloading Coverage',
+        'Earned Freight Coverage',
+        'Refrigeration Breakdown Coverage',
+        'Hired Car Cargo Coverage',
+        'Exclude Theft Coverage'
       ],
       Q109Options: [
         { value: '', text: 'Please select an option' },
@@ -321,7 +330,6 @@ export const NicoMixin = {
                 nico_questions = JSON.parse(nico_questions)
             } 
 
-            console.log(nico_questions.driversContinue, nico_questions.Q5)
             if (nico_questions.Q5 != undefined && nico_questions.driversContinue != undefined) {
               this.form = nico_questions
               // newly add loss Experience blocks as an array
@@ -344,7 +352,6 @@ export const NicoMixin = {
               }
               if (this.form.physicalDamageCovs.length == 0) {
                 this.addPhysicalDamageCov()
-                console.log(this.form.physicalDamageCovs)
               }
             }
           } 

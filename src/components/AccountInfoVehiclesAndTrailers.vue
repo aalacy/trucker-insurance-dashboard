@@ -334,7 +334,7 @@
                   <b-form-select 
                     v-model="trailer.vehicleType.$model"
                     :state="validateTrailerState(index, 'vehicleType')"
-                    :options="otherVehicleType">
+                    :options="otherTrailerType">
                   </b-form-select>
                   <b-form-invalid-feedback>{{ errrorMessageTrailer(index, 'vehicleType')}}</b-form-invalid-feedback>
                 </b-form-group>
@@ -591,6 +591,22 @@ export default {
         "Straight Truck",
         "Box Truck"
       ],
+      otherTrailerType: [
+        "Flatbed",
+        "Dry Van or Enclosed",
+        "Refrigerated",
+        "Lowboy",
+        "Step Deck",
+        "Extendable Flatbed",
+        "Stretch Single Drop Deck",
+        "Removable Gooseneck",
+        "Specialty",
+        "Extended Double Drop",
+        "Stretch RGN",
+        "Conestoga",
+        "Power-Only",
+        "Multi-Car"
+      ],
       trailerTypes: [
         "Auto Hauler",
         "Bottom Dump Trailer",
@@ -738,10 +754,8 @@ export default {
               required
             },
             currentValue: {
-              required
             },
             deductible: {
-              required
             },
           }
         }
@@ -971,6 +985,7 @@ export default {
     },
     async updateCompany() {
       this.$v.form.$touch();
+      console.log(this.$v.form)
       if (this.$v.form.$anyError) {
         return;
       }

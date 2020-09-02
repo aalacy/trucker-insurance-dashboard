@@ -222,6 +222,7 @@ export default {
         address: this.address,
         newpdf,
         userId,
+        uuid: this.uuid,
         policyId: this.policy.policyId
       });
       this.loading = false;

@@ -14,6 +14,7 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 import VueFileAgent from 'vue-file-agent';
 import VueFileAgentStyles from 'vue-file-agent/dist/vue-file-agent.css';
 import ToggleButton from 'vue-js-toggle-button'
+import Multiselect from 'vue-multiselect'
 import { 
   faCaretLeft,
   faSpinner, 
@@ -100,6 +101,7 @@ Vue.use(Vue2TouchEvents)
 Vue.use(VueFileAgent)
 
 Vue.use(ToggleButton)
+Vue.component('multiselect', Multiselect)
 
 
 // Vue.component('font-awesome-icon', FontAwesomeIcon)

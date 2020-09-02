@@ -464,7 +464,13 @@
                 class="mb-0"
                 label="Additional Coverage Options (additional premium may apply):"
               >
-                <b-form-select v-model="$v.form.Q105.$model" :options="Q105Options"></b-form-select>
+                <b-form-select v-if="false" multiple v-model="$v.form.Q105.$model" :options="Q105Options"></b-form-select>
+                <multiselect  
+                  v-model="$v.form.Q105.$model"
+                  :options="Q105Options"
+                  multiple
+                  variant="primary"
+                ></multiselect>
               </b-form-group>
             </b-col>
           </b-form-row>
@@ -665,3 +671,4 @@ export default {
   }
 }
 </script>
+<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
