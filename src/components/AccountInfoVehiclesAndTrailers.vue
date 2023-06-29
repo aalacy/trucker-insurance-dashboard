@@ -1041,7 +1041,6 @@ select{
   -moz-appearance: none;
 }
 
-
 .fontawesome.minus path {
   fill: black;
 }

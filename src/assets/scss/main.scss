@@ -384,31 +384,31 @@ img {
   .mob-hint {
     display: flex;
     flex-wrap: wrap;
-}
-.text-cent{
-  text-align: center;
-  display: block;
-  margin-bottom: 3px;
-}
-.white-space{
-  width: 100%;
-  display: block;
-  text-align: center;
-  margin-left: 0px !important;
-  margin-right: 0px !important;
-  // max-width: 280px;
-  padding-top: 7px !important;
-}
-#text-date .lt-input{
-  text-align: center;
-  margin-top: 10px;
-}
-#app .app-main {
-  padding: 100px 0 0 0;
-}
-#text-date .mt-1{
-  margin-top: 16px !important;
-}
+  }
+  .text-cent{
+    text-align: center;
+    display: block;
+    margin-bottom: 3px;
+  }
+  .white-space{
+    width: 100%;
+    display: block;
+    text-align: center;
+    margin-left: 0px !important;
+    margin-right: 0px !important;
+    // max-width: 280px;
+    padding-top: 7px !important;
+  }
+  #text-date .lt-input{
+    text-align: center;
+    margin-top: 10px;
+  }
+  #app .app-main {
+    padding: 100px 0 0 0;
+  }
+  #text-date .mt-1{
+    margin-top: 16px !important;
+  }
   .d-none-mob{
     display: none;
   }
@@ -434,8 +434,6 @@ img {
     padding-top: 0px !important; 
   }
 }
-
-
 
 @media screen and (max-width:768px)
 {
@@ -550,16 +548,6 @@ img {
   
 }
 
- @media screen and (max-width:375px)
-{
-  // .mob-showa{
-  //   display: inline-block !important;
-    
-  // }
-  .mob-hide{
-    display: none;
-  }
-}
 @media screen and (max-width:416px)
 {
   .quotes-all-quotes .quote-image-wrapper{
@@ -574,6 +562,10 @@ img {
     padding: 0px !important;
   }
 
+  .mob-hide{
+    display: none;
+  }
+
   .mar-10{
     font-size: 14px;
   }
@@ -584,6 +576,10 @@ img {
     z-index: 3 !important; 
     left: 0px;
     top: 17% !important; 
+  }
+
+  #app .app-main {
+    padding: 121px 0 0 0;
   }
 }
 
